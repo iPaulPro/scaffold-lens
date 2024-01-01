@@ -11,3 +11,7 @@ node_modules
 .eslintcache
 .vscode/**
 .DS_Store
+.idea/**
+
+.env
+.env.development

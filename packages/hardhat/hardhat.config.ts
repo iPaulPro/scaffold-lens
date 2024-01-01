@@ -1,5 +1,10 @@
 import * as dotenv from "dotenv";
-dotenv.config();
+import path from "path";
+
+const envFileName = process.env.NODE_ENV === "production" ? ".env" : `.env.${process.env.NODE_ENV}`;
+const envFile = path.resolve(process.cwd(), envFileName);
+dotenv.config({ path: envFile });
+
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
@@ -17,7 +22,7 @@ const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.17",
+    version: "0.8.19",
     settings: {
       optimizer: {
         enabled: true,
@@ -131,9 +136,9 @@ const config: HardhatUserConfig = {
       accounts: [deployerPrivateKey],
     },
   },
-  verify: {
-    etherscan: {
-      apiKey: `${etherscanApiKey}`,
+  etherscan: {
+    apiKey: {
+      polygonMumbai: `${etherscanApiKey}`,
     },
   },
 };

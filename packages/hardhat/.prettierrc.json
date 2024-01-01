@@ -9,10 +9,9 @@
       "options": {
         "printWidth": 80,
         "tabWidth": 4,
-        "useTabs": true,
+        "useTabs": false,
         "singleQuote": false,
-        "bracketSpacing": true,
-        "explicitTypes": "always"
+        "bracketSpacing": false
       }
     }
   ]

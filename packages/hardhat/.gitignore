@@ -1,5 +1,5 @@
 node_modules
-.env
+.env.development
 coverage
 coverage.json
 typechain
@@ -15,3 +15,4 @@ artifacts-zk
 cache-zk
 
 deployments/localhost
+deployments/polygonMumbai

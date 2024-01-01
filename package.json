@@ -1,5 +1,5 @@
 {
-  "name": "se-2",
+  "name": "scaffold-lens",
   "version": "0.0.1",
   "private": true,
   "workspaces": {
@@ -11,7 +11,8 @@
     "account": "yarn workspace @se-2/hardhat account",
     "chain": "yarn workspace @se-2/hardhat chain",
     "compile": "yarn workspace @se-2/hardhat compile",
-    "deploy": "yarn workspace @se-2/hardhat deploy",
+    "deploy:local": "yarn workspace @se-2/hardhat deploy:local",
+    "deploy:action": "yarn workspace @se-2/hardhat deploy:action",
     "fork": "yarn workspace @se-2/hardhat fork",
     "generate": "yarn workspace @se-2/hardhat generate",
     "hardhat:lint": "yarn workspace @se-2/hardhat lint",

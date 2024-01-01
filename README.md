@@ -1,4 +1,30 @@
-# 🏗 Scaffold-ETH 2
+# 🏗 ~~Scaffold-ETH 2~~ Scaffold-Lens
+
+---
+
+This project is a fork of [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2) that demonstrates how to build, debug, test, and deploy an [Open Action](https://docs.lens.xyz/docs/publication-actions-aka-open-actions) Module on Lens Protocol using [Hardhat](https://hardhat.org/).
+
+The `TipActionModule` is a simple module that allows users to tip the author of a publication. It's based on the "Creating an Open Action" tutorial from the [Lens Docs](https://docs.lens.xyz/docs/creating-a-publication-action).
+
+Additions to the tutorial include:
+- [x] Adds compliance with the Open Action [Module Metadata Standard](https://docs.lens.xyz/docs/module-metadata-standard)
+- [x] Publishes metadata file on Arweave during deployment and sets a `metadataURI` field on the module
+- [x] Registers the module with the [ModuleRegistry](https://docs.lens.xyz/docs/module-registry) contract during deployment
+- [x] Checks token allowance before attempting to send a tip
+- [x] Uses `SafeERC20` to transfer tokens
+- [x] Uses `ReentrancyGuard` to prevent reentrancy attacks
+- [x] Adds unit tests with Chai
+
+Features:
+- [x] Run a local EVM chain and test contracts locally with Hardhat
+- [x] Deploy a mock ModuleRegistry contract
+- [x] Deploy an ERC20 token contract used for whitelisted tips
+- [x] Deploy an Open Action Module contract
+- [x] Debug local contract calls with a graphical interface
+
+Original README below. 👇
+
+---
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
 
