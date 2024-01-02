@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.19;
 
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {Types} from "./libraries/Types.sol";
 import {IPublicationActionModule} from "./interfaces/IPublicationActionModule.sol";
 import {HubRestricted} from "./base/HubRestricted.sol";
-import {LensModule} from "./base/LensModule.sol";
 import {IModuleRegistry} from "./interfaces/IModuleRegistry.sol";
 import {LensModuleMetadata} from "./base/LensModuleMetadata.sol";
 import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 
 contract TipActionModule is
+    Ownable,
     IPublicationActionModule,
     HubRestricted,
-    LensModule,
     LensModuleMetadata,
     LensModuleRegistrant,
     ReentrancyGuard
@@ -51,8 +51,9 @@ contract TipActionModule is
         address hub,
         address moduleRegistry
     )
+        Ownable()
         HubRestricted(hub)
-        LensModuleMetadata(msg.sender)
+        LensModuleMetadata()
         LensModuleRegistrant(moduleRegistry)
     {}
 

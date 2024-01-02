@@ -7,10 +7,6 @@ import {LensModule} from "./LensModule.sol";
 abstract contract LensModuleMetadata is LensModule, Ownable {
     string public metadataURI;
 
-    constructor(address owner_) Ownable() {
-        _transferOwnership(owner_);
-    }
-
     function setModuleMetadataURI(
         string memory _metadataURI
     ) external onlyOwner {
