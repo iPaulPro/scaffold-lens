@@ -57,13 +57,13 @@ Before you begin, you need to install the following tools:
 
 ## Quickstart
 
-To get started with Scaffold-ETH 2, follow the steps below:
+To get started with Scaffold-Lens, follow the steps below:
 
 1. Clone this repo & install dependencies
 
 ```
-git clone https://github.com/scaffold-eth/scaffold-eth-2.git
-cd scaffold-eth-2
+git clone https://github.com/iPaulPro/scaffold-lens
+cd scaffold-lens
 yarn install
 ```
 
@@ -78,7 +78,7 @@ This command starts a local Ethereum network using Hardhat. The network runs on 
 3. On a second terminal, deploy the test contract:
 
 ```
-yarn deploy
+yarn deploy:local
 ```
 
 This command deploys a test smart contract to the local network. The contract is located in `packages/hardhat/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/hardhat/deploy` to deploy the contract to the network. You can also customize the deploy script.
