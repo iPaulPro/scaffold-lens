@@ -132,7 +132,7 @@ You can generate a random account / private key with `yarn generate` or add the 
 To deploy the `TipActionModule` to Mumbai you can run 
 
 ```
-`yarn deploy:action`
+yarn deploy:action
 ```
 
 5. Verify your smart contract

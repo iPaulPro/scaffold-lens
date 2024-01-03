@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -13,8 +13,8 @@ import {LensModuleMetadata} from "./base/LensModuleMetadata.sol";
 import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 
 contract TipActionModule is
-    Ownable,
     IPublicationActionModule,
+    Ownable,
     HubRestricted,
     LensModuleMetadata,
     LensModuleRegistrant,
@@ -40,7 +40,11 @@ contract TipActionModule is
         uint256 tipAmount
     );
 
-    mapping(uint256 => mapping(uint256 => address)) internal _tipReceivers;
+    /**
+     * @dev Mapping of tip receivers for publications.
+     */
+    mapping(uint256 profileId => mapping(uint256 pubId => address tipReceiver))
+        internal _tipReceivers;
 
     /**
      * @dev Initializes the TipActionModule contract.
