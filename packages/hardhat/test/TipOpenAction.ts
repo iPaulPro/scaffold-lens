@@ -22,7 +22,7 @@ describe("TipActionModule", function () {
     recipientAddress = await recipient.getAddress();
 
     // Deploy a new mock ModuleRegistry contract
-    const ModuleRegistry = await ethers.getContractFactory("ModuleRegistry");
+    const ModuleRegistry = await ethers.getContractFactory("MockModuleRegistry");
     moduleRegistry = await ModuleRegistry.deploy();
     await moduleRegistry.deployed();
 

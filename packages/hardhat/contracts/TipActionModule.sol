@@ -12,6 +12,10 @@ import {IModuleRegistry} from "./interfaces/IModuleRegistry.sol";
 import {LensModuleMetadata} from "./base/LensModuleMetadata.sol";
 import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 
+/**
+ * @title TipActionModule
+ * @dev Open Action Module for tipping Lens publications.
+ */
 contract TipActionModule is
     IPublicationActionModule,
     Ownable,

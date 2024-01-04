@@ -3,7 +3,7 @@ pragma solidity ^0.8.19;
 
 import {IModuleRegistry} from "../interfaces/IModuleRegistry.sol";
 
-contract ModuleRegistry is IModuleRegistry {
+contract MockModuleRegistry is IModuleRegistry {
     mapping(address => uint256) internal moduleTypes;
     mapping(address => bool) internal modules;
     mapping(address => bool) internal erc20Currencies;

@@ -22,12 +22,6 @@ Features:
 - [x] Deploy an Open Action Module contract
 - [x] Debug local contract calls with a graphical interface
 
-## Using the TipActionModule Contract
-
-| Network | Chain ID | Deployed Contract                                                                                                               |
-|---------|----------|---------------------------------------------------------------------------------------------------------------------------------|
-| Mumbai  | 80001    | [0xce962e5ade34202489e04bb8ed258f8d079eee3e](https://mumbai.polygonscan.com/address/0xce962e5ade34202489e04bb8ed258f8d079eee3e) |
-
 ---
 
 ## Contents
@@ -36,6 +30,7 @@ Features:
 - [Quickstart](#quickstart)
 - [Testing](#testing)
 - [Deploying to Mumbai](#deploying-to-mumbai)
+- [Using the TipActionModule Contract](#using-the-tipactionmodule-contract)
 - [About Scaffold-ETH 2](#about-scaffold-eth-2)
 
 ## Requirements
@@ -142,6 +137,142 @@ You can verify your smart contract on Etherscan by running:
 ```
 yarn verify
 ```
+
+## Using the TipActionModule Contract
+
+| Network | Chain ID | Deployed Contract                                                                                                               | Metadata                                                                     |
+|---------|----------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| Mumbai  | 80001    | [0xce962e5ade34202489e04bb8ed258f8d079eee3e](https://mumbai.polygonscan.com/address/0xce962e5ade34202489e04bb8ed258f8d079eee3e) | [link](https://gateway.irys.xyz/9XjLZj9uvL_ZiHuTp9SdGAMd859IBYX95KKNNrqmF-Q) |
+
+The `TipActionModule` contract can be used as an Open Action Module on Lens Protocol.
+
+The initialize calldata ABI is
+
+```json
+[
+  { 
+    "type": "address", 
+    "name": "tipReceiver"
+  }
+]
+```
+
+And the process calldata ABI is
+
+```json
+[
+    {
+      "type": "address",
+      "name": "currency"
+    },
+    {
+      "type": "uint256",
+      "name": "tipAmount"
+    }
+  ]
+```
+
+Where `currency` is the address of the ERC20 token to use for tips, and `tipAmount` is the amount of tokens to send in wei. Note that the token must be registered with the Lens Module Registry.
+
+### Using the TipActionModule with the Lens SDK
+
+You can initialize the action and set the tip receiver using the Lens SDK Client.
+
+```typescript
+import { type LensClient, type OnchainPostRequest, encodeData } from '@lens-protocol/client';
+
+const openActionContract = "0xce962e5ade34202489e04bb8ed258f8d079eee3e";
+
+const postRequest: OnchainPostRequest = { contentURI };
+
+// The initialization calldata accepts a single address parameter, the tip receiver
+const calldata = encodeData(
+  [{ name: "tipReceiver", type: "address" }],
+  [tipReceiver],
+);
+
+postRequest.openActionModules.push({
+  unknownOpenAction: {
+    address: openActionContract,
+    data: calldata,
+  },
+});
+
+await lensClient.publication.postOnchain(postRequest);
+```
+
+To support executing a tip action, you can create an `act` transaction as usual, supplying the currency and amount to tip as the process call data.
+
+```typescript
+const tipActionContract = "0xce962e5ade34202489e04bb8ed258f8d079eee3e";
+
+// get the module settings and metadata
+const settings = post.openActionModules.find(
+  (module) => module.contract.address.toLowerCase() === tipActionContract.toLowerCase(),
+);
+const metadataRes = await lensClient.modules.fetchMetadata({
+  implementation: settings.contract.address,
+});
+
+// encode calldata
+const processCalldata: ModuleParam[] = JSON.parse(metadataRes.metadata.processCalldataABI);
+const calldata = encodeData(
+  processCalldata,
+  [currency, amount.toString()],
+);
+
+// create the act transaction request
+const request: ActOnOpenActionRequest = {
+  actOn: {
+    unknownOpenAction: {
+      address: tipActionContract,
+      data: calldata,
+    },
+  },
+  for: post.id,
+};
+
+const tip = await lensClient.publication.actions.createActOnTypedData(request);
+// sign and broadcast transaction
+```
+
+The tip receiver can be obtained from the module settings
+```typescript
+if (settings.initializeCalldata) {
+  const initData = decodeData(
+    JSON.parse(metadataRes.metadata.initializeCalldataABI) as ModuleParam[],
+    settings.initializeCalldata,
+  );
+  // This is the tip receiver address (registered in the initialize calldata)
+  const tipReceiver = initData.tipReceiver;
+}
+```
+
+### Important Notes
+
+1. Clients implementing the tip action should ensure the user has approved the tip amount for the tip currency before attempting to execute the tip action.
+
+You can check the allowance using the ERC-20 `allowance` function directly, or use the Lens SDK Client:
+
+```typescript
+const needsApproval = async (
+  currency: string, 
+  actionModule: string
+): Promise<boolean> => {
+  const req: ApprovedModuleAllowanceAmountRequest = {
+    currencies: [currency],
+    unknownOpenActionModules: [actionModule],
+  };
+  const res = await lensClient.modules.approvedAllowanceAmount(req);
+  if (res.isFailure()) return true;
+
+  const allowances = res.unwrap();
+  if (!allowances.length) return true;
+
+  return tipAmount.lt(allowances[0].allowance.value);
+};
+```
+---
 
 ## About Scaffold-ETH 2
 
