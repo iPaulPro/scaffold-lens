@@ -248,20 +248,24 @@ if (settings.initializeCalldata) {
 
     ```typescript
     const needsApproval = async (
-      currency: string, 
-      actionModule: string
+      lensClient: LensClient,
+      currency: string,
+      tipAmount: BigNumber,
+      actionModule: string,
     ): Promise<boolean> => {
       const req: ApprovedModuleAllowanceAmountRequest = {
         currencies: [currency],
         unknownOpenActionModules: [actionModule],
       };
+      
       const res = await lensClient.modules.approvedAllowanceAmount(req);
       if (res.isFailure()) return true;
-
+      
       const allowances = res.unwrap();
       if (!allowances.length) return true;
-
-      return tipAmount.lt(allowances[0].allowance.value);
+    
+      const valueInWei = ethers.utils.parseEther(allowances[0].allowance.value);
+      return tipAmount.gt(valueInWei);
     };
     ```
 ---
