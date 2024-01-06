@@ -16,8 +16,6 @@ import {Types} from "../libraries/Types.sol";
 abstract contract LensModuleRegistrant is ILensModuleRegistrant, Ownable {
     event ModuleRegistered();
 
-    error ModuleAlreadyRegistered();
-
     IModuleRegistry public immutable MODULE_REGISTRY;
 
     constructor(address moduleRegistry) {
@@ -32,7 +30,7 @@ abstract contract LensModuleRegistrant is ILensModuleRegistrant, Ownable {
     /// @inheritdoc ILensModuleRegistrant
     function registerModule() external override onlyOwner returns (bool) {
         if (isRegistered()) {
-            revert ModuleAlreadyRegistered();
+            return true;
         }
 
         bool registered = MODULE_REGISTRY.registerModule(
