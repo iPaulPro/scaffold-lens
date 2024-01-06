@@ -31,6 +31,8 @@ jobs:
         run: yarn install --immutable
 
       - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
+        env:
+          LENS_HUB: ${{ secrets.LENS_HUB }}
         run: yarn chain & yarn deploy:local
 
       - name: Run nextjs lint
