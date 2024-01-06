@@ -10,6 +10,7 @@
   "scripts": {
     "account": "yarn workspace @se-2/hardhat account",
     "chain": "yarn workspace @se-2/hardhat chain",
+    "clean": "yarn workspace @se-2/hardhat clean",
     "compile": "yarn workspace @se-2/hardhat compile",
     "deploy:local": "yarn workspace @se-2/hardhat deploy:local",
     "deploy:action": "yarn workspace @se-2/hardhat deploy:action",

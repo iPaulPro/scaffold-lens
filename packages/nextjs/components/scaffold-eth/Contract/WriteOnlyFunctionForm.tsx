@@ -71,20 +71,39 @@ export const WriteOnlyFunctionForm = ({
   }, [txResult]);
 
   // TODO use `useMemo` to optimize also update in ReadOnlyFunctionForm
-  const inputs = abiFunction.inputs.map((input, inputIndex) => {
+  const inputs = abiFunction.inputs.flatMap((input, inputIndex) => {
     const key = getFunctionInputKey(abiFunction.name, input, inputIndex);
-    return (
-      <ContractInput
-        key={key}
-        setForm={updatedFormValue => {
-          setDisplayedTxResult(undefined);
-          setForm(updatedFormValue);
-        }}
-        form={form}
-        stateObjectKey={key}
-        paramType={input}
-      />
-    );
+    if ("components" in input) {
+      console.log("getParsedContractFunctionArgs: found a tuple", abiFunction);
+      return input.components.map((component, componentIndex) => {
+        const componentKey = `${key}-${componentIndex}`;
+        return (
+          <ContractInput
+            key={componentKey}
+            setForm={updatedFormValue => {
+              setDisplayedTxResult(undefined);
+              setForm(updatedFormValue);
+            }}
+            form={form}
+            stateObjectKey={componentKey}
+            paramType={component}
+          />
+        );
+      });
+    } else {
+      return (
+        <ContractInput
+          key={key}
+          setForm={updatedFormValue => {
+            setDisplayedTxResult(undefined);
+            setForm(updatedFormValue);
+          }}
+          form={form}
+          stateObjectKey={key}
+          paramType={input}
+        />
+      );
+    }
   });
   const zeroInputs = inputs.length === 0 && abiFunction.stateMutability !== "payable";
 
