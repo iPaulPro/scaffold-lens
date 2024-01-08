@@ -25,7 +25,8 @@ Features:
 
 - [Requirements](#requirements)
 - [Quickstart](#quickstart)
-- [Testing](#testing)
+- [Debugging](#debugging)
+- [Unit Testing](#testing)
 - [Deploying to Mumbai](#deploying-to-mumbai)
 - [Using the TipActionModule Contract](#using-the-tipactionmodule-contract)
 - [About Scaffold-ETH 2](#about-scaffold-eth-2)
@@ -88,7 +89,7 @@ To get started with Scaffold-Lens, follow the steps below:
 
 ## Debugging
 
-You can debug your smart contracts using the Contract Degbugger. If you haven't already, from the root directory, start your NextJS app:
+You can debug your smart contracts using the Contract Debugger. If you haven't already, from the root directory, start your NextJS app:
 ```shell
 yarn start
 ```
