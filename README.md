@@ -86,9 +86,43 @@ To get started with Scaffold-Lens, follow the steps below:
 
    This command deploys the smart contracts to the local network. The contracts are located in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the deploy scripts located in `packages/hardhat/deploy` to deploy the contracts to the network.
 
+## Debugging
+
+You can debug your smart contracts using the Contract Degbugger. If you haven't already, from the root directory, start your NextJS app:
+```shell
+yarn start
+```
+
+Then navigate to http://localhost:3000/debug to open the debugger. You can now call functions on your smart contracts and debug them in the browser.
+
+### Debugging the `TipActionModule`
+
+1. Ensure the `LENS_HUB` environment variable is set to the address of the burner wallet:
+    ```bash
+    LENS_HUB=""
+    ```
+2. Run the chain and deploy the `TipActionModule` and mock contracts to the local network, and start the app:
+    ```shell
+    yarn chain
+    yarn deploy:local
+    yarn start
+    ```
+3. Navigate to http://localhost:3000/debug.
+4. Select the `TestToken` contract and call the `mint` function to mint tokens for the burner wallet.
+5. Copy the address of the `TipActionModule` and the `approve` spending from the `TipActionModule`.
+6. Select the `TipActionModule` contract and call the `initializePublicationAction` function with a receiver address.
+7. Call the `processPublicationAction` with the tip data. 
+
+**Tip:** Use https://abi.hashex.org/ to encode the calldata for the `initializePublicationAction` and `processPublicationAction` functions.
+
 ## Testing
 
-Run the smart contract test with `yarn hardhat:test` from the root directory. This will run the tests located in `packages/hardhat/test` with [Chai](https://github.com/chaijs/chai).
+Run the smart contract unit tests from the root directory.
+```shell
+yarn hardhat:test
+```
+
+This will run the tests located in `packages/hardhat/test` with [Chai](https://github.com/chaijs/chai).
 
 ## Deploying to Mumbai
 
@@ -102,13 +136,13 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    MODULE_REGISTRY=0x4BeB63842BB800A1Da77a62F2c74dE3CA39AF7C0
    ```
 
-   Next, generate a new account or add one to deploy the contract(s) from. Additionally you will need to add your Alchemy API key.
+   Next, generate a new account or add one to deploy the contract(s) from. Additionally you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Mumbai).
    ```bash
    ALCHEMY_API_KEY=""
    DEPLOYER_PRIVATE_KEY=""
    ```
 
-   The deployer account is the account that will deploy your contracts. Additionally, the deployer account will be used to execute any function calls that are part of your deployment script.
+   The deployer wallet is the account that will deploy your contracts. Additionally, the deployer account will be used to execute any function calls that are part of your deployment script.
 
    You can generate a random account / private key with `yarn generate` or add the private key of your crypto wallet. `yarn generate` will create a random account and add the DEPLOYER_PRIVATE_KEY to the .env file. You can check the generated account with `yarn account`.
 
