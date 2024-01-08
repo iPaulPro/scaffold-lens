@@ -13,7 +13,7 @@
     "clean": "yarn workspace @se-2/hardhat clean",
     "compile": "yarn workspace @se-2/hardhat compile",
     "deploy:local": "yarn workspace @se-2/hardhat deploy:local",
-    "deploy:action": "yarn workspace @se-2/hardhat deploy:action",
+    "deploy:mumbai": "yarn workspace @se-2/hardhat deploy:mumbai",
     "fork": "yarn workspace @se-2/hardhat fork",
     "generate": "yarn workspace @se-2/hardhat generate",
     "hardhat:lint": "yarn workspace @se-2/hardhat lint",

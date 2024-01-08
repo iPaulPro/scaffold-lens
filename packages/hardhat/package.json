@@ -7,7 +7,7 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile --show-stack-traces",
     "deploy:local": "NODE_ENV=development hardhat deploy",
-    "deploy:action": "NODE_ENV=production hardhat deploy --tags TipActionModule --network polygonMumbai",
+    "deploy:mumbai": "NODE_ENV=production hardhat deploy --tags TipActionModule --network polygonMumbai",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "NODE_ENV=development hardhat run scripts/generateAccount.ts",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
