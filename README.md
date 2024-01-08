@@ -154,7 +154,7 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    To deploy the `TipActionModule` to Mumbai you can run
 
    ```shell
-   yarn deploy:action
+   yarn deploy:mumbai
    ```
 
 3. **Verify**  
