@@ -19,7 +19,7 @@ Features:
 - ✅ Deploy an ERC20 token contract used for whitelisted tips
 - ✅ Deploy an Open Action Module contract
 - ✅ Debug local contract calls with a graphical interface
-
+- ✅ Verify contracts on Etherscan
 
 ## Contents
 
@@ -65,7 +65,7 @@ To get started with Scaffold-Lens, follow the steps below:
     yarn start
     ```
 
-   Visit your app on: `http://localhost:3000`. You can interact with your smart contracts using the contract component and reiview all transactions in the block explorer. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+   Visit your app on: `http://localhost:3000`. You can interact with your smart contracts using the contract component and review all transactions in the block explorer. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
 4. **Set up environment**  
    To test on a local chain, you'll need to set up a `.env.development` file in the `packages/hardhat` directory. You can use the `.env.development.example` file as a template.
@@ -165,9 +165,9 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
 
 To use the live `TipActionModule` you can use the address and metadata below:
 
-| Network | Chain ID | Deployed Contract                                                                                                               | Metadata                                                                     |
-|---------|----------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| Mumbai  | 80001    | [0xce962e5ade34202489e04bb8ed258f8d079eee3e](https://mumbai.polygonscan.com/address/0xce962e5ade34202489e04bb8ed258f8d079eee3e) | [link](https://gateway.irys.xyz/9XjLZj9uvL_ZiHuTp9SdGAMd859IBYX95KKNNrqmF-Q) |
+| Network | Chain ID | Deployed Contract                                                                                                               | Metadata                                                                    |
+|---------|----------|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| Mumbai  | 80001    | [0xbb1B9C55F943Bd2edCa0cDfa2F4Bb41Ea2c49a44](https://mumbai.polygonscan.com/address/0xbb1B9C55F943Bd2edCa0cDfa2F4Bb41Ea2c49a44) | [link](https://devnet.irys.xyz/DmTRxYr0BR02aWUZ2R8UB12RO31r4qmqScp9fuuNIRY) |
 
 The `TipActionModule` contract can be used as an Open Action Module on Lens Protocol.
 
