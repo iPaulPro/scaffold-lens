@@ -1,6 +1,6 @@
 {
   "name": "scaffold-lens",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "workspaces": {
     "packages": [
@@ -8,28 +8,28 @@
     ]
   },
   "scripts": {
-    "account": "yarn workspace @se-2/hardhat account",
-    "chain": "yarn workspace @se-2/hardhat chain",
-    "clean": "yarn workspace @se-2/hardhat clean",
-    "compile": "yarn workspace @se-2/hardhat compile",
-    "deploy:local": "yarn workspace @se-2/hardhat deploy:local",
-    "deploy:mumbai": "yarn workspace @se-2/hardhat deploy:mumbai",
-    "fork": "yarn workspace @se-2/hardhat fork",
-    "generate": "yarn workspace @se-2/hardhat generate",
-    "hardhat:lint": "yarn workspace @se-2/hardhat lint",
-    "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
-    "hardhat:test": "yarn workspace @se-2/hardhat test",
+    "account": "yarn workspace @sl/hardhat account",
+    "chain": "yarn workspace @sl/hardhat chain",
+    "clean": "yarn workspace @sl/hardhat clean",
+    "compile": "yarn workspace @sl/hardhat compile",
+    "deploy:local": "yarn workspace @sl/hardhat deploy:local",
+    "deploy:mumbai": "yarn workspace @sl/hardhat deploy:mumbai",
+    "fork": "yarn workspace @sl/hardhat fork",
+    "generate": "yarn workspace @sl/hardhat generate",
+    "hardhat:lint": "yarn workspace @sl/hardhat lint",
+    "hardhat:lint-staged": "yarn workspace @sl/hardhat lint-staged",
+    "hardhat:test": "yarn workspace @sl/hardhat test",
     "postinstall": "husky install",
-    "next:check-types": "yarn workspace @se-2/nextjs check-types",
-    "next:format": "yarn workspace @se-2/nextjs format",
-    "next:lint": "yarn workspace @se-2/nextjs lint",
+    "next:check-types": "yarn workspace @sl/nextjs check-types",
+    "next:format": "yarn workspace @sl/nextjs format",
+    "next:lint": "yarn workspace @sl/nextjs lint",
     "precommit": "lint-staged",
     "prepare": "install-self-peers -- --ignore-scripts",
-    "start": "yarn workspace @se-2/nextjs dev",
+    "start": "yarn workspace @sl/nextjs dev",
     "test": "yarn hardhat:test",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
-    "verify": "yarn workspace @se-2/hardhat verify"
+    "vercel": "yarn workspace @sl/nextjs vercel",
+    "vercel:yolo": "yarn workspace @sl/nextjs vercel:yolo",
+    "verify": "yarn workspace @sl/hardhat verify"
   },
   "resolutions": {
     "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch"

@@ -128,7 +128,7 @@ This will run the tests located in `packages/hardhat/test` with [Chai](https://g
 
 ## Deploying to Mumbai
 
-**NOTE:** There is no need to publish your own `TipActionModule` if all you want is to add tipping support to your app. In that case you should integrate the verified contract by Orna. 
+**NOTE:** There is no need to publish your own `TipActionModule` if all you want is to add tipping support to your app. In that case you should use the [verified contract by Orna](https://github.com/mvanhalen/TipActionModule). 
 
 Once you are ready to deploy your smart contracts, there are a few things you need to adjust.
 

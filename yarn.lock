@@ -4140,93 +4140,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@se-2/hardhat@workspace:packages/hardhat":
-  version: 0.0.0-use.local
-  resolution: "@se-2/hardhat@workspace:packages/hardhat"
-  dependencies:
-    "@ethersproject/abi": ^5.7.0
-    "@ethersproject/providers": ^5.7.1
-    "@irys/sdk": ^0.1.1
-    "@lens-protocol/metadata": ^1.1.5
-    "@matterlabs/hardhat-zksync-solc": ^0.3.17
-    "@matterlabs/hardhat-zksync-verify": ^0.1.8
-    "@nomicfoundation/hardhat-chai-matchers": ^1.0.3
-    "@nomicfoundation/hardhat-network-helpers": ^1.0.6
-    "@nomicfoundation/hardhat-toolbox": ^2.0.0
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13"
-    "@nomiclabs/hardhat-etherscan": ^3.1.0
-    "@openzeppelin/contracts": ^4.8.1
-    "@typechain/ethers-v5": ^10.1.0
-    "@typechain/hardhat": ^6.1.3
-    "@types/eslint": ^8
-    "@types/mocha": ^9.1.1
-    "@types/prettier": ^2
-    "@types/qrcode": ^1
-    "@typescript-eslint/eslint-plugin": latest
-    "@typescript-eslint/parser": latest
-    chai: ^4.3.6
-    dotenv: ^16.0.3
-    envfile: ^6.18.0
-    eslint: ^8.26.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    ethers: ^5.7.1
-    hardhat: ^2.17.3
-    hardhat-deploy: ^0.11.31
-    hardhat-gas-reporter: ^1.0.9
-    prettier: ^2.8.4
-    prettier-plugin-solidity: ^1.3.1
-    qrcode: ^1.5.1
-    solidity-coverage: ^0.8.2
-    ts-node: ^10.9.1
-    typechain: ^8.1.0
-    typescript: ^5.1.6
-    zod: ^3.22.4
-  languageName: unknown
-  linkType: soft
-
-"@se-2/nextjs@workspace:packages/nextjs":
-  version: 0.0.0-use.local
-  resolution: "@se-2/nextjs@workspace:packages/nextjs"
-  dependencies:
-    "@ethersproject/providers": ^5.7.2
-    "@heroicons/react": ^2.0.11
-    "@rainbow-me/rainbowkit": 1.3.0
-    "@trivago/prettier-plugin-sort-imports": ^4.1.1
-    "@types/node": ^17.0.45
-    "@types/react": ^18.0.21
-    "@types/react-copy-to-clipboard": ^5.0.4
-    "@typescript-eslint/eslint-plugin": ^5.40.0
-    "@uniswap/sdk-core": ^4.0.1
-    "@uniswap/v2-sdk": ^3.0.1
-    autoprefixer: ^10.4.12
-    blo: ^1.0.1
-    daisyui: ^4.4.19
-    eslint: ^8.24.0
-    eslint-config-next: ^13.1.6
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    next: ^13.1.6
-    nextjs-progressbar: ^0.0.16
-    postcss: ^8.4.16
-    prettier: ^2.8.4
-    qrcode.react: ^3.1.0
-    react: ^18.2.0
-    react-copy-to-clipboard: ^5.1.0
-    react-dom: ^18.2.0
-    react-hot-toast: ^2.4.0
-    tailwindcss: ^3.3.3
-    type-fest: ^4.6.0
-    typescript: ^5.1.6
-    use-debounce: ^8.0.4
-    usehooks-ts: ^2.9.1
-    vercel: ^28.15.1
-    viem: 1.19.9
-    wagmi: 1.4.12
-    zustand: ^4.1.2
-  languageName: unknown
-  linkType: soft
-
 "@sentry/core@npm:5.30.0":
   version: 5.30.0
   resolution: "@sentry/core@npm:5.30.0"
@@ -4322,6 +4235,93 @@ __metadata:
   checksum: 83839f13da2c29d55c97abc3bc2c55b250d33a0447554997a85c539e058e57b8da092da396e252b11ec24a0279a0bed1f537fa26302209327060643e327f81d2
   languageName: node
   linkType: hard
+
+"@sl/hardhat@workspace:packages/hardhat":
+  version: 0.0.0-use.local
+  resolution: "@sl/hardhat@workspace:packages/hardhat"
+  dependencies:
+    "@ethersproject/abi": ^5.7.0
+    "@ethersproject/providers": ^5.7.1
+    "@irys/sdk": ^0.1.1
+    "@lens-protocol/metadata": ^1.1.5
+    "@matterlabs/hardhat-zksync-solc": ^0.3.17
+    "@matterlabs/hardhat-zksync-verify": ^0.1.8
+    "@nomicfoundation/hardhat-chai-matchers": ^1.0.3
+    "@nomicfoundation/hardhat-network-helpers": ^1.0.6
+    "@nomicfoundation/hardhat-toolbox": ^2.0.0
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13"
+    "@nomiclabs/hardhat-etherscan": ^3.1.0
+    "@openzeppelin/contracts": ^4.8.1
+    "@typechain/ethers-v5": ^10.1.0
+    "@typechain/hardhat": ^6.1.3
+    "@types/eslint": ^8
+    "@types/mocha": ^9.1.1
+    "@types/prettier": ^2
+    "@types/qrcode": ^1
+    "@typescript-eslint/eslint-plugin": latest
+    "@typescript-eslint/parser": latest
+    chai: ^4.3.6
+    dotenv: ^16.0.3
+    envfile: ^6.18.0
+    eslint: ^8.26.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    ethers: ^5.7.1
+    hardhat: ^2.17.3
+    hardhat-deploy: ^0.11.31
+    hardhat-gas-reporter: ^1.0.9
+    prettier: ^2.8.4
+    prettier-plugin-solidity: ^1.3.1
+    qrcode: ^1.5.1
+    solidity-coverage: ^0.8.2
+    ts-node: ^10.9.1
+    typechain: ^8.1.0
+    typescript: ^5.1.6
+    zod: ^3.22.4
+  languageName: unknown
+  linkType: soft
+
+"@sl/nextjs@workspace:packages/nextjs":
+  version: 0.0.0-use.local
+  resolution: "@sl/nextjs@workspace:packages/nextjs"
+  dependencies:
+    "@ethersproject/providers": ^5.7.2
+    "@heroicons/react": ^2.0.11
+    "@rainbow-me/rainbowkit": 1.3.0
+    "@trivago/prettier-plugin-sort-imports": ^4.1.1
+    "@types/node": ^17.0.45
+    "@types/react": ^18.0.21
+    "@types/react-copy-to-clipboard": ^5.0.4
+    "@typescript-eslint/eslint-plugin": ^5.40.0
+    "@uniswap/sdk-core": ^4.0.1
+    "@uniswap/v2-sdk": ^3.0.1
+    autoprefixer: ^10.4.12
+    blo: ^1.0.1
+    daisyui: ^4.4.19
+    eslint: ^8.24.0
+    eslint-config-next: ^13.1.6
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    next: ^13.1.6
+    nextjs-progressbar: ^0.0.16
+    postcss: ^8.4.16
+    prettier: ^2.8.4
+    qrcode.react: ^3.1.0
+    react: ^18.2.0
+    react-copy-to-clipboard: ^5.1.0
+    react-dom: ^18.2.0
+    react-hot-toast: ^2.4.0
+    tailwindcss: ^3.3.3
+    type-fest: ^4.6.0
+    typescript: ^5.1.6
+    use-debounce: ^8.0.4
+    usehooks-ts: ^2.9.1
+    vercel: ^28.15.1
+    viem: 1.19.9
+    wagmi: 1.4.12
+    zustand: ^4.1.2
+  languageName: unknown
+  linkType: soft
 
 "@solana/buffer-layout@npm:^4.0.0":
   version: 4.0.1

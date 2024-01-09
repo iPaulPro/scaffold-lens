@@ -1,6 +1,6 @@
 {
-  "name": "@se-2/hardhat",
-  "version": "0.0.1",
+  "name": "@sl/hardhat",
+  "version": "1.0.0",
   "scripts": {
     "account": "hardhat run scripts/listAccount.ts",
     "chain": "NODE_ENV=development hardhat node --network hardhat --no-deploy",
