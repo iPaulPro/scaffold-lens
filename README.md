@@ -30,6 +30,7 @@ This repo demonstrates how to debug and test the `TipActionModule`. Additions to
 - [Debugging](#debugging)
 - [Unit Testing](#testing)
 - [Deploying to Mumbai](#deploying-to-mumbai)
+- [Using your own contracts](#using-your-own-contracts)
 - [About Scaffold-ETH 2](#about-scaffold-eth-2)
 
 ## Requirements
@@ -184,6 +185,15 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    yarn verify
    ```
 ---
+
+## Using your own contracts
+
+If you want to use your own contracts there are a few simple steps. 
+
+1. Replace the `TipActionModule.sol` contract in `/packages/hardhat/contracts` with your own. 
+2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the mock contracts.
+3. Change the tag in the `deploy:mumbai` script in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
+4. (Optional) Remove the `/packages/hardhat/contracts/helpers` directory and related deploy scripts unless you want to use the `MockModuleRegistry` and `TestToken` contracts for testing and debugging.
 
 ## About Scaffold-ETH 2
 
