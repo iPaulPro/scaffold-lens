@@ -115,7 +115,27 @@ Then navigate to http://localhost:3000/debug to open the debugger. You can now c
 6. Select the `TipActionModule` contract and call the `initializePublicationAction` function with a receiver address.
 7. Call the `processPublicationAction` with the tip data. 
 
-**Tip:** Use https://abi.hashex.org/ to encode the calldata for the `initializePublicationAction` and `processPublicationAction` functions.
+### Dealing with Action Module calldata
+
+You can use https://abi.hashex.org/ to encode the data needed for the `initializePublicationAction` and `processPublicationAction` functions.
+
+So for example, if you want to call the `processPublicationAction` function with a $10 USDC tip, you'd first need to encode the data. The contract expects the following format for the `processCalldataABI`:
+```json
+{
+  "currency": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "tipAmount": 10000000
+}
+```
+Input the values into HashEx and select the proper types:
+
+<img src="assets/abi-hashex.jpg" width="600" alt="Screenshot of abi.hashex.org"/>
+
+You end up with encoded calldata:
+```
+0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000989680
+```
+
+**NOTE:** You will add a `0x` prefix to the encoded calldata copied from HashEx before calling the function.
 
 ## Testing
 
