@@ -5,11 +5,13 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import {Types} from "./libraries/Types.sol";
-import {IPublicationActionModule} from "./interfaces/IPublicationActionModule.sol";
-import {HubRestricted} from "./base/HubRestricted.sol";
-import {IModuleRegistry} from "./interfaces/IModuleRegistry.sol";
-import {LensModuleMetadata} from "./base/LensModuleMetadata.sol";
+
+import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
+import {IPublicationActionModule} from "lens-modules/contracts/interfaces/IPublicationActionModule.sol";
+import {HubRestricted} from "lens-modules/contracts/base/HubRestricted.sol";
+import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
+import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
+
 import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 
 /**
@@ -18,7 +20,6 @@ import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
  */
 contract TipActionModule is
     IPublicationActionModule,
-    Ownable,
     HubRestricted,
     LensModuleMetadata,
     LensModuleRegistrant,

@@ -2,9 +2,11 @@
 pragma solidity >=0.6.0;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
+import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
+
 import {ILensModuleRegistrant} from "../interfaces/IModuleRegistrant.sol";
-import {IModuleRegistry} from "../interfaces/IModuleRegistry.sol";
-import {Types} from "../libraries/Types.sol";
 
 /**
  * @title LensModuleRegistrant
@@ -35,7 +37,7 @@ abstract contract LensModuleRegistrant is ILensModuleRegistrant, Ownable {
 
         bool registered = MODULE_REGISTRY.registerModule(
             address(this),
-            uint256(Types.ModuleType.PUBLICATION_ACTION_MODULE)
+            uint256(IModuleRegistry.ModuleType.PUBLICATION_ACTION_MODULE)
         );
 
         if (registered) {

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {IModuleRegistry} from "../interfaces/IModuleRegistry.sol";
+import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 
 contract MockModuleRegistry is IModuleRegistry {
     mapping(address => uint256) internal moduleTypes;
@@ -43,10 +43,6 @@ contract MockModuleRegistry is IModuleRegistry {
         return
             modules[moduleAddress] && moduleTypes[moduleAddress] == moduleType;
     }
-
-    function emitModuleMetadataRefresh(
-        address moduleAddress
-    ) external override {}
 
     function verifyErc20Currency(
         address currencyAddress
