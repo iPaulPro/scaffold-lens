@@ -5,7 +5,7 @@ const envFileName = process.env.NODE_ENV === "production" ? ".env" : `.env.${pro
 const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
 import "@matterlabs/hardhat-zksync-solc";
@@ -19,6 +19,17 @@ const deployerPrivateKey =
   process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 // If not set, it uses ours Etherscan default API key.
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
+
+task("debug", "Debugs a transaction")
+  .addParam("tx", "The transaction hash")
+  .setAction(async (taskArgs, hre) => {
+    console.log(`Debugging transaction ${taskArgs.tx}`);
+    const debugTrace = await hre.ethers.provider.send("debug_traceTransaction", [
+      taskArgs.tx,
+      { tracer: "callTracer" },
+    ]);
+    console.log(debugTrace);
+  });
 
 const config: HardhatUserConfig = {
   solidity: {
