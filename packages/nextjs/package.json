@@ -35,6 +35,8 @@
     "zustand": "^4.1.2"
   },
   "devDependencies": {
+    "@ethereum-attestation-service/eas-sdk": "^1.4.2",
+    "@lens-protocol/client": "^2.0.0-alpha.30",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.21",
@@ -45,6 +47,7 @@
     "eslint-config-next": "^13.1.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "ethers": "6.10.0",
     "postcss": "^8.4.16",
     "prettier": "^2.8.4",
     "tailwindcss": "^3.3.3",

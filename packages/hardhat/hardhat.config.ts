@@ -5,11 +5,15 @@ const envFileName = process.env.NODE_ENV === "production" ? ".env" : `.env.${pro
 const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
+import { HardhatUserConfig, task } from "hardhat/config";
+import "@nomicfoundation/hardhat-ethers";
+import "@nomicfoundation/hardhat-chai-matchers";
+import "@typechain/hardhat";
+import "hardhat-gas-reporter";
+import "solidity-coverage";
+import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
-import "@matterlabs/hardhat-zksync-solc";
-import "@matterlabs/hardhat-zksync-verify";
+import "hardhat-deploy-ethers";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -20,9 +24,20 @@ const deployerPrivateKey =
 // If not set, it uses ours Etherscan default API key.
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
+task("debug", "Debugs a transaction")
+  .addParam("tx", "The transaction hash")
+  .setAction(async (taskArgs, hre) => {
+    console.log(`Debugging transaction ${taskArgs.tx}`);
+    const debugTrace = await hre.ethers.provider.send("debug_traceTransaction", [
+      taskArgs.tx,
+      { tracer: "callTracer" },
+    ]);
+    console.log(debugTrace);
+  });
+
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.21",
+    version: "0.8.19",
     settings: {
       optimizer: {
         enabled: true,
@@ -95,13 +110,11 @@ const config: HardhatUserConfig = {
       url: "https://testnet.era.zksync.dev",
       zksync: true,
       accounts: [deployerPrivateKey],
-      verifyURL: "https://zksync2-testnet-explorer.zksync.dev/contract_verification",
     },
     zkSync: {
       url: "https://mainnet.era.zksync.io",
       zksync: true,
       accounts: [deployerPrivateKey],
-      verifyURL: "https://zksync2-mainnet-explorer.zksync.io/contract_verification",
     },
     gnosis: {
       url: "https://rpc.gnosischain.com",

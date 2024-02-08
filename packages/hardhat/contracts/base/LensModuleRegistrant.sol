@@ -20,8 +20,8 @@ abstract contract LensModuleRegistrant is ILensModuleRegistrant, Ownable {
 
     IModuleRegistry public immutable MODULE_REGISTRY;
 
-    constructor(address moduleRegistry) {
-        MODULE_REGISTRY = IModuleRegistry(moduleRegistry);
+    constructor(IModuleRegistry moduleRegistry) {
+        MODULE_REGISTRY = moduleRegistry;
     }
 
     /// @inheritdoc ILensModuleRegistrant

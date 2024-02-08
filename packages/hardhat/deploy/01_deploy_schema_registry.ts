@@ -5,19 +5,14 @@ const deployModuleRegistry: DeployFunction = async function (hre: HardhatRuntime
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("MockModuleRegistry", {
+  await deploy("MockSchemaRegistry", {
     from: deployer,
     args: [],
     log: true,
     autoMine: true,
   });
-
-  const moduleGlobals = await hre.ethers.getContract("MockModuleRegistry", deployer);
-
-  const currency = await hre.ethers.getContract("TestToken", deployer);
-  await moduleGlobals.registerErc20Currency(currency.address);
 };
 
 export default deployModuleRegistry;
 
-deployModuleRegistry.tags = ["MockModuleRegistry"];
+deployModuleRegistry.tags = ["MockSchemaRegistry"];
