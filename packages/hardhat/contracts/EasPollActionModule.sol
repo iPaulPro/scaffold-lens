@@ -14,6 +14,8 @@ import {
     Signature
 } from "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol";
 import {NO_EXPIRATION_TIME, EMPTY_UID} from "@ethereum-attestation-service/eas-contracts/contracts/Common.sol";
+import {SchemaResolver} from "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol";
+import {ISchemaRegistry, SchemaRecord} from "@ethereum-attestation-service/eas-contracts/contracts/ISchemaRegistry.sol";
 
 import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
 import {IPublicationActionModule} from "lens-modules/contracts/interfaces/IPublicationActionModule.sol";
@@ -29,7 +31,8 @@ contract EasPollActionModule is
     IPublicationActionModule,
     HubRestricted,
     LensModuleMetadata,
-    LensModuleRegistrant
+    LensModuleRegistrant,
+    SchemaResolver
 {
     struct Poll {
         bytes32[4] options;
@@ -43,14 +46,17 @@ contract EasPollActionModule is
         uint256 publicationId;
         uint256 actorProfileId;
         address actorProfileOwner;
-        uint8 option;
+        address transactionExecutor;
+        uint8 optionIndex;
         uint40 timestamp;
     }
 
     struct AttestedVote {
         Vote vote;
-        bytes32 attestation;
+        bytes32 attestationUid;
     }
+
+    event SchemaRegistered(SchemaRecord schemaRecord);
 
     event PollCreated(
         uint256 indexed profileId,
@@ -58,6 +64,7 @@ contract EasPollActionModule is
         Poll poll
     );
 
+    event AttestationValidated(Poll poll, Vote vote, bytes32 attestationUid);
     event VoteAttestationCreated(Poll poll, AttestedVote attestedVote);
 
     error PollEnded();
@@ -66,33 +73,55 @@ contract EasPollActionModule is
     error PollAlreadyExists();
     error VotedAlready();
     error VoteInvalid();
+    error SignatureInvalid();
+    error SchemaNotRegistered();
 
-    IEAS public immutable EAS;
+    string public constant SCHEMA =
+        "uint256 publicationProfileId,uint256 publicationId,uint256 actorProfileId,address actorProfileOwner,address transactionExecutor,uint8 optionIndex,uint40 timestamp";
 
-    bytes32 public immutable SCHEMA;
+    bytes32 public schemaUid;
 
     mapping(uint256 profileId => mapping(uint256 pubId => Poll poll))
         internal _polls;
 
-    mapping(uint256 profileId => mapping(uint256 pubId => mapping(address attester => bytes32 attestation)))
+    mapping(uint256 profileId => mapping(uint256 pubId => mapping(address attester => bytes32 attestationUid)))
         internal _attestations;
 
     mapping(uint256 profileId => mapping(uint256 pubId => address[] attesters))
-        internal _attesters;
+        internal _actors;
 
     constructor(
         address hub,
         IModuleRegistry moduleRegistry,
-        IEAS eas,
-        bytes32 schema
+        IEAS eas
     )
         Ownable()
         HubRestricted(hub)
         LensModuleMetadata()
         LensModuleRegistrant(moduleRegistry)
-    {
-        EAS = eas;
-        SCHEMA = schema;
+        SchemaResolver(eas)
+    {}
+
+    function setSchemaUid(bytes32 _schemaUid) external onlyOwner {
+        schemaUid = _schemaUid;
+    }
+
+    function getSchemaRecord() external view returns (SchemaRecord memory) {
+        ISchemaRegistry registry = ISchemaRegistry(_eas.getSchemaRegistry());
+        return registry.getSchema(schemaUid);
+    }
+
+    function registerSchema() external onlyOwner {
+        ISchemaRegistry registry = _eas.getSchemaRegistry();
+        schemaUid = registry.register(SCHEMA, this, true);
+        emit SchemaRegistered(
+            SchemaRecord({
+                uid: schemaUid,
+                resolver: this,
+                revocable: true,
+                schema: SCHEMA
+            })
+        );
     }
 
     function getPoll(
@@ -106,24 +135,24 @@ contract EasPollActionModule is
         uint256 profileId,
         uint256 pubId
     ) external view returns (uint256) {
-        return _attesters[profileId][pubId].length;
+        return _actors[profileId][pubId].length;
     }
 
     function getAttestationUid(
         uint256 profileId,
         uint256 pubId,
-        address attester
-    ) external view returns (bytes32 attestation) {
-        return _attestations[profileId][pubId][attester];
+        address actor
+    ) external view returns (bytes32) {
+        return _attestations[profileId][pubId][actor];
     }
 
     function getAttestation(
         uint256 profileId,
         uint256 pubId,
-        address attester
+        address actor
     ) external view returns (Attestation memory) {
-        bytes32 uid = _attestations[profileId][pubId][attester];
-        return EAS.getAttestation(uid);
+        bytes32 uid = _attestations[profileId][pubId][actor];
+        return _eas.getAttestation(uid);
     }
 
     function getAttestationByIndex(
@@ -131,17 +160,17 @@ contract EasPollActionModule is
         uint256 pubId,
         uint256 index
     ) external view returns (bytes32) {
-        address attester = _attesters[profileId][pubId][index];
-        return _attestations[profileId][pubId][attester];
+        address actor = _actors[profileId][pubId][index];
+        return _attestations[profileId][pubId][actor];
     }
 
     function getVote(
         uint256 profileId,
         uint256 pubId,
-        address attester
+        address actor
     ) external view returns (Vote memory) {
-        bytes32 uid = _attestations[profileId][pubId][attester];
-        return abi.decode(EAS.getAttestation(uid).data, (Vote));
+        bytes32 uid = _attestations[profileId][pubId][actor];
+        return abi.decode(_eas.getAttestation(uid).data, (Vote));
     }
 
     function getVoteByIndex(
@@ -149,9 +178,9 @@ contract EasPollActionModule is
         uint256 pubId,
         uint256 index
     ) external view returns (Vote memory) {
-        address attester = _attesters[profileId][pubId][index];
-        bytes32 uid = _attestations[profileId][pubId][attester];
-        return abi.decode(EAS.getAttestation(uid).data, (Vote));
+        address actor = _actors[profileId][pubId][index];
+        bytes32 uid = _attestations[profileId][pubId][actor];
+        return abi.decode(_eas.getAttestation(uid).data, (Vote));
     }
 
     function initializePublicationAction(
@@ -174,12 +203,13 @@ contract EasPollActionModule is
 
         emit PollCreated(profileId, pubId, poll);
 
-        return abi.encode(poll, address(EAS), SCHEMA);
+        return abi.encode(poll, address(_eas), schemaUid);
     }
 
     function _validatePoll(
         Poll memory poll,
-        Types.ProcessActionParams calldata params
+        uint256 publicationProfileId,
+        uint256 actorProfileId
     ) internal view {
         if (poll.options.length == 0) revert PollDoesNotExist();
 
@@ -188,8 +218,8 @@ contract EasPollActionModule is
         if (poll.followerOnly) {
             FollowValidationLib.validateIsFollowingOrSelf(
                 HUB,
-                params.actorProfileId,
-                params.publicationActedProfileId
+                actorProfileId,
+                publicationProfileId
             );
         }
     }
@@ -234,13 +264,13 @@ contract EasPollActionModule is
             memory attestationRequestData = _buildAttestationRequest(vote);
 
         AttestationRequest memory request = AttestationRequest({
-            schema: SCHEMA,
+            schema: schemaUid,
             data: attestationRequestData
         });
 
-        bytes32 uid = EAS.attest(request);
+        bytes32 uid = _eas.attest(request);
 
-        return AttestedVote({vote: vote, attestation: uid});
+        return AttestedVote({vote: vote, attestationUid: uid});
     }
 
     function _processSignedVote(
@@ -256,16 +286,16 @@ contract EasPollActionModule is
 
         DelegatedAttestationRequest
             memory request = DelegatedAttestationRequest({
-                schema: SCHEMA,
+                schema: schemaUid,
                 data: attestationRequestData,
                 signature: signature,
                 attester: params.transactionExecutor,
                 deadline: deadline
             });
 
-        bytes32 uid = EAS.attestByDelegation(request);
+        bytes32 uid = _eas.attestByDelegation(request);
 
-        return AttestedVote({vote: vote, attestation: uid});
+        return AttestedVote({vote: vote, attestationUid: uid});
     }
 
     function processPublicationAction(
@@ -273,14 +303,8 @@ contract EasPollActionModule is
     ) external override onlyHub returns (bytes memory) {
         uint256 profileId = processActionParams.publicationActedProfileId;
         uint256 pubId = processActionParams.publicationActedId;
-        address attester = processActionParams.transactionExecutor;
 
         Poll memory poll = _polls[profileId][pubId];
-
-        _validatePoll(poll, processActionParams);
-
-        bytes32 existingAttestation = _attestations[profileId][pubId][attester];
-        if (existingAttestation != bytes32(0)) revert VotedAlready();
 
         AttestedVote memory attestedVote;
         if (poll.signatureRequired) {
@@ -289,11 +313,49 @@ contract EasPollActionModule is
             attestedVote = _processVote(processActionParams);
         }
 
-        _attestations[profileId][pubId][attester] = attestedVote.attestation;
-        _attesters[profileId][pubId].push(attester);
+        address actor = processActionParams.actorProfileOwner;
+        _attestations[profileId][pubId][actor] = attestedVote.attestationUid;
+        _actors[profileId][pubId].push(actor);
 
         emit VoteAttestationCreated(poll, attestedVote);
 
         return abi.encode(poll, attestedVote);
+    }
+
+    function onAttest(
+        Attestation calldata attestation,
+        uint256 /*value*/
+    ) internal override returns (bool) {
+        Vote memory vote = abi.decode(attestation.data, (Vote));
+
+        uint256 profileId = vote.publicationProfileId;
+        uint256 pubId = vote.publicationId;
+
+        Poll memory poll = _polls[profileId][pubId];
+
+        _validatePoll(poll, profileId, vote.actorProfileId);
+
+        if (
+            poll.signatureRequired &&
+            attestation.attester != vote.transactionExecutor
+        ) {
+            revert SignatureInvalid();
+        }
+
+        bytes32 existingAttestation = _attestations[profileId][pubId][
+            vote.actorProfileOwner
+        ];
+        if (existingAttestation != bytes32(0)) revert VotedAlready();
+
+        emit AttestationValidated(poll, vote, attestation.uid);
+
+        return true;
+    }
+
+    function onRevoke(
+        Attestation calldata /*attestation*/,
+        uint256 /*value*/
+    ) internal pure override returns (bool) {
+        return true;
     }
 }

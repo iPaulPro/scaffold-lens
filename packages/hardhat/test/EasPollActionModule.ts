@@ -14,8 +14,7 @@ describe("EasPollActionModule", function () {
     const easPollActionModule = await EasPollActionModule.deploy(
       wallet.address,
       "0x0000000000000000000000000000000000000000",
-      mockEas.address,
-      "0x0000000000000000000000000000000000000000000000000000000000000000",
+      await mockEas.getAddress(),
     );
 
     // Prepare the data for the Poll struct
@@ -28,9 +27,9 @@ describe("EasPollActionModule", function () {
     // Call the initializePublicationAction function
     const profileId = 1;
     const pubId = 1;
-    const data = ethers.utils.defaultAbiCoder.encode(
+    const data = ethers.AbiCoder.defaultAbiCoder().encode(
       ["bytes32[4]", "bool", "uint40"],
-      [poll.options.map(ethers.utils.formatBytes32String), poll.followerOnly, poll.endTimestamp],
+      [poll.options.map(ethers.decodeBytes32String), poll.followerOnly, poll.endTimestamp],
     );
     console.log("data", data);
     await easPollActionModule.initializePublicationAction(profileId, pubId, wallet.address, data);
@@ -39,7 +38,7 @@ describe("EasPollActionModule", function () {
     const pollFromContract = await easPollActionModule.getPoll(profileId, pubId);
 
     // Assert that the poll has been stored correctly
-    expect(pollFromContract.options).to.deep.equal(poll.options.map(ethers.utils.formatBytes32String));
+    expect(pollFromContract.options).to.deep.equal(poll.options.map(ethers.decodeBytes32String));
     expect(pollFromContract.followerOnly).to.equal(poll.followerOnly);
     expect(pollFromContract.endTimestamp).to.equal(poll.endTimestamp);
   });

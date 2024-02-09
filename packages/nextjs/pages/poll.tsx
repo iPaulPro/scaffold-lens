@@ -3,13 +3,16 @@ import { encodeData } from "@lens-protocol/client";
 import { AbiCoder, BrowserProvider, ethers } from "ethers";
 import { NextPage } from "next";
 
-const eas = new EAS("0xaEF4103A04090071165F78D45D83A0C0782c2B2a");
+const EAS_ADDRESS = "0xaEF4103A04090071165F78D45D83A0C0782c2B2a";
+const EXECUTOR = "0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868";
+const SCHEMA = "0xf6dd9770fcaa0dbf32eb870d70d4346c113ae16f6960b0a6f1ac1f0eab4e0a74";
+const RECIPIENT = "0x4E7d4C7e61001fe1E9d645f55b9e76EC419f7d85";
+
+const eas = new EAS(EAS_ADDRESS);
 const schemaEncoder = new SchemaEncoder(
-  "uint256 publicationProfileId,uint256 publicationId,uint256 actorProfileId,address actorProfileOwner,uint8 option,uint40 timestamp",
+  "uint256 publicationProfileId,uint256 publicationId,uint256 actorProfileId,address actorProfileOwner,address transactionExecutor,uint8 optionIndex,uint40 timestamp",
 );
 
-// EAS_ADDRESS=0xaEF4103A04090071165F78D45D83A0C0782c2B2a
-// EAS_SCHEMA=0xfab18e898a2f81c630cb962ca6743b967c005d84ca139c45f76e8a4d8cdde6be
 async function createDerivedAttestation() {
   const [account] = await window.ethereum!.request({ method: "eth_requestAccounts" });
   console.log("createDerivedAttestation: account", account);
@@ -21,10 +24,11 @@ async function createDerivedAttestation() {
   const timestamp = Math.floor(Date.now() / 1000);
   const encodedData = schemaEncoder.encodeData([
     { name: "publicationProfileId", value: 216, type: "uint256" },
-    { name: "publicationId", value: 207, type: "uint256" },
+    { name: "publicationId", value: 206, type: "uint256" },
     { name: "actorProfileId", value: 216, type: "uint256" },
-    { name: "actorProfileOwner", value: "0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868", type: "address" },
-    { name: "option", value: 1, type: "uint8" },
+    { name: "actorProfileOwner", value: EXECUTOR, type: "address" },
+    { name: "transactionExecutor", value: EXECUTOR, type: "address" },
+    { name: "optionIndex", value: 1, type: "uint8" },
     { name: "timestamp", value: timestamp, type: "uint40" },
   ]);
   console.log("createDerivedAttestation: encodedData", encodedData);
@@ -35,11 +39,11 @@ async function createDerivedAttestation() {
   console.log("createDerivedAttestation: nonce", nonce.toString());
   const response = await delegated.signDelegatedAttestation(
     {
-      schema: "0xfab18e898a2f81c630cb962ca6743b967c005d84ca139c45f76e8a4d8cdde6be",
+      schema: SCHEMA,
       data: encodedData,
       nonce: nonce,
       revocable: true,
-      recipient: "0x25281C473698Bb7593C56Ee1b4BedB116DC82939",
+      recipient: RECIPIENT,
       expirationTime: NO_EXPIRATION,
       refUID: ZERO_BYTES32,
       value: 0n,
@@ -60,7 +64,8 @@ async function createDerivedAttestation() {
           { type: "uint256", name: "publicationId" },
           { type: "uint256", name: "actorProfileId" },
           { type: "address", name: "actorProfileOwner" },
-          { type: "uint8", name: "option" },
+          { type: "address", name: "transactionExecutor" },
+          { type: "uint8", name: "optionIndex" },
           { type: "uint40", name: "timestamp" },
         ],
         name: "vote",
@@ -77,7 +82,7 @@ async function createDerivedAttestation() {
       { type: "uint64", name: "deadline" },
     ],
     [
-      ["216", "207", "216", "0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868", "1", timestamp.toString()],
+      ["216", "206", "216", EXECUTOR, EXECUTOR, "1", timestamp.toString()],
       [signature.v.toString(), signature.r, signature.s],
       "0",
     ],
