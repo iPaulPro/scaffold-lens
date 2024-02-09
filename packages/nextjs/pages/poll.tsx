@@ -5,8 +5,8 @@ import { NextPage } from "next";
 
 const EAS_ADDRESS = "0xaEF4103A04090071165F78D45D83A0C0782c2B2a";
 const EXECUTOR = "0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868";
-const SCHEMA = "0xf6dd9770fcaa0dbf32eb870d70d4346c113ae16f6960b0a6f1ac1f0eab4e0a74";
-const RECIPIENT = "0x4E7d4C7e61001fe1E9d645f55b9e76EC419f7d85";
+const SCHEMA = "0x24ca9797275ecbafb883a1716439ac972c42c324c20c252f2ea45652703f0daa";
+const RECIPIENT = "0x36f07fE9Bed364c2c8F679E058af7107dfb0CE33";
 
 const eas = new EAS(EAS_ADDRESS);
 const schemaEncoder = new SchemaEncoder(
