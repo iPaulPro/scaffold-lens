@@ -39,7 +39,7 @@ async function createDerivedAttestation() {
       data: encodedData,
       nonce: nonce,
       revocable: true,
-      recipient: "0x75ac369d5c6a4fa8386a6dfcb07a1ceaa2277fef",
+      recipient: "0x25281C473698Bb7593C56Ee1b4BedB116DC82939",
       expirationTime: NO_EXPIRATION,
       refUID: ZERO_BYTES32,
       value: 0n,
@@ -91,11 +91,12 @@ async function createPoll() {
     options: ["Option A", "Option B", "Option C", "Option D"],
     followerOnly: false,
     endTimestamp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 14, // 14 days from now
+    signatureRequired: true,
   };
 
   const calldata = new AbiCoder().encode(
-    ["bytes32[4]", "bool", "uint40"],
-    [poll.options.map(ethers.encodeBytes32String), poll.followerOnly, poll.endTimestamp],
+    ["bytes32[4]", "bool", "uint40", "bool"],
+    [poll.options.map(ethers.encodeBytes32String), poll.followerOnly, poll.endTimestamp, poll.signatureRequired],
   );
 
   console.log("createPoll: created poll calldata", calldata);

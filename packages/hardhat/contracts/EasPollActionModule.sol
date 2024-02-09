@@ -4,7 +4,15 @@ pragma solidity ^0.8.19;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
-import {IEAS, Attestation, DelegatedAttestationRequest, AttestationRequestData, Signature} from "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol";
+// prettier-ignore
+import {
+    IEAS,
+    Attestation,
+    AttestationRequest,
+    DelegatedAttestationRequest,
+    AttestationRequestData,
+    Signature
+} from "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol";
 import {NO_EXPIRATION_TIME, EMPTY_UID} from "@ethereum-attestation-service/eas-contracts/contracts/Common.sol";
 
 import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
@@ -27,6 +35,7 @@ contract EasPollActionModule is
         bytes32[4] options;
         bool followerOnly;
         uint40 endTimestamp;
+        bool signatureRequired;
     }
 
     struct Vote {
@@ -39,9 +48,8 @@ contract EasPollActionModule is
     }
 
     struct AttestedVote {
+        Vote vote;
         bytes32 attestation;
-        address attester;
-        Signature signature;
     }
 
     event PollCreated(
@@ -50,11 +58,7 @@ contract EasPollActionModule is
         Poll poll
     );
 
-    event VoteAttestationCreated(
-        uint256 indexed profileId,
-        uint256 indexed pubId,
-        AttestedVote attestedVote
-    );
+    event VoteAttestationCreated(Poll poll, AttestedVote attestedVote);
 
     error PollEnded();
     error PollDoesNotExist();
@@ -70,8 +74,11 @@ contract EasPollActionModule is
     mapping(uint256 profileId => mapping(uint256 pubId => Poll poll))
         internal _polls;
 
-    mapping(uint256 profileId => mapping(uint256 pubId => mapping(address attester => AttestedVote attestedVote)))
-        internal _attestedVotes;
+    mapping(uint256 profileId => mapping(uint256 pubId => mapping(address attester => bytes32 attestation)))
+        internal _attestations;
+
+    mapping(uint256 profileId => mapping(uint256 pubId => address[] attesters))
+        internal _attesters;
 
     constructor(
         address hub,
@@ -95,12 +102,19 @@ contract EasPollActionModule is
         return _polls[profileId][pubId];
     }
 
-    function getVote(
+    function getAttestationCount(
+        uint256 profileId,
+        uint256 pubId
+    ) external view returns (uint256) {
+        return _attesters[profileId][pubId].length;
+    }
+
+    function getAttestationUid(
         uint256 profileId,
         uint256 pubId,
         address attester
-    ) external view returns (AttestedVote memory) {
-        return _attestedVotes[profileId][pubId][attester];
+    ) external view returns (bytes32 attestation) {
+        return _attestations[profileId][pubId][attester];
     }
 
     function getAttestation(
@@ -108,8 +122,36 @@ contract EasPollActionModule is
         uint256 pubId,
         address attester
     ) external view returns (Attestation memory) {
-        AttestedVote memory vote = _attestedVotes[profileId][pubId][attester];
-        return EAS.getAttestation(vote.attestation);
+        bytes32 uid = _attestations[profileId][pubId][attester];
+        return EAS.getAttestation(uid);
+    }
+
+    function getAttestationByIndex(
+        uint256 profileId,
+        uint256 pubId,
+        uint256 index
+    ) external view returns (bytes32) {
+        address attester = _attesters[profileId][pubId][index];
+        return _attestations[profileId][pubId][attester];
+    }
+
+    function getVote(
+        uint256 profileId,
+        uint256 pubId,
+        address attester
+    ) external view returns (Vote memory) {
+        bytes32 uid = _attestations[profileId][pubId][attester];
+        return abi.decode(EAS.getAttestation(uid).data, (Vote));
+    }
+
+    function getVoteByIndex(
+        uint256 profileId,
+        uint256 pubId,
+        uint256 index
+    ) external view returns (Vote memory) {
+        address attester = _attesters[profileId][pubId][index];
+        bytes32 uid = _attestations[profileId][pubId][attester];
+        return abi.decode(EAS.getAttestation(uid).data, (Vote));
     }
 
     function initializePublicationAction(
@@ -117,7 +159,7 @@ contract EasPollActionModule is
         uint256 pubId,
         address /* transactionExecutor */,
         bytes calldata data
-    ) external returns (bytes memory) {
+    ) external override onlyHub returns (bytes memory) {
         Poll memory poll = abi.decode(data, (Poll));
 
         if (poll.endTimestamp <= block.timestamp || poll.options.length < 2) {
@@ -135,35 +177,10 @@ contract EasPollActionModule is
         return abi.encode(poll, address(EAS), SCHEMA);
     }
 
-    function processPublicationAction(
-        Types.ProcessActionParams calldata processActionParams
-    ) external returns (bytes memory) {
-        uint256 profileId = processActionParams.publicationActedProfileId;
-        uint256 pubId = processActionParams.publicationActedId;
-        address transactionExecutor = processActionParams.transactionExecutor;
-
-        AttestedVote memory existingVote = _attestedVotes[profileId][pubId][
-            transactionExecutor
-        ];
-        if (existingVote.attester == transactionExecutor) revert VotedAlready();
-
-        (Vote memory vote, Signature memory signature, uint64 deadline) = abi
-            .decode(
-                processActionParams.actionModuleData,
-                (Vote, Signature, uint64)
-            );
-
-        if (
-            vote.publicationProfileId != profileId ||
-            vote.publicationId != pubId ||
-            vote.actorProfileId != processActionParams.actorProfileId ||
-            vote.actorProfileOwner != processActionParams.actorProfileOwner
-        ) {
-            revert VoteInvalid();
-        }
-
-        Poll memory poll = _polls[profileId][pubId];
-
+    function _validatePoll(
+        Poll memory poll,
+        Types.ProcessActionParams calldata params
+    ) internal view {
         if (poll.options.length == 0) revert PollDoesNotExist();
 
         if (block.timestamp > poll.endTimestamp) revert PollEnded();
@@ -171,15 +188,32 @@ contract EasPollActionModule is
         if (poll.followerOnly) {
             FollowValidationLib.validateIsFollowingOrSelf(
                 HUB,
-                processActionParams.actorProfileId,
-                profileId
+                params.actorProfileId,
+                params.publicationActedProfileId
             );
         }
+    }
 
+    function _validateVote(
+        Vote memory vote,
+        Types.ProcessActionParams calldata params
+    ) internal pure {
+        if (
+            vote.publicationProfileId != params.publicationActedProfileId ||
+            vote.publicationId != params.publicationActedId ||
+            vote.actorProfileId != params.actorProfileId ||
+            vote.actorProfileOwner != params.actorProfileOwner
+        ) {
+            revert VoteInvalid();
+        }
+    }
+
+    function _buildAttestationRequest(
+        Vote memory vote
+    ) internal view returns (AttestationRequestData memory) {
         bytes memory encodedData = abi.encode(vote);
-
-        AttestationRequestData
-            memory attestationRequestData = AttestationRequestData({
+        return
+            AttestationRequestData({
                 data: encodedData,
                 recipient: address(this),
                 expirationTime: NO_EXPIRATION_TIME,
@@ -187,28 +221,79 @@ contract EasPollActionModule is
                 refUID: EMPTY_UID,
                 value: 0
             });
+    }
+
+    function _processVote(
+        Types.ProcessActionParams calldata params
+    ) internal returns (AttestedVote memory) {
+        Vote memory vote = abi.decode(params.actionModuleData, (Vote));
+
+        _validateVote(vote, params);
+
+        AttestationRequestData
+            memory attestationRequestData = _buildAttestationRequest(vote);
+
+        AttestationRequest memory request = AttestationRequest({
+            schema: SCHEMA,
+            data: attestationRequestData
+        });
+
+        bytes32 uid = EAS.attest(request);
+
+        return AttestedVote({vote: vote, attestation: uid});
+    }
+
+    function _processSignedVote(
+        Types.ProcessActionParams calldata params
+    ) internal returns (AttestedVote memory) {
+        (Vote memory vote, Signature memory signature, uint64 deadline) = abi
+            .decode(params.actionModuleData, (Vote, Signature, uint64));
+
+        _validateVote(vote, params);
+
+        AttestationRequestData
+            memory attestationRequestData = _buildAttestationRequest(vote);
 
         DelegatedAttestationRequest
             memory request = DelegatedAttestationRequest({
                 schema: SCHEMA,
                 data: attestationRequestData,
                 signature: signature,
-                attester: transactionExecutor,
+                attester: params.transactionExecutor,
                 deadline: deadline
             });
 
         bytes32 uid = EAS.attestByDelegation(request);
 
-        AttestedVote memory attestedVote = AttestedVote({
-            attestation: uid,
-            attester: transactionExecutor,
-            signature: signature
-        });
+        return AttestedVote({vote: vote, attestation: uid});
+    }
 
-        _attestedVotes[profileId][pubId][transactionExecutor] = attestedVote;
+    function processPublicationAction(
+        Types.ProcessActionParams calldata processActionParams
+    ) external override onlyHub returns (bytes memory) {
+        uint256 profileId = processActionParams.publicationActedProfileId;
+        uint256 pubId = processActionParams.publicationActedId;
+        address attester = processActionParams.transactionExecutor;
 
-        emit VoteAttestationCreated(profileId, pubId, attestedVote);
+        Poll memory poll = _polls[profileId][pubId];
 
-        return abi.encode(attestedVote);
+        _validatePoll(poll, processActionParams);
+
+        bytes32 existingAttestation = _attestations[profileId][pubId][attester];
+        if (existingAttestation != bytes32(0)) revert VotedAlready();
+
+        AttestedVote memory attestedVote;
+        if (poll.signatureRequired) {
+            attestedVote = _processSignedVote(processActionParams);
+        } else {
+            attestedVote = _processVote(processActionParams);
+        }
+
+        _attestations[profileId][pubId][attester] = attestedVote.attestation;
+        _attesters[profileId][pubId].push(attester);
+
+        emit VoteAttestationCreated(poll, attestedVote);
+
+        return abi.encode(poll, attestedVote);
     }
 }
