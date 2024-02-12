@@ -12,11 +12,11 @@ const metadata = module({
   authors: ["paul@paulburke.co"],
   initializeCalldataABI: JSON.stringify([
     {
-      type: "tuple",
+      type: "tuple(bytes32[4],bool,uint40,bool)",
       name: "poll",
       components: [
         { type: "bytes32[4]", name: "options" },
-        { type: "bool", name: "followerOnly" },
+        { type: "bool", name: "followersOnly" },
         { type: "uint40", name: "endTimestamp" },
         { type: "bool", name: "signatureRequired" },
       ],
@@ -24,7 +24,7 @@ const metadata = module({
   ]),
   processCalldataABI: JSON.stringify([
     {
-      type: "tuple",
+      type: "tuple(uint256,uint256,uint256,address,uint8,uint40)",
       name: "vote",
       components: [
         { type: "uint256", name: "publicationProfileId" },
@@ -37,7 +37,7 @@ const metadata = module({
       ],
     },
     {
-      type: "tuple",
+      type: "tuple(uint8,bytes32,bytes32)",
       name: "signature",
       components: [
         { type: "uint8", name: "v" },
@@ -45,10 +45,7 @@ const metadata = module({
         { type: "bytes32", name: "s" },
       ],
     },
-    {
-      type: "uint64",
-      name: "deadline",
-    },
+    { type: "uint64", name: "deadline" },
   ]),
   attributes: [],
 });

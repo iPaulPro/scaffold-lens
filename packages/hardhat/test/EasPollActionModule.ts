@@ -20,7 +20,7 @@ describe("EasPollActionModule", function () {
     // Prepare the data for the Poll struct
     const poll = {
       options: ["Option A", "Option B", "Option C", "Option D"],
-      followerOnly: false,
+      followersOnly: false,
       endTimestamp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24 hours from now
     };
 
@@ -29,7 +29,7 @@ describe("EasPollActionModule", function () {
     const pubId = 1;
     const data = ethers.AbiCoder.defaultAbiCoder().encode(
       ["bytes32[4]", "bool", "uint40"],
-      [poll.options.map(ethers.decodeBytes32String), poll.followerOnly, poll.endTimestamp],
+      [poll.options.map(ethers.decodeBytes32String), poll.followersOnly, poll.endTimestamp],
     );
     console.log("data", data);
     await easPollActionModule.initializePublicationAction(profileId, pubId, wallet.address, data);
@@ -39,7 +39,7 @@ describe("EasPollActionModule", function () {
 
     // Assert that the poll has been stored correctly
     expect(pollFromContract.options).to.deep.equal(poll.options.map(ethers.decodeBytes32String));
-    expect(pollFromContract.followerOnly).to.equal(poll.followerOnly);
+    expect(pollFromContract.followersOnly).to.equal(poll.followersOnly);
     expect(pollFromContract.endTimestamp).to.equal(poll.endTimestamp);
   });
 });

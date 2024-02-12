@@ -27,6 +27,14 @@ import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetad
 
 import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 
+/**
+ * @title EasPollActionModule
+ * @author Paul Burke
+ *
+ * @dev An Open Action Module for creating and voting on polls attached to
+ * Lens Publications that uses the Ethereum Attestation Service (EAS) to
+ * record votes.
+ */
 contract EasPollActionModule is
     IPublicationActionModule,
     HubRestricted,
@@ -34,23 +42,43 @@ contract EasPollActionModule is
     LensModuleRegistrant,
     SchemaResolver
 {
+    /**
+     * @dev The init calldata poll struct.
+     */
     struct Poll {
+        /// @dev The options for the poll.
         bytes32[4] options;
-        bool followerOnly;
+        /// @dev Whether the poll is only for followers of the publication author.
+        bool followersOnly;
+        /// @dev The end timestamp for the poll since epoch in seconds.
         uint40 endTimestamp;
+        /// @dev Whether a signature is required for the vote.
         bool signatureRequired;
     }
 
+    /**
+     * @dev The process calldata vote struct.
+     */
     struct Vote {
+        /// @dev The profile id of the publication author.
         uint256 publicationProfileId;
+        /// @dev The publication id.
         uint256 publicationId;
+        /// @dev The profile id of the actor.
         uint256 actorProfileId;
+        /// @dev The address of the actor profile owner.
         address actorProfileOwner;
+        /// @dev The address of the transaction executor.
         address transactionExecutor;
+        /// @dev The index of the vote option.
         uint8 optionIndex;
+        /// @dev The timestamp of the vote since epoch in seconds.
         uint40 timestamp;
     }
 
+    /**
+     * @dev The process action result.
+     */
     struct AttestedVote {
         Vote vote;
         bytes32 attestationUid;
@@ -76,42 +104,74 @@ contract EasPollActionModule is
     error VoteInvalid();
     error SignatureInvalid();
     error SchemaNotRegistered();
+    error SchemaInvalid();
 
+    /**
+     * @dev The EAS Schema for the poll action.
+     */
     string public constant SCHEMA =
         "uint256 publicationProfileId,uint256 publicationId,uint256 actorProfileId,address actorProfileOwner,address transactionExecutor,uint8 optionIndex,uint40 timestamp";
 
+    /**
+     * @dev The EAS Schema UID for the poll action.
+     */
     bytes32 public schemaUid;
 
+    /**
+     * @dev Mapping of polls for publications.
+     */
     mapping(uint256 profileId => mapping(uint256 pubId => Poll poll))
         internal _polls;
 
+    /**
+     * @dev Mapping of vote attestations for polls.
+     */
     mapping(uint256 profileId => mapping(uint256 pubId => mapping(address attester => bytes32 attestationUid)))
         internal _attestations;
 
+    /**
+     * @dev Mapping of actors of votes for publications.
+     */
     mapping(uint256 profileId => mapping(uint256 pubId => address[] actors))
         internal _actors;
 
     constructor(
-        address hub,
+        address lensHub,
         IModuleRegistry moduleRegistry,
         IEAS eas
     )
         Ownable()
-        HubRestricted(hub)
+        HubRestricted(lensHub)
         LensModuleMetadata()
         LensModuleRegistrant(moduleRegistry)
         SchemaResolver(eas)
     {}
 
     function setSchemaUid(bytes32 _schemaUid) external onlyOwner {
+        ISchemaRegistry registry = ISchemaRegistry(_eas.getSchemaRegistry());
+        SchemaRecord memory record = registry.getSchema(_schemaUid);
+        if (
+            record.resolver != this ||
+            keccak256(abi.encodePacked(record.schema)) !=
+            keccak256(abi.encodePacked(SCHEMA))
+        ) {
+            revert SchemaInvalid();
+        }
         schemaUid = _schemaUid;
     }
 
+    /**
+     * @dev Get the EAS Schema record used for attestations.
+     * @return The full schema record
+     */
     function getSchemaRecord() external view returns (SchemaRecord memory) {
         ISchemaRegistry registry = ISchemaRegistry(_eas.getSchemaRegistry());
         return registry.getSchema(schemaUid);
     }
 
+    /**
+     * @dev Registers the EAS Schema to use for attestations using {SCHEMA} and this contract as the Resolver.
+     */
     function registerSchema() external onlyOwner {
         ISchemaRegistry registry = _eas.getSchemaRegistry();
         schemaUid = registry.register(SCHEMA, this, true);
@@ -125,6 +185,12 @@ contract EasPollActionModule is
         );
     }
 
+    /**
+     * @dev Get the poll for a publication.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @return The poll
+     */
     function getPoll(
         uint256 profileId,
         uint256 pubId
@@ -132,6 +198,12 @@ contract EasPollActionModule is
         return _polls[profileId][pubId];
     }
 
+    /**
+     * @dev Get the number of votes/attestations for a publication.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @return The number of attestations
+     */
     function getAttestationCount(
         uint256 profileId,
         uint256 pubId
@@ -139,6 +211,13 @@ contract EasPollActionModule is
         return _actors[profileId][pubId].length;
     }
 
+    /**
+     * @dev Get the attestation uid for an vote.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @param actor The actor address
+     * @return The attestation uid
+     */
     function getAttestationUid(
         uint256 profileId,
         uint256 pubId,
@@ -147,6 +226,13 @@ contract EasPollActionModule is
         return _attestations[profileId][pubId][actor];
     }
 
+    /**
+     * @dev Get the attestation for an vote.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @param actor The actor address
+     * @return The attestation
+     */
     function getAttestation(
         uint256 profileId,
         uint256 pubId,
@@ -156,6 +242,13 @@ contract EasPollActionModule is
         return _eas.getAttestation(uid);
     }
 
+    /**
+     * @dev Get the attestation for a vote at a specific index.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @param index The index of the vote
+     * @return The vote
+     */
     function getAttestationByIndex(
         uint256 profileId,
         uint256 pubId,
@@ -165,6 +258,13 @@ contract EasPollActionModule is
         return _attestations[profileId][pubId][actor];
     }
 
+    /**
+     * @dev Get the attested vote for an actor.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @param actor The actor address
+     * @return The vote
+     */
     function getVote(
         uint256 profileId,
         uint256 pubId,
@@ -174,6 +274,13 @@ contract EasPollActionModule is
         return abi.decode(_eas.getAttestation(uid).data, (Vote));
     }
 
+    /**
+     * @dev Get the attestation for a vote at a specific index.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @param index The index of the vote
+     * @return The vote
+     */
     function getVoteByIndex(
         uint256 profileId,
         uint256 pubId,
@@ -184,6 +291,7 @@ contract EasPollActionModule is
         return abi.decode(_eas.getAttestation(uid).data, (Vote));
     }
 
+    /// @inheritdoc IPublicationActionModule
     function initializePublicationAction(
         uint256 profileId,
         uint256 pubId,
@@ -207,24 +315,43 @@ contract EasPollActionModule is
         return abi.encode(poll, address(_eas), schemaUid);
     }
 
+    /**
+     * @dev Validate a poll exists, hasn't ended, and the actor is allowed to vote.
+     * @param poll The poll
+     * @param publicationProfileId The profile id of the publication author
+     * @param actorProfileId The profile id of the actor
+     * @param attester The attester address
+     * @param transactionExecutor The transaction executor address
+     */
     function _validatePoll(
         Poll memory poll,
         uint256 publicationProfileId,
-        uint256 actorProfileId
+        uint256 actorProfileId,
+        address attester,
+        address transactionExecutor
     ) internal view {
         if (poll.options.length == 0) revert PollDoesNotExist();
 
         if (block.timestamp > poll.endTimestamp) revert PollEnded();
 
-        if (poll.followerOnly) {
+        if (poll.followersOnly) {
             FollowValidationLib.validateIsFollowingOrSelf(
                 HUB,
                 actorProfileId,
                 publicationProfileId
             );
         }
+
+        if (poll.signatureRequired && attester != transactionExecutor) {
+            revert SignatureInvalid();
+        }
     }
 
+    /**
+     * @dev Validate a signed vote params matches the action params.
+     * @param vote The vote
+     * @param params The process action params
+     */
     function _validateVote(
         Vote memory vote,
         Types.ProcessActionParams calldata params
@@ -239,6 +366,11 @@ contract EasPollActionModule is
         }
     }
 
+    /**
+     * @dev Build an attestation request for a vote.
+     * @param vote The vote
+     * @return The attestation request data
+     */
     function _buildAttestationRequest(
         Vote memory vote
     ) internal view returns (AttestationRequestData memory) {
@@ -254,6 +386,11 @@ contract EasPollActionModule is
             });
     }
 
+    /**
+     * @dev Creates an attestation from an unsigned vote.
+     * @param params The process action params
+     * @return The attested vote
+     */
     function _processVote(
         Types.ProcessActionParams calldata params
     ) internal returns (AttestedVote memory) {
@@ -274,6 +411,11 @@ contract EasPollActionModule is
         return AttestedVote({vote: vote, attestationUid: uid});
     }
 
+    /**
+     * @dev Creates an attestation from a signed vote.
+     * @param params The process action params
+     * @return The attested signed vote
+     */
     function _processSignedVote(
         Types.ProcessActionParams calldata params
     ) internal returns (AttestedVote memory) {
@@ -299,6 +441,7 @@ contract EasPollActionModule is
         return AttestedVote({vote: vote, attestationUid: uid});
     }
 
+    /// @inheritdoc IPublicationActionModule
     function processPublicationAction(
         Types.ProcessActionParams calldata processActionParams
     ) external override onlyHub returns (bytes memory) {
@@ -323,6 +466,7 @@ contract EasPollActionModule is
         return abi.encode(poll, attestedVote);
     }
 
+    /// @inheritdoc SchemaResolver
     function onAttest(
         Attestation calldata attestation,
         uint256 /*value*/
@@ -334,14 +478,13 @@ contract EasPollActionModule is
 
         Poll memory poll = _polls[profileId][pubId];
 
-        _validatePoll(poll, profileId, vote.actorProfileId);
-
-        if (
-            poll.signatureRequired &&
-            attestation.attester != vote.transactionExecutor
-        ) {
-            revert SignatureInvalid();
-        }
+        _validatePoll(
+            poll,
+            profileId,
+            vote.actorProfileId,
+            attestation.attester,
+            vote.transactionExecutor
+        );
 
         bytes32 existingAttestation = _attestations[profileId][pubId][
             vote.actorProfileOwner
@@ -353,6 +496,7 @@ contract EasPollActionModule is
         return true;
     }
 
+    /// @inheritdoc SchemaResolver
     function onRevoke(
         Attestation calldata attestation,
         uint256 /*value*/
