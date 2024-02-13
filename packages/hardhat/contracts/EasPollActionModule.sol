@@ -23,7 +23,6 @@ import {HubRestricted} from "lens-modules/contracts/base/HubRestricted.sol";
 import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
 import {FollowValidationLib} from "lens-modules/contracts/modules/libraries/FollowValidationLib.sol";
-import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
 
 import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 
@@ -289,6 +288,14 @@ contract EasPollActionModule is
         address actor = _actors[profileId][pubId][index];
         bytes32 uid = _attestations[profileId][pubId][actor];
         return abi.decode(_eas.getAttestation(uid).data, (Vote));
+    }
+
+    function supportsInterface(
+        bytes4 interfaceID
+    ) public pure virtual override returns (bool) {
+        return
+            interfaceID == type(IPublicationActionModule).interfaceId ||
+            super.supportsInterface(interfaceID);
     }
 
     /// @inheritdoc IPublicationActionModule

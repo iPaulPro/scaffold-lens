@@ -85,7 +85,8 @@ const deployEasPollActionModuleContract: DeployFunction = async function (hre: H
   const pollAction = await hre.ethers.getContract<Contract>("EasPollActionModule", deployer);
 
   const metadataURI = await uploadMetadata(metadata);
-  await pollAction.setModuleMetadataURI(metadataURI);
+  const metadataTx = await pollAction.setModuleMetadataURI(metadataURI);
+  console.log("set module metadata URI: tx=", metadataTx.hash);
 
   await new Promise(resolve => setTimeout(resolve, 10000));
 
