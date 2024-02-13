@@ -4,9 +4,12 @@ import { AbiCoder, BrowserProvider, ethers } from "ethers";
 import { NextPage } from "next";
 
 const EAS_ADDRESS = "0xaEF4103A04090071165F78D45D83A0C0782c2B2a";
-const EXECUTOR = "0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868";
-const SCHEMA = "0x24ca9797275ecbafb883a1716439ac972c42c324c20c252f2ea45652703f0daa";
-const RECIPIENT = "0x36f07fE9Bed364c2c8F679E058af7107dfb0CE33";
+const EXECUTOR = "0x10E1DEB36F41b4Fad35d10d0aB870a4dc52Dbb2c";
+const SCHEMA = "0x5e67b8b854d74789f6fa56f202907f85e3e53b87abe3d218c9f6dee1cc60ecbd";
+const RECIPIENT = "0xBd43F2Bc51020347619c2cC243E3B21859f4f64c";
+const PROFILE_ID = 250;
+const PUBLICATION_ID = 4;
+const ACTOR_PROFILE_ID = 250;
 
 const eas = new EAS(EAS_ADDRESS);
 const schemaEncoder = new SchemaEncoder(
@@ -23,9 +26,9 @@ async function createDerivedAttestation() {
 
   const timestamp = Math.floor(Date.now() / 1000);
   const encodedData = schemaEncoder.encodeData([
-    { name: "publicationProfileId", value: 216, type: "uint256" },
-    { name: "publicationId", value: 206, type: "uint256" },
-    { name: "actorProfileId", value: 216, type: "uint256" },
+    { name: "publicationProfileId", value: PROFILE_ID, type: "uint256" },
+    { name: "publicationId", value: PUBLICATION_ID, type: "uint256" },
+    { name: "actorProfileId", value: ACTOR_PROFILE_ID, type: "uint256" },
     { name: "actorProfileOwner", value: EXECUTOR, type: "address" },
     { name: "transactionExecutor", value: EXECUTOR, type: "address" },
     { name: "optionIndex", value: 1, type: "uint8" },
@@ -82,7 +85,15 @@ async function createDerivedAttestation() {
       { type: "uint64", name: "deadline" },
     ],
     [
-      ["216", "206", "216", EXECUTOR, EXECUTOR, "1", timestamp.toString()],
+      [
+        PROFILE_ID.toString(),
+        PUBLICATION_ID.toString(),
+        ACTOR_PROFILE_ID.toString(),
+        EXECUTOR,
+        EXECUTOR,
+        "1",
+        timestamp.toString(),
+      ],
       [signature.v.toString(), signature.r, signature.s],
       "0",
     ],

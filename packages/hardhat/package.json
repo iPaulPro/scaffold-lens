@@ -7,14 +7,16 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile --show-stack-traces",
     "deploy:local": "NODE_ENV=development hardhat deploy",
-    "deploy:mumbai": "NODE_ENV=production hardhat deploy --tags EasPollActionModule --network polygonMumbai",
+    "deploy:mumbai": "NODE_ENV=staging hardhat deploy --tags EasPollActionModule --network polygonMumbai",
+    "deploy:mainnet": "NODE_ENV=production hardhat deploy --tags EasPollActionModule --network polygon",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "NODE_ENV=development hardhat run scripts/generateAccount.ts",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "lint-staged": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore",
     "prettier": "prettier --write 'contracts/**/*.sol'",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
-    "verify": "NODE_ENV=production hardhat etherscan-verify --network polygonMumbai",
+    "verify:mainnet": "NODE_ENV=production hardhat etherscan-verify --network polygon",
+    "verify:mumbai": "NODE_ENV=staging hardhat etherscan-verify --network polygonMumbai",
     "debug": "hardhat debug --tx 0x71bb4cafc86c863c90b6444859cec60489e32deb641e6d1583fee55ba8a0e498 --network polygonMumbai"
   },
   "dependencies": {
