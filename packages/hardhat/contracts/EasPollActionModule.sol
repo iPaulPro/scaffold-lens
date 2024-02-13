@@ -49,7 +49,7 @@ contract EasPollActionModule is
         bytes32[4] options;
         /// @dev Whether the poll is only for followers of the publication author.
         bool followersOnly;
-        /// @dev The end timestamp for the poll since epoch in seconds.
+        /// @dev The end timestamp for the poll (in seconds). 0 for open-ended.
         uint40 endTimestamp;
         /// @dev Whether a signature is required for the vote.
         bool signatureRequired;
@@ -71,7 +71,7 @@ contract EasPollActionModule is
         address transactionExecutor;
         /// @dev The index of the vote option.
         uint8 optionIndex;
-        /// @dev The timestamp of the vote since epoch in seconds.
+        /// @dev The timestamp of the vote (in seconds)
         uint40 timestamp;
     }
 
@@ -307,11 +307,14 @@ contract EasPollActionModule is
     ) external override onlyHub returns (bytes memory) {
         Poll memory poll = abi.decode(data, (Poll));
 
-        if (poll.endTimestamp <= block.timestamp || poll.options.length < 2) {
+        if (
+            (poll.endTimestamp > 0 && poll.endTimestamp <= block.timestamp) ||
+            poll.options.length < 2
+        ) {
             revert PollInvalid();
         }
 
-        if (_polls[profileId][pubId].endTimestamp > 0) {
+        if (_polls[profileId][pubId].options[0] != bytes32(0)) {
             revert PollAlreadyExists();
         }
 
@@ -339,7 +342,9 @@ contract EasPollActionModule is
     ) internal view {
         if (poll.options.length == 0) revert PollDoesNotExist();
 
-        if (block.timestamp > poll.endTimestamp) revert PollEnded();
+        if (poll.endTimestamp > 0 && block.timestamp > poll.endTimestamp) {
+            revert PollEnded();
+        }
 
         if (poll.followersOnly) {
             FollowValidationLib.validateIsFollowingOrSelf(
