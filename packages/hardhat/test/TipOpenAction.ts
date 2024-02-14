@@ -1,21 +1,19 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract, ContractFactory } from "ethers";
+import { MockModuleRegistry, TipActionModule } from "../typechain-types";
 
 describe("TipActionModule", function () {
   const PROFILE_ID = 1;
   const PUBLICATION_ID = 1;
   const TIP_AMOUNT = "1";
 
-  let TipActionModule: ContractFactory;
-  let tipOpenAction: Contract;
-  let moduleRegistry: Contract;
+  let tipOpenAction: TipActionModule;
+  let moduleRegistry: MockModuleRegistry;
   let ownerAddress: string;
   let recipientAddress: string;
 
   beforeEach(async function () {
     // Get the ContractFactory and Signers here.
-    TipActionModule = await ethers.getContractFactory("TipActionModule");
     const [owner, recipient] = await ethers.getSigners();
 
     ownerAddress = await owner.getAddress();
@@ -24,18 +22,17 @@ describe("TipActionModule", function () {
     // Deploy a new mock ModuleRegistry contract
     const ModuleRegistry = await ethers.getContractFactory("MockModuleRegistry");
     moduleRegistry = await ModuleRegistry.deploy();
-    await moduleRegistry.deployed();
 
     // Deploy a new TipActionModule contract for each test
-    tipOpenAction = await TipActionModule.deploy(ownerAddress, moduleRegistry.address);
-    await tipOpenAction.deployed();
+    const TipActionModule = await ethers.getContractFactory("TipActionModule");
+    tipOpenAction = await TipActionModule.deploy(ownerAddress, await moduleRegistry.getAddress());
   });
 
   // Test case for supportsInterface function
   it("Should support the Lens Module interface", async function () {
     // Calculate the interface ID for 'LENS_MODULE'
-    const interfaceID = ethers.utils.solidityKeccak256(["string"], ["LENS_MODULE"]);
-    const bytes4InterfaceID = ethers.utils.hexDataSlice(interfaceID, 0, 4);
+    const interfaceID = ethers.solidityPackedKeccak256(["string"], ["LENS_MODULE"]);
+    const bytes4InterfaceID = ethers.dataSlice(interfaceID, 0, 4);
 
     // Call supportsInterface and check the result
     expect(await tipOpenAction.supportsInterface(bytes4InterfaceID)).to.be.true;
@@ -48,7 +45,7 @@ describe("TipActionModule", function () {
       PROFILE_ID,
       PUBLICATION_ID,
       ownerAddress,
-      ethers.utils.defaultAbiCoder.encode(["address"], [recipientAddress]),
+      ethers.AbiCoder.defaultAbiCoder().encode(["address"], [recipientAddress]),
     );
 
     await expect(tx)
@@ -69,21 +66,21 @@ describe("TipActionModule", function () {
       PROFILE_ID,
       PUBLICATION_ID,
       ownerAddress,
-      ethers.utils.defaultAbiCoder.encode(["address"], [recipientAddress]),
+      ethers.AbiCoder.defaultAbiCoder().encode(["address"], [recipientAddress]),
     );
 
     // Deploy a new mock ERC20 token contract
     const TestToken = await ethers.getContractFactory("TestToken");
     const token = await TestToken.deploy();
-    await token.deployed();
 
-    const tipAmount = ethers.utils.parseEther(TIP_AMOUNT);
+    const tipAmount = ethers.parseEther(TIP_AMOUNT);
 
     // Approve the TipActionModule contract to spend tokens
-    await token.approve(tipOpenAction.address, tipAmount);
+    await token.approve(await tipOpenAction.getAddress(), tipAmount);
 
     // Register the token in the mock ModuleRegistry contract
-    await moduleRegistry.registerErc20Currency(token.address);
+    const tokenAddress = await token.getAddress();
+    await moduleRegistry.registerErc20Currency(tokenAddress);
 
     // Prepare the parameters for processPublicationAction
     const params = {
@@ -95,7 +92,7 @@ describe("TipActionModule", function () {
       referrerProfileIds: [],
       referrerPubIds: [],
       referrerPubTypes: [],
-      actionModuleData: ethers.utils.defaultAbiCoder.encode(["address", "uint256"], [token.address, tipAmount]),
+      actionModuleData: ethers.AbiCoder.defaultAbiCoder().encode(["address", "uint256"], [tokenAddress, tipAmount]),
     };
 
     // Call the processPublicationAction function
@@ -103,7 +100,7 @@ describe("TipActionModule", function () {
 
     await expect(tx)
       .to.emit(tipOpenAction, "TipCreated")
-      .withArgs(ownerAddress, recipientAddress, token.address, tipAmount);
+      .withArgs(ownerAddress, recipientAddress, tokenAddress, tipAmount);
 
     // Get the balance of the tip receiver
     const balance = await token.balanceOf(recipientAddress);

@@ -3,6 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
+import { TipActionModule } from "../typechain-types";
 
 /**
  * Generates the metadata for the TipActionModule contract compliant with the Module Metadata Standard at:
@@ -80,7 +81,7 @@ const deployTipActionModuleContract: DeployFunction = async function (hre: Hardh
   });
 
   // Get the deployed contract
-  const tipPublicationAction = await hre.ethers.getContract("TipActionModule", deployer);
+  const tipPublicationAction = await hre.ethers.getContract<TipActionModule>("TipActionModule", deployer);
 
   // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
