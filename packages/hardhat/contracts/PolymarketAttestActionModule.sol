@@ -8,17 +8,19 @@ import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
 import {IPublicationActionModule} from "lens-modules/contracts/interfaces/IPublicationActionModule.sol";
 import {HubRestricted} from "lens-modules/contracts/base/HubRestricted.sol";
 import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
+import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
+import {LensModuleRegistrant} from "lens-modules/contracts/modules/base/LensModuleRegistrant.sol";
 
 import {Order, OrderStatus} from "./libraries/OrderStructs.sol";
 import {ICtfExchange} from "./interfaces/ICtfExchange.sol";
 import {IConditionalTokens} from "./interfaces/IConditionalTokens.sol";
-import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
 import {QuestionDataV2, IUmaCtfAdapterV2} from "./interfaces/IUmaCtfAdapterV2.sol";
-import {QuestionDataV3, IUmaCtfAdapterV3} from "./interfaces/IUmaCtfAdapterV3.sol";
 import {IRegistry} from "./interfaces/IRegistry.sol";
 
 /**
  * @title PolymarketAttestActionModule
+ * @author Paul Burke
+ *
  * @dev Open Action Module that verifies Polymarket trades that happen in Lens Protocol publications.
  */
 contract PolymarketAttestActionModule is
@@ -114,7 +116,7 @@ contract PolymarketAttestActionModule is
 
     constructor(
         address lensHub,
-        address lensModuleRegistry,
+        IModuleRegistry lensModuleRegistry,
         ICtfExchange exchange,
         IERC20 collateralToken,
         IConditionalTokens conditionalTokens,
