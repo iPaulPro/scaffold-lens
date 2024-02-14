@@ -7,15 +7,16 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile --show-stack-traces",
     "deploy:local": "NODE_ENV=development hardhat deploy",
-    "deploy:mumbai": "NODE_ENV=production hardhat deploy --tags PolymarketAttestActionModule --network polygonMumbai",
+    "deploy:mumbai": "NODE_ENV=staging hardhat deploy --tags PolymarketAttestActionModule --network polygonMumbai",
+    "deploy:mainnet": "NODE_ENV=production hardhat deploy --tags PolymarketAttestActionModule --network polygon",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "NODE_ENV=development hardhat run scripts/generateAccount.ts",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "lint-staged": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore",
     "prettier": "prettier --write 'contracts/**/*.sol'",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
-    "verify": "NODE_ENV=production hardhat etherscan-verify --network polygonMumbai",
-    "debug": "hardhat debug --tx 0xb671900ef0827337ef5868ffcf76f2bb99bee4fff55620e0395e0cf3982db5b7 --network polygonMumbai "
+    "verify:mumbai": "NODE_ENV=staging hardhat etherscan-verify --network polygonMumbai",
+    "verify:mainnet": "NODE_ENV=production hardhat etherscan-verify --network polygon"
   },
   "dependencies": {
     "@irys/sdk": "^0.1.1",
