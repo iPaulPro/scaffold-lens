@@ -154,14 +154,14 @@ This will run the tests located in `packages/hardhat/test` with [Chai](https://g
 Once you are ready to deploy your smart contracts, there are a few things you need to adjust.
 
 1. **Set up environment**  
-   To deploy on Mumbai, you'll need to set up a `.env` file in the `packages/hardhat` directory. You can use the `.env.example` file as a template.  You'll need to provide the current addresses of the Lens Hub and Module Registry contracts. (These should be provided by Lens Protocol).
+   To deploy on Mumbai, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.example` file as a template.  You'll need to provide the current addresses of the Lens Hub and Module Registry contracts. (These should be provided by Lens Protocol).
    ```bash
    # These should be provided by https://docs.lens.xyz/docs/deployed-contract-addresses
    LENS_HUB=0x4fbffF20302F3326B20052ab9C217C44F6480900
    MODULE_REGISTRY=0x4BeB63842BB800A1Da77a62F2c74dE3CA39AF7C0
    ```
 
-   Next, generate a new account or add one to deploy the contract(s) from. Additionally you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Mumbai).
+   Next, generate a new account or add one to deploy the contract(s) from. Additionally, you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Mumbai).
    ```bash
    ALCHEMY_API_KEY=""
    DEPLOYER_PRIVATE_KEY=""
@@ -186,13 +186,19 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    ```
 ---
 
+## Deploying to Polygon Mainnet
+
+**NOTE:** There is no need to publish your own `TipActionModule` if all you want is to add tipping support to your app. In that case you should use the [verified contract by Orna](https://github.com/mvanhalen/TipActionModule).
+
+Follow the same directions for deploying to Mumbai, but use the `.env.production` file instead of `.env.staging`. You will also need to set the `ALCHEMY_API_KEY` with a mainnet API key.
+
 ## Using your own contracts
 
 If you want to use your own contracts there are a few simple steps. 
 
 1. Replace the `TipActionModule.sol` contract in `/packages/hardhat/contracts` with your own. 
 2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the mock contracts.
-3. Change the tag in the `deploy:mumbai` script in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
+3. Change the tag in the `deploy:*` scripts in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
 4. (Optional) Remove the `/packages/hardhat/contracts/helpers` directory and related deploy scripts unless you want to use the `MockModuleRegistry` and `TestToken` contracts for testing and debugging.
 
 ## About Scaffold-ETH 2
