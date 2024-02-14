@@ -90,6 +90,12 @@ contract PolymarketAttestActionModule is
         internal _questionIds;
 
     /**
+     * @dev Mapping of Polymarket Market orders for publications.
+     */
+    mapping(uint256 profileId => mapping(uint256 pubId => Order[] orders))
+        internal _orders;
+
+    /**
      * @dev Polymarket CTF Exchange contract.
      */
     ICtfExchange internal immutable _exchange;
@@ -171,6 +177,52 @@ contract PolymarketAttestActionModule is
             OUTCOME_SLOT_COUNT
         );
         return conditionId;
+    }
+
+    /**
+     * @dev Returns the Polymarket order count for a publication.
+     * @param profileId ID of the profile.
+     * @param pubId ID of the publication.
+     * @return Polymarket order count.
+     */
+    function getTotalOrderCount(
+        uint256 profileId,
+        uint256 pubId
+    ) external view returns (uint256) {
+        return _orders[profileId][pubId].length;
+    }
+
+    /**
+     * @dev Returns the Polymarket order at an index for a publication.
+     * @param profileId ID of the profile.
+     * @param pubId ID of the publication.
+     * @param index Index of the order.
+     * @return Polymarket order.
+     */
+    function getOrderAtIndex(
+        uint256 profileId,
+        uint256 pubId,
+        uint256 index
+    ) external view returns (Order memory) {
+        return _orders[profileId][pubId][index];
+    }
+
+    /**
+     * @dev Returns the Polymarket order counts for YES and NO trades from a publication.
+     * @param profileId ID of the profile.
+     * @param pubId ID of the publication.
+     * @return An array of the Polymarket order counts for YES and NO trades.
+     */
+    function getOrderCounts(
+        uint256 profileId,
+        uint256 pubId
+    ) external view returns (uint256[] memory) {
+        uint256[] memory binaryOrders = new uint256[](OUTCOME_SLOT_COUNT);
+        for (uint256 i = 0; i < _orders[profileId][pubId].length; i++) {
+            Order storage order = _orders[profileId][pubId][i];
+            binaryOrders[order.tokenId]++;
+        }
+        return binaryOrders;
     }
 
     function supportsInterface(
@@ -285,11 +337,11 @@ contract PolymarketAttestActionModule is
             revert OrderMustBeProvided();
         }
 
+        uint256 profileId = params.publicationActedProfileId;
+        uint256 pubId = params.publicationActedId;
+
         // Ensure the market is registered for this publication
-        bytes32 conditionId = getConditionId(
-            params.publicationActedProfileId,
-            params.publicationActedId
-        );
+        bytes32 conditionId = getConditionId(profileId, pubId);
         if (conditionId == 0) {
             revert MarketNotFound();
         }
@@ -313,13 +365,13 @@ contract PolymarketAttestActionModule is
             revert OrderInvalid();
         }
 
-        bytes32 questionId = _questionIds[params.publicationActedProfileId][
-            params.publicationActedId
-        ];
+        bytes32 questionId = _questionIds[profileId][pubId];
+
+        _orders[profileId][pubId].push(order);
 
         emit OrderVerified(
-            params.publicationActedProfileId,
-            params.publicationActedId,
+            profileId,
+            pubId,
             params.actorProfileId,
             params.actorProfileOwner,
             getOracle(),

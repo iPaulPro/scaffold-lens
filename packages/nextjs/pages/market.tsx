@@ -2,7 +2,6 @@
 
 import { ExternalProvider } from "@ethersproject/providers";
 import { ClobClient, getContractConfig } from "@polymarket/clob-client";
-import { ExchangeOrderBuilder, Side } from "@polymarket/order-utils";
 import { constants, providers } from "ethers";
 import { NextPage } from "next";
 import { createWalletClient, custom } from "viem";
@@ -32,7 +31,7 @@ async function getWalletClient() {
 const createOrder = async () => {
   const provider = new providers.Web3Provider(window.ethereum as ExternalProvider);
   const signer = provider.getSigner();
-  const address = await signer.getAddress();
+  // const address = await signer.getAddress();
 
   const clobClient = new ClobClient(clobApiUrl, chain.id, signer);
 
@@ -89,7 +88,7 @@ const createOrder = async () => {
   // const market: { tokens: any[] } = openMarkets[0];
   // const market = await l2ClobClient.getMarket("0x01958cbde4700b3699a09fea26d24c126efa504f8101105f0610a27c005922d9");
   // const tokenID = market.tokens.find(token => token.outcome === "No")?.token_id;
-  const tokenID = "90235636905692038421575464069756115183049918358828384207390440341823241745498"; // YES
+  const tokenID = "88338572045681885230929771298378256652324875272521785820255616475971956514259"; // YES
   // const tokenID = " 55532475252909998012650010434309245009128554025209054789347111104743465619530"; // NO
 
   // const priceRes = await l2ClobClient.getPrice(tokenID, Side.BUY);
@@ -126,31 +125,31 @@ const createOrder = async () => {
   //
   // console.log("createOrder: price", priceRes, price);
 
-  // const order = await l2ClobClient.createMarketBuyOrder({
-  //   tokenID,
-  //   amount: 15,
-  //   price: 0.5,
-  // });
+  const order = await l2ClobClient.createMarketBuyOrder({
+    tokenID,
+    amount: 10,
+    price: 0.5,
+  });
   // const order = await l2ClobClient.createOrder({
   //   tokenID,
   //   size: 15,
   //   price: 0.5,
   //   side: Side.BUY,
   // });
-  // console.log("Created Order", order);
+  console.log("Created Order", order);
 
-  const orderBuilder = new ExchangeOrderBuilder(config.exchange, chain.id, signer);
-
-  const order = await orderBuilder.buildSignedOrder({
-    maker: address,
-    taker: constants.AddressZero,
-    tokenId: tokenID,
-    side: Side.BUY,
-    makerAmount: "15000000",
-    takerAmount: "30000000",
-    feeRateBps: "0",
-    nonce: "1",
-  });
+  // const orderBuilder = new ExchangeOrderBuilder(config.exchange, chain.id, signer);
+  //
+  // const order = await orderBuilder.buildSignedOrder({
+  //   maker: address,
+  //   taker: constants.AddressZero,
+  //   tokenId: tokenID,
+  //   side: Side.BUY,
+  //   makerAmount: "15000000",
+  //   takerAmount: "30000000",
+  //   feeRateBps: "0",
+  //   nonce: "1",
+  // });
 
   // const orderTypedData = orderBuilder.buildOrderTypedData(order);
   //
@@ -160,8 +159,8 @@ const createOrder = async () => {
   //   ...order,
   //   signature: orderSignature,
   // };
-
-  console.log("createOrder: order", order);
+  //
+  // console.log("createOrder: order", order);
 
   try {
     const postRes = await l2ClobClient.postOrder(order);
@@ -201,7 +200,7 @@ const mintUsdc = async () => {
 
 const approveSpend = async () => {
   const { localWalletClient } = await getWalletClient();
-
+  console.log("approveSpend: localWalletClient chain", localWalletClient.chain, "config", config);
   try {
     let hash;
     hash = await localWalletClient.writeContract({
