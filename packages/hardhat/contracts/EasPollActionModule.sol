@@ -309,7 +309,8 @@ contract EasPollActionModule is
 
         if (
             (poll.endTimestamp > 0 && poll.endTimestamp <= block.timestamp) ||
-            poll.options.length < 2
+            poll.options[0] == bytes32(0) ||
+            poll.options[1] == bytes32(0)
         ) {
             revert PollInvalid();
         }
@@ -340,7 +341,7 @@ contract EasPollActionModule is
         address attester,
         address transactionExecutor
     ) internal view {
-        if (poll.options.length == 0) revert PollDoesNotExist();
+        if (poll.options[0] == bytes32(0)) revert PollDoesNotExist();
 
         if (poll.endTimestamp > 0 && block.timestamp > poll.endTimestamp) {
             revert PollEnded();
