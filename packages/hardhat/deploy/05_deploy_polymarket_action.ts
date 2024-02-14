@@ -11,18 +11,29 @@ const metadata = module({
   authors: ["paul@paulburke.co"],
   initializeCalldataABI: JSON.stringify([
     {
-      type: "address",
-      name: "oracle",
-    },
-    {
       type: "bytes32",
       name: "questionId",
     },
   ]),
   processCalldataABI: JSON.stringify([
     {
-      type: "tuple",
+      type: "tuple(uint256,address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint8,uint8,bytes)",
       name: "order",
+      components: [
+        { name: "salt", type: "uint256" },
+        { name: "maker", type: "address" },
+        { name: "signer", type: "address" },
+        { name: "taker", type: "address" },
+        { name: "tokenId", type: "uint256" },
+        { name: "makerAmount", type: "uint256" },
+        { name: "takerAmount", type: "uint256" },
+        { name: "expiration", type: "uint256" },
+        { name: "nonce", type: "uint256" },
+        { name: "feeRateBps", type: "uint256" },
+        { name: "side", type: "uint8" },
+        { name: "signatureType", type: "uint8" },
+        { name: "signature", type: "bytes" },
+      ],
     },
   ]),
   attributes: [],
@@ -33,7 +44,6 @@ const deployPolymarketActionModuleContract: DeployFunction = async function (hre
   const { deploy, get } = hre.deployments;
 
   const lensHubAddress = process.env.LENS_HUB;
-  // const lensHubAddress = "0x10E1DEB36F41b4Fad35d10d0aB870a4dc52Dbb2c";
 
   let moduleRegistry: string | undefined;
   try {
