@@ -11,8 +11,7 @@ import {IPublicationActionModule} from "lens-modules/contracts/interfaces/IPubli
 import {HubRestricted} from "lens-modules/contracts/base/HubRestricted.sol";
 import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
-
-import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
+import {LensModuleRegistrant} from "lens-modules/contracts/modules/base/LensModuleRegistrant.sol";
 
 /**
  * @title TipActionModule
@@ -58,7 +57,7 @@ contract TipActionModule is
      */
     constructor(
         address hub,
-        address moduleRegistry
+        IModuleRegistry moduleRegistry
     )
         Ownable()
         HubRestricted(hub)
