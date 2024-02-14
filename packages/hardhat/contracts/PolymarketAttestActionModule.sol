@@ -208,21 +208,35 @@ contract PolymarketAttestActionModule is
     }
 
     /**
-     * @dev Returns the Polymarket order counts for YES and NO trades from a publication.
+     * @dev Returns the Polymarket order count for a position index (1 for "YES", 2 for "NO") for a publication.
      * @param profileId ID of the profile.
      * @param pubId ID of the publication.
-     * @return An array of the Polymarket order counts for YES and NO trades.
+     * @param positionIndex Index of the positionID.
+     * @return Polymarket order count for the position index.
      */
-    function getOrderCounts(
+    function getOrderCountForPositionIndex(
         uint256 profileId,
-        uint256 pubId
-    ) external view returns (uint256[] memory) {
-        uint256[] memory binaryOrders = new uint256[](OUTCOME_SLOT_COUNT);
+        uint256 pubId,
+        uint256 positionIndex
+    ) external view returns (uint256) {
+        bytes32 conditionId = getConditionId(profileId, pubId);
+        bytes32 collectionId = _conditionalTokens.getCollectionId(
+            bytes32(0),
+            conditionId,
+            positionIndex
+        );
+        uint256 tokenId = _conditionalTokens.getPositionId(
+            _collateralToken,
+            collectionId
+        );
+
+        uint256 count = 0;
         for (uint256 i = 0; i < _orders[profileId][pubId].length; i++) {
-            Order storage order = _orders[profileId][pubId][i];
-            binaryOrders[order.tokenId]++;
+            if (_orders[profileId][pubId][i].tokenId == tokenId) {
+                count++;
+            }
         }
-        return binaryOrders;
+        return count;
     }
 
     function supportsInterface(
