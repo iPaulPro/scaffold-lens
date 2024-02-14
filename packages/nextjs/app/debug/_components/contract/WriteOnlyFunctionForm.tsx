@@ -11,6 +11,7 @@ import {
   getFunctionInputKey,
   getInitialFormState,
   getParsedContractFunctionArgs,
+  transformAbiFunction,
 } from "~~/app/debug/_components/contract";
 import { IntegerInput } from "~~/components/scaffold-eth";
 import { useTransactor } from "~~/hooks/scaffold-eth";
@@ -72,39 +73,21 @@ export const WriteOnlyFunctionForm = ({
   }, [txResult]);
 
   // TODO use `useMemo` to optimize also update in ReadOnlyFunctionForm
-  const inputs = abiFunction.inputs.flatMap((input, inputIndex) => {
+  const transformedFunction = transformAbiFunction(abiFunction);
+  const inputs = transformedFunction.inputs.map((input, inputIndex) => {
     const key = getFunctionInputKey(abiFunction.name, input, inputIndex);
-    if ("components" in input) {
-      console.log("getParsedContractFunctionArgs: found a tuple", abiFunction);
-      return input.components.map((component, componentIndex) => {
-        const componentKey = `${key}-${componentIndex}`;
-        return (
-          <ContractInput
-            key={componentKey}
-            setForm={updatedFormValue => {
-              setDisplayedTxResult(undefined);
-              setForm(updatedFormValue);
-            }}
-            form={form}
-            stateObjectKey={componentKey}
-            paramType={component}
-          />
-        );
-      });
-    } else {
-      return (
-        <ContractInput
-          key={key}
-          setForm={updatedFormValue => {
-            setDisplayedTxResult(undefined);
-            setForm(updatedFormValue);
-          }}
-          form={form}
-          stateObjectKey={key}
-          paramType={input}
-        />
-      );
-    }
+    return (
+      <ContractInput
+        key={key}
+        setForm={updatedFormValue => {
+          setDisplayedTxResult(undefined);
+          setForm(updatedFormValue);
+        }}
+        form={form}
+        stateObjectKey={key}
+        paramType={input}
+      />
+    );
   });
   const zeroInputs = inputs.length === 0 && abiFunction.stateMutability !== "payable";
 
