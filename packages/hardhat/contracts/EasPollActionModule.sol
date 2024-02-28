@@ -23,8 +23,8 @@ import {HubRestricted} from "lens-modules/contracts/base/HubRestricted.sol";
 import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
 import {FollowValidationLib} from "lens-modules/contracts/modules/libraries/FollowValidationLib.sol";
-
-import {LensModuleRegistrant} from "./base/LensModuleRegistrant.sol";
+import {LensModuleRegistrant} from "lens-modules/contracts/modules/base/LensModuleRegistrant.sol";
+import {TokenGateLib} from "lens-modules/contracts/modules/libraries/TokenGateLib.sol";
 
 /**
  * @title EasPollActionModule
@@ -53,6 +53,8 @@ contract EasPollActionModule is
         uint40 endTimestamp;
         /// @dev Whether a signature is required for the vote.
         bool signatureRequired;
+        /// @dev Optional gating token address and minimum balance required to vote. {followersOnly} takes precedence.
+        TokenGateLib.GateParams gateParams;
     }
 
     /**
@@ -315,6 +317,10 @@ contract EasPollActionModule is
             revert PollInvalid();
         }
 
+        if (poll.gateParams.tokenAddress != address(0)) {
+            TokenGateLib.validateGateParams(poll.gateParams);
+        }
+
         if (_polls[profileId][pubId].options[0] != bytes32(0)) {
             revert PollAlreadyExists();
         }
@@ -357,6 +363,14 @@ contract EasPollActionModule is
 
         if (poll.signatureRequired && attester != transactionExecutor) {
             revert SignatureInvalid();
+        }
+
+        if (poll.gateParams.tokenAddress != address(0)) {
+            TokenGateLib.validateTokenBalance(
+                HUB,
+                poll.gateParams,
+                actorProfileId
+            );
         }
     }
 
@@ -408,8 +422,6 @@ contract EasPollActionModule is
         Types.ProcessActionParams calldata params
     ) internal returns (AttestedVote memory) {
         Vote memory vote = abi.decode(params.actionModuleData, (Vote));
-
-        _validateVote(vote, params);
 
         AttestationRequestData
             memory attestationRequestData = _buildAttestationRequest(vote);

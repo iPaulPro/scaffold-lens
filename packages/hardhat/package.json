@@ -54,7 +54,7 @@
     "hardhat-deploy": "^0.11.45",
     "hardhat-deploy-ethers": "^0.4.1",
     "hardhat-gas-reporter": "^1.0.9",
-    "lens-modules": "^1.0.0",
+    "lens-modules": "^1.0.3",
     "prettier": "^2.8.4",
     "prettier-plugin-solidity": "^1.3.1",
     "solidity-coverage": "^0.8.5",

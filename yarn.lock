@@ -4668,7 +4668,7 @@ __metadata:
     hardhat-deploy: ^0.11.45
     hardhat-deploy-ethers: ^0.4.1
     hardhat-gas-reporter: ^1.0.9
-    lens-modules: ^1.0.0
+    lens-modules: ^1.0.3
     prettier: ^2.8.4
     prettier-plugin-solidity: ^1.3.1
     qrcode: ^1.5.1
@@ -13647,10 +13647,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lens-modules@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "lens-modules@npm:1.0.2"
-  checksum: 4ddb58efc6e124bbc72bd54e15d170ba6b988e9c3e7f55d8b06bca032ebb4ac8d3baa1fbef9a162cef1ad3b9f61508068241f0f092f3818020021430102b25ab
+"lens-modules@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "lens-modules@npm:1.0.3"
+  checksum: 8d336e4a69d147e41682d2c04911680e735c71c6eecb74203730a29ec18c50c22b6bef766bf7badf1ab57d74fb0567e65b553da2b3ce6404a096f8ff977271ff
   languageName: node
   linkType: hard
 
