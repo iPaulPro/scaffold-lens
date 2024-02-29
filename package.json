@@ -16,6 +16,7 @@
     "deploy:mumbai": "yarn workspace @sl/hardhat deploy:mumbai",
     "fork": "yarn workspace @sl/hardhat fork",
     "generate": "yarn workspace @sl/hardhat generate",
+    "flatten": "yarn workspace @sl/hardhat flatten",
     "hardhat:lint": "yarn workspace @sl/hardhat lint",
     "hardhat:lint-staged": "yarn workspace @sl/hardhat lint-staged",
     "hardhat:test": "yarn workspace @sl/hardhat test",
