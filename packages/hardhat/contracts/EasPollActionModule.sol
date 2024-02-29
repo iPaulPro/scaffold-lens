@@ -423,8 +423,21 @@ contract EasPollActionModule is
     ) internal returns (AttestedVote memory) {
         Vote memory vote = abi.decode(params.actionModuleData, (Vote));
 
+        // we're only interested in the optionIndex from the vote
+        Vote memory unsignedVote = Vote({
+            publicationProfileId: params.publicationActedProfileId,
+            publicationId: params.publicationActedId,
+            actorProfileId: params.actorProfileId,
+            actorProfileOwner: params.actorProfileOwner,
+            transactionExecutor: params.transactionExecutor,
+            optionIndex: vote.optionIndex,
+            timestamp: uint40(block.timestamp)
+        });
+
         AttestationRequestData
-            memory attestationRequestData = _buildAttestationRequest(vote);
+            memory attestationRequestData = _buildAttestationRequest(
+                unsignedVote
+            );
 
         AttestationRequest memory request = AttestationRequest({
             schema: schemaUid,
@@ -433,7 +446,7 @@ contract EasPollActionModule is
 
         bytes32 uid = _eas.attest(request);
 
-        return AttestedVote({vote: vote, attestationUid: uid});
+        return AttestedVote({vote: unsignedVote, attestationUid: uid});
     }
 
     /**
