@@ -19,6 +19,7 @@
     "flatten": "yarn workspace @sl/hardhat flatten",
     "hardhat:lint": "yarn workspace @sl/hardhat lint",
     "hardhat:lint-staged": "yarn workspace @sl/hardhat lint-staged",
+    "hardhat:format": "yarn workspace @sl/hardhat format",
     "hardhat:test": "yarn workspace @sl/hardhat test",
     "postinstall": "husky install",
     "next:check-types": "yarn workspace @sl/nextjs check-types",
