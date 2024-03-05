@@ -1,13 +1,16 @@
 import { OpenActionModuleInput } from "@lens-protocol/client";
 import {
   type EasPoll,
-  EasVote,
+  type EasVote,
+  SignedEasVote,
   createPollActionModuleInput,
   createVoteActionRequest,
   createVoteCountForOptionQueryVariables,
   createVoteCountQueryVariables,
+  createVoteForActorQueryVariables,
   getVoteCount,
   getVoteCountForOption,
+  getVoteForActor,
 } from "eas-poll-action-module";
 import { BrowserProvider } from "ethers";
 import { NextPage } from "next";
@@ -18,9 +21,6 @@ const ACTOR = "0x0c44c12b458de60DFB94f9050f36b27F6C52Af61";
 async function createAttestation() {
   const vote: EasVote = {
     publicationId: "0x01-0x02",
-    actorProfileId: "0x01",
-    actorProfileOwner: ACTOR,
-    transactionExecutor: EXECUTOR,
     optionIndex: 1,
   };
 
@@ -32,8 +32,8 @@ async function createDerivedAttestation() {
   const provider = new BrowserProvider(window.ethereum!, "any");
   const signer = await provider.getSigner();
 
-  const vote: EasVote = {
-    publicationId: "0x01-0x02",
+  const vote: SignedEasVote = {
+    publicationId: "0x01-0x01",
     actorProfileId: "0x01",
     actorProfileOwner: ACTOR,
     transactionExecutor: EXECUTOR,
@@ -70,6 +70,12 @@ async function voteCount() {
   console.log("voteCount: option vote count response", optionVoteCountResponse);
 }
 
+async function getVote() {
+  const variables = createVoteForActorQueryVariables("0xfa-0x04", "0xfa");
+  const vote = await getVoteForActor(variables, true);
+  console.log("getVote: vote", vote);
+}
+
 const Poll: NextPage = () => {
   return (
     <>
@@ -78,6 +84,7 @@ const Poll: NextPage = () => {
       <button onClick={createAttestation}>Create Attestation</button>
       <button onClick={createDerivedAttestation}>Create Derived Attestation</button>
       <button onClick={voteCount}>Vote Count</button>
+      <button onClick={getVote}>Get Vote</button>
     </>
   );
 };

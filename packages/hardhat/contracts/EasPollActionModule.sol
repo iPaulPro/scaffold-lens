@@ -103,6 +103,8 @@ contract EasPollActionModule is
     error PollAlreadyExists();
     error VotedAlready();
     error VoteInvalid();
+    error VoteNotFound();
+    error AttestationNotFound();
     error SignatureInvalid();
     error SchemaNotRegistered();
     error SchemaInvalid();
@@ -240,6 +242,7 @@ contract EasPollActionModule is
         address actor
     ) external view returns (Attestation memory) {
         bytes32 uid = _attestations[profileId][pubId][actor];
+        if (uid == bytes32(0)) revert AttestationNotFound();
         return _eas.getAttestation(uid);
     }
 
@@ -256,6 +259,7 @@ contract EasPollActionModule is
         uint256 index
     ) external view returns (bytes32) {
         address actor = _actors[profileId][pubId][index];
+        if (actor == address(0)) revert AttestationNotFound();
         return _attestations[profileId][pubId][actor];
     }
 
@@ -272,6 +276,7 @@ contract EasPollActionModule is
         address actor
     ) external view returns (Vote memory) {
         bytes32 uid = _attestations[profileId][pubId][actor];
+        if (uid == bytes32(0)) revert VoteNotFound();
         return abi.decode(_eas.getAttestation(uid).data, (Vote));
     }
 
@@ -288,7 +293,9 @@ contract EasPollActionModule is
         uint256 index
     ) external view returns (Vote memory) {
         address actor = _actors[profileId][pubId][index];
+        if (actor == address(0)) revert VoteNotFound();
         bytes32 uid = _attestations[profileId][pubId][actor];
+        if (uid == bytes32(0)) revert VoteNotFound();
         return abi.decode(_eas.getAttestation(uid).data, (Vote));
     }
 
@@ -375,14 +382,33 @@ contract EasPollActionModule is
     }
 
     /**
+     * @dev Ensures an option index is valid.
+     * @param optionIndex The vote option index
+     * @param poll The poll to validate against
+     */
+    function _validateOptionIndex(
+        uint8 optionIndex,
+        Poll memory poll
+    ) internal pure {
+        if (optionIndex < 0 || poll.options[optionIndex] == bytes32(0)) {
+            revert VoteInvalid();
+        }
+    }
+
+    /**
      * @dev Validate a signed vote params matches the action params.
      * @param vote The vote
      * @param params The process action params
      */
-    function _validateVote(
+    function _validateSignedVote(
         Vote memory vote,
         Types.ProcessActionParams calldata params
-    ) internal pure {
+    ) internal view {
+        Poll memory poll = _polls[params.publicationActedProfileId][
+            params.publicationActedId
+        ];
+        _validateOptionIndex(vote.optionIndex, poll);
+
         if (
             vote.publicationProfileId != params.publicationActedProfileId ||
             vote.publicationId != params.publicationActedId ||
@@ -423,7 +449,12 @@ contract EasPollActionModule is
     ) internal returns (AttestedVote memory) {
         Vote memory vote = abi.decode(params.actionModuleData, (Vote));
 
-        // we're only interested in the optionIndex from the vote
+        Poll memory poll = _polls[params.publicationActedProfileId][
+            params.publicationActedId
+        ];
+        _validateOptionIndex(vote.optionIndex, poll);
+
+        // we're only interested in the optionIndex from the unsigned vote
         Vote memory unsignedVote = Vote({
             publicationProfileId: params.publicationActedProfileId,
             publicationId: params.publicationActedId,
@@ -460,7 +491,7 @@ contract EasPollActionModule is
         (Vote memory vote, Signature memory signature, uint64 deadline) = abi
             .decode(params.actionModuleData, (Vote, Signature, uint64));
 
-        _validateVote(vote, params);
+        _validateSignedVote(vote, params);
 
         AttestationRequestData
             memory attestationRequestData = _buildAttestationRequest(vote);

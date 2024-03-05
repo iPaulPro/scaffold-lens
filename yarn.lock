@@ -4699,7 +4699,7 @@ __metadata:
     autoprefixer: ^10.4.12
     blo: ^1.0.1
     daisyui: ^4.4.19
-    eas-poll-action-module: ^1.0.6
+    eas-poll-action-module: ^1.0.7
     eslint: ^8.24.0
     eslint-config-next: ^13.1.6
     eslint-config-prettier: ^8.5.0
@@ -9404,10 +9404,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eas-poll-action-module@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "eas-poll-action-module@npm:1.0.6"
-  checksum: 5ecd01a1be20233cceed2c285d95ec9d7a477c0f590a2b2b5804bdf6a194ae6b6953baedbbed65c667701006c3d4c44ab20d54c3db4d48c5c0dec2d0073a7523
+"eas-poll-action-module@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "eas-poll-action-module@npm:1.0.7"
+  checksum: bc3ce27897704debc637c46dc0c0f08c86ce7600a68702283729211f59ae6c3c89aeec316eb1c3db2cf12197975978a22a2076b97d97b74bb4896a48c1e84745
   languageName: node
   linkType: hard
 
