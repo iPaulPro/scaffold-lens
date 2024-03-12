@@ -14,5 +14,4 @@ artifacts
 artifacts-zk
 cache-zk
 
-deployments/localhost
-deployments/polygonMumbai
+deployments/*
