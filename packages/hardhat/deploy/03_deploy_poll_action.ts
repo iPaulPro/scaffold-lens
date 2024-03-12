@@ -8,7 +8,8 @@ import { uploadMetadata } from "../lib/irys-service";
 const metadata = module({
   name: "EasPollActionModule",
   title: "EAS Poll Open Action",
-  description: "Transforms a Lens Publication into a poll using Ethereum Attestation Service (EAS) for voting.",
+  description:
+    "Transforms a Lens Publication into an onchain poll using Ethereum Attestation Service (EAS) for voting.",
   authors: ["paul@paulburke.co"],
   initializeCalldataABI: JSON.stringify([
     {
