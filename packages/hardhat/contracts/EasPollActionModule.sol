@@ -203,6 +203,7 @@ contract EasPollActionModule is
      * @return The full schema record
      */
     function getSchemaRecord() external view returns (SchemaRecord memory) {
+        if (schemaUid == bytes32(0)) revert SchemaNotRegistered();
         ISchemaRegistry registry = ISchemaRegistry(_eas.getSchemaRegistry());
         return registry.getSchema(schemaUid);
     }
@@ -349,6 +350,8 @@ contract EasPollActionModule is
         address /* transactionExecutor */,
         bytes calldata data
     ) external override onlyHub returns (bytes memory) {
+        if (schemaUid == bytes32(0)) revert SchemaNotRegistered();
+
         Poll memory poll = abi.decode(data, (Poll));
 
         if (
@@ -549,6 +552,8 @@ contract EasPollActionModule is
     function processPublicationAction(
         Types.ProcessActionParams calldata processActionParams
     ) external override onlyHub returns (bytes memory) {
+        if (schemaUid == bytes32(0)) revert SchemaNotRegistered();
+
         uint256 profileId = processActionParams.publicationActedProfileId;
         uint256 pubId = processActionParams.publicationActedId;
 
