@@ -4,6 +4,3394 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    EasPollActionModule: {
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lensHub",
+              type: "address",
+            },
+            {
+              internalType: "contract IModuleRegistry",
+              name: "moduleRegistry",
+              type: "address",
+            },
+            {
+              internalType: "contract IEAS",
+              name: "eas",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AttestationNotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "GateParamsInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InsufficientValue",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidEAS",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidLength",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEnoughBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotPayable",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "OwnableInvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "OwnableUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PollAlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PollDoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PollEnded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PollInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SchemaInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SchemaNotRegistered",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SignatureInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "VoteInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "VoteNotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "VotedAlready",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "attestationUid",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32[4]",
+                  name: "options",
+                  type: "bytes32[4]",
+                },
+                {
+                  internalType: "bool",
+                  name: "followersOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint40",
+                  name: "endTimestamp",
+                  type: "uint40",
+                },
+                {
+                  internalType: "bool",
+                  name: "signatureRequired",
+                  type: "bool",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "tokenAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "minThreshold",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct TokenGateLib.GateParams",
+                  name: "gateParams",
+                  type: "tuple",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EasPollActionModule.Poll",
+              name: "poll",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "optionIndex",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint40",
+                  name: "timestamp",
+                  type: "uint40",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EasPollActionModule.Vote",
+              name: "vote",
+              type: "tuple",
+            },
+          ],
+          name: "AttestationCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "attestationUid",
+              type: "bytes32",
+            },
+          ],
+          name: "AttestationRevoked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "attestationUid",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32[4]",
+                  name: "options",
+                  type: "bytes32[4]",
+                },
+                {
+                  internalType: "bool",
+                  name: "followersOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint40",
+                  name: "endTimestamp",
+                  type: "uint40",
+                },
+                {
+                  internalType: "bool",
+                  name: "signatureRequired",
+                  type: "bool",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "tokenAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "minThreshold",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct TokenGateLib.GateParams",
+                  name: "gateParams",
+                  type: "tuple",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EasPollActionModule.Poll",
+              name: "poll",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "optionIndex",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint40",
+                  name: "timestamp",
+                  type: "uint40",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EasPollActionModule.Vote",
+              name: "vote",
+              type: "tuple",
+            },
+          ],
+          name: "AttestationValidated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "ModuleRegistered",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32[4]",
+                  name: "options",
+                  type: "bytes32[4]",
+                },
+                {
+                  internalType: "bool",
+                  name: "followersOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint40",
+                  name: "endTimestamp",
+                  type: "uint40",
+                },
+                {
+                  internalType: "bool",
+                  name: "signatureRequired",
+                  type: "bool",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "tokenAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "minThreshold",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct TokenGateLib.GateParams",
+                  name: "gateParams",
+                  type: "tuple",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EasPollActionModule.Poll",
+              name: "poll",
+              type: "tuple",
+            },
+          ],
+          name: "PollCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "contract ISchemaResolver",
+                  name: "resolver",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "schema",
+                  type: "string",
+                },
+              ],
+              indexed: false,
+              internalType: "struct SchemaRecord",
+              name: "schemaRecord",
+              type: "tuple",
+            },
+          ],
+          name: "SchemaRegistered",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SCHEMA",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "time",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expirationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "revocationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "refUID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Attestation",
+              name: "attestation",
+              type: "tuple",
+            },
+          ],
+          name: "attest",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "actor",
+              type: "address",
+            },
+          ],
+          name: "getAttestation",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "time",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expirationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "revocationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "refUID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Attestation",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+          ],
+          name: "getAttestationByIndex",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getAttestationCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "actor",
+              type: "address",
+            },
+          ],
+          name: "getAttestationUid",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPoll",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32[4]",
+                  name: "options",
+                  type: "bytes32[4]",
+                },
+                {
+                  internalType: "bool",
+                  name: "followersOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint40",
+                  name: "endTimestamp",
+                  type: "uint40",
+                },
+                {
+                  internalType: "bool",
+                  name: "signatureRequired",
+                  type: "bool",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "tokenAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "minThreshold",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct TokenGateLib.GateParams",
+                  name: "gateParams",
+                  type: "tuple",
+                },
+              ],
+              internalType: "struct EasPollActionModule.Poll",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getSchemaRecord",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "contract ISchemaResolver",
+                  name: "resolver",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "schema",
+                  type: "string",
+                },
+              ],
+              internalType: "struct SchemaRecord",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "actor",
+              type: "address",
+            },
+          ],
+          name: "getVote",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "optionIndex",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint40",
+                  name: "timestamp",
+                  type: "uint40",
+                },
+              ],
+              internalType: "struct EasPollActionModule.Vote",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+          ],
+          name: "getVoteByIndex",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "optionIndex",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint40",
+                  name: "timestamp",
+                  type: "uint40",
+                },
+              ],
+              internalType: "struct EasPollActionModule.Vote",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "isPayable",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "isRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "time",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expirationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "revocationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "refUID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Attestation[]",
+              name: "attestations",
+              type: "tuple[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "values",
+              type: "uint256[]",
+            },
+          ],
+          name: "multiAttest",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "time",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expirationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "revocationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "refUID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Attestation[]",
+              name: "attestations",
+              type: "tuple[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "values",
+              type: "uint256[]",
+            },
+          ],
+          name: "multiRevoke",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessActionParams",
+              name: "processActionParams",
+              type: "tuple",
+            },
+          ],
+          name: "processPublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "registerModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "registerSchema",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "time",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expirationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "revocationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "refUID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Attestation",
+              name: "attestation",
+              type: "tuple",
+            },
+          ],
+          name: "revoke",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "schemaUid",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "_schemaUid",
+              type: "bytes32",
+            },
+          ],
+          name: "setSchemaUid",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "version",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {
+        initializePublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+        processPublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        renounceOwnership: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        isRegistered: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        registerModule: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        attest: "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol",
+        isPayable: "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol",
+        multiAttest: "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol",
+        multiRevoke: "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol",
+        revoke: "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol",
+        version: "@ethereum-attestation-service/eas-contracts/contracts/resolver/SchemaResolver.sol",
+      },
+    },
+    MockEAS: {
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "contract ISchemaRegistry",
+              name: "registry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "AddressInsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyRevoked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyRevokedOffchain",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyTimestamped",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DeadlineExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FailedInnerCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InsufficientValue",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidAttestation",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidAttestations",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidExpirationTime",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidLength",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidNonce",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOffset",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRegistry",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRevocation",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRevocations",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidSchema",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidShortString",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidSignature",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidVerifier",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Irrevocable",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotPayable",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "str",
+              type: "string",
+            },
+          ],
+          name: "StringTooLong",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "WrongSchema",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "attester",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "uid",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "schemaUID",
+              type: "bytes32",
+            },
+          ],
+          name: "Attested",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "EIP712DomainChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "oldNonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newNonce",
+              type: "uint256",
+            },
+          ],
+          name: "NonceIncreased",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "attester",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "uid",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "schemaUID",
+              type: "bytes32",
+            },
+          ],
+          name: "Revoked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "revoker",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "data",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "uint64",
+              name: "timestamp",
+              type: "uint64",
+            },
+          ],
+          name: "RevokedOffchain",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "data",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "uint64",
+              name: "timestamp",
+              type: "uint64",
+            },
+          ],
+          name: "Timestamped",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "expirationTime",
+                      type: "uint64",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "revocable",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "refUID",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "data",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct AttestationRequestData",
+                  name: "data",
+                  type: "tuple",
+                },
+              ],
+              internalType: "struct AttestationRequest",
+              name: "request",
+              type: "tuple",
+            },
+          ],
+          name: "attest",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "expirationTime",
+                      type: "uint64",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "revocable",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "refUID",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "data",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct AttestationRequestData",
+                  name: "data",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "uint8",
+                      name: "v",
+                      type: "uint8",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "r",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "s",
+                      type: "bytes32",
+                    },
+                  ],
+                  internalType: "struct Signature",
+                  name: "signature",
+                  type: "tuple",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "uint64",
+                  name: "deadline",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct DelegatedAttestationRequest",
+              name: "delegatedRequest",
+              type: "tuple",
+            },
+          ],
+          name: "attestByDelegation",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "eip712Domain",
+          outputs: [
+            {
+              internalType: "bytes1",
+              name: "fields",
+              type: "bytes1",
+            },
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "version",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "verifyingContract",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "salt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256[]",
+              name: "extensions",
+              type: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAttestTypeHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "uid",
+              type: "bytes32",
+            },
+          ],
+          name: "getAttestation",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "time",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "expirationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "uint64",
+                  name: "revocationTime",
+                  type: "uint64",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "refUID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Attestation",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDomainSeparator",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getName",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getNonce",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "revoker",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "data",
+              type: "bytes32",
+            },
+          ],
+          name: "getRevokeOffchain",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getRevokeTypeHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getSchemaRegistry",
+          outputs: [
+            {
+              internalType: "contract ISchemaRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "data",
+              type: "bytes32",
+            },
+          ],
+          name: "getTimestamp",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "newNonce",
+              type: "uint256",
+            },
+          ],
+          name: "increaseNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "uid",
+              type: "bytes32",
+            },
+          ],
+          name: "isAttestationValid",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "expirationTime",
+                      type: "uint64",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "revocable",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "refUID",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "data",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct AttestationRequestData[]",
+                  name: "data",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct MultiAttestationRequest[]",
+              name: "multiRequests",
+              type: "tuple[]",
+            },
+          ],
+          name: "multiAttest",
+          outputs: [
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "expirationTime",
+                      type: "uint64",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "revocable",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "refUID",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "data",
+                      type: "bytes",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct AttestationRequestData[]",
+                  name: "data",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "uint8",
+                      name: "v",
+                      type: "uint8",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "r",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "s",
+                      type: "bytes32",
+                    },
+                  ],
+                  internalType: "struct Signature[]",
+                  name: "signatures",
+                  type: "tuple[]",
+                },
+                {
+                  internalType: "address",
+                  name: "attester",
+                  type: "address",
+                },
+                {
+                  internalType: "uint64",
+                  name: "deadline",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct MultiDelegatedAttestationRequest[]",
+              name: "multiDelegatedRequests",
+              type: "tuple[]",
+            },
+          ],
+          name: "multiAttestByDelegation",
+          outputs: [
+            {
+              internalType: "bytes32[]",
+              name: "",
+              type: "bytes32[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "uid",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct RevocationRequestData[]",
+                  name: "data",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct MultiRevocationRequest[]",
+              name: "multiRequests",
+              type: "tuple[]",
+            },
+          ],
+          name: "multiRevoke",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "uid",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct RevocationRequestData[]",
+                  name: "data",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "uint8",
+                      name: "v",
+                      type: "uint8",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "r",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "s",
+                      type: "bytes32",
+                    },
+                  ],
+                  internalType: "struct Signature[]",
+                  name: "signatures",
+                  type: "tuple[]",
+                },
+                {
+                  internalType: "address",
+                  name: "revoker",
+                  type: "address",
+                },
+                {
+                  internalType: "uint64",
+                  name: "deadline",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct MultiDelegatedRevocationRequest[]",
+              name: "multiDelegatedRequests",
+              type: "tuple[]",
+            },
+          ],
+          name: "multiRevokeByDelegation",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32[]",
+              name: "data",
+              type: "bytes32[]",
+            },
+          ],
+          name: "multiRevokeOffchain",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32[]",
+              name: "data",
+              type: "bytes32[]",
+            },
+          ],
+          name: "multiTimestamp",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "uid",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct RevocationRequestData",
+                  name: "data",
+                  type: "tuple",
+                },
+              ],
+              internalType: "struct RevocationRequest",
+              name: "request",
+              type: "tuple",
+            },
+          ],
+          name: "revoke",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "schema",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "uid",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "value",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct RevocationRequestData",
+                  name: "data",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "uint8",
+                      name: "v",
+                      type: "uint8",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "r",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "s",
+                      type: "bytes32",
+                    },
+                  ],
+                  internalType: "struct Signature",
+                  name: "signature",
+                  type: "tuple",
+                },
+                {
+                  internalType: "address",
+                  name: "revoker",
+                  type: "address",
+                },
+                {
+                  internalType: "uint64",
+                  name: "deadline",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct DelegatedRevocationRequest",
+              name: "delegatedRequest",
+              type: "tuple",
+            },
+          ],
+          name: "revokeByDelegation",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "data",
+              type: "bytes32",
+            },
+          ],
+          name: "revokeOffchain",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "data",
+              type: "bytes32",
+            },
+          ],
+          name: "timestamp",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "version",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        attest: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        attestByDelegation: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        getAttestation: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        getRevokeOffchain: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        getSchemaRegistry: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        getTimestamp: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        isAttestationValid: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        multiAttest: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        multiAttestByDelegation: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        multiRevoke: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        multiRevokeByDelegation: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        multiRevokeOffchain: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        multiTimestamp: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        revoke: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        revokeByDelegation: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        revokeOffchain: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        timestamp: "@ethereum-attestation-service/eas-contracts/contracts/IEAS.sol",
+        version: "@ethereum-attestation-service/eas-contracts/contracts/Semver.sol",
+        eip712Domain: "contracts/helpers/EIP1271Verifier.sol",
+        getAttestTypeHash: "contracts/helpers/EIP1271Verifier.sol",
+        getDomainSeparator: "contracts/helpers/EIP1271Verifier.sol",
+        getName: "contracts/helpers/EIP1271Verifier.sol",
+        getNonce: "contracts/helpers/EIP1271Verifier.sol",
+        getRevokeTypeHash: "contracts/helpers/EIP1271Verifier.sol",
+        increaseNonce: "contracts/helpers/EIP1271Verifier.sol",
+      },
+    },
+    MockModuleRegistry: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "getModuleTypes",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "isErc20CurrencyRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "isModuleRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "isModuleRegisteredAs",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "registerErc20Currency",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "registerModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "verifyErc20Currency",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "verifyModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleTypes: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isErc20CurrencyRegistered: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isModuleRegistered: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isModuleRegisteredAs: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        registerErc20Currency: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        registerModule: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        verifyErc20Currency: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        verifyModule: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+      },
+    },
+    MockSchemaRegistry: {
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyExists",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "uid",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "registerer",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "contract ISchemaResolver",
+                  name: "resolver",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "schema",
+                  type: "string",
+                },
+              ],
+              indexed: false,
+              internalType: "struct SchemaRecord",
+              name: "schema",
+              type: "tuple",
+            },
+          ],
+          name: "Registered",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "uid",
+              type: "bytes32",
+            },
+          ],
+          name: "getSchema",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "uid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "contract ISchemaResolver",
+                  name: "resolver",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "revocable",
+                  type: "bool",
+                },
+                {
+                  internalType: "string",
+                  name: "schema",
+                  type: "string",
+                },
+              ],
+              internalType: "struct SchemaRecord",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "schema",
+              type: "string",
+            },
+            {
+              internalType: "contract ISchemaResolver",
+              name: "resolver",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "revocable",
+              type: "bool",
+            },
+          ],
+          name: "register",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "version",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getSchema: "@ethereum-attestation-service/eas-contracts/contracts/ISchemaRegistry.sol",
+        register: "@ethereum-attestation-service/eas-contracts/contracts/ISchemaRegistry.sol",
+        version: "@ethereum-attestation-service/eas-contracts/contracts/Semver.sol",
+      },
+    },
+    TestToken: {
+      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "allowance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "needed",
+              type: "uint256",
+            },
+          ],
+          name: "ERC20InsufficientAllowance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "balance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "needed",
+              type: "uint256",
+            },
+          ],
+          name: "ERC20InsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "approver",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidApprover",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "receiver",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidReceiver",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidSender",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidSpender",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "allowance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "mint",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "transfer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        allowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        approve: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        balanceOf: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        decimals: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        name: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        symbol: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      },
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;

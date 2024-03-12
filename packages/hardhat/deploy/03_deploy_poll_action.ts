@@ -103,6 +103,9 @@ const deployEasPollActionModuleContract: DeployFunction = async function (hre: H
 
   const schema = await pollAction.registerSchema();
   console.log("registered schema: tx=", schema.hash);
+
+  await pollAction.transferOwnership("0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
+  console.log("transferred ownership to 0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
 };
 
 export default deployEasPollActionModuleContract;

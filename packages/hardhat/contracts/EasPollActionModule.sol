@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity 0.8.23;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
@@ -85,17 +85,52 @@ contract EasPollActionModule is
         bytes32 attestationUid;
     }
 
+    /**
+     * @dev Emitted when the EAS Schema is registered.
+     */
     event SchemaRegistered(SchemaRecord schemaRecord);
 
+    /**
+     * @dev Emitted when a poll is created.
+     * @param profileId The profile id of the publication author
+     * @param pubId The publication id
+     * @param poll The poll
+     */
     event PollCreated(
         uint256 indexed profileId,
         uint256 indexed pubId,
         Poll poll
     );
 
-    event AttestationValidated(Poll poll, Vote vote, bytes32 attestationUid);
-    event AttestationRevoked(bytes32 attestationUid);
-    event AttestationCreated(Poll poll, AttestedVote attestedVote);
+    /**
+     * @dev Emitted when an vote is validated.
+     * @param attestationUid The attestation uid
+     * @param poll The poll
+     * @param vote The vote
+     */
+    event AttestationValidated(
+        bytes32 indexed attestationUid,
+        Poll poll,
+        Vote vote
+    );
+
+    /**
+     * @dev Emitted when an vote is revoked.
+     * @param attestationUid The attestation uid
+     */
+    event AttestationRevoked(bytes32 indexed attestationUid);
+
+    /**
+     * @dev Emitted when an vote is created.
+     * @param attestationUid The attestation uid
+     * @param poll The poll
+     * @param vote The vote
+     */
+    event AttestationCreated(
+        bytes32 indexed attestationUid,
+        Poll poll,
+        Vote vote
+    );
 
     error PollEnded();
     error PollDoesNotExist();
@@ -143,7 +178,7 @@ contract EasPollActionModule is
         IModuleRegistry moduleRegistry,
         IEAS eas
     )
-        Ownable()
+        Ownable(msg.sender)
         HubRestricted(lensHub)
         LensModuleMetadata()
         LensModuleRegistrant(moduleRegistry)
@@ -353,7 +388,7 @@ contract EasPollActionModule is
         uint256 actorProfileId,
         address attester,
         address transactionExecutor
-    ) internal view {
+    ) private view {
         if (poll.options[0] == bytes32(0)) revert PollDoesNotExist();
 
         if (poll.endTimestamp > 0 && block.timestamp > poll.endTimestamp) {
@@ -389,7 +424,7 @@ contract EasPollActionModule is
     function _validateOptionIndex(
         uint8 optionIndex,
         Poll memory poll
-    ) internal pure {
+    ) private pure {
         if (optionIndex < 0 || poll.options[optionIndex] == bytes32(0)) {
             revert VoteInvalid();
         }
@@ -403,7 +438,7 @@ contract EasPollActionModule is
     function _validateSignedVote(
         Vote memory vote,
         Types.ProcessActionParams calldata params
-    ) internal view {
+    ) private view {
         Poll memory poll = _polls[params.publicationActedProfileId][
             params.publicationActedId
         ];
@@ -426,7 +461,7 @@ contract EasPollActionModule is
      */
     function _buildAttestationRequest(
         Vote memory vote
-    ) internal view returns (AttestationRequestData memory) {
+    ) private view returns (AttestationRequestData memory) {
         bytes memory encodedData = abi.encode(vote);
         return
             AttestationRequestData({
@@ -446,7 +481,7 @@ contract EasPollActionModule is
      */
     function _processVote(
         Types.ProcessActionParams calldata params
-    ) internal returns (AttestedVote memory) {
+    ) private returns (AttestedVote memory) {
         Vote memory vote = abi.decode(params.actionModuleData, (Vote));
 
         Poll memory poll = _polls[params.publicationActedProfileId][
@@ -487,7 +522,7 @@ contract EasPollActionModule is
      */
     function _processSignedVote(
         Types.ProcessActionParams calldata params
-    ) internal returns (AttestedVote memory) {
+    ) private returns (AttestedVote memory) {
         (Vote memory vote, Signature memory signature, uint64 deadline) = abi
             .decode(params.actionModuleData, (Vote, Signature, uint64));
 
@@ -530,7 +565,11 @@ contract EasPollActionModule is
         _attestations[profileId][pubId][actor] = attestedVote.attestationUid;
         _actors[profileId][pubId].push(actor);
 
-        emit AttestationCreated(poll, attestedVote);
+        emit AttestationCreated(
+            attestedVote.attestationUid,
+            poll,
+            attestedVote.vote
+        );
 
         return abi.encode(poll, attestedVote);
     }
@@ -560,7 +599,7 @@ contract EasPollActionModule is
         ];
         if (existingAttestation != bytes32(0)) revert VotedAlready();
 
-        emit AttestationValidated(poll, vote, attestation.uid);
+        emit AttestationValidated(attestation.uid, poll, vote);
 
         return true;
     }
@@ -580,15 +619,16 @@ contract EasPollActionModule is
 
         address[] storage actors = _actors[profileId][pubId];
         uint256 index;
+        uint256 actorsSize = actors.length;
 
-        for (uint i = 0; i < actors.length; i++) {
+        for (uint256 i; i < actorsSize; ++i) {
             if (actors[i] == actor) {
                 index = i;
                 break;
             }
         }
 
-        actors[index] = actors[actors.length - 1];
+        actors[index] = actors[actorsSize - 1];
         actors.pop();
 
         emit AttestationRevoked(attestation.uid);
