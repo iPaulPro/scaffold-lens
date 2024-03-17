@@ -2351,10 +2351,11 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     ethers: ^6.10.0
     hardhat: ^2.19.4
+    hardhat-dependency-compiler: ^1.1.3
     hardhat-deploy: ^0.11.45
     hardhat-deploy-ethers: ^0.4.1
     hardhat-gas-reporter: ^1.0.9
-    lens-modules: ^1.0.2
+    lens-modules: ^1.0.6
     prettier: ^2.8.4
     prettier-plugin-solidity: ^1.3.1
     qrcode: ^1.5.1
@@ -8413,6 +8414,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hardhat-dependency-compiler@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "hardhat-dependency-compiler@npm:1.1.3"
+  peerDependencies:
+    hardhat: ^2.0.0
+  checksum: f32bd10ef259f5b316d0dbb1ab20257e0f59780d7e374d3f71efb0c550666a400575f7acfd755cc3e9ad1adcf8a1dc72cb52f7a9d984d15f4d8f6e6d1b2e480f
+  languageName: node
+  linkType: hard
+
 "hardhat-deploy-ethers@npm:^0.4.1":
   version: 0.4.1
   resolution: "hardhat-deploy-ethers@npm:0.4.1"
@@ -9776,10 +9786,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lens-modules@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "lens-modules@npm:1.0.2"
-  checksum: 4ddb58efc6e124bbc72bd54e15d170ba6b988e9c3e7f55d8b06bca032ebb4ac8d3baa1fbef9a162cef1ad3b9f61508068241f0f092f3818020021430102b25ab
+"lens-modules@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "lens-modules@npm:1.0.6"
+  checksum: f9371dbd98caf8910c91b681d88d5d9afb989f6a114882552c242ec25437441e2e54ac670d1cb0f2727637b6785b78fff939cb4595e8b0a18d98fd6cc3632be7
   languageName: node
   linkType: hard
 

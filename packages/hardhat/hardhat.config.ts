@@ -14,6 +14,7 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import "hardhat-dependency-compiler";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -26,7 +27,7 @@ const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.21",
+    version: "0.8.23",
     settings: {
       optimizer: {
         enabled: true,
@@ -34,6 +35,13 @@ const config: HardhatUserConfig = {
         runs: 200,
       },
     },
+  },
+  dependencyCompiler: {
+    paths: [
+      "lens-modules/contracts/misc/ModuleRegistry.sol",
+      "lens-modules/contracts/modules/act/collect/CollectPublicationAction.sol",
+      "lens-modules/contracts/modules/act/collect/CollectNFT.sol",
+    ],
   },
   defaultNetwork: "localhost",
   namedAccounts: {

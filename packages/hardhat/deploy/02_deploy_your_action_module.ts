@@ -3,43 +3,29 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
-import { TipActionModule } from "../typechain-types";
+import { YourActionModule } from "../typechain-types";
 
 /**
- * Generates the metadata for the TipActionModule contract compliant with the Module Metadata Standard at:
+ * Generates the metadata for the YourActionModule contract compliant with the Module Metadata Standard at:
  * https://docs.lens.xyz/docs/module-metadata-standard
  */
 const metadata = module({
-  name: "TipActionModule",
-  title: "Tip Open Action",
-  description: "Allow users to tip the creator of a publication",
-  authors: ["dev@lens.xyz", "paul@paulburke.co", "martijn.vanhalen@gmail.com"],
-  initializeCalldataABI: JSON.stringify([
-    {
-      type: "address",
-      name: "tipReceiver",
-    },
-  ]),
-  processCalldataABI: JSON.stringify([
-    {
-      type: "address",
-      name: "currency",
-    },
-    {
-      type: "uint256",
-      name: "tipAmount",
-    },
-  ]),
+  name: "YourActionModule",
+  title: "Your Open Action",
+  description: "Description of your action",
+  authors: ["some@email.com"],
+  initializeCalldataABI: JSON.stringify([]),
+  processCalldataABI: JSON.stringify([]),
   attributes: [],
 });
 
 /**
- * Deploys a contract named "TipActionModule" using the deployer account and
+ * Deploys a contract named "YourActionModule" using the deployer account and
  * constructor arguments set to the deployer address
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployTipActionModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployYourActionModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -61,7 +47,7 @@ const deployTipActionModuleContract: DeployFunction = async function (hre: Hardh
   // This allows us to run tests locally with the same flow as on-chain
   let moduleRegistry: string | undefined;
   try {
-    const { address } = await get("MockModuleRegistry");
+    const { address } = await get("ModuleRegistry");
     moduleRegistry = address;
   } catch (e) {}
 
@@ -70,8 +56,8 @@ const deployTipActionModuleContract: DeployFunction = async function (hre: Hardh
     moduleRegistry = process.env.MODULE_REGISTRY;
   }
 
-  // Deploy the TipActionModule contract
-  await deploy("TipActionModule", {
+  // Deploy the YourActionModule contract
+  await deploy("YourActionModule", {
     from: deployer,
     args: [lensHubAddress, moduleRegistry],
     log: true,
@@ -81,22 +67,22 @@ const deployTipActionModuleContract: DeployFunction = async function (hre: Hardh
   });
 
   // Get the deployed contract
-  const tipPublicationAction = await hre.ethers.getContract<TipActionModule>("TipActionModule", deployer);
+  const yourPublicationAction = await hre.ethers.getContract<YourActionModule>("YourActionModule", deployer);
 
   // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
-  await tipPublicationAction.setModuleMetadataURI(metadataURI);
+  await yourPublicationAction.setModuleMetadataURI(metadataURI);
 
   // Add a delay before calling registerModule to allow for propagation
   await new Promise(resolve => setTimeout(resolve, 10000));
 
   // Register the module with the ModuleRegistry
-  const registered = await tipPublicationAction.registerModule();
+  const registered = await yourPublicationAction.registerModule();
   console.log("registered open action: tx=", registered.hash);
 };
 
-export default deployTipActionModuleContract;
+export default deployYourActionModuleContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployTipActionModuleContract.tags = ["TipActionModule"];
+// e.g. yarn deploy --tags YourActionModule
+deployYourActionModuleContract.tags = ["YourActionModule"];
