@@ -4,6 +4,7 @@ import { YourCollectModule } from "../typechain-types";
 import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
+import { COLLECT_NFT, COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
  * Generates the metadata for the YourCollectModule contract compliant with the Module Metadata Standard at:
@@ -41,7 +42,7 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
 
   // This is the address of the LensHub contract on the network we're deploying to
   // When running locally, this should be the address of burner wallet used in the nextjs app
-  const lensHubAddress = process.env.LENS_HUB;
+  const lensHubAddress = LENS_HUB;
 
   // First check to see if there's a local mocked ModuleRegistry contract deployed
   // This allows us to run tests locally with the same flow as on-chain
@@ -53,7 +54,7 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
 
   // If there's no local mocked ModuleRegistry, use the live address from the environment
   if (!moduleRegistry) {
-    moduleRegistry = process.env.MODULE_REGISTRY;
+    moduleRegistry = MODULE_REGISTRY;
   }
 
   // Next, check to see if there's a local mocked CollectNFT contract deployed
@@ -66,7 +67,7 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
 
   // If there's no local mocked CollectNFT, use the live address from the environment
   if (!collectNFT) {
-    collectNFT = process.env.COLLECT_NFT;
+    collectNFT = COLLECT_NFT;
   }
 
   // Next, check to see if there's a local mocked CollectPublicationAction contract deployed
@@ -79,7 +80,7 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
 
   // If there's no local mocked CollectPublicationAction, use the live address from the environment
   if (!collectPublicationAction) {
-    collectPublicationAction = process.env.COLLECT_PUBLICATION_ACTION;
+    collectPublicationAction = COLLECT_PUBLICATION_ACTION;
   }
 
   // Deploy the YourCollectModule contract

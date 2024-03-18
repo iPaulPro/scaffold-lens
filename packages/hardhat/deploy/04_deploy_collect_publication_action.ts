@@ -2,12 +2,13 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { ethers } from "hardhat";
 import { CollectPublicationAction } from "../typechain-types";
+import { COLLECT_NFT, LENS_HUB, MODULE_REGISTRY } from "../config";
 
 const deployCollectPublicationAction: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
-  const lensHubAddress = process.env.LENS_HUB;
+  const lensHubAddress = LENS_HUB;
 
   // First check to see if there's a local mocked CollectNFT contract deployed
   // This allows us to run tests locally with the same flow as on-chain
@@ -19,7 +20,7 @@ const deployCollectPublicationAction: DeployFunction = async function (hre: Hard
 
   // If there's no local mocked CollectNFT, use the live address from the environment
   if (!collectNft) {
-    collectNft = process.env.COLLECT_NFT;
+    collectNft = COLLECT_NFT;
   }
 
   const salt = ethers.keccak256(ethers.toUtf8Bytes("something very unique"));
@@ -48,7 +49,7 @@ const deployCollectPublicationAction: DeployFunction = async function (hre: Hard
 
   // If there's no local mocked ModuleRegistry, use the live address from the environment
   if (!moduleRegistry) {
-    moduleRegistry = process.env.MODULE_REGISTRY;
+    moduleRegistry = MODULE_REGISTRY;
   }
 
   const moduleRegistryContract = await ethers.getContractAt("ModuleRegistry", moduleRegistry!);

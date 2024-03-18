@@ -4,6 +4,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
 import { YourActionModule } from "../typechain-types";
+import { LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
  * Generates the metadata for the YourActionModule contract compliant with the Module Metadata Standard at:
@@ -41,7 +42,7 @@ const deployYourActionModuleContract: DeployFunction = async function (hre: Hard
 
   // This is the address of the LensHub contract on the network we're deploying to
   // When running locally, this should be the address of burner wallet used in the nextjs app
-  const lensHubAddress = process.env.LENS_HUB;
+  const lensHubAddress = LENS_HUB;
 
   // First check to see if there's a local mocked ModuleRegistry contract deployed
   // This allows us to run tests locally with the same flow as on-chain
@@ -53,7 +54,7 @@ const deployYourActionModuleContract: DeployFunction = async function (hre: Hard
 
   // If there's no local mocked ModuleRegistry, use the live address from the environment
   if (!moduleRegistry) {
-    moduleRegistry = process.env.MODULE_REGISTRY;
+    moduleRegistry = MODULE_REGISTRY;
   }
 
   // Deploy the YourActionModule contract

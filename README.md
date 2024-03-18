@@ -7,21 +7,9 @@ Features:
 - ✅ Deploy a mock ModuleRegistry contract
 - ✅ Deploy an ERC20 token contract used for whitelisted tips
 - ✅ Deploy an Open Action Module contract
+- ✅ Deploy a Collect Action Module contract
 - ✅ Debug local contract calls with a graphical interface
 - ✅ Verify contracts on Etherscan
-
-## Using the TipActionModule Contract
-
-To use the live `TipActionModule` deployed by [Orna](https://orna.art), you can find the contract address and ABI from the dedicated repo: 
-
-https://github.com/mvanhalen/TipActionModule
-
-It also includes information about the Orna tip indexer API, which allows you to query for tips for a given publication or user.
-
-This repo demonstrates how to debug and test the `TipActionModule`. Additions to the Orna contract include:
-- ✅ Publishes metadata file on Arweave during deployment and sets a `metadataURI` field on the module
-- ✅ Registers the module with the [ModuleRegistry](https://docs.lens.xyz/docs/module-registry) contract during deployment
-- ✅ Adds unit tests with Chai
 
 ## Contents
 
@@ -68,18 +56,11 @@ To get started with Scaffold-Lens, follow the steps below:
     ```
 
    Visit your app on: `http://localhost:3000`. You can interact with your smart contracts using the contract component and review all transactions in the block explorer. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+   
+   Copy the burner wallet address from the top-right navbar menu.
 
 4. **Set up environment**  
-   To test on a local chain, you'll need to set up a `.env.development` file in the `packages/hardhat` directory. You can use the `.env.development.example` file as a template.
-    ```bash
-    # This should be the address of the eth-scaffold burner wallet when running locally
-    LENS_HUB=0x19F380b7Bd20c49e48DBD53C732880166C792daE
-    ```
-   `LENS_HUB` should be set to the address of the burner wallet, found when running the nextjs app locally. This will allow you to test `onlyHub` functions on the contract.
-
-    <img src="assets/nextjs-screenshot.jpg" width="400" alt="Screenshot of nextjs client"/>
-
-   **NOTE:** The burner wallet created in the nextjs app is different from the deployer wallet used to deploy the contracts. You can think of the burner as a user wallet.
+    Open `config.ts` in the `packages/hardhat` directory and set `LENS_HUB` to the address of the burner wallet provided by the nextjs project.
 
 5. **Deploy**  
    On a third terminal, from the root directory, deploy the test contract locally:
@@ -100,27 +81,23 @@ Then navigate to http://localhost:3000/debug to open the debugger. You can now c
 
 ### Debugging contracts
 
-1. Ensure the `LENS_HUB` environment variable is set to the address of the burner wallet:
-    ```bash
-    LENS_HUB=""
-    ```
-2. Run the chain and deploy the `TipActionModule` and mock contracts to the local network, and start the app:
+1. Run the chain and deploy the `YourActionModule` and mock contracts to the local network, and start the app:
     ```shell
     yarn chain
-    yarn deploy:local
+    yarn deploy:action:local
     yarn start
     ```
-3. Navigate to http://localhost:3000/debug.
-4. Select the `TestToken` contract and call the `mint` function to mint tokens for the burner wallet.
-5. Copy the address of the `TipActionModule` and the `approve` spending from the `TipActionModule`.
-6. Select the `TipActionModule` contract and call the `initializePublicationAction` function with a receiver address.
-7. Call the `processPublicationAction` with the tip data. 
+2. Navigate to http://localhost:3000/debug.
+3. Select the `TestToken` contract and call the `mint` function to mint tokens for the burner wallet.
+4. Copy the address of the `YourActionModule` and the `approve` spending from the `YourActionModule`.
+5. Select the `YourActionModule` contract and call the `initializePublicationAction` function with a receiver address.
+6. Call the `processPublicationAction` with the call data. 
 
 ### Dealing with Action Module calldata
 
 You can use https://abi.hashex.org/ to encode the data needed for the `initializePublicationAction` and `processPublicationAction` functions.
 
-So for example, if you want to call the `processPublicationAction` function with a $10 USDC tip, you'd first need to encode the data. The contract expects the following format for the `processCalldataABI`:
+So for example, if you want to call the `processPublicationAction` function on the `TipActoinModule` with a $10 USDC tip, you'd first need to encode the data. The contract expects the following format for the `processCalldataABI`:
 ```json
 {
   "currency": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
@@ -138,6 +115,8 @@ You end up with encoded calldata:
 
 **NOTE:** You will add a `0x` prefix to the encoded calldata copied from HashEx before calling the function.
 
+You can also use `ethers` or the `@lens-protocol/client` to encode the abi parameters.
+
 ## Testing
 
 Run the smart contract unit tests from the root directory.
@@ -149,17 +128,10 @@ This will run the tests located in `packages/hardhat/test` with [Chai](https://g
 
 ## Deploying to Mumbai
 
-**NOTE:** There is no need to publish your own `TipActionModule` if all you want is to add tipping support to your app. In that case you should use the [verified contract by Orna](https://github.com/mvanhalen/TipActionModule). 
-
 Once you are ready to deploy your smart contracts, there are a few things you need to adjust.
 
 1. **Set up environment**  
-   To deploy on Mumbai, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.example` file as a template.  You'll need to provide the current addresses of the Lens Hub and Module Registry contracts. (These should be provided by Lens Protocol).
-   ```bash
-   # These should be provided by https://docs.lens.xyz/docs/deployed-contract-addresses
-   LENS_HUB=0x4fbffF20302F3326B20052ab9C217C44F6480900
-   MODULE_REGISTRY=0x4BeB63842BB800A1Da77a62F2c74dE3CA39AF7C0
-   ```
+   To deploy on Mumbai, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.example` file as a template.
 
    Next, generate a new account or add one to deploy the contract(s) from. Additionally, you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Mumbai).
    ```bash
@@ -172,7 +144,7 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    You can generate a random account / private key with `yarn generate` or add the private key of your crypto wallet. `yarn generate` will create a random account and add the DEPLOYER_PRIVATE_KEY to the .env file. You can check the generated account with `yarn account`.
 
 2. **Deploy**  
-   To deploy the `TipActionModule` to Mumbai you can run
+   To deploy the `YourActionModule` to Mumbai you can run
 
    ```shell
    yarn deploy:mumbai
@@ -182,24 +154,22 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    You can verify your smart contract on Etherscan by running:
 
    ```shell
-   yarn verify
+   yarn verify:mumbai
    ```
 ---
 
 ## Deploying to Polygon Mainnet
 
-**NOTE:** There is no need to publish your own `TipActionModule` if all you want is to add tipping support to your app. In that case you should use the [verified contract by Orna](https://github.com/mvanhalen/TipActionModule).
-
-Follow the same directions for deploying to Mumbai, but use the `.env.production` file instead of `.env.staging`. You will also need to set the `ALCHEMY_API_KEY` with a mainnet API key.
+Follow the same directions for deploying to Mumbai, but use the `.env` file instead of `.env.staging` and `:mainnet` in the yarn commands, instaead of `:mumbai`. You will also need to set the `ALCHEMY_API_KEY` with a mainnet API key.
 
 ## Using your own contracts
 
 If you want to use your own contracts there are a few simple steps. 
 
-1. Replace the `TipActionModule.sol` contract in `/packages/hardhat/contracts` with your own. 
+1. Replace the `YourActionModule.sol` contract in `/packages/hardhat/contracts` with your own. 
 2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the mock contracts.
 3. Change the tag in the `deploy:*` scripts in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
-4. (Optional) Remove the `/packages/hardhat/contracts/helpers` directory and related deploy scripts unless you want to use the `MockModuleRegistry` and `TestToken` contracts for testing and debugging.
+4. (Optional) Remove the `/packages/hardhat/contracts/helpers` directory and related deploy scripts unless you want to use the `TestToken` contract for testing and debugging.
 
 ## About Scaffold-ETH 2
 

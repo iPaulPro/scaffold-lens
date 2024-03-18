@@ -1,12 +1,13 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { ethers } from "hardhat";
+import { LENS_HUB } from "../config";
 
 const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const lensHubAddress = process.env.LENS_HUB;
+  const lensHubAddress = LENS_HUB;
 
   const factory = await ethers.getContractFactory("CollectPublicationAction");
   const initCode = factory.bytecode;
