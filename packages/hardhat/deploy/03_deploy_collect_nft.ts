@@ -11,8 +11,10 @@ const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvi
 
   const factory = await ethers.getContractFactory("CollectPublicationAction");
   const initCode = factory.bytecode;
+  console.log("deployCollectNFT: initCode", initCode);
   const salt = ethers.keccak256(ethers.toUtf8Bytes("something very unique"));
   const collectPublicationActionAddress = ethers.getCreate2Address(deployer, salt, ethers.keccak256(initCode));
+  console.log("creating CollectNFT with CollectPublicationAction address:", collectPublicationActionAddress);
 
   await deploy("CollectNFT", {
     from: deployer,

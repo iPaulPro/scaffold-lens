@@ -1,32 +1,40 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { YourCollectModule } from "../typechain-types";
+import { PayWhatYouWantCollectModule } from "../typechain-types";
 import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
-import { COLLECT_NFT, COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
+import { COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
- * Generates the metadata for the YourCollectModule contract compliant with the Module Metadata Standard at:
+ * Generates the metadata for the PayWhatYouWantCollectModule contract compliant with the Module Metadata Standard at:
  * https://docs.lens.xyz/docs/module-metadata-standard
  */
 const metadata = module({
-  name: "YourCollectModule",
-  title: "Your Collect Action",
-  description: "Description of your collect action",
-  authors: ["some@email.com"],
-  initializeCalldataABI: JSON.stringify([]),
+  name: "PayWhatYouWantCollectModule",
+  title: "Pay What You Want Collect Action",
+  description: "Allow users to pay what they want for a collectible",
+  authors: ["paul@paulburke.co"],
+  initializeCalldataABI: JSON.stringify([
+    { type: "uint160", name: "amount" },
+    { type: "uint96", name: "collectLimit" },
+    { type: "address", name: "currency" },
+    { type: "uint16", name: "referralFee" },
+    { type: "bool", name: "followerOnly" },
+    { type: "uint72", name: "endTimestamp" },
+    { type: "address", name: "recipient" },
+  ]),
   processCalldataABI: JSON.stringify([]),
   attributes: [],
 });
 
 /**
- * Deploys a contract named "YourCollectModule" using the deployer account and
+ * Deploys a contract named "PayWhatYouWantCollectModule" using the deployer account and
  * constructor arguments set to the deployer address
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourCollectModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -57,19 +65,6 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
     moduleRegistry = MODULE_REGISTRY;
   }
 
-  // Next, check to see if there's a local mocked CollectNFT contract deployed
-  // This allows us to run tests locally with the same flow as on-chain
-  let collectNFT: string | undefined;
-  try {
-    const { address } = await get("CollectNFT");
-    collectNFT = address;
-  } catch (e) {}
-
-  // If there's no local mocked CollectNFT, use the live address from the environment
-  if (!collectNFT) {
-    collectNFT = COLLECT_NFT;
-  }
-
   // Next, check to see if there's a local mocked CollectPublicationAction contract deployed
   // This allows us to run tests locally with the same flow as on-chain
   let collectPublicationAction: string | undefined;
@@ -83,10 +78,10 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
     collectPublicationAction = COLLECT_PUBLICATION_ACTION;
   }
 
-  // Deploy the YourCollectModule contract
-  await deploy("YourCollectModule", {
+  // Deploy the PayWhatYouWantCollectModule contract
+  await deploy("PayWhatYouWantCollectModule", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationAction, moduleRegistry, deployer],
+    args: [lensHubAddress, collectPublicationAction, moduleRegistry],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -94,7 +89,10 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
   });
 
   // Get the deployed contract
-  const yourCollectModule = await hre.ethers.getContract<YourCollectModule>("YourCollectModule", deployer);
+  const yourCollectModule = await hre.ethers.getContract<PayWhatYouWantCollectModule>(
+    "PayWhatYouWantCollectModule",
+    deployer,
+  );
 
   // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
@@ -106,11 +104,11 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
   // Register the module with the Publication Action
   const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);
   await publicationActionContract.registerCollectModule(await yourCollectModule.getAddress());
-  console.log("Registered YourCollectModule with CollectPublicationAction");
+  console.log("Registered PayWhatYouWantCollectModule with CollectPublicationAction");
 };
 
-export default deployYourCollectModuleContract;
+export default deployPayWhatYouWantCollectModuleContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourCollectModule
-deployYourCollectModuleContract.tags = ["YourCollectModule"];
+// e.g. yarn deploy --tags PayWhatYouWantCollectModule
+deployPayWhatYouWantCollectModuleContract.tags = ["PayWhatYouWantCollectModule"];
