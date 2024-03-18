@@ -4,7 +4,7 @@ import { YourCollectModule } from "../typechain-types";
 import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
-import { COLLECT_NFT, COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
+import { COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
  * Generates the metadata for the YourCollectModule contract compliant with the Module Metadata Standard at:
@@ -57,19 +57,6 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
     moduleRegistry = MODULE_REGISTRY;
   }
 
-  // Next, check to see if there's a local mocked CollectNFT contract deployed
-  // This allows us to run tests locally with the same flow as on-chain
-  let collectNFT: string | undefined;
-  try {
-    const { address } = await get("CollectNFT");
-    collectNFT = address;
-  } catch (e) {}
-
-  // If there's no local mocked CollectNFT, use the live address from the environment
-  if (!collectNFT) {
-    collectNFT = COLLECT_NFT;
-  }
-
   // Next, check to see if there's a local mocked CollectPublicationAction contract deployed
   // This allows us to run tests locally with the same flow as on-chain
   let collectPublicationAction: string | undefined;
@@ -86,7 +73,7 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
   // Deploy the YourCollectModule contract
   await deploy("YourCollectModule", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationAction, moduleRegistry, deployer],
+    args: [lensHubAddress, collectPublicationAction, moduleRegistry],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
