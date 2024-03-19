@@ -2,23 +2,30 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { ethers } from "hardhat";
 import { LENS_HUB } from "../config";
+import { getContractAddress } from "@ethersproject/address";
 
 const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const lensHubAddress = LENS_HUB;
+  const [owner] = await ethers.getSigners();
+  const nonce = await owner.getNonce();
 
-  const factory = await ethers.getContractFactory("CollectPublicationAction");
-  const initCode = factory.bytecode;
-  console.log("deployCollectNFT: initCode", initCode);
-  const salt = ethers.keccak256(ethers.toUtf8Bytes("something very unique"));
-  const collectPublicationActionAddress = ethers.getCreate2Address(deployer, salt, ethers.keccak256(initCode));
-  console.log("creating CollectNFT with CollectPublicationAction address:", collectPublicationActionAddress);
+  const collectNftAddress = getContractAddress({
+    from: owner.address,
+    nonce,
+  });
+  console.log("deployCollectNFT: collectNftAddress", collectNftAddress);
+
+  const collectPublicationActionAddress = getContractAddress({
+    from: owner.address,
+    nonce: nonce + 1,
+  });
+  console.log("deployCollectNFT: collectPublicationActionAddress", collectPublicationActionAddress);
 
   await deploy("CollectNFT", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationActionAddress],
+    args: [LENS_HUB, collectPublicationActionAddress],
     log: true,
     autoMine: true,
   });

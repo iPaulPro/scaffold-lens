@@ -96,15 +96,15 @@ contract PayWhatYouWantCollectModule is
         );
         _validateInitData(initData);
         BaseFeeCollectModuleInitData
-            memory baseInitData = BaseFeeCollectModuleInitData(
-                0,
-                initData.collectLimit,
-                address(0),
-                initData.referralFee,
-                initData.followerOnly,
-                initData.endTimestamp,
-                initData.recipient
-            );
+            memory baseInitData = BaseFeeCollectModuleInitData({
+                amount: 0,
+                collectLimit: initData.collectLimit,
+                currency: address(0),
+                referralFee: initData.referralFee,
+                followerOnly: initData.followerOnly,
+                endTimestamp: initData.endTimestamp,
+                recipient: initData.recipient
+            });
         _storeBasePublicationCollectParameters(profileId, pubId, baseInitData);
         return data;
     }
@@ -124,6 +124,11 @@ contract PayWhatYouWantCollectModule is
             processCollectParams.data,
             (address, uint256)
         );
+
+        // free collect
+        if (amount == 0) {
+            return;
+        }
 
         _verifyErc20Currency(currency);
 

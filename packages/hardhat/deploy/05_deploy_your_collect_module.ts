@@ -4,7 +4,7 @@ import { PayWhatYouWantCollectModule } from "../typechain-types";
 import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
-import { COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
+import { COLLECT_PUBLICATION_ACTION, isLocalHost, LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
  * Generates the metadata for the PayWhatYouWantCollectModule contract compliant with the Module Metadata Standard at:
@@ -16,9 +16,7 @@ const metadata = module({
   description: "Allow users to pay what they want for a collectible",
   authors: ["paul@paulburke.co"],
   initializeCalldataABI: JSON.stringify([
-    { type: "uint160", name: "amount" },
     { type: "uint96", name: "collectLimit" },
-    { type: "address", name: "currency" },
     { type: "uint16", name: "referralFee" },
     { type: "bool", name: "followerOnly" },
     { type: "uint72", name: "endTimestamp" },
@@ -47,10 +45,6 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   */
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
-
-  // This is the address of the LensHub contract on the network we're deploying to
-  // When running locally, this should be the address of burner wallet used in the nextjs app
-  const lensHubAddress = LENS_HUB;
 
   // First check to see if there's a local mocked ModuleRegistry contract deployed
   // This allows us to run tests locally with the same flow as on-chain
@@ -81,7 +75,7 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   // Deploy the PayWhatYouWantCollectModule contract
   await deploy("PayWhatYouWantCollectModule", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationAction, moduleRegistry],
+    args: [LENS_HUB, collectPublicationAction, moduleRegistry],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -98,8 +92,10 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   const metadataURI = await uploadMetadata(metadata);
   await yourCollectModule.setModuleMetadataURI(metadataURI);
 
-  // Add a delay before calling registerModule to allow for propagation
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (!isLocalHost) {
+    // Add a delay before calling registerModule to allow for propagation
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
 
   // Register the module with the Publication Action
   const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);

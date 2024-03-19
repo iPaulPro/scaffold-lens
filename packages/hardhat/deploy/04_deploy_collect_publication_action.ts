@@ -8,8 +8,6 @@ const deployCollectPublicationAction: DeployFunction = async function (hre: Hard
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
-  const lensHubAddress = LENS_HUB;
-
   // First check to see if there's a local mocked CollectNFT contract deployed
   // This allows us to run tests locally with the same flow as on-chain
   let collectNft: string | undefined;
@@ -23,12 +21,9 @@ const deployCollectPublicationAction: DeployFunction = async function (hre: Hard
     collectNft = COLLECT_NFT;
   }
 
-  const salt = ethers.keccak256(ethers.toUtf8Bytes("something very unique"));
-
   await deploy("CollectPublicationAction", {
     from: deployer,
-    args: [lensHubAddress, collectNft, deployer],
-    deterministicDeployment: salt,
+    args: [LENS_HUB, collectNft, deployer],
     log: true,
     autoMine: true,
   });
