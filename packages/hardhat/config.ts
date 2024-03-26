@@ -4,7 +4,7 @@ export const isMainnet = process.env.NETWORK === "polygon";
 export const isLocalHost = process.env.NETWORK === "localhost";
 
 export const LENS_HUB = isLocalHost
-  ? "0x0c44c12b458de60DFB94f9050f36b27F6C52Af61" // <-- the burner wallet from the nextjs project
+  ? "0x0DF39c234Cc8212C76f0405Fdb8BaaF9f039963e" // <-- the burner wallet from the nextjs project
   : isMainnet
   ? LensContracts.mainnet.LensHubProxy
   : LensContracts.testnet.LensHubProxy;

@@ -49,7 +49,7 @@ const deployCollectPublicationAction: DeployFunction = async function (hre: Hard
 
   const moduleRegistryContract = await ethers.getContractAt("ModuleRegistry", moduleRegistry!);
   await moduleRegistryContract.registerModule(await publicationAction.getAddress(), 1);
-  console.log("Registered CollectPublicationAction with ModuleRegistry");
+  console.log("registered CollectPublicationAction with ModuleRegistry");
 };
 
 export default deployCollectPublicationAction;

@@ -12,17 +12,29 @@ import { COLLECT_PUBLICATION_ACTION, isLocalHost, LENS_HUB, MODULE_REGISTRY } fr
  */
 const metadata = module({
   name: "PayWhatYouWantCollectModule",
-  title: "Pay What You Want Collect Action",
-  description: "Allow users to pay what they want for a collectible",
+  title: "Pay What You Want Collect Module",
+  description: "Allow users to pay what they want to collect the publication.",
   authors: ["paul@paulburke.co"],
   initializeCalldataABI: JSON.stringify([
+    { type: "uint160", name: "amountFloor" },
     { type: "uint96", name: "collectLimit" },
+    { type: "address", name: "currency" },
     { type: "uint16", name: "referralFee" },
     { type: "bool", name: "followerOnly" },
     { type: "uint72", name: "endTimestamp" },
-    { type: "address", name: "recipient" },
+    {
+      type: "tuple[]",
+      name: "recipients",
+      components: [
+        { type: "address", name: "recipient" },
+        { type: "uint16", name: "split" },
+      ],
+    },
   ]),
-  processCalldataABI: JSON.stringify([]),
+  processCalldataABI: JSON.stringify([
+    { type: "address", name: "currency" },
+    { type: "uint256", name: "amount" },
+  ]),
   attributes: [],
 });
 
@@ -83,14 +95,14 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   });
 
   // Get the deployed contract
-  const yourCollectModule = await hre.ethers.getContract<PayWhatYouWantCollectModule>(
+  const collectModule = await hre.ethers.getContract<PayWhatYouWantCollectModule>(
     "PayWhatYouWantCollectModule",
     deployer,
   );
 
   // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
-  await yourCollectModule.setModuleMetadataURI(metadataURI);
+  await collectModule.setModuleMetadataURI(metadataURI);
 
   if (!isLocalHost) {
     // Add a delay before calling registerModule to allow for propagation
@@ -99,8 +111,8 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
 
   // Register the module with the Publication Action
   const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);
-  await publicationActionContract.registerCollectModule(await yourCollectModule.getAddress());
-  console.log("Registered PayWhatYouWantCollectModule with CollectPublicationAction");
+  await publicationActionContract.registerCollectModule(await collectModule.getAddress());
+  console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction");
 };
 
 export default deployPayWhatYouWantCollectModuleContract;
