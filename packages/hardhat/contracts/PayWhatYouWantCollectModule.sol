@@ -47,7 +47,7 @@ struct PayWhatYouWantCollectModuleInitData {
     uint16 referralFee;
     bool followerOnly;
     uint72 endTimestamp;
-    RecipientData[] recipients;
+    RecipientData[5] recipients;
 }
 
 /**
@@ -191,8 +191,16 @@ contract PayWhatYouWantCollectModule is
                 recipient: address(0)
             });
 
+        RecipientData[] memory recipients = new RecipientData[](
+            initData.recipients.length
+        );
+
+        for (uint256 i = 0; i < initData.recipients.length; i++) {
+            recipients[i] = initData.recipients[i];
+        }
+
         _validateInitData(initData);
-        _validateAndStoreRecipients(initData.recipients, profileId, pubId);
+        _validateAndStoreRecipients(recipients, profileId, pubId);
         _storeBasePublicationCollectParameters(profileId, pubId, baseInitData);
 
         return data;
@@ -219,7 +227,13 @@ contract PayWhatYouWantCollectModule is
         uint256 totalSplits;
         uint256 i;
         while (i < len) {
-            if (recipients[i].split == 0) revert InvalidRecipientSplits();
+            if (
+                recipients[i].recipient != address(0) &&
+                recipients[i].split == 0
+            ) {
+                revert InvalidRecipientSplits();
+            }
+
             totalSplits += recipients[i].split;
 
             // Store each recipient while looping - avoids extra gas costs in successful cases
