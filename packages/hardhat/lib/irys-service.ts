@@ -4,12 +4,15 @@ import { ModuleMetadata } from "@lens-protocol/metadata";
 const getIrys = async () => {
   // Devnet RPC URLs change often, use a recent one from https://chainlist.org/chain/80001
   const providerUrl = "https://endpoints.omniatech.io/v1/matic/mumbai/public";
+  const isMainnet = process.env.NETWORK === "polygon";
 
   const irys = new Irys({
-    url: "https://devnet.irys.xyz",
+    url: isMainnet ? "https://node2.irys.xyz" : "https://devnet.irys.xyz",
     token: "matic",
     key: process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
-    config: { providerUrl }, // Optional provider URL, only required when using Devnet
+    ...(!isMainnet && {
+      config: { providerUrl }, // Optional provider URL, only required when using Devnet
+    }),
   });
   return irys;
 };
