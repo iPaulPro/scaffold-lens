@@ -13,7 +13,7 @@ import { COLLECT_PUBLICATION_ACTION, isLocalHost, LENS_HUB, MODULE_REGISTRY } fr
 const metadata = module({
   name: "PayWhatYouWantCollectModule",
   title: "Pay What You Want Collect Module",
-  description: "Allow users to pay what they want to collect the publication.",
+  description: "Allows users to collect publications with any denomination of any token.",
   authors: ["paul@paulburke.co"],
   initializeCalldataABI: JSON.stringify([
     { type: "uint160", name: "amountFloor" },
@@ -111,8 +111,11 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
 
   // Register the module with the Publication Action
   const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);
-  await publicationActionContract.registerCollectModule(await collectModule.getAddress());
-  console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction");
+  const registerTx = await publicationActionContract.registerCollectModule(await collectModule.getAddress());
+  console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction", registerTx);
+
+  // await collectModule.transferOwnership("0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
+  // console.log("registered transferred ownership to 0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
 };
 
 export default deployPayWhatYouWantCollectModuleContract;

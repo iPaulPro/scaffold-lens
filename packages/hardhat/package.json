@@ -9,7 +9,7 @@
     "deploy:action:local": "NODE_ENV=development hardhat deploy --tags TestToken,MockModuleRegistry,YourActionModule,generateTsAbis",
     "deploy:collect:local": "NODE_ENV=development hardhat deploy --tags TestToken,ModuleRegistry,CollectNFT,CollectPublicationAction,PayWhatYouWantCollectModule,generateTsAbis",
     "deploy:mumbai": "NODE_ENV=staging hardhat deploy --tags PayWhatYouWantCollectModule,generateTsAbis --network polygonMumbai",
-    "deploy:mainnet": "NODE_ENV=production hardhat deploy --tags YourActionModule --network polygon",
+    "deploy:mainnet": "NODE_ENV=production hardhat deploy --tags PayWhatYouWantCollectModule --network polygon",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "NODE_ENV=development hardhat run scripts/generateAccount.ts",
     "flatten": "hardhat flatten",

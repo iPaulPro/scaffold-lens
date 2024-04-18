@@ -4,6 +4,2764 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    CollectNFT: {
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "Initialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonERC721ReceiverImplementer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotOwnerOrApproved",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotProfileOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "burn",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDomainSeparator",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getSourcePublicationPointer",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "mint",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "mintTimestampOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "salePrice",
+              type: "uint256",
+            },
+          ],
+          name: "royaltyInfo",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "royaltiesInBasisPoints",
+              type: "uint256",
+            },
+          ],
+          name: "setRoyalty",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenDataOf",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "mintTimestamp",
+                  type: "uint96",
+                },
+              ],
+              internalType: "struct Types.TokenData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        royaltyInfo: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        setRoyalty: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        supportsInterface: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        ACTION_MODULE: "lens-modules/contracts/modules/ActionRestricted.sol",
+        getSourcePublicationPointer: "lens-modules/contracts/interfaces/ICollectNFT.sol",
+        initialize: "lens-modules/contracts/interfaces/ICollectNFT.sol",
+        mint: "lens-modules/contracts/interfaces/ICollectNFT.sol",
+      },
+    },
+    CollectPublicationAction: {
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "collectNFTImpl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CollectNotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotCollectModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadata",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CollectModuleRegistered",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "collectNFT",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CollectNFTDeployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectedProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectedPubId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectorProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "nftRecipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "collectActionData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "collectActionResult",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "collectNFT",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Collected",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "COLLECT_NFT_IMPL",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getCollectData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "collectModule",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "collectNFT",
+                  type: "address",
+                },
+              ],
+              internalType: "struct CollectPublicationAction.CollectData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+          ],
+          name: "isCollectModuleRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessActionParams",
+              name: "processActionParams",
+              type: "tuple",
+            },
+          ],
+          name: "processPublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+          ],
+          name: "registerCollectModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+          ],
+          name: "verifyCollectModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        initialize: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        initializePublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+        processPublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+      },
+    },
+    ModuleRegistry: {
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "ModuleDoesNotSupportType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotLensModule",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadata",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ModuleRegistered",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "erc20CurrencyAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "symbol",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint8",
+              name: "decimals",
+              type: "uint8",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "erc20CurrencyRegistered",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "getModuleTypes",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "isErc20CurrencyRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "isModuleRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "isModuleRegisteredAs",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "registerErc20Currency",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "registrationWasPerformed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "registerModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "registrationWasPerformed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "verifyErc20Currency",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "verifyModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleTypes: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isErc20CurrencyRegistered: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isModuleRegistered: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isModuleRegisteredAs: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        registerErc20Currency: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        registerModule: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        verifyErc20Currency: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        verifyModule: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+      },
+    },
+    PayWhatYouWantCollectModule: {
+      address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CollectExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidInitParams",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOffer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRecipientSplits",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MintLimitExceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "calculateFee",
+          outputs: [
+            {
+              internalType: "uint160",
+              name: "",
+              type: "uint160",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getBasePublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amountFloor",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint16",
+                      name: "split",
+                      type: "uint16",
+                    },
+                  ],
+                  internalType: "struct RecipientData[]",
+                  name: "recipients",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct PayWhatYouWantCollectProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationCollectModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "processCollect",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ACTION_MODULE: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        calculateFee: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        getBasePublicationData: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        initializePublicationCollectModule: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        processCollect: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+      },
+    },
+    TestToken: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "allowance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "subtractedValue",
+              type: "uint256",
+            },
+          ],
+          name: "decreaseAllowance",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "addedValue",
+              type: "uint256",
+            },
+          ],
+          name: "increaseAllowance",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "mint",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "transfer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        allowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        approve: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        balanceOf: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        decimals: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        decreaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        increaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        name: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        symbol: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      },
+    },
+  },
+  80001: {
+    PayWhatYouWantCollectModule: {
+      address: "0xD9968D6A7C0B550a9a66aC202de66E95673e676B",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CollectExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidInitParams",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOffer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRecipientSplits",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MintLimitExceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "calculateFee",
+          outputs: [
+            {
+              internalType: "uint160",
+              name: "",
+              type: "uint160",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getBasePublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amountFloor",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint16",
+                      name: "split",
+                      type: "uint16",
+                    },
+                  ],
+                  internalType: "struct RecipientData[]",
+                  name: "recipients",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct PayWhatYouWantCollectProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationCollectModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "processCollect",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ACTION_MODULE: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        calculateFee: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        getBasePublicationData: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        initializePublicationCollectModule: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        processCollect: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+      },
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;

@@ -314,17 +314,16 @@ contract PayWhatYouWantCollectModule is
 
         _verifyErc20Currency(currency);
 
-        uint256 treasuryAmount = 0;
-        //        (address treasury, uint16 treasuryFee) = _treasuryData();
-        //        uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
-        //
-        //        if (treasuryAmount > 0) {
-        //            IERC20(currency).safeTransferFrom(
-        //                processCollectParams.transactionExecutor,
-        //                treasury,
-        //                treasuryAmount
-        //            );
-        //        }
+        (address treasury, uint16 treasuryFee) = _treasuryData();
+        uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
+
+        if (treasuryAmount > 0) {
+            IERC20(currency).safeTransferFrom(
+                processCollectParams.transactionExecutor,
+                treasury,
+                treasuryAmount
+            );
+        }
 
         // Send amount after treasury cut, to all recipients
         _transferToRecipients(
