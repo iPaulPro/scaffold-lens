@@ -17,7 +17,7 @@ Features:
 - [Quickstart](#quickstart)
 - [Debugging](#debugging)
 - [Unit Testing](#testing)
-- [Deploying to Mumbai](#deploying-to-mumbai)
+- [Deploying to Testnet](#deploying-to-testnet)
 - [Using your own contracts](#using-your-own-contracts)
 - [About Scaffold-ETH 2](#about-scaffold-eth-2)
 
@@ -126,14 +126,14 @@ yarn hardhat:test
 
 This will run the tests located in `packages/hardhat/test` with [Chai](https://github.com/chaijs/chai).
 
-## Deploying to Mumbai
+## Deploying to Testnet
 
 Once you are ready to deploy your smart contracts, there are a few things you need to adjust.
 
 1. **Set up environment**  
-   To deploy on Mumbai, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.example` file as a template.
+   To deploy on Amoy, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.staging.example` file as a template.
 
-   Next, generate a new account or add one to deploy the contract(s) from. Additionally, you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Mumbai).
+   Next, generate a new account or add one to deploy the contract(s) from. Additionally, you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Amoy).
    ```bash
    ALCHEMY_API_KEY=""
    DEPLOYER_PRIVATE_KEY=""
@@ -144,23 +144,23 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    You can generate a random account / private key with `yarn generate` or add the private key of your crypto wallet. `yarn generate` will create a random account and add the DEPLOYER_PRIVATE_KEY to the .env file. You can check the generated account with `yarn account`.
 
 2. **Deploy**  
-   To deploy the `YourActionModule` to Mumbai you can run
+   To deploy the `YourActionModule` to Amoy you can run
 
    ```shell
-   yarn deploy:mumbai
+   yarn deploy:action:testnet
    ```
 
 3. **Verify**  
    You can verify your smart contract on Etherscan by running:
 
    ```shell
-   yarn verify:mumbai
+   yarn verify:testnet
    ```
 ---
 
 ## Deploying to Polygon Mainnet
 
-Follow the same directions for deploying to Mumbai, but use the `.env` file instead of `.env.staging` and `:mainnet` in the yarn commands, instaead of `:mumbai`. You will also need to set the `ALCHEMY_API_KEY` with a mainnet API key.
+Follow the same directions for deploying to Amoy, but use the `.env` file instead of `.env.staging` and `:mainnet` in the yarn commands, instead of `:testnet`. You will also need to set the `ALCHEMY_API_KEY` with a mainnet API key.
 
 ## Using your own contracts
 
