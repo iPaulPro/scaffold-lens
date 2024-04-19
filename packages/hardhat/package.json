@@ -7,9 +7,11 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile --show-stack-traces",
     "deploy:action:local": "NODE_ENV=development hardhat deploy --tags TestToken,MockModuleRegistry,YourActionModule,generateTsAbis",
+    "deploy:action:mainnet": "NODE_ENV=production hardhat deploy --tags YourActionModule,generateTsAbis --network polygon",
+    "deploy:action:testnet": "NODE_ENV=staging hardhat deploy --tags YourActionModule,generateTsAbis --network polygonAmoy",
     "deploy:collect:local": "NODE_ENV=development hardhat deploy --tags TestToken,ModuleRegistry,CollectNFT,CollectPublicationAction,YourCollectModule,generateTsAbis",
-    "deploy:mumbai": "NODE_ENV=staging hardhat deploy --tags YourActionModule,generateTsAbis --network polygonMumbai",
-    "deploy:mainnet": "NODE_ENV=production hardhat deploy --tags YourActionModule --network polygon",
+    "deploy:collect:mainnet": "NODE_ENV=production hardhat deploy --tags YourCollectModule,generateTsAbis --network polygon",
+    "deploy:collect:testnet": "NODE_ENV=staging hardhat deploy --tags YourCollectModule,generateTsAbis --network polygonAmoy",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "NODE_ENV=development hardhat run scripts/generateAccount.ts",
     "flatten": "hardhat flatten",
@@ -18,7 +20,7 @@
     "format": "prettier --write ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
     "verify:mainnet": "NODE_ENV=production hardhat etherscan-verify --network polygon",
-    "verify:mumbai": "NODE_ENV=staging hardhat etherscan-verify --network polygonMumbai"
+    "verify:testnet": "NODE_ENV=staging hardhat etherscan-verify --network polygonAmoy"
   },
   "dependencies": {
     "@irys/sdk": "^0.1.1",
@@ -55,7 +57,7 @@
     "hardhat-deploy": "^0.11.45",
     "hardhat-deploy-ethers": "^0.4.1",
     "hardhat-gas-reporter": "^1.0.9",
-    "lens-modules": "^1.0.11",
+    "lens-modules": "^1.0.12",
     "prettier": "^2.8.4",
     "prettier-plugin-solidity": "^1.3.1",
     "solidity-coverage": "^0.8.7",

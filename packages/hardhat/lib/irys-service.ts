@@ -2,8 +2,8 @@ import Irys from "@irys/sdk";
 import { ModuleMetadata } from "@lens-protocol/metadata";
 
 const getIrys = async () => {
-  // Devnet RPC URLs change often, use a recent one from https://chainlist.org/chain/80001
-  const providerUrl = "https://endpoints.omniatech.io/v1/matic/mumbai/public";
+  // Devnet RPC URLs change often, use a recent one from https://chainlist.org/chain/80002
+  const providerUrl = "https://polygon-amoy-bor-rpc.publicnode.com";
   const isMainnet = process.env.NETWORK === "polygon";
 
   const irys = new Irys({
