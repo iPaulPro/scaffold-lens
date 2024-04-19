@@ -114,8 +114,8 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   const registerTx = await publicationActionContract.registerCollectModule(await collectModule.getAddress());
   console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction", registerTx);
 
-  // await collectModule.transferOwnership("0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
-  // console.log("registered transferred ownership to 0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
+  await collectModule.transferOwnership("0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
+  console.log("registered transferred ownership to 0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
 };
 
 export default deployPayWhatYouWantCollectModuleContract;

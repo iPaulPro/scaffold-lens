@@ -2762,6 +2762,516 @@ const deployedContracts = {
       },
     },
   },
+  80002: {
+    PayWhatYouWantCollectModule: {
+      address: "0x3d06AA6ca4FC7eE0D5581B85CB52CA7714175e43",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CollectExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidInitParams",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOffer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRecipientSplits",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MintLimitExceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "calculateFee",
+          outputs: [
+            {
+              internalType: "uint160",
+              name: "",
+              type: "uint160",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getBasePublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amountFloor",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint16",
+                      name: "split",
+                      type: "uint16",
+                    },
+                  ],
+                  internalType: "struct RecipientData[]",
+                  name: "recipients",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct PayWhatYouWantCollectProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationCollectModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "processCollect",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ACTION_MODULE: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        calculateFee: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        getBasePublicationData: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        initializePublicationCollectModule: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        processCollect: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+      },
+    },
+  },
 } as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
