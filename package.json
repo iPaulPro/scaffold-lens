@@ -12,8 +12,9 @@
     "chain": "yarn workspace @sl/hardhat chain",
     "clean": "yarn workspace @sl/hardhat clean",
     "compile": "yarn workspace @sl/hardhat compile",
-    "deploy:local": "yarn workspace @sl/hardhat deploy:local",
-    "deploy:mumbai": "yarn workspace @sl/hardhat deploy:mumbai",
+    "deploy:local": "yarn workspace @sl/hardhat deploy:action:local",
+    "deploy:testnet": "yarn workspace @sl/hardhat deploy:action:testnet",
+    "deploy:mainnet": "yarn workspace @sl/hardhat deploy:action:mainnet",
     "fork": "yarn workspace @sl/hardhat fork",
     "generate": "yarn workspace @sl/hardhat generate",
     "flatten": "yarn workspace @sl/hardhat flatten",
@@ -31,7 +32,8 @@
     "test": "yarn hardhat:test",
     "vercel": "yarn workspace @sl/nextjs vercel",
     "vercel:yolo": "yarn workspace @sl/nextjs vercel:yolo",
-    "verify": "yarn workspace @sl/hardhat verify"
+    "verify:mainnet": "yarn workspace @sl/hardhat verify:mainnet",
+    "verify:testnet": "yarn workspace @sl/hardhat verify:testnet"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {

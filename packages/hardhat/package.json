@@ -20,7 +20,7 @@
     "format": "prettier --write ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
     "verify:mainnet": "NODE_ENV=production hardhat etherscan-verify --network polygon",
-    "verify:testnet": "NODE_ENV=staging hardhat etherscan-verify --network polygonAmoy"
+    "verify:testnet": "NODE_ENV=staging hardhat etherscan-verify --network polygonAmoy --api-url https://api-amoy.polygonscan.com"
   },
   "dependencies": {
     "@irys/sdk": "^0.1.1",
