@@ -112,7 +112,7 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   // Register the module with the Publication Action
   const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);
   const registerTx = await publicationActionContract.registerCollectModule(await collectModule.getAddress());
-  console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction", registerTx);
+  console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction", registerTx.hash);
 
   await collectModule.transferOwnership("0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
   console.log("registered transferred ownership to 0xdaA5EBe0d75cD16558baE6145644EDdFcbA1e868");
