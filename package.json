@@ -26,6 +26,7 @@
     "next:check-types": "yarn workspace @sl/nextjs check-types",
     "next:format": "yarn workspace @sl/nextjs format",
     "next:lint": "yarn workspace @sl/nextjs lint",
+    "next:serve": "yarn workspace @sl/nextjs serve",
     "precommit": "lint-staged",
     "prepare": "install-self-peers -- --ignore-scripts",
     "start": "yarn workspace @sl/nextjs dev",
