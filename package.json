@@ -40,5 +40,8 @@
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }
