@@ -81,7 +81,7 @@ Then navigate to http://localhost:3000/debug to open the debugger. You can now c
 
 ### Debugging contracts
 
-1. Run the chain and deploy the `YourActionModule` and mock contracts to the local network, and start the app:
+1. Run the chain and deploy the `PublicationCollectionAction` and mock contracts to the local network, and start the app:
     ```shell
     yarn chain
     yarn deploy:action:local
@@ -89,8 +89,8 @@ Then navigate to http://localhost:3000/debug to open the debugger. You can now c
     ```
 2. Navigate to http://localhost:3000/debug.
 3. Select the `TestToken` contract and call the `mint` function to mint tokens for the burner wallet.
-4. Copy the address of the `YourActionModule` and the `approve` spending from the `YourActionModule`.
-5. Select the `YourActionModule` contract and call the `initializePublicationAction` function with a receiver address.
+4. Copy the address of the `PublicationCollectionAction` and the `approve` spending from the `PublicationCollectionAction`.
+5. Select the `PublicationCollectionAction` contract and call the `initializePublicationAction` function with a receiver address.
 6. Call the `processPublicationAction` with the call data. 
 
 ### Dealing with Action Module calldata
@@ -144,7 +144,7 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    You can generate a random account / private key with `yarn generate` or add the private key of your crypto wallet. `yarn generate` will create a random account and add the DEPLOYER_PRIVATE_KEY to the .env file. You can check the generated account with `yarn account`.
 
 2. **Deploy**  
-   To deploy the `YourActionModule` to Amoy you can run
+   To deploy the `PublicationCollectionAction` to Amoy you can run
 
    ```shell
    yarn deploy:action:testnet
@@ -166,7 +166,7 @@ Follow the same directions for deploying to Amoy, but use the `.env` file instea
 
 If you want to use your own contracts there are a few simple steps. 
 
-1. Replace the `YourActionModule.sol` contract in `/packages/hardhat/contracts` with your own. 
+1. Replace the `PublicationCollectionAction.sol` contract in `/packages/hardhat/contracts` with your own. 
 2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the mock contracts.
 3. Change the tag in the `deploy:*` scripts in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
 4. (Optional) Remove the `/packages/hardhat/contracts/helpers` directory and related deploy scripts unless you want to use the `TestToken` contract for testing and debugging.

@@ -3,30 +3,40 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irys-service";
-import { YourActionModule } from "../typechain-types";
+import { FlexCollectPublicationAction } from "../typechain-types";
 import { LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
- * Generates the metadata for the YourActionModule contract compliant with the Module Metadata Standard at:
+ * Generates the metadata for the FlexCollectPublicationAction contract compliant with the Module Metadata Standard at:
  * https://docs.lens.xyz/docs/module-metadata-standard
  */
 const metadata = module({
-  name: "YourActionModule",
-  title: "Your Open Action",
-  description: "Description of your action",
-  authors: ["some@email.com"],
-  initializeCalldataABI: JSON.stringify([]),
-  processCalldataABI: JSON.stringify([]),
+  name: "FlexCollectPublicationAction",
+  title: "Smart Collections",
+  description: "Collect Publication Action that allows adding new publications to an existing collection.",
+  authors: ["paul@paulburke.co"],
+  initializeCalldataABI: JSON.stringify([
+    { type: "address", name: "collectModule" },
+    { type: "bytes", name: "collectModuleInitData" },
+    { type: "address", name: "collectNFT" },
+    { type: "bytes32", name: "tokenName" },
+    { type: "bytes32", name: "tokenSymbol" },
+    { type: "uint16", name: "tokenRoyalty" },
+  ]),
+  processCalldataABI: JSON.stringify([
+    { type: "address", name: "collectNftRecipient" },
+    { type: "bytes", name: "collectData" },
+  ]),
   attributes: [],
 });
 
 /**
- * Deploys a contract named "YourActionModule" using the deployer account and
+ * Deploys a contract named "FlexCollectPublicationAction" using the deployer account and
  * constructor arguments set to the deployer address
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourActionModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployFlexCollectPublicationActionContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -57,10 +67,12 @@ const deployYourActionModuleContract: DeployFunction = async function (hre: Hard
     moduleRegistry = MODULE_REGISTRY;
   }
 
-  // Deploy the YourActionModule contract
-  await deploy("YourActionModule", {
+  const { address: collectNFTImpl } = await get("FlexCollectNFT");
+
+  // Deploy the FlexCollectPublicationAction contract
+  await deploy("FlexCollectPublicationAction", {
     from: deployer,
-    args: [lensHubAddress, moduleRegistry],
+    args: [lensHubAddress, moduleRegistry, collectNFTImpl, deployer],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -68,22 +80,23 @@ const deployYourActionModuleContract: DeployFunction = async function (hre: Hard
   });
 
   // Get the deployed contract
-  const yourPublicationAction = await hre.ethers.getContract<YourActionModule>("YourActionModule", deployer);
+  const action = await hre.ethers.getContract<FlexCollectPublicationAction>("FlexCollectPublicationAction", deployer);
 
   // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
-  await yourPublicationAction.setModuleMetadataURI(metadataURI);
+  const setMetadataRes = await action.setModuleMetadataURI(metadataURI);
+  console.log("set metadata URI: tx=", setMetadataRes.hash);
 
   // Add a delay before calling registerModule to allow for propagation
   await new Promise(resolve => setTimeout(resolve, 10000));
 
   // Register the module with the ModuleRegistry
-  const registered = await yourPublicationAction.registerModule();
+  const registered = await action.registerModule();
   console.log("registered open action: tx=", registered.hash);
 };
 
-export default deployYourActionModuleContract;
+export default deployFlexCollectPublicationActionContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourActionModule
-deployYourActionModuleContract.tags = ["YourActionModule"];
+// e.g. yarn deploy --tags FlexCollectPublicationAction
+deployFlexCollectPublicationActionContract.tags = ["FlexCollectPublicationAction"];

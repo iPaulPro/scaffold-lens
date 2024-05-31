@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { ethers } from "hardhat";
 import { LENS_HUB } from "../config";
+import getNextContractAddress from "../lib/get-next-contract-address";
 
 const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
@@ -9,14 +9,11 @@ const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvi
 
   const lensHubAddress = LENS_HUB;
 
-  const factory = await ethers.getContractFactory("CollectPublicationAction");
-  const initCode = factory.bytecode;
-  const salt = ethers.keccak256(ethers.toUtf8Bytes("something very unique"));
-  const collectPublicationActionAddress = ethers.getCreate2Address(deployer, salt, ethers.keccak256(initCode));
+  const actionAddress = await getNextContractAddress(deployer);
 
-  await deploy("CollectNFT", {
+  await deploy("FlexCollectNFT", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationActionAddress],
+    args: [lensHubAddress, actionAddress],
     log: true,
     autoMine: true,
   });
@@ -24,4 +21,4 @@ const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvi
 
 export default deployCollectNFT;
 
-deployCollectNFT.tags = ["CollectNFT"];
+deployCollectNFT.tags = ["FlexCollectNFT"];
