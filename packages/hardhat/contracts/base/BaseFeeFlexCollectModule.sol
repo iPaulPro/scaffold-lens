@@ -37,7 +37,7 @@ abstract contract BaseFeeFlexCollectModule is
 {
     using SafeERC20 for IERC20;
 
-    address immutable HUB;
+    address public immutable HUB;
 
     mapping(uint256 => mapping(uint256 => BaseProfilePublicationData))
         internal _dataByPublicationByProfile;
@@ -221,6 +221,9 @@ abstract contract BaseFeeFlexCollectModule is
         ModuleTypes.ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint256 amount = calculateFee(processCollectParams);
+        if (amount == 0) {
+            return;
+        }
         address currency = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
         ][processCollectParams.publicationCollectedId].currency;
@@ -259,6 +262,9 @@ abstract contract BaseFeeFlexCollectModule is
         ModuleTypes.ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint256 amount = calculateFee(processCollectParams);
+        if (amount == 0) {
+            return;
+        }
         address currency = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
         ][processCollectParams.publicationCollectedId].currency;

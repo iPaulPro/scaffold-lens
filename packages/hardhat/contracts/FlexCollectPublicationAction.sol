@@ -2,7 +2,6 @@
 pragma solidity 0.8.23;
 
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IPublicationActionModule} from "lens-modules/contracts/interfaces/IPublicationActionModule.sol";
 import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
 import {ModuleTypes} from "lens-modules/contracts/modules/libraries/constants/ModuleTypes.sol";
@@ -12,7 +11,6 @@ import {ILensModule} from "lens-modules/contracts/modules/interfaces/ILensModule
 import {LensModuleMetadataInitializable} from "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol";
 import {LensModuleRegistrant} from "lens-modules/contracts/modules/base/LensModuleRegistrant.sol";
 import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
-import {ILensHub} from "lens-modules/contracts/interfaces/ILensHub.sol";
 
 import {IFlexCollectModule} from "./interfaces/IFlexCollectModule.sol";
 import {IFlexCollectNFT} from "./interfaces/IFlexCollectNFT.sol";
@@ -160,6 +158,15 @@ contract FlexCollectPublicationAction is
         }
     }
 
+    function verifyCollectNFTOwnership(
+        uint256 profileId,
+        address collectNFT
+    ) private view returns (bool) {
+        (uint256 ownerProfileId, ) = IFlexCollectNFT(collectNFT)
+            .getSourcePublicationPointer(1);
+        return ownerProfileId == profileId;
+    }
+
     function initializePublicationAction(
         uint256 profileId,
         uint256 pubId,
@@ -181,15 +188,12 @@ contract FlexCollectPublicationAction is
         if (_collectDataByPub[profileId][pubId].collectModule != address(0)) {
             revert Errors.AlreadyInitialized();
         }
-        if (
-            collectNFT != address(0) &&
-            Ownable(collectNFT).owner() != ILensHub(HUB).ownerOf(profileId)
-        ) {
-            revert NotCollectNFTContractOwner();
-        }
         verifyCollectModule(collectModule);
         _collectDataByPub[profileId][pubId].collectModule = collectModule;
-        _collectDataByPub[profileId][pubId].collectNFT = collectNFT;
+        if (collectNFT != address(0)) {
+            verifyCollectNFTOwnership(profileId, collectNFT);
+            _collectDataByPub[profileId][pubId].collectNFT = collectNFT;
+        }
         _collectDataByPub[profileId][pubId].contractURI = contractURI;
         _collectDataByPub[profileId][pubId].tokenData = TokenData({
             name: tokenName,

@@ -12,7 +12,7 @@ import {LensModule} from "lens-modules/contracts/modules/LensModule.sol";
 import {BaseFeeFlexCollectModule} from "./base/BaseFeeFlexCollectModule.sol";
 import {BaseFeeFlexCollectModuleInitData} from "./interfaces/IBaseFeeFlexCollectModule.sol";
 
-contract YourCollectModule is
+contract FlexCollectModule is
     Ownable,
     BaseFeeFlexCollectModule,
     LensModuleMetadata
