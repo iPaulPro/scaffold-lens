@@ -2,7 +2,7 @@
 pragma solidity >=0.6.0;
 
 import {IFlexCollectModule} from "./IFlexCollectModule.sol";
-import {ModuleTypes} from "lens-modules/contracts/modules/libraries/constants/ModuleTypes.sol";
+import {ProcessCollectParams} from "./IFlexCollectModule.sol";
 
 /**
  * @notice A struct containing the necessary data to execute collect actions on a publication.
@@ -70,6 +70,6 @@ interface IBaseFeeFlexCollectModule is IFlexCollectModule {
      * @return The collect fee of the specified publication.
      */
     function calculateFee(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams
-    ) external view returns (uint160);
+        ProcessCollectParams calldata processCollectParams
+    ) external view returns (uint256);
 }

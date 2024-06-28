@@ -2,15 +2,17 @@
 
 pragma solidity ^0.8.23;
 
+import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
 import {ERC2981CollectionRoyalties} from "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol";
 import {Errors} from "lens-modules/contracts/libraries/constants/Errors.sol";
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {ILensHub} from "lens-modules/contracts/interfaces/ILensHub.sol";
 import {LensBaseERC721} from "lens-modules/contracts/base/LensBaseERC721.sol";
 import {ActionRestricted} from "lens-modules/contracts/modules/ActionRestricted.sol";
-import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {ContractURIUpdated, IFlexCollectNFT} from "./interfaces/IFlexCollectNFT.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title FlexCollectNFT
@@ -145,12 +147,13 @@ contract FlexCollectNFT is
         public
         view
         virtual
-        override(ERC2981CollectionRoyalties, LensBaseERC721)
+        override(ERC2981CollectionRoyalties, LensBaseERC721, IERC165)
         returns (bool)
     {
         return
             ERC2981CollectionRoyalties.supportsInterface(interfaceId) ||
-            LensBaseERC721.supportsInterface(interfaceId);
+            LensBaseERC721.supportsInterface(interfaceId) ||
+            interfaceId == type(IFlexCollectNFT).interfaceId;
     }
 
     function _getReceiver(

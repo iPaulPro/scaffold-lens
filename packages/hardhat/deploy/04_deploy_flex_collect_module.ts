@@ -45,10 +45,11 @@ const deployFlexCollectModuleContract: DeployFunction = async function (hre: Har
     autoMine: true,
   });
 
-  const yourCollectModule = await hre.ethers.getContract<FlexCollectModule>("FlexCollectModule", deployer);
+  const flexCollectModule = await hre.ethers.getContract<FlexCollectModule>("FlexCollectModule", deployer);
 
   const metadataURI = await uploadMetadata(metadata);
-  await yourCollectModule.setModuleMetadataURI(metadataURI);
+  const metadataTx = await flexCollectModule.setModuleMetadataURI(metadataURI);
+  console.log("Set metadata URI on FlexCollectModule at", metadataTx.hash);
 
   await new Promise(resolve => setTimeout(resolve, 10000));
 
@@ -56,8 +57,8 @@ const deployFlexCollectModuleContract: DeployFunction = async function (hre: Har
     "FlexCollectPublicationAction",
     flexCollectPublicationAction!,
   );
-  await publicationActionContract.registerCollectModule(await yourCollectModule.getAddress());
-  console.log("Registered FlexCollectModule with FlexCollectPublicationAction");
+  const registerTx = await publicationActionContract.registerCollectModule(await flexCollectModule.getAddress());
+  console.log("Registered FlexCollectModule with FlexCollectPublicationAction at", registerTx.hash);
 };
 
 export default deployFlexCollectModuleContract;

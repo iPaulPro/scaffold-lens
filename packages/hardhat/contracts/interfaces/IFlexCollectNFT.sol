@@ -2,6 +2,8 @@
 
 pragma solidity >=0.6.0;
 
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+
 /**
  * @notice Signal to OpenSea that the contract-level metadata URI has changed.
  *
@@ -18,7 +20,7 @@ event ContractURIUpdated();
  *
  * @notice Adds token name, symbol, royalty, and contract metadata URI to the initialize interface.
  */
-interface IFlexCollectNFT {
+interface IFlexCollectNFT is IERC165 {
     /**
      * @notice Initializes the collect NFT with the specified token name, symbol, and royalty.
      * @custom:permissions PublicationCollectionAction.

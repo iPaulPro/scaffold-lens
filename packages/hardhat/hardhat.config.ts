@@ -32,16 +32,12 @@ const config: HardhatUserConfig = {
       optimizer: {
         enabled: true,
         // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
-        runs: 200,
+        runs: 10_000_000,
       },
     },
   },
   dependencyCompiler: {
-    paths: [
-      "lens-modules/contracts/misc/ModuleRegistry.sol",
-      "lens-modules/contracts/modules/act/collect/CollectPublicationAction.sol",
-      "lens-modules/contracts/modules/act/collect/CollectNFT.sol",
-    ],
+    paths: ["lens-modules/contracts/misc/ModuleRegistry.sol"],
   },
   defaultNetwork: "localhost",
   namedAccounts: {

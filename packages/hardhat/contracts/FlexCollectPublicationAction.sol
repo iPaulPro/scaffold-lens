@@ -2,9 +2,9 @@
 pragma solidity 0.8.23;
 
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
+
 import {IPublicationActionModule} from "lens-modules/contracts/interfaces/IPublicationActionModule.sol";
 import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
-import {ModuleTypes} from "lens-modules/contracts/modules/libraries/constants/ModuleTypes.sol";
 import {Errors} from "lens-modules/contracts/modules/constants/Errors.sol";
 import {HubRestricted} from "lens-modules/contracts/base/HubRestricted.sol";
 import {ILensModule} from "lens-modules/contracts/modules/interfaces/ILensModule.sol";
@@ -13,6 +13,7 @@ import {LensModuleRegistrant} from "lens-modules/contracts/modules/base/LensModu
 import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 
 import {IFlexCollectModule} from "./interfaces/IFlexCollectModule.sol";
+import {ProcessCollectParams} from "./interfaces/IFlexCollectModule.sol";
 import {IFlexCollectNFT} from "./interfaces/IFlexCollectNFT.sol";
 
 /**
@@ -39,14 +40,6 @@ contract FlexCollectPublicationAction is
     IPublicationActionModule,
     LensModuleRegistrant
 {
-    function supportsInterface(
-        bytes4 interfaceID
-    ) public pure override returns (bool) {
-        return
-            interfaceID == type(IPublicationActionModule).interfaceId ||
-            super.supportsInterface(interfaceID);
-    }
-
     struct CollectData {
         address collectModule;
         address collectNFT;
@@ -86,7 +79,7 @@ contract FlexCollectPublicationAction is
      * @param collectActionResult The data returned from the collect module's collect action. This is ABI-encoded
      * and depends on the collect module chosen.
      * @param collectNFT The address of the NFT collection where the minted collect NFT belongs to.
-     * @param tokenId The token ID of the collect NFT that was minted as a collect of the publication.
+     * @param tokenIds The array of token IDs of the collect NFT that was minted as a collect of the publication.
      * @param transactionExecutor The address of the account that executed this operation.
      * @param timestamp The current block timestamp.
      */
@@ -98,13 +91,13 @@ contract FlexCollectPublicationAction is
         bytes collectActionData,
         bytes collectActionResult,
         address collectNFT,
-        uint256 tokenId,
+        uint256[] tokenIds,
         address transactionExecutor,
         uint256 timestamp
     );
 
     error NotCollectModule();
-
+    error NotFlexCollectNFT();
     error NotCollectNFTContractOwner();
 
     address public immutable COLLECT_NFT_IMPL;
@@ -125,6 +118,14 @@ contract FlexCollectPublicationAction is
         LensModuleRegistrant(moduleRegistry)
     {
         COLLECT_NFT_IMPL = collectNFTImpl;
+    }
+
+    function supportsInterface(
+        bytes4 interfaceID
+    ) public pure override returns (bool) {
+        return
+            interfaceID == type(IPublicationActionModule).interfaceId ||
+            super.supportsInterface(interfaceID);
     }
 
     function verifyCollectModule(address collectModule) public returns (bool) {
@@ -167,6 +168,15 @@ contract FlexCollectPublicationAction is
         return ownerProfileId == profileId;
     }
 
+    function verifyIsFlexCollectNFT(
+        address collectNFT
+    ) private view returns (bool) {
+        return
+            IFlexCollectNFT(collectNFT).supportsInterface(
+                type(IFlexCollectNFT).interfaceId
+            );
+    }
+
     function initializePublicationAction(
         uint256 profileId,
         uint256 pubId,
@@ -191,6 +201,7 @@ contract FlexCollectPublicationAction is
         verifyCollectModule(collectModule);
         _collectDataByPub[profileId][pubId].collectModule = collectModule;
         if (collectNFT != address(0)) {
+            verifyIsFlexCollectNFT(collectNFT);
             verifyCollectNFTOwnership(profileId, collectNFT);
             _collectDataByPub[profileId][pubId].collectNFT = collectNFT;
         }
@@ -223,10 +234,10 @@ contract FlexCollectPublicationAction is
             processActionParams.actionModuleData,
             (address, bytes)
         );
-        bool isMintAction = IFlexCollectModule(collectModule).isMintAction(
+        uint256 mintsAllowed = IFlexCollectModule(collectModule).mintsAllowed(
             collectData
         );
-        if (!isMintAction) {
+        if (mintsAllowed == 0) {
             return
                 IFlexCollectModule(collectModule).processPublicationAction(
                     processActionParams
@@ -238,14 +249,25 @@ contract FlexCollectPublicationAction is
             publicationCollectedId: processActionParams.publicationActedId,
             collectNFTImpl: COLLECT_NFT_IMPL
         });
-        uint256 tokenId = IFlexCollectNFT(collectNFT).mint(
-            processActionParams.publicationActedId,
-            collectNftRecipient
-        );
+
+        uint256[] memory tokenIds = new uint256[](mintsAllowed);
+
+        for (uint256 i = 0; i < mintsAllowed; ) {
+            uint256 tokenId = IFlexCollectNFT(collectNFT).mint(
+                processActionParams.publicationActedId,
+                collectNftRecipient
+            );
+            tokenIds[i] = tokenId;
+            unchecked {
+                ++i;
+            }
+        }
+
         bytes memory collectActionResult = _processCollect(
             collectModule,
             collectData,
-            processActionParams
+            processActionParams,
+            mintsAllowed
         );
         _emitCollectedEvent(
             processActionParams,
@@ -253,10 +275,15 @@ contract FlexCollectPublicationAction is
             collectData,
             collectActionResult,
             collectNFT,
-            tokenId
+            tokenIds
         );
         return
-            abi.encode(collectNFT, tokenId, collectModule, collectActionResult);
+            abi.encode(
+                collectNFT,
+                tokenIds,
+                collectModule,
+                collectActionResult
+            );
     }
 
     function _emitCollectedEvent(
@@ -265,7 +292,7 @@ contract FlexCollectPublicationAction is
         bytes memory collectData,
         bytes memory collectActionResult,
         address collectNFT,
-        uint256 tokenId
+        uint256[] memory tokenIds
     ) private {
         emit Collected(
             processActionParams.publicationActedProfileId,
@@ -275,7 +302,7 @@ contract FlexCollectPublicationAction is
             collectData,
             collectActionResult,
             collectNFT,
-            tokenId,
+            tokenIds,
             processActionParams.transactionExecutor,
             block.timestamp
         );
@@ -327,11 +354,12 @@ contract FlexCollectPublicationAction is
     function _processCollect(
         address collectModule,
         bytes memory collectData,
-        Types.ProcessActionParams calldata processActionParams
+        Types.ProcessActionParams calldata processActionParams,
+        uint256 mintsAllowed
     ) private returns (bytes memory) {
         return
             IFlexCollectModule(collectModule).processCollect(
-                ModuleTypes.ProcessCollectParams({
+                ProcessCollectParams({
                     publicationCollectedProfileId: processActionParams
                         .publicationActedProfileId,
                     publicationCollectedId: processActionParams
@@ -344,7 +372,8 @@ contract FlexCollectPublicationAction is
                     referrerProfileIds: processActionParams.referrerProfileIds,
                     referrerPubIds: processActionParams.referrerPubIds,
                     referrerPubTypes: processActionParams.referrerPubTypes,
-                    data: collectData
+                    data: collectData,
+                    mintsAllowed: mintsAllowed
                 })
             );
     }

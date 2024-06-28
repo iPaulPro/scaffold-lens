@@ -4,10 +4,8 @@ pragma solidity ^0.8.10;
 
 import {Errors} from "lens-modules/contracts/modules/constants/Errors.sol";
 import {FeeModuleBase} from "lens-modules/contracts/modules/FeeModuleBase.sol";
-import {ICollectModule} from "lens-modules/contracts/modules/interfaces/ICollectModule.sol";
 import {ActionRestricted} from "lens-modules/contracts/modules/ActionRestricted.sol";
 
-import {ModuleTypes} from "lens-modules/contracts/modules/libraries/constants/ModuleTypes.sol";
 import {Types} from "lens-modules/contracts/libraries/constants/Types.sol";
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -16,6 +14,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {FollowValidationLib} from "lens-modules/contracts/modules/libraries/FollowValidationLib.sol";
 
 import {IFlexCollectModule} from "../interfaces/IFlexCollectModule.sol";
+import {ProcessCollectParams} from "../interfaces/IFlexCollectModule.sol";
 import {BaseFeeFlexCollectModuleInitData, BaseProfilePublicationData, IBaseFeeFlexCollectModule} from "../interfaces/IBaseFeeFlexCollectModule.sol";
 
 /**
@@ -39,7 +38,7 @@ abstract contract BaseFeeFlexCollectModule is
 
     address public immutable HUB;
 
-    mapping(uint256 => mapping(uint256 => BaseProfilePublicationData))
+    mapping(uint256 profileId => mapping(uint256 pubId => BaseProfilePublicationData))
         internal _dataByPublicationByProfile;
 
     constructor(
@@ -53,21 +52,25 @@ abstract contract BaseFeeFlexCollectModule is
     function supportsInterface(
         bytes4 interfaceID
     ) public pure virtual returns (bool) {
-        return
-            interfaceID == type(ICollectModule).interfaceId ||
-            interfaceID == type(IFlexCollectModule).interfaceId;
+        return interfaceID == type(IFlexCollectModule).interfaceId;
+    }
+
+    function mintsAllowed(
+        bytes calldata /** collectData */
+    ) external view virtual override onlyActionModule returns (uint256) {
+        return 1;
     }
 
     /**
-     * @inheritdoc ICollectModule
+     * @inheritdoc IFlexCollectModule
      * @notice Processes a collect by:
      *  1. Validating that collect action meets all needed criteria
      *  2. Processing the collect action either with or without referral
      *
-     * @param processCollectParams Collect action parameters (see ModuleTypes.ProcessCollectParams struct)
+     * @param processCollectParams Collect action parameters (see ProcessCollectParams struct)
      */
     function processCollect(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams
+        ProcessCollectParams calldata processCollectParams
     ) external virtual onlyActionModule returns (bytes memory) {
         _validateAndStoreCollect(processCollectParams);
 
@@ -89,19 +92,13 @@ abstract contract BaseFeeFlexCollectModule is
 
     /// @inheritdoc IBaseFeeFlexCollectModule
     function calculateFee(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams
-    ) public view virtual returns (uint160) {
+        ProcessCollectParams calldata processCollectParams
+    ) public view virtual returns (uint256) {
         return
             _dataByPublicationByProfile[
                 processCollectParams.publicationCollectedProfileId
-            ][processCollectParams.publicationCollectedId].amount;
-    }
-
-    /// @inheritdoc IFlexCollectModule
-    function isMintAction(
-        bytes calldata /* collectData */
-    ) public view virtual onlyActionModule returns (bool) {
-        return true;
+            ][processCollectParams.publicationCollectedId].amount *
+            processCollectParams.mintsAllowed;
     }
 
     /// @inheritdoc IFlexCollectModule
@@ -175,7 +172,7 @@ abstract contract BaseFeeFlexCollectModule is
      * This should be called during processCollect()
      */
     function _validateAndStoreCollect(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams
+        ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint96 collectsAfter = ++_dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
@@ -218,7 +215,7 @@ abstract contract BaseFeeFlexCollectModule is
      * @param processCollectParams Parameters of the collect
      */
     function _processCollect(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams
+        ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint256 amount = calculateFee(processCollectParams);
         if (amount == 0) {
@@ -259,7 +256,7 @@ abstract contract BaseFeeFlexCollectModule is
      * @param processCollectParams Parameters of the collect
      */
     function _processCollectWithReferral(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams
+        ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint256 amount = calculateFee(processCollectParams);
         if (amount == 0) {
@@ -305,7 +302,7 @@ abstract contract BaseFeeFlexCollectModule is
      * @param amount Amount to transfer to recipient(-s)
      */
     function _transferToRecipients(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams,
+        ProcessCollectParams calldata processCollectParams,
         address currency,
         uint256 amount
     ) internal virtual {
@@ -332,7 +329,7 @@ abstract contract BaseFeeFlexCollectModule is
      * @param amount Amount of the fee after subtracting the Treasury part.
      */
     function _transferToReferrals(
-        ModuleTypes.ProcessCollectParams calldata processCollectParams,
+        ProcessCollectParams calldata processCollectParams,
         address currency,
         uint256 amount
     ) internal virtual returns (uint256) {
