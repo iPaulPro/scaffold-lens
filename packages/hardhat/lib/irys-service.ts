@@ -23,5 +23,5 @@ export const uploadMetadata = async (metadata: ModuleMetadata) => {
   const receipt = await irys.upload(dataToUpload, {
     tags: [{ name: "Content-Type", value: "application/json" }],
   });
-  return `https://gateway.irys.xyz/${receipt.id}`;
+  return `ar://${receipt.id}`;
 };
