@@ -7,7 +7,7 @@ const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvi
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const collectPublicationActionAddress = getNextContractAddress(deployer);
+  const collectPublicationActionAddress = await getNextContractAddress(deployer);
 
   await deploy("CollectNFT", {
     from: deployer,

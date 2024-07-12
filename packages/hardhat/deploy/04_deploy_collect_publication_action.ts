@@ -23,12 +23,9 @@ const deployCollectPublicationAction: DeployFunction = async function (hre: Hard
     collectNft = COLLECT_NFT;
   }
 
-  const salt = ethers.keccak256(ethers.toUtf8Bytes("something very unique"));
-
   await deploy("CollectPublicationAction", {
     from: deployer,
     args: [lensHubAddress, collectNft, deployer],
-    deterministicDeployment: salt,
     log: true,
     autoMine: true,
   });
