@@ -6,6 +6,7 @@ import deployedContracts from "~~/contracts/deployedContracts";
  */
 export function getAllAbis(): any[] {
   const networkId = 31337; // Adjust based on your hardhat network ID
+  // @ts-ignore
   const contracts = deployedContracts[networkId];
 
   const allAbis: any[] = [];
