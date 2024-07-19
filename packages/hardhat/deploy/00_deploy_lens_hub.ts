@@ -1,7 +1,8 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import getNextContractAddress from "../lib/get-next-contract-address";
+import getNextContractAddress from "../lib/getNextContractAddress";
 import { ethers } from "hardhat";
+import { DeployOptions } from "hardhat-deploy/dist/types";
 
 const COOLDOWN_PERIOD = 300n;
 
@@ -9,7 +10,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const baseConfig = {
+  const baseConfig: DeployOptions = {
     from: deployer,
     log: true,
     autoMine: true,
@@ -172,13 +173,15 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     args: [process.env.BURNER_PUBLIC_KEY!, lensHub.address, lensHandles.address, tokenHandleRegistry.address],
   });
 
+  const publicActProxy_MetaTx = await deploy("PublicActProxy_MetaTx", baseConfig);
+
   // deploy PublicActProxy
   await deploy("PublicActProxy", {
     ...baseConfig,
-    args: [lensHub.address, collectPublicationAction.address],
+    args: [lensHub.address],
     libraries: {
       Types: typesLib.address,
-      MetaTxLib: metaTxLib.address,
+      PublicActProxy_MetaTx: publicActProxy_MetaTx.address,
     },
   });
 

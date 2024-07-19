@@ -18,14 +18,24 @@ const isJsonString = (str: string) => {
   }
 };
 
+const isBigInt = (str: string) => {
+  if (str.trim().length === 0 || str.startsWith("0")) return false;
+  try {
+    BigInt(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 // Recursive function to deeply parse JSON strings, correctly handling nested arrays and encoded JSON strings
 const deepParseValues = (value: any): any => {
   if (typeof value === "string") {
-    try {
+    // first try with bigInt because we losse precision with JSON.parse
+    if (isBigInt(value)) {
       return BigInt(value);
-    } catch (e) {
-      // continue
     }
+
     if (isJsonString(value)) {
       const parsed = JSON.parse(value);
       return deepParseValues(parsed);

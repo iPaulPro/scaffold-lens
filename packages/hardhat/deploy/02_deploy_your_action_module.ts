@@ -2,7 +2,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
 import { module } from "@lens-protocol/metadata";
-import { uploadMetadata } from "../lib/irys-service";
+import { uploadMetadata } from "../lib/irysService";
 import { YourActionModule } from "../typechain-types";
 import { LENS_HUB, MODULE_REGISTRY } from "../config";
 
