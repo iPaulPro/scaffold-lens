@@ -38,9 +38,13 @@ const deployFlexCollectModuleContract: DeployFunction = async function (hre: Har
     flexCollectPublicationAction = address;
   } catch (e) {}
 
+  if (!flexCollectPublicationAction) {
+    throw new Error("FlexCollectPublicationAction not deployed");
+  }
+
   await deploy("FlexCollectModule", {
     from: deployer,
-    args: [lensHubAddress, flexCollectPublicationAction, moduleRegistry],
+    args: [lensHubAddress, flexCollectPublicationAction, moduleRegistry, deployer],
     log: true,
     autoMine: true,
   });
