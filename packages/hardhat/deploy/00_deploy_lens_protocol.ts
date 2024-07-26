@@ -4,7 +4,14 @@ import getNextContractAddress from "../lib/getNextContractAddress";
 import { ethers } from "hardhat";
 import { DeployOptions } from "hardhat-deploy/dist/types";
 
-const COOLDOWN_PERIOD = 300n;
+const GUARDIAN_COOLDOWN_PERIOD = 300n; // 5 minutes
+const TREASURY_FEE = 500n; // 5%
+
+enum ModuleType {
+  PUBLICATION_ACTION_MODULE = 1,
+  REFERENCE_MODULE = 2,
+  FOLLOW_MODULE = 3,
+}
 
 const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
@@ -33,15 +40,18 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   // deploy ModuleRegistry
   const moduleRegistry = await deploy("ModuleRegistry", baseConfig);
+  const ModuleRegistry = await ethers.getContractAt("ModuleRegistry", moduleRegistry.address);
 
   // determine the LensHub address
   const lensHubAddress = await getNextContractAddress(deployer, 4);
 
-  // deploy FollowNFT and LegacyCollectNFT
+  // deploy FollowNFT
   const followNft = await deploy("FollowNFT", {
     ...baseConfig,
     args: [lensHubAddress],
   });
+
+  // deploy LegacyCollectNFT
   const legacyCollectNft = await deploy("LegacyCollectNFT", {
     ...baseConfig,
     args: [lensHubAddress],
@@ -50,7 +60,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   // deploy LensHub
   const lensHub = await deploy("LensHub", {
     from: deployer,
-    args: [followNft.address, legacyCollectNft.address, moduleRegistry.address, COOLDOWN_PERIOD],
+    args: [followNft.address, legacyCollectNft.address, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
     log: true,
     autoMine: true,
     proxy: {
@@ -74,11 +84,16 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     },
   });
 
-  // deploy LensHandles and TokenHandleRegistry
+  const LensHub = await ethers.getContractAt("LensHub", lensHub.address);
+
+  // deploy LensHandles
   const lensHandles = await deploy("LensHandles", {
     ...baseConfig,
-    args: [deployer, lensHub.address, COOLDOWN_PERIOD],
+    args: [deployer, lensHub.address, GUARDIAN_COOLDOWN_PERIOD],
   });
+  const LensHandles = await ethers.getContractAt("LensHandles", lensHandles.address);
+
+  // deploy TokenHandleRegistry
   const tokenHandleRegistry = await deploy("TokenHandleRegistry", {
     ...baseConfig,
     args: [lensHub.address, lensHandles.address],
@@ -109,50 +124,35 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     collectPublicationAction.address,
   );
 
-  // deploy MultirecipientFeeCollectModule
-  const multirecipientFeeCollectModule = await deploy("MultirecipientFeeCollectModule", {
-    ...baseConfig,
-    args: [lensHub.address, collectPublicationAction.address, moduleRegistry.address, deployer],
-  });
-
   // deploy SimpleFeeCollectModule
   const simpleFeeCollectModule = await deploy("SimpleFeeCollectModule", {
     ...baseConfig,
     args: [lensHub.address, collectPublicationAction.address, moduleRegistry.address, deployer],
   });
 
-  const registerMultirecipientCollectModule = await CollectPublicationAction.registerCollectModule(
-    multirecipientFeeCollectModule.address,
-  );
-  console.log("registered MultirecipientFeeCollectModule (tx: " + registerMultirecipientCollectModule.hash + ")");
+  // deploy MultirecipientFeeCollectModule
+  const multirecipientFeeCollectModule = await deploy("MultirecipientFeeCollectModule", {
+    ...baseConfig,
+    args: [lensHub.address, collectPublicationAction.address, moduleRegistry.address, deployer],
+  });
 
-  const registerSimpleCollectModule = await CollectPublicationAction.registerCollectModule(
-    simpleFeeCollectModule.address,
-  );
-  console.log("registered SimpleFeeCollectModule (tx: " + registerSimpleCollectModule.hash + ")");
-
-  const LensHub = await ethers.getContractAt("LensHub", lensHub.address);
-
-  // set treasury
-  const setTreasury = await LensHub.setTreasury(deployer);
-  console.log("set Treasury address (tx: " + setTreasury.hash + ")");
-  const setTreasuryFee = await LensHub.setTreasuryFee(500n);
-  console.log("set Treasury fee (tx: " + setTreasuryFee.hash + ")");
-
-  // deploy token URI contracts
+  // deploy FollowTokenURI
   const followTokenUri = await deploy("FollowTokenURI", {
     ...baseConfig,
     libraries: {
       FollowSVG: (await deploy("FollowSVG", baseConfig)).address,
     },
   });
+
+  // deploy ProfileTokenURI
   const profileTokenUri = await deploy("SimpleProfileTokenURI", {
     ...baseConfig,
     libraries: {
       SimpleProfileSVG: (await deploy("SimpleProfileSVG", baseConfig)).address,
     },
   });
-  const gintoNordFontSVG = await deploy("GintoNordFontSVG", baseConfig);
+
+  // deploy HandleTokenURI
   const handleTokenUri = await deploy("HandleTokenURI", {
     ...baseConfig,
     libraries: {
@@ -160,7 +160,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
         await deploy("HandleSVG", {
           ...baseConfig,
           libraries: {
-            GintoNordFontSVG: gintoNordFontSVG.address,
+            GintoNordFontSVG: (await deploy("GintoNordFontSVG", baseConfig)).address,
           },
         })
       ).address,
@@ -173,6 +173,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     args: [process.env.BURNER_PUBLIC_KEY!, lensHub.address, lensHandles.address, tokenHandleRegistry.address],
   });
 
+  // deploy PublicActProxy_MetaTx
   const publicActProxy_MetaTx = await deploy("PublicActProxy_MetaTx", baseConfig);
 
   // deploy PublicActProxy
@@ -192,42 +193,104 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   });
 
   // deploy FeeFollowModule
-  await deploy("FeeFollowModule", {
+  const feeFollowModule = await deploy("FeeFollowModule", {
     ...baseConfig,
     args: [lensHub.address, moduleRegistry.address, deployer],
   });
 
   // deploy RevertFollowModule
-  await deploy("RevertFollowModule", {
+  const revertFollowModule = await deploy("RevertFollowModule", {
     ...baseConfig,
     args: [deployer],
   });
 
   // deploy DegreesOfSeparationReferenceModule
-  await deploy("DegreesOfSeparationReferenceModule", {
+  const degreesOfSeparationReferenceModule = await deploy("DegreesOfSeparationReferenceModule", {
     ...baseConfig,
     args: [lensHub.address, deployer],
   });
 
+  // deploy FollowerOnlyReferenceModule
+  const followerOnlyReferenceModule = await deploy("FollowerOnlyReferenceModule", {
+    ...baseConfig,
+    args: [lensHub.address, deployer],
+  });
+
+  // set treasury
+
+  const setTreasury = await LensHub.setTreasury(deployer);
+  console.log("set Treasury address (tx: " + setTreasury.hash + ")");
+
+  const setTreasuryFee = await LensHub.setTreasuryFee(TREASURY_FEE);
+  console.log("set Treasury fee (tx: " + setTreasuryFee.hash + ")");
+
+  // register modules
+
+  const registerMultirecipientCollectModule = await CollectPublicationAction.registerCollectModule(
+    multirecipientFeeCollectModule.address,
+  );
+  console.log("registered MultirecipientFeeCollectModule (tx: " + registerMultirecipientCollectModule.hash + ")");
+
+  const registerSimpleCollectModule = await CollectPublicationAction.registerCollectModule(
+    simpleFeeCollectModule.address,
+  );
+  console.log("registered SimpleFeeCollectModule (tx: " + registerSimpleCollectModule.hash + ")");
+
+  const registerCollectPublicationActionAddress = await ModuleRegistry.registerModule(
+    collectPublicationAction.address,
+    ModuleType.PUBLICATION_ACTION_MODULE,
+  );
+  console.log("registered CollectPublicationAction (tx: " + registerCollectPublicationActionAddress.hash + ")");
+
+  const registerFeeFollowModule = await ModuleRegistry.registerModule(
+    feeFollowModule.address,
+    ModuleType.FOLLOW_MODULE,
+  );
+  console.log("registered FeeFollowModule (tx: " + registerFeeFollowModule.hash + ")");
+
+  const registerRevertFollowModule = await ModuleRegistry.registerModule(
+    revertFollowModule.address,
+    ModuleType.FOLLOW_MODULE,
+  );
+  console.log("registered RevertFollowModule (tx: " + registerRevertFollowModule.hash + ")");
+
+  const registerDegreesOfSeparationReferenceModule = await ModuleRegistry.registerModule(
+    degreesOfSeparationReferenceModule.address,
+    ModuleType.REFERENCE_MODULE,
+  );
+  console.log(
+    "registered DegreesOfSeparationReferenceModule (tx: " + registerDegreesOfSeparationReferenceModule.hash + ")",
+  );
+
+  const registerFollowerOnlyReferenceModule = await ModuleRegistry.registerModule(
+    followerOnlyReferenceModule.address,
+    ModuleType.REFERENCE_MODULE,
+  );
+  console.log("registered FollowerOnlyReferenceModule (tx: " + registerFollowerOnlyReferenceModule.hash + ")");
+
   // set token URI contracts
+
   const setFollowTokenURIContract = await LensHub.setFollowTokenURIContract(followTokenUri.address);
   console.log("assigned FollowTokenURI contract (tx: " + setFollowTokenURIContract.hash + ")");
+
   const setProfileTokenURIContract = await LensHub.setProfileTokenURIContract(profileTokenUri.address);
   console.log("assigned ProfileTokenURI contract (tx: " + setProfileTokenURIContract.hash + ")");
 
   // whitelist addresses for profile creation
+
   const whitelistBurner = await LensHub.whitelistProfileCreator(process.env.BURNER_PUBLIC_KEY!, true);
   console.log("whitelisted burner wallet (tx: " + whitelistBurner.hash + ")");
+
   const whitelistProfileCreationProxy = await LensHub.whitelistProfileCreator(profileCreationProxy.address, true);
   console.log("whitelisted ProfileCreationProxy (tx: " + whitelistProfileCreationProxy.hash + ")");
 
   // set token URI contract for LensHandles
-  const LensHandles = await ethers.getContractAt("LensHandles", lensHandles.address);
   const setHandleTokenURIContract = await LensHandles.setHandleTokenURIContract(handleTokenUri.address);
   console.log("assigned HandleTokenURI contract (tx: " + setHandleTokenURIContract.hash + ")");
 
-  const upause = await LensHub.setState(0);
-  console.log("unpaused LensHub (tx: " + upause.hash + ")");
+  // finally, unpause LensHub
+  const unpause = await LensHub.setState(0);
+  console.log("unpaused LensHub (tx: " + unpause.hash + ")");
 };
 
 export default deployLensHub;
