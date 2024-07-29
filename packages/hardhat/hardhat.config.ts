@@ -5,17 +5,18 @@ const envFileName = process.env.NODE_ENV === "production" ? ".env" : `.env.${pro
 const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
-import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
+import "hardhat-dependency-compiler";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
-import "hardhat-dependency-compiler";
 import "@openzeppelin/hardhat-upgrades";
+
+import { HardhatUserConfig } from "hardhat/config";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -79,6 +80,7 @@ const config: HardhatUserConfig = {
       "lens-modules/contracts/namespaces/LensHandles.sol",
       "lens-modules/contracts/namespaces/TokenHandleRegistry.sol",
     ],
+    keep: true,
   },
   defaultNetwork: "localhost",
   namedAccounts: {
