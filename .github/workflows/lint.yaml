@@ -34,7 +34,7 @@ jobs:
         env:
           NETWORK: ${{ secrets.NETWORK }}
           BURNER_PUBLIC_KEY: ${{ secrets.BURNER_PUBLIC_KEY }}
-        run: yarn chain & yarn deploy:lens & yarn deploy:local
+        run: yarn chain & yarn deploy:lens
 
       - name: Run nextjs lint
         run: yarn next:lint --max-warnings=0

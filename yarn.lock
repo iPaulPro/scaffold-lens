@@ -1831,7 +1831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomicfoundation/hardhat-chai-matchers@npm:^2.0.3":
+"@nomicfoundation/hardhat-chai-matchers@npm:^2.0.7":
   version: 2.0.7
   resolution: "@nomicfoundation/hardhat-chai-matchers@npm:2.0.7"
   dependencies:
@@ -1872,7 +1872,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomicfoundation/hardhat-verify@npm:^2.0.1":
+"@nomicfoundation/hardhat-verify@npm:^2.0.8":
   version: 2.0.8
   resolution: "@nomicfoundation/hardhat-verify@npm:2.0.8"
   dependencies:
@@ -2528,10 +2528,10 @@ __metadata:
     "@ethersproject/providers": ^5.7.1
     "@irys/sdk": ^0.1.1
     "@lens-protocol/metadata": ^1.1.5
-    "@nomicfoundation/hardhat-chai-matchers": ^2.0.3
+    "@nomicfoundation/hardhat-chai-matchers": ^2.0.7
     "@nomicfoundation/hardhat-ethers": ^3.0.5
     "@nomicfoundation/hardhat-network-helpers": ^1.0.6
-    "@nomicfoundation/hardhat-verify": ^2.0.1
+    "@nomicfoundation/hardhat-verify": ^2.0.8
     "@openzeppelin/contracts": ^4.8.1
     "@openzeppelin/hardhat-upgrades": ^2.5.1
     "@typechain/ethers-v6": ^0.5.1
@@ -2549,10 +2549,10 @@ __metadata:
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.1.3
     ethers: ^6.10.0
-    hardhat: ^2.19.4
-    hardhat-dependency-compiler: ^1.1.3
-    hardhat-deploy: ^0.11.45
-    hardhat-deploy-ethers: ^0.4.1
+    hardhat: ^2.22.6
+    hardhat-dependency-compiler: ^1.2.1
+    hardhat-deploy: ^0.12.4
+    hardhat-deploy-ethers: ^0.4.2
     hardhat-gas-reporter: ^1.0.9
     lens-modules: ^1.1.3
     prettier: ^3.3.2
@@ -7857,7 +7857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.7.0, ethers@npm:^5.7.2":
+"ethers@npm:^5.7.0, ethers@npm:^5.7.2, ethers@npm:~5.7.0":
   version: 5.7.2
   resolution: "ethers@npm:5.7.2"
   dependencies:
@@ -8933,7 +8933,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-dependency-compiler@npm:^1.1.3":
+"hardhat-dependency-compiler@npm:^1.2.1":
   version: 1.2.1
   resolution: "hardhat-dependency-compiler@npm:1.2.1"
   peerDependencies:
@@ -8942,7 +8942,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-deploy-ethers@npm:^0.4.1":
+"hardhat-deploy-ethers@npm:^0.4.2":
   version: 0.4.2
   resolution: "hardhat-deploy-ethers@npm:0.4.2"
   peerDependencies:
@@ -8953,9 +8953,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-deploy@npm:^0.11.45":
-  version: 0.11.45
-  resolution: "hardhat-deploy@npm:0.11.45"
+"hardhat-deploy@npm:^0.12.4":
+  version: 0.12.4
+  resolution: "hardhat-deploy@npm:0.12.4"
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/abstract-signer": ^5.7.0
@@ -8980,8 +8980,8 @@ __metadata:
     match-all: ^1.2.6
     murmur-128: ^0.2.1
     qs: ^6.9.4
-    zksync-web3: ^0.14.3
-  checksum: 7ecce33c3305857bdd1873a25d391e27ae9f581df75757035cb028ace7bb5fbb83f053435e843bc3d925e7fd8412c3dc582797fe5b4bbe1fef7f3dd989a7c878
+    zksync-ethers: ^5.0.0
+  checksum: 995a20a7ae8d10d2b961690e0903cd2a4a07198bc3d20a15d4734f2d9aade261b6f0ffb9e01b8fc013de34b687e401ed0c90dfc4d592571576f133ce8cbf3003
   languageName: node
   linkType: hard
 
@@ -8998,7 +8998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.19.4":
+"hardhat@npm:^2.22.6":
   version: 2.22.6
   resolution: "hardhat@npm:2.22.6"
   dependencies:
@@ -15907,12 +15907,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zksync-web3@npm:^0.14.3":
-  version: 0.14.4
-  resolution: "zksync-web3@npm:0.14.4"
+"zksync-ethers@npm:^5.0.0":
+  version: 5.9.1
+  resolution: "zksync-ethers@npm:5.9.1"
+  dependencies:
+    ethers: ~5.7.0
   peerDependencies:
-    ethers: ^5.7.0
-  checksum: f702a3437f48a8d42c4bb35b8dd13671a168aadfc4e23ce723d62959220ccb6bf9c529c60331fe5b91afaa622147c6a37490551474fe3e35c06ac476524b5160
+    ethers: ~5.7.0
+  checksum: c9e54677de296b328805c617e8e39aee8abe74c906a335f6431687301f06b30e70337b9b2136e5eece8b275f3523404e3e78956f4f8a82b47a638a08347ce459
   languageName: node
   linkType: hard
 
