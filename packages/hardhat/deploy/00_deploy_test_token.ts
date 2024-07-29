@@ -28,4 +28,3 @@ const deployTestToken: DeployFunction = async function (hre: HardhatRuntimeEnvir
 export default deployTestToken;
 
 deployTestToken.tags = ["TestToken"];
-deployTestToken.dependencies = ["LensHub"];
