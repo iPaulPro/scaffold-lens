@@ -17,6 +17,9 @@ typechain-types
 cache
 artifacts
 
+# hardhat-dependency-compiler
+contracts/hardhat-dependency-compiler
+
 # zkSync files
 artifacts-zk
 cache-zk

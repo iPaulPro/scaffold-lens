@@ -12,6 +12,7 @@
     "chain": "yarn workspace @sl/hardhat chain",
     "clean": "yarn workspace @sl/hardhat clean",
     "compile": "yarn workspace @sl/hardhat compile",
+    "deploy:lens": "yarn workspace @sl/hardhat deploy:lens",
     "deploy:local": "yarn workspace @sl/hardhat deploy:action:local",
     "deploy:testnet": "yarn workspace @sl/hardhat deploy:action:testnet",
     "deploy:mainnet": "yarn workspace @sl/hardhat deploy:action:mainnet",

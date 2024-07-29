@@ -2,7 +2,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
 import { module } from "@lens-protocol/metadata";
-import { uploadMetadata } from "../lib/irys-service";
+import { uploadMetadata } from "../lib/irysService";
 import { YourActionModule } from "../typechain-types";
 import { LENS_HUB, MODULE_REGISTRY } from "../config";
 
@@ -40,9 +40,17 @@ const deployYourActionModuleContract: DeployFunction = async function (hre: Hard
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
-  // This is the address of the LensHub contract on the network we're deploying to
-  // When running locally, this should be the address of burner wallet used in the nextjs app
-  const lensHubAddress = LENS_HUB;
+  // First check to see if there's a local mocked LensHub contract deployed
+  // This allows us to run tests locally with the same flow as on-chain
+  let lensHubAddress: string | undefined;
+  try {
+    const { address } = await get("LensHub");
+    lensHubAddress = address;
+  } catch (e) {}
+
+  if (!lensHubAddress) {
+    lensHubAddress = LENS_HUB;
+  }
 
   // First check to see if there's a local mocked ModuleRegistry contract deployed
   // This allows us to run tests locally with the same flow as on-chain
@@ -74,12 +82,14 @@ const deployYourActionModuleContract: DeployFunction = async function (hre: Hard
   const metadataURI = await uploadMetadata(metadata);
   await yourPublicationAction.setModuleMetadataURI(metadataURI);
 
-  // Add a delay before calling registerModule to allow for propagation
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (process.env.NETWORK !== "localhost") {
+    // Add a delay before calling registerModule to allow for propagation
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
 
   // Register the module with the ModuleRegistry
   const registered = await yourPublicationAction.registerModule();
-  console.log("registered open action: tx=", registered.hash);
+  console.log("registered open action (tx=" + registered.hash + ")");
 };
 
 export default deployYourActionModuleContract;

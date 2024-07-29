@@ -63,12 +63,12 @@ To get started with Scaffold-Lens, follow the steps below:
     Open `config.ts` in the `packages/hardhat` directory and set `LENS_HUB` to the address of the burner wallet provided by the nextjs project.
 
 5. **Deploy**  
-   On a third terminal, from the root directory, deploy the test contract locally:
+   On a third terminal, from the root directory, deploy the Lens contracts locally:
     ```bash
-    yarn deploy:local
+    yarn deploy:lens
     ```
 
-   This command deploys the smart contracts to the local network. The contracts are located in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the deploy scripts located in `packages/hardhat/deploy` to deploy the contracts to the network.
+   This command deploys the full Lens Protocol on the local network. Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
 
 ## Debugging
 
@@ -93,30 +93,6 @@ Then navigate to http://localhost:3000/debug to open the debugger. You can now c
 5. Select the `YourActionModule` contract and call the `initializePublicationAction` function with a receiver address.
 6. Call the `processPublicationAction` with the call data. 
 
-### Dealing with Action Module calldata
-
-You can use https://abi.hashex.org/ to encode the data needed for the `initializePublicationAction` and `processPublicationAction` functions.
-
-So for example, if you want to call the `processPublicationAction` function on the `TipActoinModule` with a $10 USDC tip, you'd first need to encode the data. The contract expects the following format for the `processCalldataABI`:
-```json
-{
-  "currency": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-  "tipAmount": 10000000
-}
-```
-Input the values into HashEx and select the proper types:
-
-<img src="assets/abi-hashex.jpg" width="600" alt="Screenshot of abi.hashex.org"/>
-
-You end up with encoded calldata:
-```
-0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000989680
-```
-
-**NOTE:** You will add a `0x` prefix to the encoded calldata copied from HashEx before calling the function.
-
-You can also use `ethers` or the `@lens-protocol/client` to encode the abi parameters.
-
 ## Testing
 
 Run the smart contract unit tests from the root directory.
@@ -133,7 +109,7 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
 1. **Set up environment**  
    To deploy on Amoy, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.staging.example` file as a template.
 
-   Next, generate a new account or add one to deploy the contract(s) from. Additionally, you will need to add your Alchemy API key. Note that the key should correspond to the network you're deploying on (in this case, Amoy).
+   Next, generate a new account or add one to deploy the contract(s) from. Additionally, you will need to add your Alchemy API key.
    ```bash
    ALCHEMY_API_KEY=""
    DEPLOYER_PRIVATE_KEY=""
@@ -160,7 +136,7 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
 
 ## Deploying to Polygon Mainnet
 
-Follow the same directions for deploying to Amoy, but use the `.env` file instead of `.env.staging` and `:mainnet` in the yarn commands, instead of `:testnet`. You will also need to set the `ALCHEMY_API_KEY` with a mainnet API key.
+Follow the same directions for deploying to Amoy, but use the `.env` file instead of `.env.staging` and `:mainnet` in the yarn commands, instead of `:testnet`. You will also need to set the `ALCHEMY_API_KEY` with a valid API key.
 
 ## Using your own contracts
 

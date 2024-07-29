@@ -32,8 +32,9 @@ jobs:
 
       - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
         env:
-          LENS_HUB: ${{ secrets.LENS_HUB }}
-        run: yarn chain & yarn deploy:local
+          NETWORK: ${{ secrets.NETWORK }}
+          BURNER_PUBLIC_KEY: ${{ secrets.BURNER_PUBLIC_KEY }}
+        run: yarn chain & yarn deploy:lens
 
       - name: Run nextjs lint
         run: yarn next:lint --max-warnings=0
