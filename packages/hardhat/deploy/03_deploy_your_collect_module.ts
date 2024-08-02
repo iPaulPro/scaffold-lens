@@ -1,103 +1,103 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { YourCollectModule } from "../typechain-types";
+import { TokenGatedCollectModule } from "../typechain-types";
 import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irysService";
 import { COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
 
-/**
- * Generates the metadata for the YourCollectModule contract compliant with the Module Metadata Standard at:
- * https://docs.lens.xyz/docs/module-metadata-standard
- */
 const metadata = module({
-  name: "YourCollectModule",
-  title: "Your Collect Action",
-  description: "Description of your collect action",
-  authors: ["some@email.com"],
-  initializeCalldataABI: JSON.stringify([]),
-  processCalldataABI: JSON.stringify([]),
+  name: "TokenGatedCollectModule",
+  title: "Token Gated Collect Module",
+  description: "Enables restricting Collects to users who hold a specific token.",
+  authors: ["paul@paulburke.co"],
+  initializeCalldataABI: JSON.stringify([
+    { type: "uint160", name: "amount" },
+    { type: "uint96", name: "collectLimit" },
+    { type: "address", name: "currency" },
+    { type: "uint16", name: "referralFee" },
+    { type: "bool", name: "followerOnly" },
+    { type: "uint72", name: "endTimestamp" },
+    {
+      type: "tuple(address,uint16)[]",
+      name: "recipients",
+      components: [
+        { type: "address", name: "recipient" },
+        { type: "uint16", name: "split" },
+      ],
+    },
+    {
+      type: "tuple(address,uint256)",
+      name: "gateParams",
+      components: [
+        { type: "address", name: "tokenAddress" },
+        { type: "uint256", name: "minThreshold" },
+      ],
+    },
+  ]),
+  processCalldataABI: JSON.stringify([
+    { type: "address", name: "currency" },
+    { type: "uint256", name: "amount" },
+  ]),
   attributes: [],
 });
 
-/**
- * Deploys a contract named "YourCollectModule" using the deployer account and
- * constructor arguments set to the deployer address
- *
- * @param hre HardhatRuntimeEnvironment object.
- */
-const deployYourCollectModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  /*
-    On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
-
-    When deploying to live networks (e.g `yarn deploy --network goerli`), the deployer account
-    should have sufficient balance to pay for the gas fees for contract creation.
-
-    You can generate a random account with `yarn generate` which will fill DEPLOYER_PRIVATE_KEY
-    with a random private key in the .env file (then used on hardhat.config.ts)
-    You can run the `yarn account` command to check your balance in every network.
-  */
+const deployTokenGatedCollectModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
-  // This is the address of the LensHub contract on the network we're deploying to
-  // When running locally, this should be the address of burner wallet used in the nextjs app
-  const lensHubAddress = LENS_HUB;
+  let lensHubAddress: string | undefined;
+  try {
+    const { address } = await get("LensHub");
+    lensHubAddress = address;
+  } catch (e) {}
 
-  // First check to see if there's a local mocked ModuleRegistry contract deployed
-  // This allows us to run tests locally with the same flow as on-chain
+  if (!lensHubAddress) {
+    lensHubAddress = LENS_HUB;
+  }
+
   let moduleRegistry: string | undefined;
   try {
     const { address } = await get("ModuleRegistry");
     moduleRegistry = address;
   } catch (e) {}
 
-  // If there's no local mocked ModuleRegistry, use the live address from the environment
   if (!moduleRegistry) {
     moduleRegistry = MODULE_REGISTRY;
   }
 
-  // Next, check to see if there's a local mocked CollectPublicationAction contract deployed
-  // This allows us to run tests locally with the same flow as on-chain
   let collectPublicationAction: string | undefined;
   try {
     const { address } = await get("CollectPublicationAction");
     collectPublicationAction = address;
   } catch (e) {}
 
-  // If there's no local mocked CollectPublicationAction, use the live address from the environment
   if (!collectPublicationAction) {
     collectPublicationAction = COLLECT_PUBLICATION_ACTION;
   }
 
-  // Deploy the YourCollectModule contract
-  await deploy("YourCollectModule", {
+  await deploy("TokenGatedCollectModule", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationAction, moduleRegistry],
+    args: [lensHubAddress, collectPublicationAction, moduleRegistry, deployer],
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  // Get the deployed contract
-  const yourCollectModule = await hre.ethers.getContract<YourCollectModule>("YourCollectModule", deployer);
+  const collectModule = await hre.ethers.getContract<TokenGatedCollectModule>("TokenGatedCollectModule", deployer);
 
-  // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
-  await yourCollectModule.setModuleMetadataURI(metadataURI);
+  const setMetadata = await collectModule.setModuleMetadataURI(metadataURI);
+  console.log("set metadata URI (tx: " + setMetadata.hash + ")");
 
-  // Add a delay before calling registerModule to allow for propagation
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (process.env.NETWORK !== "localhost") {
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
 
-  // Register the module with the Publication Action
   const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);
-  await publicationActionContract.registerCollectModule(await yourCollectModule.getAddress());
-  console.log("Registered YourCollectModule with CollectPublicationAction");
+  const register = await publicationActionContract.registerCollectModule(await collectModule.getAddress());
+  console.log("registered TokenGatedCollectModule (tx: " + register.hash + ")");
 };
 
-export default deployYourCollectModuleContract;
+export default deployTokenGatedCollectModuleContract;
 
-// Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourCollectModule
-deployYourCollectModuleContract.tags = ["YourCollectModule"];
+deployTokenGatedCollectModuleContract.tags = ["TokenGatedCollectModule"];

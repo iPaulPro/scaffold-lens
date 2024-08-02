@@ -15,6 +15,7 @@ import "hardhat-dependency-compiler";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 import "@openzeppelin/hardhat-upgrades";
+import "hardhat-tracer";
 
 import { HardhatUserConfig } from "hardhat/config";
 
@@ -97,6 +98,7 @@ const config: HardhatUserConfig = {
         url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
+      // loggingEnabled: true,
     },
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,

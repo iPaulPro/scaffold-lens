@@ -59,10 +59,8 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   // deploy LensHub
   const lensHub = await deploy("LensHub", {
-    from: deployer,
+    ...baseConfig,
     args: [followNft.address, legacyCollectNft.address, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
-    log: true,
-    autoMine: true,
     proxy: {
       proxyContract: "OpenZeppelinTransparentProxy",
       implementationName: "LensHubInitializable",
@@ -280,6 +278,9 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   const whitelistBurner = await LensHub.whitelistProfileCreator(process.env.BURNER_PUBLIC_KEY!, true);
   console.log("whitelisted burner wallet (tx: " + whitelistBurner.hash + ")");
+
+  const whitelistDeployer = await LensHub.whitelistProfileCreator(deployer, true);
+  console.log("whitelisted deployer (tx: " + whitelistDeployer.hash + ")");
 
   const whitelistProfileCreationProxy = await LensHub.whitelistProfileCreator(profileCreationProxy.address, true);
   console.log("whitelisted ProfileCreationProxy (tx: " + whitelistProfileCreationProxy.hash + ")");
