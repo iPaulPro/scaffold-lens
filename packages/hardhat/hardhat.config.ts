@@ -1,7 +1,8 @@
 import * as dotenv from "dotenv";
 import path from "path";
 
-const envFileName = process.env.NODE_ENV === "production" ? ".env" : `.env.${process.env.NODE_ENV}`;
+const envFileName =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "production" ? ".env" : `.env.${process.env.NODE_ENV}`;
 const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
