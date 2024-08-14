@@ -8,7 +8,6 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 import {ICollectModule} from "lens-modules/contracts/modules/interfaces/ICollectModule.sol";
 import {LensModuleMetadata} from "lens-modules/contracts/modules/LensModuleMetadata.sol";
-import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 import {BaseFeeCollectModule} from "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol";
 import {BaseFeeCollectModuleInitData, BaseProfilePublicationData} from "lens-modules/contracts/modules/interfaces/IBaseFeeCollectModule.sol";
 import {ModuleTypes} from "lens-modules/contracts/modules/libraries/constants/ModuleTypes.sol";
@@ -236,32 +235,6 @@ contract TokenGatedCollectModule is BaseFeeCollectModule, LensModuleMetadata {
                 gateParams: _gateParams[profileId][pubId],
                 recipients: _recipients[profileId][pubId]
             });
-    }
-
-    /**
-     * @dev Checks if the module is registered in the module registry
-     * @return True if the module is registered, false otherwise
-     */
-    function isRegistered() public view returns (bool) {
-        return MODULE_REGISTRY.isModuleRegistered(address(this));
-    }
-
-    /**
-     * @dev Registers the open action in the module registry
-     * @return True if the module was registered, false otherwise
-     */
-    function registerModule() external onlyOwner returns (bool) {
-        if (isRegistered()) {
-            return true;
-        }
-        bool registered = MODULE_REGISTRY.registerModule(
-            address(this),
-            uint256(IModuleRegistry.ModuleType.PUBLICATION_ACTION_MODULE)
-        );
-        if (registered) {
-            emit ModuleRegistered();
-        }
-        return registered;
     }
 
     /**

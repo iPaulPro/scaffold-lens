@@ -220,7 +220,6 @@ describe("TokenGatedCollectModule", () => {
     const collectData = await actionModule.getCollectData(authorProfileId, 1n);
     const collectNFTImpl = await artifacts.readArtifact("CollectNFT");
     const collectNFT = new ethers.Contract(collectData.collectNFT, collectNFTImpl.abi, collector);
-    console.log("collectNFT address", await collectNFT.getAddress(), await collectNFT.totalSupply());
 
     expect(collectTx).to.emit(lensHub, "Acted");
     expect(await testToken.balanceOf(treasury)).to.equal(treasuryAmount);

@@ -8,7 +8,7 @@
     "compile": "hardhat compile --show-stack-traces",
     "deploy:lens": "NODE_ENV=development hardhat deploy --tags LensHub,generateTsAbis",
     "deploy:collect:local": "NODE_ENV=development hardhat deploy --tags TestToken,TokenGatedCollectModule,generateTsAbis",
-    "deploy:collect:mainnet": "NODE_ENV=production hardhat deploy --tags TokenGatedCollectModule,generateTsAbis --network polygon",
+    "deploy:collect:mainnet": "NODE_ENV=production hardhat deploy --tags TokenGatedCollectModule --network polygon",
     "deploy:collect:testnet": "NODE_ENV=staging hardhat deploy --tags TokenGatedCollectModule,generateTsAbis --network polygonAmoy",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "NODE_ENV=development hardhat run scripts/generateAccount.ts",
