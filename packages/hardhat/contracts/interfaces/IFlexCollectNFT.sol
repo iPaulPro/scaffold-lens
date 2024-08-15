@@ -40,8 +40,8 @@ interface IFlexCollectNFT is IERC165 {
     ) external;
 
     /**
-     * @notice Mints a collect NFT to the specified address. This can only be called by the hub and is called
-     * upon collection.
+     * @notice Mints a collect NFT to the specified address. This can only be called by the action
+     * and is called upon collection.
      * @custom:permissions PublicationCollectionAction.
      *
      * @param pubId The ID of the publication.
