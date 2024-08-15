@@ -3,7 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { FlexCollectModule } from "../typechain-types";
 import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
-import { uploadMetadata } from "../lib/irys-service";
+import { uploadMetadata } from "../lib/irysService";
 import { LENS_HUB, MODULE_REGISTRY } from "../config";
 
 const metadata = module({

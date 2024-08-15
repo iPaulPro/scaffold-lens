@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { LENS_HUB } from "../config";
-import getNextContractAddress from "../lib/get-next-contract-address";
+import getNextContractAddress from "../lib/getNextContractAddress";
 
 const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();

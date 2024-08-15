@@ -5,7 +5,6 @@ const envFileName = process.env.NODE_ENV === "production" ? ".env" : `.env.${pro
 const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
-import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@typechain/hardhat";
@@ -15,6 +14,8 @@ import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 import "hardhat-dependency-compiler";
+
+import { HardhatUserConfig } from "hardhat/config";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -32,12 +33,53 @@ const config: HardhatUserConfig = {
       optimizer: {
         enabled: true,
         // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
-        runs: 10_000_000,
+        runs: 200,
       },
+      viaIR: true, // required to compile LensHubInitializable
     },
   },
   dependencyCompiler: {
-    paths: ["lens-modules/contracts/misc/ModuleRegistry.sol"],
+    paths: [
+      "lens-modules/contracts/LensHub.sol",
+      "lens-modules/contracts/FollowNFT.sol",
+      "lens-modules/contracts/misc/ModuleRegistry.sol",
+      "lens-modules/contracts/misc/LegacyCollectNFT.sol",
+      "lens-modules/contracts/misc/LensHubInitializable.sol",
+      "lens-modules/contracts/misc/PermissionlessCreator.sol",
+      "lens-modules/contracts/misc/ProfileCreationProxy.sol",
+      "lens-modules/contracts/misc/PublicActProxy.sol",
+      "lens-modules/contracts/misc/PublicActProxy_MetaTx.sol",
+      "lens-modules/contracts/misc/access/LitAccessControl.sol",
+      "lens-modules/contracts/misc/token-uris/FollowTokenURI.sol",
+      "lens-modules/contracts/misc/token-uris/HandleTokenURI.sol",
+      "lens-modules/contracts/misc/token-uris/SimpleProfileTokenURI.sol",
+      "lens-modules/contracts/modules/act/collect/CollectPublicationAction.sol",
+      "lens-modules/contracts/modules/act/collect/CollectNFT.sol",
+      "lens-modules/contracts/modules/act/collect/MultirecipientFeeCollectModule.sol",
+      "lens-modules/contracts/modules/act/collect/SimpleFeeCollectModule.sol",
+      "lens-modules/contracts/modules/follow/FeeFollowModule.sol",
+      "lens-modules/contracts/modules/follow/RevertFollowModule.sol",
+      "lens-modules/contracts/modules/reference/DegreesOfSeparationReferenceModule.sol",
+      "lens-modules/contracts/modules/reference/FollowerOnlyReferenceModule.sol",
+      "lens-modules/contracts/libraries/ActionLib.sol",
+      "lens-modules/contracts/libraries/FollowLib.sol",
+      "lens-modules/contracts/libraries/GovernanceLib.sol",
+      "lens-modules/contracts/libraries/LegacyCollectLib.sol",
+      "lens-modules/contracts/libraries/MetaTxLib.sol",
+      "lens-modules/contracts/libraries/ProfileLib.sol",
+      "lens-modules/contracts/libraries/PublicationLib.sol",
+      "lens-modules/contracts/libraries/StorageLib.sol",
+      "lens-modules/contracts/libraries/constants/Types.sol",
+      "lens-modules/contracts/libraries/constants/Events.sol",
+      "lens-modules/contracts/libraries/svgs/Follow/FollowSVG.sol",
+      "lens-modules/contracts/libraries/svgs/Handle/GintoNordFontSVG.sol",
+      "lens-modules/contracts/libraries/svgs/Handle/HandleSVG.sol",
+      "lens-modules/contracts/libraries/svgs/Profile/SimpleProfileSVG.sol",
+      "lens-modules/contracts/libraries/ValidationLib.sol",
+      "lens-modules/contracts/namespaces/LensHandles.sol",
+      "lens-modules/contracts/namespaces/TokenHandleRegistry.sol",
+    ],
+    keep: true,
   },
   defaultNetwork: "localhost",
   namedAccounts: {

@@ -10,8 +10,15 @@ temp
 cache
 artifacts
 
+# hardhat-dependency-compiler
+contracts/hardhat-dependency-compiler
+
 #zkSync files
 artifacts-zk
 cache-zk
 
-deployments/*
+# deployments
+deployments/localhost
+
+# other
+temp
