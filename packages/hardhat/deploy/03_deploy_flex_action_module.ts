@@ -30,6 +30,16 @@ const deployFlexCollectPublicationActionContract: DeployFunction = async functio
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
+  let lensHubAddress: string | undefined;
+  try {
+    const { address } = await get("LensHub");
+    lensHubAddress = address;
+  } catch (e) {}
+
+  if (!lensHubAddress) {
+    lensHubAddress = LENS_HUB;
+  }
+
   let moduleRegistry: string | undefined;
   try {
     const { address } = await get("ModuleRegistry");
@@ -44,7 +54,7 @@ const deployFlexCollectPublicationActionContract: DeployFunction = async functio
 
   await deploy("FlexCollectPublicationAction", {
     from: deployer,
-    args: [LENS_HUB, moduleRegistry, collectNFTImpl, deployer],
+    args: [lensHubAddress, moduleRegistry, collectNFTImpl, deployer],
     log: true,
     autoMine: true,
   });

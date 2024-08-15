@@ -5,9 +5,17 @@ import getNextContractAddress from "../lib/getNextContractAddress";
 
 const deployCollectNFT: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
+  const { deploy, get } = hre.deployments;
 
-  const lensHubAddress = LENS_HUB;
+  let lensHubAddress: string | undefined;
+  try {
+    const { address } = await get("LensHub");
+    lensHubAddress = address;
+  } catch (e) {}
+
+  if (!lensHubAddress) {
+    lensHubAddress = LENS_HUB;
+  }
 
   const actionAddress = await getNextContractAddress(deployer);
 

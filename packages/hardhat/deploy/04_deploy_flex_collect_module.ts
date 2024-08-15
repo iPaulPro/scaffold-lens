@@ -20,7 +20,15 @@ const deployFlexCollectModuleContract: DeployFunction = async function (hre: Har
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
-  const lensHubAddress = LENS_HUB;
+  let lensHubAddress: string | undefined;
+  try {
+    const { address } = await get("LensHub");
+    lensHubAddress = address;
+  } catch (e) {}
+
+  if (!lensHubAddress) {
+    lensHubAddress = LENS_HUB;
+  }
 
   let moduleRegistry: string | undefined;
   try {
