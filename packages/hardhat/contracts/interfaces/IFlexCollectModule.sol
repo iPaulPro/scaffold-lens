@@ -51,15 +51,19 @@ interface IFlexCollectModule {
     ) external returns (bytes memory);
 
     /**
-     * @notice Returns the number of mints allowed for a given collectData. If zero, no mints
+     * @notice Returns the number of mints allowed for a given collect. If zero, no mints
      * are allowed and processPublicationAction is called with the original action data.
      * @custom:permissions ActionModule.
      *
+     * @param publicationCollectedProfileId The token ID of the profile mapped to the publication to query.
+     * @param publicationCollectedId The publication ID of the publication to query.
      * @param collectData The collectData from the process action params.
      *
      * @return The number of mints allowed in the current transaction. If zero, no mints are allowed.
      */
     function mintsAllowed(
+        uint256 publicationCollectedProfileId,
+        uint256 publicationCollectedId,
         bytes calldata collectData
     ) external returns (uint256);
 

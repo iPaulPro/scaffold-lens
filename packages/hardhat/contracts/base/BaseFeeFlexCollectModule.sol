@@ -56,7 +56,9 @@ abstract contract BaseFeeFlexCollectModule is
     }
 
     function mintsAllowed(
-        bytes calldata /** collectData */
+        uint256 /* publicationCollectedProfileId */,
+        uint256 /* publicationCollectedId */,
+        bytes calldata /* collectData */
     ) external view virtual override onlyActionModule returns (uint256) {
         return 1;
     }
@@ -97,8 +99,7 @@ abstract contract BaseFeeFlexCollectModule is
         return
             _dataByPublicationByProfile[
                 processCollectParams.publicationCollectedProfileId
-            ][processCollectParams.publicationCollectedId].amount *
-            processCollectParams.mintsAllowed;
+            ][processCollectParams.publicationCollectedId].amount;
     }
 
     /// @inheritdoc IFlexCollectModule

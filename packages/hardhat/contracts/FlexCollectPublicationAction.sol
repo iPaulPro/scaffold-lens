@@ -159,24 +159,6 @@ contract FlexCollectPublicationAction is
         }
     }
 
-    function verifyCollectNFTOwnership(
-        uint256 profileId,
-        address collectNFT
-    ) private view returns (bool) {
-        (uint256 ownerProfileId, ) = IFlexCollectNFT(collectNFT)
-            .getSourcePublicationPointer(1);
-        return ownerProfileId == profileId;
-    }
-
-    function verifyIsFlexCollectNFT(
-        address collectNFT
-    ) private view returns (bool) {
-        return
-            IFlexCollectNFT(collectNFT).supportsInterface(
-                type(IFlexCollectNFT).interfaceId
-            );
-    }
-
     function initializePublicationAction(
         uint256 profileId,
         uint256 pubId,
@@ -201,8 +183,8 @@ contract FlexCollectPublicationAction is
         verifyCollectModule(collectModule);
         _collectDataByPub[profileId][pubId].collectModule = collectModule;
         if (collectNFT != address(0)) {
-            verifyIsFlexCollectNFT(collectNFT);
-            verifyCollectNFTOwnership(profileId, collectNFT);
+            _verifyIsFlexCollectNFT(collectNFT);
+            _verifyCollectNFTOwnership(profileId, collectNFT);
             _collectDataByPub[profileId][pubId].collectNFT = collectNFT;
         }
         _collectDataByPub[profileId][pubId].contractURI = contractURI;
@@ -235,6 +217,8 @@ contract FlexCollectPublicationAction is
             (address, bytes)
         );
         uint256 mintsAllowed = IFlexCollectModule(collectModule).mintsAllowed(
+            processActionParams.publicationActedProfileId,
+            processActionParams.publicationActedId,
             collectData
         );
         if (mintsAllowed == 0) {
@@ -286,6 +270,44 @@ contract FlexCollectPublicationAction is
             );
     }
 
+    function getCollectData(
+        uint256 profileId,
+        uint256 pubId
+    ) external view returns (CollectData memory) {
+        return _collectDataByPub[profileId][pubId];
+    }
+
+    function isCollectModuleRegistered(
+        address collectModule
+    ) external view returns (bool) {
+        return _collectModuleRegistered[collectModule];
+    }
+
+    function _verifyCollectNFTOwnership(
+        uint256 profileId,
+        address collectNFT
+    ) internal view returns (bool) {
+        (uint256 ownerProfileId, ) = IFlexCollectNFT(collectNFT)
+            .getSourcePublicationPointer(1);
+        if (ownerProfileId != profileId) {
+            revert NotCollectNFTContractOwner();
+        }
+        return true;
+    }
+
+    function _verifyIsFlexCollectNFT(
+        address collectNFT
+    ) internal view returns (bool) {
+        if (
+            !IFlexCollectNFT(collectNFT).supportsInterface(
+                type(IFlexCollectNFT).interfaceId
+            )
+        ) {
+            revert NotFlexCollectNFT();
+        }
+        return true;
+    }
+
     function _emitCollectedEvent(
         Types.ProcessActionParams calldata processActionParams,
         address collectNftRecipient,
@@ -308,14 +330,7 @@ contract FlexCollectPublicationAction is
         );
     }
 
-    function getCollectData(
-        uint256 profileId,
-        uint256 pubId
-    ) external view returns (CollectData memory) {
-        return _collectDataByPub[profileId][pubId];
-    }
-
-    function bytes32ToString(
+    function _bytes32ToString(
         bytes32 _bytes32
     ) private pure returns (string memory) {
         bytes memory bytesArray = new bytes(32);
@@ -338,9 +353,9 @@ contract FlexCollectPublicationAction is
             collectNFT = _deployCollectNFT(
                 publicationCollectedProfileId,
                 publicationCollectedId,
-                bytes32ToString(collectData.tokenData.name),
-                bytes32ToString(collectData.tokenData.symbol),
-                bytes32ToString(collectData.contractURI),
+                _bytes32ToString(collectData.tokenData.name),
+                _bytes32ToString(collectData.tokenData.symbol),
+                _bytes32ToString(collectData.contractURI),
                 collectData.tokenData.royalty,
                 collectNFTImpl
             );
@@ -399,11 +414,5 @@ contract FlexCollectPublicationAction is
         emit CollectNFTDeployed(profileId, pubId, collectNFT, block.timestamp);
 
         return collectNFT;
-    }
-
-    function isCollectModuleRegistered(
-        address collectModule
-    ) external view returns (bool) {
-        return _collectModuleRegistered[collectModule];
     }
 }

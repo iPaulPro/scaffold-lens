@@ -141,6 +141,10 @@ contract FlexCollectModule is
             revert Errors.InitParamsInvalid();
         }
 
+        if (len > 5) {
+            revert TooManyRecipients();
+        }
+
         // Check recipient splits sum to 10 000 BPS (100%)
         uint256 totalSplits;
         uint256 i;
