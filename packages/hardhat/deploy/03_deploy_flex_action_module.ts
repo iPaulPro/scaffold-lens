@@ -65,7 +65,9 @@ const deployFlexCollectPublicationActionContract: DeployFunction = async functio
   const setMetadataRes = await action.setModuleMetadataURI(metadataURI);
   console.log("set metadata URI: tx=", setMetadataRes.hash);
 
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (process.env.NETWORK !== "localhost") {
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
 
   const registered = await action.registerModule();
   console.log("registered open action: tx=", registered.hash);

@@ -63,7 +63,9 @@ const deployFlexCollectModuleContract: DeployFunction = async function (hre: Har
   const metadataTx = await flexCollectModule.setModuleMetadataURI(metadataURI);
   console.log("Set metadata URI on FlexCollectModule at", metadataTx.hash);
 
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (process.env.NETWORK !== "localhost") {
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
 
   const publicationActionContract = await ethers.getContractAt(
     "FlexCollectPublicationAction",

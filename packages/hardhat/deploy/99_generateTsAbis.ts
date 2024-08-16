@@ -31,6 +31,7 @@ function getContractNames(path: string) {
   return fs
     .readdirSync(path, { withFileTypes: true })
     .filter(dirent => dirent.isFile() && dirent.name.endsWith(".json"))
+    .filter(dirent => !dirent.name.includes("LensHubInitializable"))
     .map(dirent => dirent.name.split(".")[0]);
 }
 
