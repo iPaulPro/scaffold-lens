@@ -30,7 +30,7 @@ struct BaseProfilePublicationData {
 /**
  * @notice A struct containing the necessary data to initialize this Base Collect Module.
  *
- * @param amount The collecting cost associated with this publication. 0 for free collect.
+ * @param amount The collecting cost for a single mint. 0 for free collect.
  * @param collectLimit The maximum number of collects for this publication. 0 for no limit.
  * @param currency The currency associated with this publication.
  * @param referralFee The referral fee associated with this publication.

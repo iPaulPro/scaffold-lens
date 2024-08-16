@@ -212,21 +212,25 @@ contract FlexCollectPublicationAction is
         if (collectModule == address(0)) {
             revert Errors.CollectNotAllowed();
         }
+
         (address collectNftRecipient, bytes memory collectData) = abi.decode(
             processActionParams.actionModuleData,
             (address, bytes)
         );
-        uint256 mintsAllowed = IFlexCollectModule(collectModule).mintsAllowed(
+
+        uint96 mintsAllowed = IFlexCollectModule(collectModule).mintsAllowed(
             processActionParams.publicationActedProfileId,
             processActionParams.publicationActedId,
             collectData
         );
         if (mintsAllowed == 0) {
+            // If no mints allowed, the Collect Module should process the publication action
             return
                 IFlexCollectModule(collectModule).processPublicationAction(
                     processActionParams
                 );
         }
+
         address collectNFT = _getOrDeployCollectNFT({
             publicationCollectedProfileId: processActionParams
                 .publicationActedProfileId,
@@ -261,6 +265,7 @@ contract FlexCollectPublicationAction is
             collectNFT,
             tokenIds
         );
+
         return
             abi.encode(
                 collectNFT,
@@ -370,7 +375,7 @@ contract FlexCollectPublicationAction is
         address collectModule,
         bytes memory collectData,
         Types.ProcessActionParams calldata processActionParams,
-        uint256 mintsAllowed
+        uint96 mintsAllowed
     ) private returns (bytes memory) {
         return
             IFlexCollectModule(collectModule).processCollect(
@@ -387,8 +392,8 @@ contract FlexCollectPublicationAction is
                     referrerProfileIds: processActionParams.referrerProfileIds,
                     referrerPubIds: processActionParams.referrerPubIds,
                     referrerPubTypes: processActionParams.referrerPubTypes,
-                    data: collectData,
-                    mintsAllowed: mintsAllowed
+                    mintsAllowed: mintsAllowed,
+                    data: collectData
                 })
             );
     }

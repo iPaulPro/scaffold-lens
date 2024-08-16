@@ -13,8 +13,8 @@ struct ProcessCollectParams {
     uint256[] referrerProfileIds;
     uint256[] referrerPubIds;
     Types.PublicationType[] referrerPubTypes;
+    uint96 mintsAllowed;
     bytes data;
-    uint256 mintsAllowed;
 }
 
 interface IFlexCollectModule {
@@ -65,7 +65,7 @@ interface IFlexCollectModule {
         uint256 publicationCollectedProfileId,
         uint256 publicationCollectedId,
         bytes calldata collectData
-    ) external returns (uint256);
+    ) external returns (uint96);
 
     /**
      * @notice Processes a publication action for a given publication. This is called when there are

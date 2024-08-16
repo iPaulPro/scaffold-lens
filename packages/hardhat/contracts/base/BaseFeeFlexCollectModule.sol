@@ -59,7 +59,7 @@ abstract contract BaseFeeFlexCollectModule is
         uint256 /* publicationCollectedProfileId */,
         uint256 /* publicationCollectedId */,
         bytes calldata /* collectData */
-    ) external view virtual override onlyActionModule returns (uint256) {
+    ) external view virtual override onlyActionModule returns (uint96) {
         return 1;
     }
 
@@ -175,9 +175,10 @@ abstract contract BaseFeeFlexCollectModule is
     function _validateAndStoreCollect(
         ProcessCollectParams calldata processCollectParams
     ) internal virtual {
-        uint96 collectsAfter = ++_dataByPublicationByProfile[
+        uint256 collectsAfter = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
-        ][processCollectParams.publicationCollectedId].currentCollects;
+        ][processCollectParams.publicationCollectedId].currentCollects +
+            processCollectParams.mintsAllowed;
 
         if (
             _dataByPublicationByProfile[
@@ -219,13 +220,15 @@ abstract contract BaseFeeFlexCollectModule is
         ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint256 amount = calculateFee(processCollectParams);
-        if (amount == 0) {
-            return;
-        }
         address currency = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
         ][processCollectParams.publicationCollectedId].currency;
+
         _validateDataIsExpected(processCollectParams.data, currency, amount);
+
+        if (amount == 0) {
+            return;
+        }
 
         (address treasury, uint16 treasuryFee) = _treasuryData();
         uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
@@ -260,14 +263,15 @@ abstract contract BaseFeeFlexCollectModule is
         ProcessCollectParams calldata processCollectParams
     ) internal virtual {
         uint256 amount = calculateFee(processCollectParams);
-        if (amount == 0) {
-            return;
-        }
         address currency = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
         ][processCollectParams.publicationCollectedId].currency;
 
         _validateDataIsExpected(processCollectParams.data, currency, amount);
+
+        if (amount == 0) {
+            return;
+        }
 
         (address treasury, uint16 treasuryFee) = _treasuryData();
         uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
