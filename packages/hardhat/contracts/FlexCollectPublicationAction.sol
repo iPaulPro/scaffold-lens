@@ -22,11 +22,13 @@ import {IFlexCollectNFT} from "./interfaces/IFlexCollectNFT.sol";
  * @param name The name of the token.
  * @param symbol The symbol of the token.
  * @param royalty The royalty percentage in basis points.
+ * @param contractURI The contract-level metadata URI.
  */
 struct TokenData {
     bytes32 name;
     bytes32 symbol;
     uint16 royalty;
+    bytes32 contractURI;
 }
 
 /**
@@ -43,7 +45,6 @@ contract FlexCollectPublicationAction is
     struct CollectData {
         address collectModule;
         address collectNFT;
-        bytes32 contractURI;
         TokenData tokenData;
     }
 
@@ -187,11 +188,11 @@ contract FlexCollectPublicationAction is
             _verifyCollectNFTOwnership(profileId, collectNFT);
             _collectDataByPub[profileId][pubId].collectNFT = collectNFT;
         }
-        _collectDataByPub[profileId][pubId].contractURI = contractURI;
         _collectDataByPub[profileId][pubId].tokenData = TokenData({
             name: tokenName,
             symbol: tokenSymbol,
-            royalty: tokenRoyalty
+            royalty: tokenRoyalty,
+            contractURI: contractURI
         });
         return
             IFlexCollectModule(collectModule)
@@ -358,10 +359,7 @@ contract FlexCollectPublicationAction is
             collectNFT = _deployCollectNFT(
                 publicationCollectedProfileId,
                 publicationCollectedId,
-                _bytes32ToString(collectData.tokenData.name),
-                _bytes32ToString(collectData.tokenData.symbol),
-                _bytes32ToString(collectData.contractURI),
-                collectData.tokenData.royalty,
+                collectData.tokenData,
                 collectNFTImpl
             );
             _collectDataByPub[publicationCollectedProfileId][
@@ -401,20 +399,17 @@ contract FlexCollectPublicationAction is
     function _deployCollectNFT(
         uint256 profileId,
         uint256 pubId,
-        string memory tokenName,
-        string memory tokenSymbol,
-        string memory contractURI,
-        uint16 royalty,
+        TokenData memory tokenData,
         address collectNFTImpl
     ) private returns (address) {
         address collectNFT = Clones.clone(collectNFTImpl);
 
         IFlexCollectNFT(collectNFT).initialize(
             profileId,
-            tokenName,
-            tokenSymbol,
-            contractURI,
-            royalty
+            _bytes32ToString(tokenData.name),
+            _bytes32ToString(tokenData.symbol),
+            _bytes32ToString(tokenData.contractURI),
+            tokenData.royalty
         );
         emit CollectNFTDeployed(profileId, pubId, collectNFT, block.timestamp);
 

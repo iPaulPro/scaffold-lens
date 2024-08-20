@@ -94,12 +94,10 @@ abstract contract BaseFeeFlexCollectModule is
 
     /// @inheritdoc IBaseFeeFlexCollectModule
     function calculateFee(
-        ProcessCollectParams calldata processCollectParams
+        uint256 profileId,
+        uint256 pubId
     ) public view virtual returns (uint256) {
-        return
-            _dataByPublicationByProfile[
-                processCollectParams.publicationCollectedProfileId
-            ][processCollectParams.publicationCollectedId].amount;
+        return _dataByPublicationByProfile[profileId][pubId].amount;
     }
 
     /// @inheritdoc IFlexCollectModule
@@ -219,7 +217,10 @@ abstract contract BaseFeeFlexCollectModule is
     function _processCollect(
         ProcessCollectParams calldata processCollectParams
     ) internal virtual {
-        uint256 amount = calculateFee(processCollectParams);
+        uint256 amount = calculateFee(
+            processCollectParams.publicationCollectedProfileId,
+            processCollectParams.publicationCollectedId
+        );
         address currency = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
         ][processCollectParams.publicationCollectedId].currency;
@@ -262,7 +263,10 @@ abstract contract BaseFeeFlexCollectModule is
     function _processCollectWithReferral(
         ProcessCollectParams calldata processCollectParams
     ) internal virtual {
-        uint256 amount = calculateFee(processCollectParams);
+        uint256 amount = calculateFee(
+            processCollectParams.collectorProfileId,
+            processCollectParams.publicationCollectedId
+        );
         address currency = _dataByPublicationByProfile[
             processCollectParams.publicationCollectedProfileId
         ][processCollectParams.publicationCollectedId].currency;

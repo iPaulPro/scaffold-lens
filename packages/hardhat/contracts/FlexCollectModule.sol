@@ -95,29 +95,45 @@ contract FlexCollectModule is
         address /* transactionExecutor */,
         bytes calldata data
     ) external override onlyActionModule returns (bytes memory) {
-        FlexCollectModuleInitData memory initData = abi.decode(
-            data,
-            (FlexCollectModuleInitData)
-        );
+        (
+            uint160 amount,
+            uint96 collectLimit,
+            address currency,
+            uint16 referralFee,
+            bool followerOnly,
+            uint72 endTimestamp,
+            RecipientData[] memory recipients
+        ) = abi.decode(
+                data,
+                (
+                    uint160,
+                    uint96,
+                    address,
+                    uint16,
+                    bool,
+                    uint72,
+                    RecipientData[]
+                )
+            );
 
         BaseFeeFlexCollectModuleInitData
             memory baseInitData = BaseFeeFlexCollectModuleInitData({
-                amount: initData.amount,
-                collectLimit: initData.collectLimit,
-                currency: initData.currency,
-                referralFee: initData.referralFee,
-                followerOnly: initData.followerOnly,
-                endTimestamp: initData.endTimestamp,
+                amount: amount,
+                collectLimit: collectLimit,
+                currency: currency,
+                referralFee: referralFee,
+                followerOnly: followerOnly,
+                endTimestamp: endTimestamp,
                 recipient: address(0)
             });
 
         // Zero amount for collect doesn't make sense here (in a module with 5 recipients)
         // Better use SimpleFeeCollect module instead which allows 0 amount
-        if (baseInitData.amount == 0 || initData.currency == address(0)) {
+        if (baseInitData.amount == 0 || currency == address(0)) {
             revert Errors.InitParamsInvalid();
         }
         _validateBaseInitData(baseInitData);
-        _validateAndStoreRecipients(initData.recipients, profileId, pubId);
+        _validateAndStoreRecipients(recipients, profileId, pubId);
         _storeBasePublicationCollectParameters(profileId, pubId, baseInitData);
         return data;
     }

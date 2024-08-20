@@ -5,6 +5,7 @@ import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irysService";
 import { FlexCollectPublicationAction } from "../typechain-types";
 import { LENS_HUB, MODULE_REGISTRY } from "../config";
+import { log } from "../lib/logger";
 
 const metadata = module({
   name: "FlexCollectPublicationAction",
@@ -18,6 +19,7 @@ const metadata = module({
     { type: "bytes32", name: "tokenName" },
     { type: "bytes32", name: "tokenSymbol" },
     { type: "uint16", name: "tokenRoyalty" },
+    { type: "bytes32", name: "contractURI" },
   ]),
   processCalldataABI: JSON.stringify([
     { type: "address", name: "collectNftRecipient" },
@@ -63,14 +65,14 @@ const deployFlexCollectPublicationActionContract: DeployFunction = async functio
 
   const metadataURI = await uploadMetadata(metadata);
   const setMetadataRes = await action.setModuleMetadataURI(metadataURI);
-  console.log("set metadata URI: tx=", setMetadataRes.hash);
+  log("set metadata URI: tx=", setMetadataRes.hash);
 
   if (process.env.NETWORK !== "localhost") {
     await new Promise(resolve => setTimeout(resolve, 10000));
   }
 
   const registered = await action.registerModule();
-  console.log("registered open action: tx=", registered.hash);
+  log("registered open action: tx=", registered.hash);
 };
 
 export default deployFlexCollectPublicationActionContract;

@@ -67,9 +67,13 @@ interface IBaseFeeFlexCollectModule is IFlexCollectModule {
      * @notice Calculates and returns the collect fee of a publication.
      * @dev Override this function to use a different formula for the fee.
      *
+     * @param profileId The token ID of the profile mapped to the publication to query.
+     * @param pubId The publication ID of the publication to query.
+     *
      * @return The collect fee of the specified publication.
      */
     function calculateFee(
-        ProcessCollectParams calldata processCollectParams
+        uint256 profileId,
+        uint256 pubId
     ) external view returns (uint256);
 }

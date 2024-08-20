@@ -14,6 +14,7 @@ import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
 import "hardhat-dependency-compiler";
+import "hardhat-tracer";
 
 import { HardhatUserConfig } from "hardhat/config";
 
@@ -43,7 +44,6 @@ const config: HardhatUserConfig = {
       "lens-modules/contracts/LensHub.sol",
       "lens-modules/contracts/FollowNFT.sol",
       "lens-modules/contracts/misc/ModuleRegistry.sol",
-      "lens-modules/contracts/misc/LegacyCollectNFT.sol",
       "lens-modules/contracts/misc/LensHubInitializable.sol",
       "lens-modules/contracts/misc/PermissionlessCreator.sol",
       "lens-modules/contracts/misc/ProfileCreationProxy.sol",
@@ -64,7 +64,6 @@ const config: HardhatUserConfig = {
       "lens-modules/contracts/libraries/ActionLib.sol",
       "lens-modules/contracts/libraries/FollowLib.sol",
       "lens-modules/contracts/libraries/GovernanceLib.sol",
-      "lens-modules/contracts/libraries/LegacyCollectLib.sol",
       "lens-modules/contracts/libraries/MetaTxLib.sol",
       "lens-modules/contracts/libraries/ProfileLib.sol",
       "lens-modules/contracts/libraries/PublicationLib.sol",

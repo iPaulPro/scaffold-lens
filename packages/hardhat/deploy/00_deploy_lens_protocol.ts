@@ -3,6 +3,8 @@ import { DeployFunction } from "hardhat-deploy/types";
 import getNextContractAddress from "../lib/getNextContractAddress";
 import { ethers } from "hardhat";
 import { DeployOptions } from "hardhat-deploy/dist/types";
+import { ZeroAddress } from "ethers";
+import { log } from "../lib/logger";
 
 const GUARDIAN_COOLDOWN_PERIOD = 300n; // 5 minutes
 const TREASURY_FEE = 500n; // 5%
@@ -51,16 +53,10 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     args: [lensHubAddress],
   });
 
-  // deploy LegacyCollectNFT
-  const legacyCollectNft = await deploy("LegacyCollectNFT", {
-    ...baseConfig,
-    args: [lensHubAddress],
-  });
-
   // deploy LensHub
   const lensHub = await deploy("LensHub", {
     from: deployer,
-    args: [followNft.address, legacyCollectNft.address, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
+    args: [followNft.address, ZeroAddress, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
     log: true,
     autoMine: true,
     proxy: {
@@ -219,78 +215,79 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   // set treasury
 
   const setTreasury = await LensHub.setTreasury(deployer);
-  console.log("set Treasury address (tx: " + setTreasury.hash + ")");
+  log("set Treasury address (tx: " + setTreasury.hash + ")");
 
   const setTreasuryFee = await LensHub.setTreasuryFee(TREASURY_FEE);
-  console.log("set Treasury fee (tx: " + setTreasuryFee.hash + ")");
+  log("set Treasury fee (tx: " + setTreasuryFee.hash + ")");
 
   // register modules
 
   const registerMultirecipientCollectModule = await CollectPublicationAction.registerCollectModule(
     multirecipientFeeCollectModule.address,
   );
-  console.log("registered MultirecipientFeeCollectModule (tx: " + registerMultirecipientCollectModule.hash + ")");
+  log("registered MultirecipientFeeCollectModule (tx: " + registerMultirecipientCollectModule.hash + ")");
 
   const registerSimpleCollectModule = await CollectPublicationAction.registerCollectModule(
     simpleFeeCollectModule.address,
   );
-  console.log("registered SimpleFeeCollectModule (tx: " + registerSimpleCollectModule.hash + ")");
+  log("registered SimpleFeeCollectModule (tx: " + registerSimpleCollectModule.hash + ")");
 
   const registerCollectPublicationActionAddress = await ModuleRegistry.registerModule(
     collectPublicationAction.address,
     ModuleType.PUBLICATION_ACTION_MODULE,
   );
-  console.log("registered CollectPublicationAction (tx: " + registerCollectPublicationActionAddress.hash + ")");
+  log("registered CollectPublicationAction (tx: " + registerCollectPublicationActionAddress.hash + ")");
 
   const registerFeeFollowModule = await ModuleRegistry.registerModule(
     feeFollowModule.address,
     ModuleType.FOLLOW_MODULE,
   );
-  console.log("registered FeeFollowModule (tx: " + registerFeeFollowModule.hash + ")");
+  log("registered FeeFollowModule (tx: " + registerFeeFollowModule.hash + ")");
 
   const registerRevertFollowModule = await ModuleRegistry.registerModule(
     revertFollowModule.address,
     ModuleType.FOLLOW_MODULE,
   );
-  console.log("registered RevertFollowModule (tx: " + registerRevertFollowModule.hash + ")");
+  log("registered RevertFollowModule (tx: " + registerRevertFollowModule.hash + ")");
 
   const registerDegreesOfSeparationReferenceModule = await ModuleRegistry.registerModule(
     degreesOfSeparationReferenceModule.address,
     ModuleType.REFERENCE_MODULE,
   );
-  console.log(
-    "registered DegreesOfSeparationReferenceModule (tx: " + registerDegreesOfSeparationReferenceModule.hash + ")",
-  );
+  log("registered DegreesOfSeparationReferenceModule (tx: " + registerDegreesOfSeparationReferenceModule.hash + ")");
 
   const registerFollowerOnlyReferenceModule = await ModuleRegistry.registerModule(
     followerOnlyReferenceModule.address,
     ModuleType.REFERENCE_MODULE,
   );
-  console.log("registered FollowerOnlyReferenceModule (tx: " + registerFollowerOnlyReferenceModule.hash + ")");
+  log("registered FollowerOnlyReferenceModule (tx: " + registerFollowerOnlyReferenceModule.hash + ")");
 
   // set token URI contracts
 
   const setFollowTokenURIContract = await LensHub.setFollowTokenURIContract(followTokenUri.address);
-  console.log("assigned FollowTokenURI contract (tx: " + setFollowTokenURIContract.hash + ")");
+  log("assigned FollowTokenURI contract (tx: " + setFollowTokenURIContract.hash + ")");
 
   const setProfileTokenURIContract = await LensHub.setProfileTokenURIContract(profileTokenUri.address);
-  console.log("assigned ProfileTokenURI contract (tx: " + setProfileTokenURIContract.hash + ")");
+  log("assigned ProfileTokenURI contract (tx: " + setProfileTokenURIContract.hash + ")");
 
   // whitelist addresses for profile creation
 
+  const whitelistDeployer = await LensHub.whitelistProfileCreator(deployer, true);
+  log("whitelisted deployer wallet (tx: " + whitelistDeployer.hash + ")");
+
   const whitelistBurner = await LensHub.whitelistProfileCreator(process.env.BURNER_PUBLIC_KEY!, true);
-  console.log("whitelisted burner wallet (tx: " + whitelistBurner.hash + ")");
+  log("whitelisted burner wallet (tx: " + whitelistBurner.hash + ")");
 
   const whitelistProfileCreationProxy = await LensHub.whitelistProfileCreator(profileCreationProxy.address, true);
-  console.log("whitelisted ProfileCreationProxy (tx: " + whitelistProfileCreationProxy.hash + ")");
+  log("whitelisted ProfileCreationProxy (tx: " + whitelistProfileCreationProxy.hash + ")");
 
   // set token URI contract for LensHandles
   const setHandleTokenURIContract = await LensHandles.setHandleTokenURIContract(handleTokenUri.address);
-  console.log("assigned HandleTokenURI contract (tx: " + setHandleTokenURIContract.hash + ")");
+  log("assigned HandleTokenURI contract (tx: " + setHandleTokenURIContract.hash + ")");
 
   // finally, unpause LensHub
   const unpause = await LensHub.setState(0);
-  console.log("unpaused LensHub (tx: " + unpause.hash + ")");
+  log("unpaused LensHub (tx: " + unpause.hash + ")");
 };
 
 export default deployLensHub;
