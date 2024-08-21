@@ -51,7 +51,7 @@ struct FlexCollectModuleInitData {
  * @param endTimestamp The end timestamp after which collecting is impossible. 0 for no expiry.
  * @param recipients Array of RecipientData items to split collect fees across multiple recipients.
  */
-struct MultirecipientFeeCollectProfilePublicationData {
+struct FlexCollectProfilePublicationData {
     uint160 amount;
     uint96 collectLimit;
     address currency;
@@ -247,16 +247,12 @@ contract FlexCollectModule is
      * @param profileId The token ID of the profile mapped to the publication to query.
      * @param pubId The publication ID of the publication to query.
      *
-     * @return The BaseProfilePublicationData struct mapped to that publication.
+     * @return The FlexCollectProfilePublicationData struct mapped to that publication.
      */
     function getPublicationData(
         uint256 profileId,
         uint256 pubId
-    )
-        external
-        view
-        returns (MultirecipientFeeCollectProfilePublicationData memory)
-    {
+    ) external view returns (FlexCollectProfilePublicationData memory) {
         BaseProfilePublicationData memory baseData = getBasePublicationData(
             profileId,
             pubId
@@ -265,7 +261,7 @@ contract FlexCollectModule is
             profileId
         ][pubId];
         return
-            MultirecipientFeeCollectProfilePublicationData({
+            FlexCollectProfilePublicationData({
                 amount: baseData.amount,
                 collectLimit: baseData.collectLimit,
                 currency: baseData.currency,
