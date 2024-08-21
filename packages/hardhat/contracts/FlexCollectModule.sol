@@ -283,6 +283,7 @@ contract FlexCollectModule is
     {
         return
             BaseFeeFlexCollectModule.supportsInterface(interfaceID) ||
-            LensModule.supportsInterface(interfaceID);
+            LensModule.supportsInterface(interfaceID) ||
+            interfaceID == type(IFlexCollectModule).interfaceId;
     }
 }
