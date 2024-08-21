@@ -187,12 +187,15 @@ describe("FlexCollectPublicationAction", () => {
   };
 
   describe("SimpleFlexCollectModule", () => {
-    const createAndActOnFreePost = async () => {
-      const collectInitValues = ["0", "0", ZeroAddress, "0", false, "0", author.address];
+    const createAndActOnFreePost = async (
+      publisher: HardhatEthersSigner = author,
+      profileId: bigint = authorProfileId,
+    ) => {
+      const collectInitValues = ["0", "0", ZeroAddress, "0", false, "0", publisher.address];
       const postId = await createPost({
         lensHub,
-        author,
-        profileId: authorProfileId,
+        author: publisher,
+        profileId,
         actionModule,
         collectModule: simpleFlexCollectModule,
         collectInitValues,
@@ -210,7 +213,7 @@ describe("FlexCollectPublicationAction", () => {
       );
 
       const collectTx = await lensHub.connect(collector).act({
-        publicationActedProfileId: authorProfileId,
+        publicationActedProfileId: profileId,
         publicationActedId: postId,
         actorProfileId: collectorProfileId,
         referrerProfileIds: [],
@@ -219,7 +222,7 @@ describe("FlexCollectPublicationAction", () => {
         actionModuleData: processActionData,
       });
 
-      const collectData = await actionModule.getCollectData(authorProfileId, postId);
+      const collectData = await actionModule.getCollectData(profileId, postId);
 
       return { collectTx, collectData };
     };
@@ -366,6 +369,46 @@ describe("FlexCollectPublicationAction", () => {
       expect(await collectNFT.balanceOf(collector.address)).to.equal(1);
     });
 
+    it("Should reject PAID minting of NFTs with SimpleFlexCollectModule if incorrect amount", async () => {
+      const value = parseUnits("0.01", 18);
+      const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", author.address];
+      const postId = await createPost({
+        lensHub,
+        author,
+        profileId: authorProfileId,
+        actionModule,
+        collectModule: simpleFlexCollectModule,
+        collectInitValues,
+      });
+
+      await mintTokens(testToken, collector.address);
+      await testToken.connect(collector).approve(simpleFlexCollectModule, value);
+
+      const metadata = await getModuleMetadata(simpleFlexCollectModule);
+      const abi = JSON.parse(metadata.processCalldataABI);
+
+      const actionModuleAddress = await actionModule.getAddress();
+
+      const incorrectValue = parseUnits("0.001", 18);
+      const processCollectData = ethers.AbiCoder.defaultAbiCoder().encode(abi, [testTokenAddress, incorrectValue]);
+      const processActionData = ethers.AbiCoder.defaultAbiCoder().encode(
+        ["address", "bytes"],
+        [collector.address, processCollectData],
+      );
+
+      const collectTx = lensHub.connect(collector).act({
+        publicationActedProfileId: authorProfileId,
+        publicationActedId: postId,
+        actorProfileId: collectorProfileId,
+        referrerProfileIds: [],
+        referrerPubIds: [],
+        actionModuleAddress: actionModuleAddress,
+        actionModuleData: processActionData,
+      });
+
+      await expect(collectTx).to.be.revertedWithCustomError(simpleFlexCollectModule, "ModuleDataMismatch");
+    });
+
     it("Should allow adding a new post to existing CollectNFT with SimpleFlexCollectModule", async () => {
       const { collectData } = await createAndActOnFreePost();
 
@@ -416,6 +459,37 @@ describe("FlexCollectPublicationAction", () => {
       // Should have 2 NFTs now
       expect(await collectNFT.balanceOf(collector.address)).to.equal(2);
       expect(await collectNFT.tokenURI(2)).to.equal(postContentURI);
+    });
+
+    it("Should reject adding a new post to existing CollectNFT from a different author with SimpleFlexCollectModule", async () => {
+      const { collectData } = await createAndActOnFreePost(collector, collectorProfileId);
+
+      const collectNFTImpl = await artifacts.readArtifact("FlexCollectNFT");
+      const collectNFT = new ethers.Contract(collectData.collectNFT, collectNFTImpl.abi, collector);
+
+      const collectInitValues = ["0", "0", ZeroAddress, "0", false, "0", author.address];
+      const postContentURI = "testing2";
+      const postId = createPost({
+        lensHub,
+        author,
+        profileId: authorProfileId,
+        actionModule,
+        collectModule: simpleFlexCollectModule,
+        collectInitValues,
+        collectNFT: await collectNFT.getAddress(),
+        postContentURI,
+      });
+
+      await expect(postId).to.be.revertedWithCustomError(actionModule, "NotCollectNFTContractOwner");
+    });
+
+    it("Should transfer ownership of Collect NFT contract to author", async () => {
+      const { collectData } = await createAndActOnFreePost();
+
+      const collectNFTImpl = await artifacts.readArtifact("FlexCollectNFT");
+      const collectNFT = new ethers.Contract(collectData.collectNFT, collectNFTImpl.abi, collector);
+
+      expect(await collectNFT.owner()).to.equal(author.address);
     });
   });
 
@@ -525,6 +599,58 @@ describe("FlexCollectPublicationAction", () => {
       expect(await flexCollectModule.calculateFee(authorProfileId, postId)).to.equal(value);
     });
 
+    it("Should reject PAID minting of NFTs with FlexCollectModule if incorrect amount", async () => {
+      const value = parseUnits("0.01", 18);
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ethers.ZeroHash,
+        ethers.ZeroHash,
+        0,
+        ethers.ZeroHash,
+      ];
+      const postId = await createPost({
+        lensHub,
+        author,
+        profileId: authorProfileId,
+        actionModule,
+        collectModule: flexCollectModule,
+        collectInitValues,
+      });
+
+      await mintTokens(testToken, collector.address);
+      await testToken.connect(collector).approve(flexCollectModule, value);
+
+      const metadata = await getModuleMetadata(flexCollectModule);
+      const abi = JSON.parse(metadata.processCalldataABI);
+
+      const actionModuleAddress = await actionModule.getAddress();
+
+      const incorrectValue = parseUnits("0.001", 18);
+      const processCollectData = ethers.AbiCoder.defaultAbiCoder().encode(abi, [testTokenAddress, incorrectValue]);
+      const processActionData = ethers.AbiCoder.defaultAbiCoder().encode(
+        ["address", "bytes"],
+        [collector.address, processCollectData],
+      );
+
+      const collectTx = lensHub.connect(collector).act({
+        publicationActedProfileId: authorProfileId,
+        publicationActedId: postId,
+        actorProfileId: collectorProfileId,
+        referrerProfileIds: [],
+        referrerPubIds: [],
+        actionModuleAddress: actionModuleAddress,
+        actionModuleData: processActionData,
+      });
+
+      await expect(collectTx).to.be.revertedWithCustomError(flexCollectModule, "ModuleDataMismatch");
+    });
+
     it("Should allow PAID minting of NFTs with FlexCollectModule and a single recipient", async () => {
       const value = parseUnits("0.01", 18);
       const { collectTx, collectData } = await createAndActOnPaidPost(value, [[author.address, "10000"]]);
@@ -564,7 +690,7 @@ describe("FlexCollectPublicationAction", () => {
       expect(await collectNFT.balanceOf(collector.address)).to.equal(1);
     });
 
-    it("Should allow adding a new post to existing CollectNFT with FlexCollectModule", async () => {
+    it("Should allow adding a new post to existing CollectNFT owned by the author", async () => {
       const value = parseUnits("0.01", 18);
       const recipients = [[author.address, "10000"]];
       const { collectData } = await createAndActOnPaidPost(value, recipients);
@@ -715,7 +841,7 @@ describe("FlexCollectPublicationAction", () => {
       expect(collectData.collectModule).to.equal(collectModuleAddress);
     });
 
-    it("Should initialize a PAID collect publication with BulkMintFlexCollectModule", async () => {
+    it("Should initialize a collect publication with BulkMintFlexCollectModule", async () => {
       const value = parseUnits(".01", 18);
       const collectInitValues = [
         value,
@@ -742,7 +868,59 @@ describe("FlexCollectPublicationAction", () => {
       expect(await bulkMintFlexCollectModule.calculateFee(authorProfileId, postId)).to.equal(value);
     });
 
-    it("Should allow PAID minting of a SINGLE NFT with BulkMintFlexCollectModule", async () => {
+    it("Should reject minting of a SINGLE NFT with BulkMintFlexCollectModule if incorrect amount", async () => {
+      const value = parseUnits("0.01", 18);
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ethers.ZeroHash,
+        ethers.ZeroHash,
+        0,
+        ethers.ZeroHash,
+      ];
+      const postId = await createPost({
+        lensHub,
+        author,
+        profileId: authorProfileId,
+        actionModule,
+        collectModule: bulkMintFlexCollectModule,
+        collectInitValues,
+      });
+
+      await mintTokens(testToken, collector.address);
+      await testToken.connect(collector).approve(bulkMintFlexCollectModule, value);
+
+      const metadata = await getModuleMetadata(bulkMintFlexCollectModule);
+      const abi = JSON.parse(metadata.processCalldataABI);
+
+      const actionModuleAddress = await actionModule.getAddress();
+
+      const incorrectValue = parseUnits("0.001", 18);
+      const processCollectData = ethers.AbiCoder.defaultAbiCoder().encode(abi, [testTokenAddress, incorrectValue, 1]);
+      const processActionData = ethers.AbiCoder.defaultAbiCoder().encode(
+        ["address", "bytes"],
+        [collector.address, processCollectData],
+      );
+
+      const collectTx = lensHub.connect(collector).act({
+        publicationActedProfileId: authorProfileId,
+        publicationActedId: postId,
+        actorProfileId: collectorProfileId,
+        referrerProfileIds: [],
+        referrerPubIds: [],
+        actionModuleAddress: actionModuleAddress,
+        actionModuleData: processActionData,
+      });
+
+      await expect(collectTx).to.be.revertedWithCustomError(bulkMintFlexCollectModule, "InvalidProcessData");
+    });
+
+    it("Should allow minting of a SINGLE NFT with BulkMintFlexCollectModule", async () => {
       const value = parseUnits("0.01", 18);
       const collectInitValues = [
         value,
@@ -799,7 +977,58 @@ describe("FlexCollectPublicationAction", () => {
       expect(await collectNFT.balanceOf(collector.address)).to.equal(1);
     });
 
-    it("Should allow PAID minting of MULTIPLE NFTs with BulkMintFlexCollectModule", async () => {
+    it("Should reject minting of a MULTIPLE NFTs with BulkMintFlexCollectModule if incorrect amount", async () => {
+      const value = parseUnits("0.01", 18);
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ethers.ZeroHash,
+        ethers.ZeroHash,
+        0,
+        ethers.ZeroHash,
+      ];
+      const postId = await createPost({
+        lensHub,
+        author,
+        profileId: authorProfileId,
+        actionModule,
+        collectModule: bulkMintFlexCollectModule,
+        collectInitValues,
+      });
+
+      await mintTokens(testToken, collector.address);
+      await testToken.connect(collector).approve(bulkMintFlexCollectModule, value);
+
+      const metadata = await getModuleMetadata(bulkMintFlexCollectModule);
+      const abi = JSON.parse(metadata.processCalldataABI);
+
+      const actionModuleAddress = await actionModule.getAddress();
+
+      const processCollectData = ethers.AbiCoder.defaultAbiCoder().encode(abi, [testTokenAddress, value, 10]);
+      const processActionData = ethers.AbiCoder.defaultAbiCoder().encode(
+        ["address", "bytes"],
+        [collector.address, processCollectData],
+      );
+
+      const collectTx = lensHub.connect(collector).act({
+        publicationActedProfileId: authorProfileId,
+        publicationActedId: postId,
+        actorProfileId: collectorProfileId,
+        referrerProfileIds: [],
+        referrerPubIds: [],
+        actionModuleAddress: actionModuleAddress,
+        actionModuleData: processActionData,
+      });
+
+      await expect(collectTx).to.be.revertedWithCustomError(bulkMintFlexCollectModule, "InvalidProcessData");
+    });
+
+    it("Should allow minting of MULTIPLE NFTs with BulkMintFlexCollectModule", async () => {
       const value = parseUnits("0.01", 18);
       const collectInitValues = [
         value,
