@@ -1,6 +1,14 @@
 import { ethers, deployments, artifacts } from "hardhat";
 import { expect } from "chai";
-import { ContractTransactionResponse, encodeBytes32String, EventLog, Log, ZeroAddress, parseUnits } from "ethers";
+import {
+  ContractTransactionResponse,
+  encodeBytes32String,
+  EventLog,
+  Log,
+  ZeroAddress,
+  parseUnits,
+  ZeroHash,
+} from "ethers";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 import {
   FlexCollectModule,
@@ -78,10 +86,6 @@ const createPost = async ({
   collectInitValues,
   actionModule,
   collectNFT = ZeroAddress,
-  tokenName = "Test NFT",
-  tokenSymbol = "TST",
-  tokenRoyalty = 0,
-  tokenContentURI = "",
   postContentURI = "testing",
 }: CreatePostParams): Promise<bigint> => {
   const metadata = await getModuleMetadata(collectModule);
@@ -90,16 +94,8 @@ const createPost = async ({
   const collectInitData = ethers.AbiCoder.defaultAbiCoder().encode(abi, collectInitValues);
 
   const actionInitData = ethers.AbiCoder.defaultAbiCoder().encode(
-    ["address", "bytes", "address", "bytes32", "bytes32", "uint16", "bytes32"],
-    [
-      await collectModule.getAddress(),
-      collectInitData,
-      collectNFT,
-      encodeBytes32String(tokenName),
-      encodeBytes32String(tokenSymbol),
-      tokenRoyalty,
-      encodeBytes32String(tokenContentURI),
-    ],
+    ["address", "bytes", "address"],
+    [await collectModule.getAddress(), collectInitData, collectNFT],
   );
 
   const postParams = {
@@ -138,45 +134,20 @@ describe("FlexCollectPublicationAction", () => {
   let authorProfileId: bigint;
   let collectorProfileId: bigint;
 
-  const createAndActOnFreePost = async () => {
-    const collectInitValues = ["0", "0", ZeroAddress, "0", false, "0", author.address];
-    const postId = await createPost({
-      lensHub,
-      author,
-      profileId: authorProfileId,
-      actionModule,
-      collectModule: simpleFlexCollectModule,
-      collectInitValues,
-    });
-
-    const metadata = await getModuleMetadata(simpleFlexCollectModule);
-    const abi = JSON.parse(metadata.processCalldataABI);
-
-    const actionModuleAddress = await actionModule.getAddress();
-
-    const processCollectData = ethers.AbiCoder.defaultAbiCoder().encode(abi, [ZeroAddress, "0"]);
-    const processActionData = ethers.AbiCoder.defaultAbiCoder().encode(
-      ["address", "bytes"],
-      [collector.address, processCollectData],
-    );
-
-    const collectTx = await lensHub.connect(collector).act({
-      publicationActedProfileId: authorProfileId,
-      publicationActedId: postId,
-      actorProfileId: collectorProfileId,
-      referrerProfileIds: [],
-      referrerPubIds: [],
-      actionModuleAddress: actionModuleAddress,
-      actionModuleData: processActionData,
-    });
-
-    const collectData = await actionModule.getCollectData(authorProfileId, postId);
-
-    return { collectTx, collectData };
-  };
-
   const createAndActOnPaidPost = async (value: bigint, recipients: any[][]) => {
-    const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", recipients];
+    const collectInitValues = [
+      value,
+      "0",
+      testTokenAddress,
+      "0",
+      false,
+      "0",
+      recipients,
+      ethers.ZeroHash,
+      ethers.ZeroHash,
+      0,
+      ethers.ZeroHash,
+    ];
     const postId = await createPost({
       lensHub,
       author,
@@ -216,6 +187,43 @@ describe("FlexCollectPublicationAction", () => {
   };
 
   describe("SimpleFlexCollectModule", () => {
+    const createAndActOnFreePost = async () => {
+      const collectInitValues = ["0", "0", ZeroAddress, "0", false, "0", author.address];
+      const postId = await createPost({
+        lensHub,
+        author,
+        profileId: authorProfileId,
+        actionModule,
+        collectModule: simpleFlexCollectModule,
+        collectInitValues,
+      });
+
+      const metadata = await getModuleMetadata(simpleFlexCollectModule);
+      const abi = JSON.parse(metadata.processCalldataABI);
+
+      const actionModuleAddress = await actionModule.getAddress();
+
+      const processCollectData = ethers.AbiCoder.defaultAbiCoder().encode(abi, [ZeroAddress, "0"]);
+      const processActionData = ethers.AbiCoder.defaultAbiCoder().encode(
+        ["address", "bytes"],
+        [collector.address, processCollectData],
+      );
+
+      const collectTx = await lensHub.connect(collector).act({
+        publicationActedProfileId: authorProfileId,
+        publicationActedId: postId,
+        actorProfileId: collectorProfileId,
+        referrerProfileIds: [],
+        referrerPubIds: [],
+        actionModuleAddress: actionModuleAddress,
+        actionModuleData: processActionData,
+      });
+
+      const collectData = await actionModule.getCollectData(authorProfileId, postId);
+
+      return { collectTx, collectData };
+    };
+
     beforeEach(async () => {
       [, author, collector] = await ethers.getSigners();
 
@@ -256,10 +264,6 @@ describe("FlexCollectPublicationAction", () => {
 
     it("Should initialize a publication with SimpleFlexCollectModule", async () => {
       const collectInitValues = ["0", "0", ZeroAddress, "0", false, "0", author.address];
-      const tokenName = "Test NFT";
-      const tokenSymbol = "TST";
-      const tokenRoyalty = 1000;
-      const tokenContentURI = "https://fake.uri";
       const postId = await createPost({
         lensHub,
         author,
@@ -267,11 +271,6 @@ describe("FlexCollectPublicationAction", () => {
         actionModule,
         collectModule: simpleFlexCollectModule,
         collectInitValues,
-        collectNFT: ZeroAddress,
-        tokenName,
-        tokenSymbol,
-        tokenRoyalty,
-        tokenContentURI,
       });
 
       const actionModuleAddress = await actionModule.getAddress();
@@ -280,11 +279,6 @@ describe("FlexCollectPublicationAction", () => {
       );
 
       const collectData = await actionModule.getCollectData(authorProfileId, postId);
-      expect(collectData.tokenData.name).to.equal(encodeBytes32String(tokenName));
-      expect(collectData.tokenData.symbol).to.equal(encodeBytes32String(tokenSymbol));
-      expect(collectData.tokenData.royalty).to.equal(tokenRoyalty);
-      expect(collectData.tokenData.contractURI).to.equal(encodeBytes32String(tokenContentURI));
-
       const collectModuleAddress = await simpleFlexCollectModule.getAddress();
       expect(collectData.collectModule).to.equal(collectModuleAddress);
     });
@@ -465,6 +459,11 @@ describe("FlexCollectPublicationAction", () => {
     });
 
     it("Should initialize a publication with FlexCollectModule", async () => {
+      const tokenName = "Test NFT";
+      const tokenSymbol = "TST";
+      const tokenRoyalty = 1000;
+      const tokenContentURI = "https://fake.uri";
+
       const collectInitValues = [
         parseUnits(".01", 18),
         "0",
@@ -473,6 +472,10 @@ describe("FlexCollectPublicationAction", () => {
         false,
         "0",
         [[author.address, "10000"]],
+        encodeBytes32String(tokenName),
+        encodeBytes32String(tokenSymbol),
+        tokenRoyalty,
+        encodeBytes32String(tokenContentURI),
       ];
       const postId = await createPost({
         lensHub,
@@ -483,6 +486,12 @@ describe("FlexCollectPublicationAction", () => {
         collectInitValues,
       });
 
+      const tokenData = await flexCollectModule.getTokenData(authorProfileId, postId);
+      expect(tokenData.name).to.equal(encodeBytes32String(tokenName));
+      expect(tokenData.symbol).to.equal(encodeBytes32String(tokenSymbol));
+      expect(tokenData.royalty).to.equal(tokenRoyalty);
+      expect(tokenData.contractURI).to.equal(encodeBytes32String(tokenContentURI));
+
       const actionModuleAddress = await actionModule.getAddress();
       expect(await lensHub.isActionModuleEnabledInPublication(authorProfileId, postId, actionModuleAddress)).to.equal(
         true,
@@ -491,7 +500,19 @@ describe("FlexCollectPublicationAction", () => {
 
     it("Should initialize a PAID collect with FlexCollectModule", async () => {
       const value = parseUnits("0.01", 18);
-      const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", [[author.address, "10000"]]];
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ethers.ZeroHash,
+        ethers.ZeroHash,
+        0,
+        ethers.ZeroHash,
+      ];
       const postId = await createPost({
         lensHub,
         author,
@@ -543,7 +564,7 @@ describe("FlexCollectPublicationAction", () => {
       expect(await collectNFT.balanceOf(collector.address)).to.equal(1);
     });
 
-    it("Should allow adding a new post to existing CollectNFT with SimpleFlexCollectModule", async () => {
+    it("Should allow adding a new post to existing CollectNFT with FlexCollectModule", async () => {
       const value = parseUnits("0.01", 18);
       const recipients = [[author.address, "10000"]];
       const { collectData } = await createAndActOnPaidPost(value, recipients);
@@ -551,7 +572,19 @@ describe("FlexCollectPublicationAction", () => {
       const collectNFTImpl = await artifacts.readArtifact("FlexCollectNFT");
       const collectNFT = new ethers.Contract(collectData.collectNFT, collectNFTImpl.abi, collector);
 
-      const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", recipients];
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        recipients,
+        ZeroHash,
+        ZeroHash,
+        0,
+        ZeroHash,
+      ];
       const postContentURI = "testing2";
       const postId = await createPost({
         lensHub,
@@ -638,6 +671,11 @@ describe("FlexCollectPublicationAction", () => {
     });
 
     it("Should initialize a publication with BulkMintFlexCollectModule", async () => {
+      const tokenName = "Test NFT";
+      const tokenSymbol = "TST";
+      const tokenRoyalty = 1000;
+      const tokenContentURI = "https://fake.uri";
+
       const collectInitValues = [
         parseUnits(".01", 18),
         "0",
@@ -646,11 +684,11 @@ describe("FlexCollectPublicationAction", () => {
         false,
         "0",
         [[author.address, "10000"]],
+        encodeBytes32String(tokenName),
+        encodeBytes32String(tokenSymbol),
+        tokenRoyalty,
+        encodeBytes32String(tokenContentURI),
       ];
-      const tokenName = "Test NFT";
-      const tokenSymbol = "TST";
-      const tokenRoyalty = 1000;
-      const tokenContentURI = "https://fake.uri";
       const postId = await createPost({
         lensHub,
         author,
@@ -659,10 +697,6 @@ describe("FlexCollectPublicationAction", () => {
         collectModule: bulkMintFlexCollectModule,
         collectInitValues,
         collectNFT: ZeroAddress,
-        tokenName,
-        tokenSymbol,
-        tokenRoyalty,
-        tokenContentURI,
       });
 
       const actionModuleAddress = await actionModule.getAddress();
@@ -670,19 +704,32 @@ describe("FlexCollectPublicationAction", () => {
         true,
       );
 
-      const collectData = await actionModule.getCollectData(authorProfileId, postId);
-      expect(collectData.tokenData.name).to.equal(encodeBytes32String(tokenName));
-      expect(collectData.tokenData.symbol).to.equal(encodeBytes32String(tokenSymbol));
-      expect(collectData.tokenData.royalty).to.equal(tokenRoyalty);
-      expect(collectData.tokenData.contractURI).to.equal(encodeBytes32String(tokenContentURI));
+      const tokenData = await bulkMintFlexCollectModule.getTokenData(authorProfileId, postId);
+      expect(tokenData.name).to.equal(encodeBytes32String(tokenName));
+      expect(tokenData.symbol).to.equal(encodeBytes32String(tokenSymbol));
+      expect(tokenData.royalty).to.equal(tokenRoyalty);
+      expect(tokenData.contractURI).to.equal(encodeBytes32String(tokenContentURI));
 
+      const collectData = await actionModule.getCollectData(authorProfileId, postId);
       const collectModuleAddress = await bulkMintFlexCollectModule.getAddress();
       expect(collectData.collectModule).to.equal(collectModuleAddress);
     });
 
     it("Should initialize a PAID collect publication with BulkMintFlexCollectModule", async () => {
       const value = parseUnits(".01", 18);
-      const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", [[author.address, "10000"]]];
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ZeroHash,
+        ZeroHash,
+        0,
+        ZeroHash,
+      ];
       const postId = await createPost({
         lensHub,
         author,
@@ -697,7 +744,19 @@ describe("FlexCollectPublicationAction", () => {
 
     it("Should allow PAID minting of a SINGLE NFT with BulkMintFlexCollectModule", async () => {
       const value = parseUnits("0.01", 18);
-      const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", [[author.address, "10000"]]];
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ZeroHash,
+        ZeroHash,
+        0,
+        ZeroHash,
+      ];
       const postId = await createPost({
         lensHub,
         author,
@@ -742,7 +801,19 @@ describe("FlexCollectPublicationAction", () => {
 
     it("Should allow PAID minting of MULTIPLE NFTs with BulkMintFlexCollectModule", async () => {
       const value = parseUnits("0.01", 18);
-      const collectInitValues = [value, "0", testTokenAddress, "0", false, "0", [[author.address, "10000"]]];
+      const collectInitValues = [
+        value,
+        "0",
+        testTokenAddress,
+        "0",
+        false,
+        "0",
+        [[author.address, "10000"]],
+        ZeroHash,
+        ZeroHash,
+        0,
+        ZeroHash,
+      ];
       const postId = await createPost({
         lensHub,
         author,

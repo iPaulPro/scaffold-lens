@@ -17,6 +17,21 @@ struct ProcessCollectParams {
     bytes data;
 }
 
+/**
+ * @notice A struct containing the necessary data to create an ERC-721.
+ *
+ * @param name The name of the token.
+ * @param symbol The symbol of the token.
+ * @param royalty The royalty percentage in basis points.
+ * @param contractURI The contract-level metadata URI.
+ */
+struct TokenData {
+    bytes32 name;
+    bytes32 symbol;
+    uint16 royalty;
+    bytes32 contractURI;
+}
+
 interface IFlexCollectModule {
     /**
      * @notice Initializes data for a given publication being published.
@@ -80,4 +95,9 @@ interface IFlexCollectModule {
     function processPublicationAction(
         Types.ProcessActionParams calldata processActionParams
     ) external returns (bytes memory);
+
+    function getTokenData(
+        uint256 profileId,
+        uint256 pubId
+    ) external view returns (TokenData memory);
 }

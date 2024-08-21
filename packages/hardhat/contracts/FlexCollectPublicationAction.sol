@@ -12,24 +12,8 @@ import {LensModuleMetadataInitializable} from "lens-modules/contracts/modules/Le
 import {LensModuleRegistrant} from "lens-modules/contracts/modules/base/LensModuleRegistrant.sol";
 import {IModuleRegistry} from "lens-modules/contracts/interfaces/IModuleRegistry.sol";
 
-import {IFlexCollectModule} from "./interfaces/IFlexCollectModule.sol";
-import {ProcessCollectParams} from "./interfaces/IFlexCollectModule.sol";
+import {IFlexCollectModule, ProcessCollectParams, TokenData} from "./interfaces/IFlexCollectModule.sol";
 import {IFlexCollectNFT} from "./interfaces/IFlexCollectNFT.sol";
-
-/**
- * @notice A struct containing the necessary data to create an ERC-721.
- *
- * @param name The name of the token.
- * @param symbol The symbol of the token.
- * @param royalty The royalty percentage in basis points.
- * @param contractURI The contract-level metadata URI.
- */
-struct TokenData {
-    bytes32 name;
-    bytes32 symbol;
-    uint16 royalty;
-    bytes32 contractURI;
-}
 
 /**
  * @title FlexCollectPublicationAction
@@ -45,7 +29,6 @@ contract FlexCollectPublicationAction is
     struct CollectData {
         address collectModule;
         address collectNFT;
-        TokenData tokenData;
     }
 
     event CollectModuleRegistered(
@@ -169,15 +152,8 @@ contract FlexCollectPublicationAction is
         (
             address collectModule,
             bytes memory collectModuleInitData,
-            address collectNFT,
-            bytes32 tokenName,
-            bytes32 tokenSymbol,
-            uint16 tokenRoyalty,
-            bytes32 contractURI
-        ) = abi.decode(
-                data,
-                (address, bytes, address, bytes32, bytes32, uint16, bytes32)
-            );
+            address collectNFT
+        ) = abi.decode(data, (address, bytes, address));
         if (_collectDataByPub[profileId][pubId].collectModule != address(0)) {
             revert Errors.AlreadyInitialized();
         }
@@ -188,12 +164,6 @@ contract FlexCollectPublicationAction is
             _verifyCollectNFTOwnership(profileId, collectNFT);
             _collectDataByPub[profileId][pubId].collectNFT = collectNFT;
         }
-        _collectDataByPub[profileId][pubId].tokenData = TokenData({
-            name: tokenName,
-            symbol: tokenSymbol,
-            royalty: tokenRoyalty,
-            contractURI: contractURI
-        });
         return
             IFlexCollectModule(collectModule)
                 .initializePublicationCollectModule(
@@ -359,7 +329,6 @@ contract FlexCollectPublicationAction is
             collectNFT = _deployCollectNFT(
                 publicationCollectedProfileId,
                 publicationCollectedId,
-                collectData.tokenData,
                 collectNFTImpl
             );
             _collectDataByPub[publicationCollectedProfileId][
@@ -399,10 +368,15 @@ contract FlexCollectPublicationAction is
     function _deployCollectNFT(
         uint256 profileId,
         uint256 pubId,
-        TokenData memory tokenData,
         address collectNFTImpl
     ) private returns (address) {
         address collectNFT = Clones.clone(collectNFTImpl);
+
+        address collectModule = _collectDataByPub[profileId][pubId]
+            .collectModule;
+
+        TokenData memory tokenData = IFlexCollectModule(collectModule)
+            .getTokenData(profileId, pubId);
 
         IFlexCollectNFT(collectNFT).initialize(
             profileId,

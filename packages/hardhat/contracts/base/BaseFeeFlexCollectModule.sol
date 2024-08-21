@@ -14,7 +14,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {FollowValidationLib} from "lens-modules/contracts/modules/libraries/FollowValidationLib.sol";
 
 import {IFlexCollectModule} from "../interfaces/IFlexCollectModule.sol";
-import {ProcessCollectParams} from "../interfaces/IFlexCollectModule.sol";
+import {ProcessCollectParams, TokenData} from "../interfaces/IFlexCollectModule.sol";
 import {BaseFeeFlexCollectModuleInitData, BaseProfilePublicationData, IBaseFeeFlexCollectModule} from "../interfaces/IBaseFeeFlexCollectModule.sol";
 
 /**
@@ -105,6 +105,19 @@ abstract contract BaseFeeFlexCollectModule is
         Types.ProcessActionParams calldata processActionParams
     ) public view virtual onlyActionModule returns (bytes memory) {
         return processActionParams.actionModuleData;
+    }
+
+    function getTokenData(
+        uint256 /* profileId */,
+        uint256 /* pubId */
+    ) external view virtual override returns (TokenData memory) {
+        return
+            TokenData({
+                name: bytes32(0),
+                symbol: bytes32(0),
+                royalty: 1000,
+                contractURI: bytes32(0)
+            });
     }
 
     /**

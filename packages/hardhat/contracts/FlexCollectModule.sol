@@ -11,7 +11,7 @@ import {LensModuleMetadataInitializable} from "lens-modules/contracts/modules/Le
 
 import {BaseFeeFlexCollectModule} from "./base/BaseFeeFlexCollectModule.sol";
 import {BaseProfilePublicationData, BaseFeeFlexCollectModuleInitData} from "./interfaces/IBaseFeeFlexCollectModule.sol";
-import {ProcessCollectParams, IFlexCollectModule} from "./interfaces/IFlexCollectModule.sol";
+import {ProcessCollectParams, IFlexCollectModule, TokenData} from "./interfaces/IFlexCollectModule.sol";
 
 struct RecipientData {
     address recipient;
@@ -73,8 +73,11 @@ contract FlexCollectModule is
 {
     using SafeERC20 for IERC20;
 
-    mapping(uint256 => mapping(uint256 => RecipientData[]))
+    mapping(uint256 profileId => mapping(uint256 pubId => RecipientData[]))
         internal _recipientsByPublicationByProfile;
+
+    mapping(uint256 profileId => mapping(uint256 pubId => TokenData))
+        internal _tokenDataByPublicationByProfile;
 
     constructor(
         address hub,
@@ -102,7 +105,11 @@ contract FlexCollectModule is
             uint16 referralFee,
             bool followerOnly,
             uint72 endTimestamp,
-            RecipientData[] memory recipients
+            RecipientData[] memory recipients,
+            bytes32 tokenName,
+            bytes32 tokenSymbol,
+            uint16 tokenRoyalty,
+            bytes32 contractURI
         ) = abi.decode(
                 data,
                 (
@@ -112,7 +119,11 @@ contract FlexCollectModule is
                     uint16,
                     bool,
                     uint72,
-                    RecipientData[]
+                    RecipientData[],
+                    bytes32,
+                    bytes32,
+                    uint16,
+                    bytes32
                 )
             );
 
@@ -135,7 +146,22 @@ contract FlexCollectModule is
         _validateBaseInitData(baseInitData);
         _validateAndStoreRecipients(recipients, profileId, pubId);
         _storeBasePublicationCollectParameters(profileId, pubId, baseInitData);
+
+        _tokenDataByPublicationByProfile[profileId][pubId] = TokenData({
+            name: tokenName,
+            symbol: tokenSymbol,
+            royalty: tokenRoyalty,
+            contractURI: contractURI
+        });
+
         return data;
+    }
+
+    function getTokenData(
+        uint256 profileId,
+        uint256 pubId
+    ) external view override returns (TokenData memory) {
+        return _tokenDataByPublicationByProfile[profileId][pubId];
     }
 
     /**

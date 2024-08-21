@@ -16,10 +16,6 @@ const metadata = module({
     { type: "address", name: "collectModule" },
     { type: "bytes", name: "collectModuleInitData" },
     { type: "address", name: "collectNFT" },
-    { type: "bytes32", name: "tokenName" },
-    { type: "bytes32", name: "tokenSymbol" },
-    { type: "uint16", name: "tokenRoyalty" },
-    { type: "bytes32", name: "contractURI" },
   ]),
   processCalldataABI: JSON.stringify([
     { type: "address", name: "collectNftRecipient" },
