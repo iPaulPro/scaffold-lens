@@ -1,45 +1,70 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { readContract } from "@wagmi/core";
 import { hardhat } from "viem/chains";
 import { useAccount } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useOwnedTokens, useProfile } from "~~/hooks/scaffold-lens";
+import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 interface ChildProps {
   refreshCounter: number;
 }
 
-const ProfileSelector: React.FC<ChildProps> = ({ refreshCounter }: ChildProps) => {
-  const [ownedTokens, setOwnedTokens] = useState<bigint[]>([]);
+interface Profile {
+  id: bigint;
+  handle: string;
+}
 
-  const { address: contractAddress, abi } = deployedContracts[hardhat.id].LensHub;
+const ProfileSelector: React.FC<ChildProps> = ({ refreshCounter }: ChildProps) => {
+  const [profiles, setProfiles] = useState<Profile[]>([]);
+
+  const { address: lensHubAddress, abi: lensHubAbi } = deployedContracts[hardhat.id].LensHub;
+  const { address: tokenHandleRegistryAddress, abi: tokenHandleRegistryAbi } =
+    deployedContracts[hardhat.id].TokenHandleRegistry;
+  const { address: lensHandlesAddress, abi: lensHandlesAbi } = deployedContracts[hardhat.id].LensHandles;
+
   const { address } = useAccount();
   const { updateProfileId } = useProfile();
-  const { getOwnedTokens } = useOwnedTokens(address, contractAddress, abi);
+  const { getOwnedTokens } = useOwnedTokens(address, lensHubAddress, lensHubAbi);
 
   useEffect(() => {
-    console.log("Account:", address);
-    async function fetchTokens() {
+    async function fetchProfiles() {
       const ownedTokens = await getOwnedTokens();
-      console.log("Owned Tokens:", ownedTokens);
-      setOwnedTokens(ownedTokens);
+      const profiles = [];
+      for (const tokenId of ownedTokens) {
+        const handleId = await readContract(wagmiConfig, {
+          abi: tokenHandleRegistryAbi,
+          address: tokenHandleRegistryAddress,
+          functionName: "getDefaultHandle",
+          args: [tokenId],
+        });
+        const handle = await readContract(wagmiConfig, {
+          abi: lensHandlesAbi,
+          address: lensHandlesAddress,
+          functionName: "getLocalName",
+          args: [handleId],
+        });
+        profiles.push({ id: tokenId, handle });
+      }
+      setProfiles(profiles);
     }
-    fetchTokens();
+    fetchProfiles();
   }, [address, refreshCounter]);
 
   return (
     <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
       <h1>Profile Selector:</h1>
-      {ownedTokens.length > 0 && (
+      {profiles.length > 0 && (
         <ul className="bg-secondary p-4 w-full">
-          {ownedTokens.map(tokenId => (
+          {profiles.map(profile => (
             <li
-              key={tokenId}
-              onClick={() => updateProfileId(tokenId)}
+              key={profile.id}
+              onClick={() => updateProfileId(profile.id)}
               className="cursor-pointer hover:bg-accent text-center"
             >
-              {tokenId.toString()}
+              {profile.handle}
             </li>
           ))}
         </ul>
