@@ -3,6 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import getNextContractAddress from "../lib/getNextContractAddress";
 import { ethers } from "hardhat";
 import { DeployOptions } from "hardhat-deploy/dist/types";
+import { ZeroAddress } from "ethers";
 
 const GUARDIAN_COOLDOWN_PERIOD = 300n; // 5 minutes
 const TREASURY_FEE = 500n; // 5%
@@ -28,10 +29,6 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const actionLib = await deploy("ActionLib", baseConfig);
   const followLib = await deploy("FollowLib", baseConfig);
   const governanceLib = await deploy("GovernanceLib", baseConfig);
-  const legacyCollectLib = await deploy("LegacyCollectLib", {
-    ...baseConfig,
-    libraries: { ValidationLib: validationLib.address },
-  });
   const metaTxLib = await deploy("MetaTxLib", baseConfig);
   const profileLib = await deploy("ProfileLib", baseConfig);
   const publicationLib = await deploy("PublicationLib", baseConfig);
@@ -51,16 +48,10 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     args: [lensHubAddress],
   });
 
-  // deploy LegacyCollectNFT
-  const legacyCollectNft = await deploy("LegacyCollectNFT", {
-    ...baseConfig,
-    args: [lensHubAddress],
-  });
-
   // deploy LensHub
   const lensHub = await deploy("LensHub", {
     from: deployer,
-    args: [followNft.address, legacyCollectNft.address, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
+    args: [followNft.address, ZeroAddress, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
     log: true,
     autoMine: true,
     proxy: {
@@ -75,7 +66,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
       ActionLib: actionLib.address,
       FollowLib: followLib.address,
       GovernanceLib: governanceLib.address,
-      LegacyCollectLib: legacyCollectLib.address,
+      LegacyCollectLib: ZeroAddress,
       MetaTxLib: metaTxLib.address,
       ProfileLib: profileLib.address,
       PublicationLib: publicationLib.address,
@@ -276,17 +267,19 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const setProfileTokenURIContract = await LensHub.setProfileTokenURIContract(profileTokenUri.address);
   console.log("assigned ProfileTokenURI contract (tx: " + setProfileTokenURIContract.hash + ")");
 
+  const setHandleTokenURIContract = await LensHandles.setHandleTokenURIContract(handleTokenUri.address);
+  console.log("assigned HandleTokenURI contract (tx: " + setHandleTokenURIContract.hash + ")");
+
   // whitelist addresses for profile creation
+
+  const whitelistDeployer = await LensHub.whitelistProfileCreator(deployer, true);
+  console.log("whitelisted deployer wallet (tx: " + whitelistDeployer.hash + ")");
 
   const whitelistBurner = await LensHub.whitelistProfileCreator(process.env.BURNER_PUBLIC_KEY!, true);
   console.log("whitelisted burner wallet (tx: " + whitelistBurner.hash + ")");
 
   const whitelistProfileCreationProxy = await LensHub.whitelistProfileCreator(profileCreationProxy.address, true);
   console.log("whitelisted ProfileCreationProxy (tx: " + whitelistProfileCreationProxy.hash + ")");
-
-  // set token URI contract for LensHandles
-  const setHandleTokenURIContract = await LensHandles.setHandleTokenURIContract(handleTokenUri.address);
-  console.log("assigned HandleTokenURI contract (tx: " + setHandleTokenURIContract.hash + ")");
 
   // finally, unpause LensHub
   const unpause = await LensHub.setState(0);
