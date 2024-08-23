@@ -1,14 +1,13 @@
-import { useState } from "react";
+"use client";
+
+import React, { useState } from "react";
 import { useAccount } from "wagmi";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
 
-interface CreateProfileProps {
-  onProfileCreated: () => void;
-}
-
-const CreateProfile: React.FC<CreateProfileProps> = ({ onProfileCreated }: CreateProfileProps) => {
+const CreateProfile: React.FC = () => {
   const [handle, setHandle] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { address } = useAccount();
   const { writeContractAsync } = useScaffoldWriteContract("ProfileCreationProxy");
@@ -19,25 +18,35 @@ const CreateProfile: React.FC<CreateProfileProps> = ({ onProfileCreated }: Creat
       functionName: "proxyCreateProfileWithHandle",
       args: [{ to: address, followModule: ZERO_ADDRESS, followModuleInitData: "0x" }, handle],
     });
-    onProfileCreated();
     setHandle("");
+    setModalOpen(false);
   }
 
   return (
-    <div className="bg-secondary p-10">
-      <h1 className="text-4xl my-0">Create Profile</h1>
-      <p className="text-neutral">Create a profile to interact with Lens Modules.</p>
-      <input
-        type="text"
-        value={handle}
-        onChange={e => setHandle(e.target.value)}
-        placeholder="Enter handle"
-        className="border border-accent rounded p-2"
-      />
-      <button onClick={createProfile} className="bg-accent text-neutral p-2 rounded mt-2">
+    <>
+      <button className="w-full btn btn-secondary btn-sm" onClick={() => setModalOpen(true)}>
         Create Profile
       </button>
-    </div>
+      <dialog id="create_profile_modal" className={`modal ${modalOpen ? "modal-open" : ""}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Create Profile</h3>
+          <p className="py-4">Create a profile to interact with Lens Modules.</p>
+          <input
+            type="text"
+            value={handle}
+            onChange={e => setHandle(e.target.value)}
+            placeholder="Enter handle"
+            className="border border-accent rounded p-2"
+          />
+          <button onClick={createProfile} className="bg-accent text-neutral p-2 rounded mt-2">
+            Create Profile
+          </button>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={() => setModalOpen(false)}>close</button>
+        </form>
+      </dialog>
+    </>
   );
 };
 

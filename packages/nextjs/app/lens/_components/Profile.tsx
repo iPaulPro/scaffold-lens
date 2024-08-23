@@ -1,14 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import CreateProfile from "~~/app/lens/_components/CreateProfile";
-import ProfileSelector from "~~/app/lens/_components/ProfileSelector";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 import { useProfile } from "~~/hooks/scaffold-lens";
 
 export function Profile() {
-  const [ownedTokenRefresh, setOwnedTokenRefresh] = useState(0);
-
   const { profileId } = useProfile();
 
   const { data: handleId } = useScaffoldReadContract({
@@ -24,12 +19,8 @@ export function Profile() {
   });
 
   return (
-    <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+    <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col gap-y-2 py-8 lg:py-12 justify-center items-center">
       <p>Selected Profile: {profileId ? (localName ?? profileId.toString()) : "No profile"}</p>
-
-      <ProfileSelector refreshCounter={ownedTokenRefresh} />
-
-      <CreateProfile onProfileCreated={() => setOwnedTokenRefresh(count => count + 1)} />
     </div>
   );
 }

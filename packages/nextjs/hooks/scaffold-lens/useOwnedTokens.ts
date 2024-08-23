@@ -1,11 +1,14 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { parseAbiItem } from "viem";
-import { usePublicClient, useReadContract } from "wagmi";
+import { usePublicClient, useReadContract, useWatchContractEvent } from "wagmi";
 
 export const useOwnedTokens = (address: string | undefined, contractAddress: `0x${string}`, abi: any) => {
+  const [ownedTokens, setOwnedTokens] = useState<bigint[]>([]);
   const publicClient = usePublicClient();
+  const processedEvents = useRef<Set<string>>(new Set());
 
-  const getOwnedTokens = async () => {
-    if (!address || !publicClient) return [];
+  const fetchOwnedTokens = useCallback(async () => {
+    if (!address || !publicClient) return;
 
     const transferEvent = parseAbiItem(
       "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
@@ -18,21 +21,59 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
       toBlock: "latest",
     });
 
-    const ownedTokens = new Set<bigint>();
+    const tokenSet = new Set<bigint>();
 
     for (const log of logs) {
       const { from, to, tokenId } = log.args as { from: string; to: string; tokenId: bigint };
 
       if (to.toLowerCase() === address.toLowerCase()) {
-        ownedTokens.add(tokenId);
+        tokenSet.add(tokenId);
       }
       if (from.toLowerCase() === address.toLowerCase()) {
-        ownedTokens.delete(tokenId);
+        tokenSet.delete(tokenId);
       }
     }
 
-    return Array.from(ownedTokens);
-  };
+    setOwnedTokens(Array.from(tokenSet));
+  }, [address, publicClient, contractAddress]);
+
+  useEffect(() => {
+    fetchOwnedTokens();
+  }, [fetchOwnedTokens]);
+
+  const handleTransferEvent = useCallback(
+    (logs: any[]) => {
+      for (const log of logs) {
+        const eventKey = `${log.transactionHash}-${log.logIndex}`;
+        if (processedEvents.current.has(eventKey)) {
+          continue; // Skip already processed events
+        }
+
+        processedEvents.current.add(eventKey);
+
+        const { from, to, tokenId } = log.args as { from: string; to: string; tokenId: bigint };
+
+        setOwnedTokens(prevTokens => {
+          const newTokens = new Set(prevTokens);
+          if (to.toLowerCase() === address?.toLowerCase()) {
+            newTokens.add(tokenId);
+          }
+          if (from.toLowerCase() === address?.toLowerCase()) {
+            newTokens.delete(tokenId);
+          }
+          return Array.from(newTokens);
+        });
+      }
+    },
+    [address],
+  );
+
+  useWatchContractEvent({
+    address: contractAddress,
+    abi,
+    eventName: "Transfer",
+    onLogs: handleTransferEvent,
+  });
 
   const { data: balanceOf } = useReadContract({
     address: contractAddress,
@@ -41,5 +82,5 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
     args: [address!],
   });
 
-  return { getOwnedTokens, balanceOf };
+  return { ownedTokens, balanceOf };
 };
