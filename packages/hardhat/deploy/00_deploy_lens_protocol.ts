@@ -4,6 +4,7 @@ import getNextContractAddress from "../lib/getNextContractAddress";
 import { ethers } from "hardhat";
 import { DeployOptions } from "hardhat-deploy/dist/types";
 import { ZeroAddress } from "ethers";
+import { BURNER_PUBLIC_KEY } from "../config";
 
 const GUARDIAN_COOLDOWN_PERIOD = 300n; // 5 minutes
 const TREASURY_FEE = 500n; // 5%
@@ -93,7 +94,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   // deploy ProfileCreationProxy
   const profileCreationProxy = await deploy("ProfileCreationProxy", {
     ...baseConfig,
-    args: [process.env.BURNER_PUBLIC_KEY!, lensHub.address, lensHandles.address, tokenHandleRegistry.address],
+    args: [BURNER_PUBLIC_KEY, lensHub.address, lensHandles.address, tokenHandleRegistry.address],
   });
 
   // determine the CollectPublicationAction address
@@ -161,7 +162,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   // deploy PermissionlessCreator
   await deploy("PermissionlessCreator", {
     ...baseConfig,
-    args: [process.env.BURNER_PUBLIC_KEY!, lensHub.address, lensHandles.address, tokenHandleRegistry.address],
+    args: [BURNER_PUBLIC_KEY, lensHub.address, lensHandles.address, tokenHandleRegistry.address],
   });
 
   // deploy PublicActProxy_MetaTx
@@ -275,7 +276,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const whitelistDeployer = await LensHub.whitelistProfileCreator(deployer, true);
   console.log("whitelisted deployer wallet (tx: " + whitelistDeployer.hash + ")");
 
-  const whitelistBurner = await LensHub.whitelistProfileCreator(process.env.BURNER_PUBLIC_KEY!, true);
+  const whitelistBurner = await LensHub.whitelistProfileCreator(BURNER_PUBLIC_KEY, true);
   console.log("whitelisted burner wallet (tx: " + whitelistBurner.hash + ")");
 
   const whitelistProfileCreationProxy = await LensHub.whitelistProfileCreator(profileCreationProxy.address, true);

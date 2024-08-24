@@ -1,32 +1,49 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { YourCollectModule } from "../typechain-types";
-import { ethers } from "hardhat";
 import { module } from "@lens-protocol/metadata";
 import { uploadMetadata } from "../lib/irysService";
-import { COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
+import { PayWhatYouWantCollectModule } from "../typechain-types";
+import { isLocalHost, COLLECT_PUBLICATION_ACTION, LENS_HUB, MODULE_REGISTRY } from "../config";
 
 /**
- * Generates the metadata for the YourCollectModule contract compliant with the Module Metadata Standard at:
+ * Generates the metadata for the PayWhatYouWantCollectModule contract compliant with the Module Metadata Standard at:
  * https://docs.lens.xyz/docs/module-metadata-standard
  */
 const metadata = module({
-  name: "YourCollectModule",
-  title: "Your Collect Action",
-  description: "Description of your collect action",
-  authors: ["some@email.com"],
-  initializeCalldataABI: JSON.stringify([]),
-  processCalldataABI: JSON.stringify([]),
+  name: "PayWhatYouWantCollectModule",
+  title: "Pay What You Want Collect Module",
+  description: "Allows users to collect publications with any denomination of any token.",
+  authors: ["paul@paulburke.co"],
+  initializeCalldataABI: JSON.stringify([
+    { type: "uint160", name: "amountFloor" },
+    { type: "uint96", name: "collectLimit" },
+    { type: "address", name: "currency" },
+    { type: "uint16", name: "referralFee" },
+    { type: "bool", name: "followerOnly" },
+    { type: "uint72", name: "endTimestamp" },
+    {
+      type: "tuple(address,uint16)[5]",
+      name: "recipients",
+      components: [
+        { type: "address", name: "recipient" },
+        { type: "uint16", name: "split" },
+      ],
+    },
+  ]),
+  processCalldataABI: JSON.stringify([
+    { type: "address", name: "currency" },
+    { type: "uint256", name: "amount" },
+  ]),
   attributes: [],
 });
 
 /**
- * Deploys a contract named "YourCollectModule" using the deployer account and
+ * Deploys a contract named "PayWhatYouWantCollectModule" using the deployer account and
  * constructor arguments set to the deployer address
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourCollectModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -39,10 +56,6 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
   */
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
-
-  // This is the address of the LensHub contract on the network we're deploying to
-  // When running locally, this should be the address of burner wallet used in the nextjs app
-  const lensHubAddress = LENS_HUB;
 
   // First check to see if there's a local mocked ModuleRegistry contract deployed
   // This allows us to run tests locally with the same flow as on-chain
@@ -70,10 +83,10 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
     collectPublicationAction = COLLECT_PUBLICATION_ACTION;
   }
 
-  // Deploy the YourCollectModule contract
-  await deploy("YourCollectModule", {
+  // Deploy the PayWhatYouWantCollectModule contract
+  await deploy("PayWhatYouWantCollectModule", {
     from: deployer,
-    args: [lensHubAddress, collectPublicationAction, moduleRegistry],
+    args: [LENS_HUB, collectPublicationAction, moduleRegistry],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -81,23 +94,31 @@ const deployYourCollectModuleContract: DeployFunction = async function (hre: Har
   });
 
   // Get the deployed contract
-  const yourCollectModule = await hre.ethers.getContract<YourCollectModule>("YourCollectModule", deployer);
+  const collectModule = await hre.ethers.getContract<PayWhatYouWantCollectModule>(
+    "PayWhatYouWantCollectModule",
+    deployer,
+  );
 
   // Upload the metadata to Arweave with Irys and set the URI on the contract
   const metadataURI = await uploadMetadata(metadata);
-  await yourCollectModule.setModuleMetadataURI(metadataURI);
+  await collectModule.setModuleMetadataURI(metadataURI);
 
-  // Add a delay before calling registerModule to allow for propagation
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  if (!isLocalHost) {
+    // Add a delay before calling registerModule to allow for propagation
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
 
   // Register the module with the Publication Action
-  const publicationActionContract = await ethers.getContractAt("CollectPublicationAction", collectPublicationAction!);
-  await publicationActionContract.registerCollectModule(await yourCollectModule.getAddress());
-  console.log("Registered YourCollectModule with CollectPublicationAction");
+  const publicationActionContract = await hre.ethers.getContractAt(
+    "CollectPublicationAction",
+    collectPublicationAction!,
+  );
+  const registerTx = await publicationActionContract.registerCollectModule(await collectModule.getAddress());
+  console.log("registered PayWhatYouWantCollectModule with CollectPublicationAction", registerTx.hash);
 };
 
-export default deployYourCollectModuleContract;
+export default deployPayWhatYouWantCollectModuleContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourCollectModule
-deployYourCollectModuleContract.tags = ["YourCollectModule"];
+// e.g. yarn deploy --tags PayWhatYouWantCollectModule
+deployPayWhatYouWantCollectModuleContract.tags = ["PayWhatYouWantCollectModule"];
