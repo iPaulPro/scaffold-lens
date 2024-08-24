@@ -4,7 +4,8 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, BugAntIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
+import LensIcon from "~~/app/lens/_components/LensIcon";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -25,9 +26,9 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <BugAntIcon className="h-4 w-4" />,
   },
   {
-    label: "Lens Modules",
+    label: "Open Actions",
     href: "/lens",
-    icon: <GlobeAltIcon className="h-4 w-4" />,
+    icon: <LensIcon className="h-4 w-4" />,
   },
 ];
 

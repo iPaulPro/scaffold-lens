@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { readContract } from "@wagmi/core";
 import { hardhat } from "viem/chains";
 import { useAccount } from "wagmi";
@@ -27,29 +27,42 @@ const ProfileSelector: React.FC = () => {
   const { profileId, updateProfileId } = useProfile();
   const { ownedTokens } = useOwnedTokens(address, lensHubAddress, lensHubAbi);
 
+  const getHandleId = useCallback(
+    async (tokenId: bigint) => {
+      return await readContract(wagmiConfig, {
+        abi: tokenHandleRegistryAbi,
+        address: tokenHandleRegistryAddress,
+        functionName: "getDefaultHandle",
+        args: [tokenId],
+      });
+    },
+    [tokenHandleRegistryAbi, tokenHandleRegistryAddress],
+  );
+
+  const getHandle = useCallback(
+    async (handleId: bigint) => {
+      return await readContract(wagmiConfig, {
+        abi: lensHandlesAbi,
+        address: lensHandlesAddress,
+        functionName: "getLocalName",
+        args: [handleId],
+      });
+    },
+    [lensHandlesAbi, lensHandlesAddress],
+  );
+
   useEffect(() => {
-    console.log("ownedTokens", ownedTokens);
     async function fetchProfiles() {
       const profiles = [];
       for (const tokenId of ownedTokens) {
-        const handleId = await readContract(wagmiConfig, {
-          abi: tokenHandleRegistryAbi,
-          address: tokenHandleRegistryAddress,
-          functionName: "getDefaultHandle",
-          args: [tokenId],
-        });
-        const handle = await readContract(wagmiConfig, {
-          abi: lensHandlesAbi,
-          address: lensHandlesAddress,
-          functionName: "getLocalName",
-          args: [handleId],
-        });
+        const handleId = await getHandleId(tokenId);
+        const handle = await getHandle(handleId);
         profiles.push({ id: tokenId, handle });
       }
       setProfiles(profiles);
     }
     fetchProfiles();
-  }, [address, ownedTokens]);
+  }, [ownedTokens, getHandle, getHandleId]);
 
   const getCurrentProfile = (): Profile | undefined => {
     if (!profiles.length) return undefined;
@@ -78,20 +91,22 @@ const ProfileSelector: React.FC = () => {
             <span className="pr-2">{profileId ? getCurrentProfile()?.handle : "No Profile"}</span>
             <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
           </summary>
-          <ul
-            tabIndex={0}
-            className="w-full dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1 max-h-44 overflow-y-scroll block"
-          >
-            {profiles.map(profile => (
-              <li
-                key={profile.id}
-                onClick={() => onProfileClick(profile.id)}
-                className={`w-full cursor-pointer hover:bg-accent p-2 rounded-box ${profile.id === profileId ? "bg-accent" : ""}`}
-              >
-                {profile.handle}
-              </li>
-            ))}
-          </ul>
+          {profiles.length > 0 && (
+            <ul
+              tabIndex={0}
+              className="w-full dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1 max-h-44 overflow-y-scroll block"
+            >
+              {profiles.map(profile => (
+                <li
+                  key={profile.id}
+                  onClick={() => onProfileClick(profile.id)}
+                  className={`w-full cursor-pointer hover:bg-accent p-2 rounded-box ${profile.id === profileId ? "bg-accent" : ""}`}
+                >
+                  {profile.handle}
+                </li>
+              ))}
+            </ul>
+          )}
         </details>
       </div>
     </>

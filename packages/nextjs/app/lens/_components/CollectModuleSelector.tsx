@@ -39,7 +39,7 @@ const CollectModuleSelector: React.FC<CollectModuleSelectorProps> = ({
       setCompatibleModules(compatModules);
     };
     getCompatibleModules();
-  }, [collectModules, openActionModuleAddress]);
+  }, [collectModules, openActionModuleAddress, publicClient]);
 
   const dropdownRef = useRef<HTMLDetailsElement>(null);
   const closeDropdown = () => {
