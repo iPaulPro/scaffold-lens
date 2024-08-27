@@ -22,12 +22,11 @@ export const useCollectModules = () => {
   const getCollectModules = useCallback(async () => {
     const contracts = deployedContracts[hardhat.id];
     const collectModules: CollectModuleContract[] = [];
-    const entries = Object.entries(contracts);
-    for (const [contractName, contract] of entries) {
+    Object.entries(contracts).forEach(([contractName, contract]) => {
       if ("initializePublicationCollectModule" in contract.inheritedFunctions) {
         collectModules.push({ contractName, contract });
       }
-    }
+    });
     setCollectModules(collectModules);
   }, [latestBlock]);
 

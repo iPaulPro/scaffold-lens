@@ -22,7 +22,7 @@ const metadata = module({
     { type: "bool", name: "followerOnly" },
     { type: "uint72", name: "endTimestamp" },
     {
-      type: "tuple(address,uint16)[5]",
+      type: "tuple(address,uint16)[]",
       name: "recipients",
       components: [
         { type: "address", name: "recipient" },

@@ -41,7 +41,7 @@ struct PayWhatYouWantCollectModuleInitData {
     uint16 referralFee;
     bool followerOnly;
     uint72 endTimestamp;
-    RecipientData[5] recipients;
+    RecipientData[] recipients;
 }
 
 /**
@@ -175,31 +175,49 @@ contract PayWhatYouWantCollectModule is
         address /* transactionExecutor */,
         bytes calldata data
     ) external override onlyActionModule returns (bytes memory) {
-        PayWhatYouWantCollectModuleInitData memory initData = abi.decode(
-            data,
-            (PayWhatYouWantCollectModuleInitData)
-        );
+        (
+            uint160 amountFloor,
+            uint96 collectLimit,
+            address currency,
+            uint16 referralFee,
+            bool followerOnly,
+            uint72 endTimestamp,
+            RecipientData[] memory recipients
+        ) = abi.decode(
+                data,
+                (
+                    uint160,
+                    uint96,
+                    address,
+                    uint16,
+                    bool,
+                    uint72,
+                    RecipientData[]
+                )
+            );
 
         BaseFeeCollectModuleInitData
             memory baseInitData = BaseFeeCollectModuleInitData({
-                amount: initData.amountFloor,
-                collectLimit: initData.collectLimit,
-                currency: initData.currency,
-                referralFee: initData.referralFee,
-                followerOnly: initData.followerOnly,
-                endTimestamp: initData.endTimestamp,
+                amount: amountFloor,
+                collectLimit: collectLimit,
+                currency: currency,
+                referralFee: referralFee,
+                followerOnly: followerOnly,
+                endTimestamp: endTimestamp,
                 recipient: address(0)
             });
 
-        RecipientData[] memory recipients = new RecipientData[](
-            initData.recipients.length
+        _validateInitData(
+            PayWhatYouWantCollectModuleInitData({
+                amountFloor: amountFloor,
+                collectLimit: collectLimit,
+                currency: currency,
+                referralFee: referralFee,
+                followerOnly: followerOnly,
+                endTimestamp: endTimestamp,
+                recipients: recipients
+            })
         );
-
-        for (uint256 i = 0; i < initData.recipients.length; i++) {
-            recipients[i] = initData.recipients[i];
-        }
-
-        _validateInitData(initData);
         _validateAndStoreRecipients(recipients, profileId, pubId);
         _storeBasePublicationCollectParameters(profileId, pubId, baseInitData);
 

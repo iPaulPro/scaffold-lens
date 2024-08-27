@@ -16,14 +16,6 @@ const LensModules: React.FC = () => {
 
   const { profileId } = useProfile();
 
-  const onOpenActionSelected = async (contract: OpenActionContract) => {
-    setSelectedActionModule(contract);
-  };
-
-  const onCollectModuleSelected = async (contract: CollectModuleContract) => {
-    setSelectedCollectModule(contract);
-  };
-
   return (
     <>
       <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
@@ -43,11 +35,11 @@ const LensModules: React.FC = () => {
                 {profileId ? (
                   <div className="flex flex-col gap-y-4">
                     <div className="flex gap-4">
-                      <OpenActionsSelector openActionSelected={onOpenActionSelected} />
+                      <OpenActionsSelector openActionSelected={setSelectedActionModule} />
                       {selectedActionModule && (
                         <CollectModuleSelector
                           openActionModuleAddress={selectedActionModule.contract.address}
-                          collectModuleSelected={onCollectModuleSelected}
+                          collectModuleSelected={setSelectedCollectModule}
                         />
                       )}
                     </div>

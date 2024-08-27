@@ -18,5 +18,13 @@ export function Profile() {
     args: [handleId],
   });
 
-  return <p>Posting as: {profileId ? (localName ?? profileId.toString()) : "No profile"}</p>;
+  if (!profileId) {
+    return null;
+  }
+
+  return (
+    <div>
+      Posting as: <span className="font-bold">{localName ?? profileId.toString()}</span>
+    </div>
+  );
 }
