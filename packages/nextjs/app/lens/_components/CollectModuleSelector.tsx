@@ -1,45 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { usePublicClient } from "wagmi";
+import React, { useRef, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import { CollectModuleContract, useCollectModules } from "~~/hooks/scaffold-lens";
+import { CollectModuleContract } from "~~/hooks/scaffold-lens";
 
 interface CollectModuleSelectorProps {
-  openActionModuleAddress: string;
+  compatibleModules: CollectModuleContract[];
   collectModuleSelected: (contract: CollectModuleContract) => void;
 }
 
-const CollectModuleSelector: React.FC<CollectModuleSelectorProps> = ({
-  openActionModuleAddress,
-  collectModuleSelected,
-}) => {
+const CollectModuleSelector: React.FC<CollectModuleSelectorProps> = ({ compatibleModules, collectModuleSelected }) => {
   const [selectedModule, setSelectedModule] = useState<CollectModuleContract>();
-  const [compatibleModules, setCompatibleModules] = useState<CollectModuleContract[]>();
-  const { collectModules } = useCollectModules();
-
-  const publicClient = usePublicClient();
-
-  useEffect(() => {
-    if (!collectModules || !publicClient) return;
-
-    const compatModules: CollectModuleContract[] = [];
-    const getCompatibleModules = async () => {
-      for (const collectModule of collectModules) {
-        const actionModule = await publicClient.readContract({
-          address: collectModule.contract.address,
-          abi: collectModule.contract.abi,
-          functionName: "ACTION_MODULE",
-        });
-        if (actionModule === openActionModuleAddress) {
-          compatModules.push(collectModule);
-        }
-      }
-      setCompatibleModules(compatModules);
-    };
-    getCompatibleModules();
-  }, [collectModules, openActionModuleAddress, publicClient]);
 
   const dropdownRef = useRef<HTMLDetailsElement>(null);
   const closeDropdown = () => {

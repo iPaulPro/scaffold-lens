@@ -1,20 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { usePublicClient } from "wagmi";
 import CollectModuleSelector from "~~/app/lens/_components/CollectModuleSelector";
 import CreatePost from "~~/app/lens/_components/CreatePost";
 import CreateProfile from "~~/app/lens/_components/CreateProfile";
 import OpenActionsSelector from "~~/app/lens/_components/OpenActionsSelector";
 import { Profile } from "~~/app/lens/_components/Profile";
 import ProfileSelector from "~~/app/lens/_components/ProfileSelector";
-import { CollectModuleContract, useProfile } from "~~/hooks/scaffold-lens";
+import { CollectModuleContract, useCollectModules, useProfile } from "~~/hooks/scaffold-lens";
 import { OpenActionContract } from "~~/hooks/scaffold-lens/useOpenActions";
 
 const LensModules: React.FC = () => {
   const [selectedActionModule, setSelectedActionModule] = useState<OpenActionContract>();
   const [selectedCollectModule, setSelectedCollectModule] = useState<CollectModuleContract>();
+  const [compatibleModules, setCompatibleModules] = useState<CollectModuleContract[]>([]);
 
   const { profileId } = useProfile();
+  const { collectModules } = useCollectModules();
+
+  const publicClient = usePublicClient();
+
+  useEffect(() => {
+    if (!collectModules || !publicClient) {
+      return;
+    }
+
+    const compatModules: CollectModuleContract[] = [];
+    const getCompatibleModules = async () => {
+      for (const collectModule of collectModules) {
+        const actionModule = await publicClient.readContract({
+          address: collectModule.contract.address,
+          abi: collectModule.contract.abi,
+          functionName: "ACTION_MODULE",
+        });
+        if (actionModule === selectedActionModule?.contract.address) {
+          compatModules.push(collectModule);
+        }
+      }
+      setCompatibleModules(compatModules);
+    };
+    getCompatibleModules();
+  }, [collectModules, selectedActionModule, publicClient]);
+
+  const handleActionModuleChange = useCallback((module: OpenActionContract) => {
+    setCompatibleModules([]);
+    setSelectedCollectModule(undefined);
+    setSelectedActionModule(module);
+  }, []);
 
   return (
     <>
@@ -35,17 +68,21 @@ const LensModules: React.FC = () => {
                 {profileId ? (
                   <div className="flex flex-col gap-y-4">
                     <div className="flex gap-4">
-                      <OpenActionsSelector openActionSelected={setSelectedActionModule} />
-                      {selectedActionModule && (
+                      <OpenActionsSelector openActionSelected={handleActionModuleChange} />
+                      {compatibleModules.length > 0 && (
                         <CollectModuleSelector
-                          openActionModuleAddress={selectedActionModule.contract.address}
+                          compatibleModules={compatibleModules}
                           collectModuleSelected={setSelectedCollectModule}
                         />
                       )}
                     </div>
                     <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col gap-y-2 p-4">
                       <Profile />
-                      <CreatePost openActionModule={selectedActionModule} collectModule={selectedCollectModule} />
+                      <CreatePost
+                        openActionModule={selectedActionModule}
+                        compatibleModules={compatibleModules}
+                        collectModule={selectedCollectModule}
+                      />
                     </div>
                   </div>
                 ) : (

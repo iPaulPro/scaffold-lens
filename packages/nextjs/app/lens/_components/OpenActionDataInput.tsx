@@ -4,18 +4,18 @@ import React, { useEffect } from "react";
 import { AbiParameter } from "abitype";
 import { usePublicClient } from "wagmi";
 import { ContractInput } from "~~/app/debug/_components/contract";
-import { CollectModuleContract } from "~~/hooks/scaffold-lens";
+import { OpenActionContract } from "~~/hooks/scaffold-lens";
 import { getModuleMetadata } from "~~/utils/scaffold-lens";
 
-interface CollectModuleDataInputProps {
-  module: CollectModuleContract;
+interface OpenActionDataInputProps {
+  module: OpenActionContract;
   form: Record<string, any>;
   setForm: (data: Record<string, any>) => void;
   metadata: AbiParameter[];
   setMetadata: (metadata: AbiParameter[]) => void;
 }
 
-export const CollectModuleDataInput: React.FC<CollectModuleDataInputProps> = ({
+export const OpenActionDataInput: React.FC<OpenActionDataInputProps> = ({
   module,
   form,
   setForm,
@@ -25,7 +25,7 @@ export const CollectModuleDataInput: React.FC<CollectModuleDataInputProps> = ({
   const publicClient = usePublicClient();
 
   useEffect(() => {
-    if (!publicClient || !module) {
+    if (!publicClient) {
       setMetadata([]);
       return;
     }

@@ -4,6 +4,13880 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    ActionLib: {
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      abi: [
+        {
+          inputs: [],
+          name: "ActionNotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ArrayMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Blocked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidReferrer",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "address",
+                  name: "actionModuleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct Types.PublicationActionParams",
+              name: "publicationActionParams",
+              type: "tuple",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "actionModuleReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Acted",
+          type: "event",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    CollectNFT: {
+      address: "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "Initialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonERC721ReceiverImplementer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotOwnerOrApproved",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotProfileOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "burn",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDomainSeparator",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getSourcePublicationPointer",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "mint",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "mintTimestampOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "salePrice",
+              type: "uint256",
+            },
+          ],
+          name: "royaltyInfo",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "royaltiesInBasisPoints",
+              type: "uint256",
+            },
+          ],
+          name: "setRoyalty",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenDataOf",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "mintTimestamp",
+                  type: "uint96",
+                },
+              ],
+              internalType: "struct Types.TokenData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        royaltyInfo: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        setRoyalty: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        supportsInterface: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        ACTION_MODULE: "lens-modules/contracts/modules/ActionRestricted.sol",
+        getSourcePublicationPointer: "lens-modules/contracts/interfaces/ICollectNFT.sol",
+        initialize: "lens-modules/contracts/interfaces/ICollectNFT.sol",
+        mint: "lens-modules/contracts/interfaces/ICollectNFT.sol",
+      },
+    },
+    CollectPublicationAction: {
+      address: "0x68B1D87F95878fE05B998F19b66F4baba5De1aed",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "collectNFTImpl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CollectNotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotCollectModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadata",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CollectModuleRegistered",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "collectNFT",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CollectNFTDeployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectedProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectedPubId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectorProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "nftRecipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "collectActionData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "collectActionResult",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "collectNFT",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Collected",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "COLLECT_NFT_IMPL",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getCollectData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "collectModule",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "collectNFT",
+                  type: "address",
+                },
+              ],
+              internalType: "struct CollectPublicationAction.CollectData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+          ],
+          name: "isCollectModuleRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessActionParams",
+              name: "processActionParams",
+              type: "tuple",
+            },
+          ],
+          name: "processPublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+          ],
+          name: "registerCollectModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "collectModule",
+              type: "address",
+            },
+          ],
+          name: "verifyCollectModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        initialize: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadataInitializable.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        initializePublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+        processPublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+      },
+    },
+    DefaultProxyAdmin: {
+      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "initialOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract TransparentUpgradeableProxy",
+              name: "proxy",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "newAdmin",
+              type: "address",
+            },
+          ],
+          name: "changeProxyAdmin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract TransparentUpgradeableProxy",
+              name: "proxy",
+              type: "address",
+            },
+          ],
+          name: "getProxyAdmin",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract TransparentUpgradeableProxy",
+              name: "proxy",
+              type: "address",
+            },
+          ],
+          name: "getProxyImplementation",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract TransparentUpgradeableProxy",
+              name: "proxy",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "implementation",
+              type: "address",
+            },
+          ],
+          name: "upgrade",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract TransparentUpgradeableProxy",
+              name: "proxy",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "implementation",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "upgradeAndCall",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    DegreesOfSeparationReferenceModule: {
+      address: "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidDegreesOfSeparation",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotInheritingPointedPubConfig",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OperationDisabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ProfilePathExceedsDegreesOfSeparation",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MAX_DEGREES_OF_SEPARATION",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getModuleConfig",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "setUp",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "commentsRestricted",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "quotesRestricted",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "mirrorsRestricted",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint8",
+                  name: "degreesOfSeparation",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint96",
+                  name: "sourceProfile",
+                  type: "uint96",
+                },
+                {
+                  internalType: "uint96",
+                  name: "originalAuthorProfile",
+                  type: "uint96",
+                },
+              ],
+              internalType: "struct ModuleConfig",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializeReferenceModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessCommentParams",
+              name: "processCommentParams",
+              type: "tuple",
+            },
+          ],
+          name: "processComment",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessMirrorParams",
+              name: "processMirrorParams",
+              type: "tuple",
+            },
+          ],
+          name: "processMirror",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessQuoteParams",
+              name: "processQuoteParams",
+              type: "tuple",
+            },
+          ],
+          name: "processQuote",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        initializeReferenceModule: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+        processComment: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+        processMirror: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+        processQuote: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+      },
+    },
+    FeeFollowModule: {
+      address: "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InitParamsInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParams",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ModuleDataMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "getFeeConfig",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+              ],
+              internalType: "struct FeeConfig",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializeFollowModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "targetProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "processFollow",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/FeeModuleBase.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        initializeFollowModule: "lens-modules/contracts/interfaces/IFollowModule.sol",
+        processFollow: "lens-modules/contracts/interfaces/IFollowModule.sol",
+      },
+    },
+    FollowLib: {
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      abi: [
+        {
+          inputs: [],
+          name: "ArrayMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Blocked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelfFollow",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "followNFT",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "FollowNFTDeployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "idOfProfileFollowed",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "followTokenIdAssigned",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "followModuleData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "processFollowModuleReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Followed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "idOfProfileUnfollowed",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Unfollowed",
+          type: "event",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    FollowNFT: {
+      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyWrapped",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotHavePermissions",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FollowTokenDoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Initialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonERC721ReceiverImplementer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotOwnerOrApproved",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotProfileOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyWrappedFollowTokens",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Paused",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "FollowApproval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approveFollow",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "burn",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "follow",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDomainSeparator",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowApproved",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "followerProfileId",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint48",
+                  name: "originalFollowTimestamp",
+                  type: "uint48",
+                },
+                {
+                  internalType: "uint48",
+                  name: "followTimestamp",
+                  type: "uint48",
+                },
+                {
+                  internalType: "uint256",
+                  name: "profileIdAllowedToRecover",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.FollowData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowTokenId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getFollowerCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowerProfileId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getOriginalFollowTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getProfileIdAllowedToRecover",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "isFollowing",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "mintTimestampOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "processBlock",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "removeFollower",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "salePrice",
+              type: "uint256",
+            },
+          ],
+          name: "royaltyInfo",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "royaltiesInBasisPoints",
+              type: "uint256",
+            },
+          ],
+          name: "setRoyalty",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenDataOf",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "mintTimestamp",
+                  type: "uint96",
+                },
+              ],
+              internalType: "struct Types.TokenData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "followerProfileOwner",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tryMigrate",
+          outputs: [
+            {
+              internalType: "uint48",
+              name: "",
+              type: "uint48",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "unfollow",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "unwrap",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "wrappedTokenReceiver",
+              type: "address",
+            },
+          ],
+          name: "wrap",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "wrap",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        approve: "lens-modules/contracts/base/LensBaseERC721.sol",
+        balanceOf: "lens-modules/contracts/base/LensBaseERC721.sol",
+        burn: "lens-modules/contracts/base/LensBaseERC721.sol",
+        exists: "lens-modules/contracts/base/LensBaseERC721.sol",
+        getApproved: "lens-modules/contracts/base/LensBaseERC721.sol",
+        getDomainSeparator: "lens-modules/contracts/base/LensBaseERC721.sol",
+        isApprovedForAll: "lens-modules/contracts/base/LensBaseERC721.sol",
+        mintTimestampOf: "lens-modules/contracts/base/LensBaseERC721.sol",
+        name: "lens-modules/contracts/base/LensBaseERC721.sol",
+        nonces: "lens-modules/contracts/base/LensBaseERC721.sol",
+        ownerOf: "lens-modules/contracts/base/LensBaseERC721.sol",
+        safeTransferFrom: "lens-modules/contracts/base/LensBaseERC721.sol",
+        setApprovalForAll: "lens-modules/contracts/base/LensBaseERC721.sol",
+        supportsInterface: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        symbol: "lens-modules/contracts/base/LensBaseERC721.sol",
+        tokenDataOf: "lens-modules/contracts/base/LensBaseERC721.sol",
+        tokenURI: "lens-modules/contracts/base/LensBaseERC721.sol",
+        totalSupply: "lens-modules/contracts/base/LensBaseERC721.sol",
+        transferFrom: "lens-modules/contracts/base/LensBaseERC721.sol",
+        royaltyInfo: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        setRoyalty: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        approveFollow: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        follow: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getFollowApproved: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getFollowData: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getFollowTimestamp: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getFollowTokenId: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getFollowerCount: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getFollowerProfileId: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getOriginalFollowTimestamp: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        getProfileIdAllowedToRecover: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        initialize: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        isFollowing: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        processBlock: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        removeFollower: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        unfollow: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        unwrap: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+        wrap: "lens-modules/contracts/interfaces/IFollowNFT.sol",
+      },
+    },
+    FollowSVG: {
+      address: "0x59b670e9fA9D0A427751Af201D676719a970857b",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowSVG",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    FollowTokenURI: {
+      address: "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followTokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "followedProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "originalFollowTimestamp",
+              type: "uint256",
+            },
+          ],
+          name: "getTokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getTokenURI: "lens-modules/contracts/interfaces/IFollowTokenURI.sol",
+      },
+    },
+    FollowerOnlyReferenceModule: {
+      address: "0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "initializeReferenceModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessCommentParams",
+              name: "processCommentParams",
+              type: "tuple",
+            },
+          ],
+          name: "processComment",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessMirrorParams",
+              name: "processMirrorParams",
+              type: "tuple",
+            },
+          ],
+          name: "processMirror",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessQuoteParams",
+              name: "processQuoteParams",
+              type: "tuple",
+            },
+          ],
+          name: "processQuote",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        initializeReferenceModule: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+        processComment: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+        processMirror: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+        processQuote: "lens-modules/contracts/interfaces/IReferenceModule.sol",
+      },
+    },
+    GintoNordFontSVG: {
+      address: "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+      abi: [
+        {
+          inputs: [],
+          name: "getFontStyle",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    GovernanceLib: {
+      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      abi: [
+        {
+          inputs: [],
+          name: "EmergencyAdminCanOnlyPauseFurther",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotGovernanceOrEmergencyAdmin",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "caller",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "oldEmergencyAdmin",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newEmergencyAdmin",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "EmergencyAdminSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "caller",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "prevGovernance",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newGovernance",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "GovernanceSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "profileCreator",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "whitelisted",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ProfileCreatorWhitelisted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "caller",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "enum Types.ProtocolState",
+              name: "prevState",
+              type: "uint8",
+            },
+            {
+              indexed: true,
+              internalType: "enum Types.ProtocolState",
+              name: "newState",
+              type: "uint8",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "StateSet",
+          type: "event",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    HandleSVG: {
+      address: "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "localName",
+              type: "string",
+            },
+          ],
+          name: "getHandleSVG",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    HandleTokenURI: {
+      address: "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "localName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+          ],
+          name: "getTokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getTokenURI: "lens-modules/contracts/interfaces/IHandleTokenURI.sol",
+      },
+    },
+    LensHandles: {
+      address: "0x9A676e781A523b5d0C0e43731313A708CB607508",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lensHub",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenGuardianCooldown",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyEnabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DisablingAlreadyTriggered",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "GuardianEnabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "HandleContainsInvalidCharacters",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "HandleFirstCharInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "HandleLengthInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEOA",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotOwnerNorWhitelisted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyOwnerOrHub",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "fromTokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "toTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "BatchMetadataUpdate",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "HandleMinted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "wallet",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "enabled",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokenGuardianDisablingTimestamp",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "TokenGuardianStateChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "DANGER__disableTokenGuardian",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "LENS_HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "NAMESPACE",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "NAMESPACE_HASH",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "OWNER",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "TOKEN_GUARDIAN_COOLDOWN",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "burn",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "enableTokenGuardian",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getHandle",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getHandleTokenURIContract",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getLocalName",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNamespace",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNamespaceHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "wallet",
+              type: "address",
+            },
+          ],
+          name: "getTokenGuardianDisablingTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "localName",
+              type: "string",
+            },
+          ],
+          name: "getTokenId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "localName",
+              type: "string",
+            },
+          ],
+          name: "migrateHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "localName",
+              type: "string",
+            },
+          ],
+          name: "mintHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "salePrice",
+              type: "uint256",
+            },
+          ],
+          name: "royaltyInfo",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "handleTokenURIContract",
+              type: "address",
+            },
+          ],
+          name: "setHandleTokenURIContract",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "royaltiesInBasisPoints",
+              type: "uint256",
+            },
+          ],
+          name: "setRoyalty",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        approve: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        balanceOf: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        getApproved: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        isApprovedForAll: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        name: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        ownerOf: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        safeTransferFrom: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        setApprovalForAll: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        supportsInterface: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        symbol: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        tokenURI: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        transferFrom: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        royaltyInfo: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        setRoyalty: "lens-modules/contracts/base/ERC2981CollectionRoyalties.sol",
+        LENS_HUB: "lens-modules/contracts/misc/ImmutableOwnable.sol",
+        OWNER: "lens-modules/contracts/misc/ImmutableOwnable.sol",
+        DANGER__disableTokenGuardian: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        burn: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        enableTokenGuardian: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        exists: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        getHandleTokenURIContract: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        getNamespace: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        getNamespaceHash: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        getTokenGuardianDisablingTimestamp: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        mintHandle: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        setHandleTokenURIContract: "lens-modules/contracts/interfaces/ILensHandles.sol",
+        totalSupply: "lens-modules/contracts/interfaces/ILensHandles.sol",
+      },
+    },
+    LensHub: {
+      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      abi: [
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "previousAdmin",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "newAdmin",
+              type: "address",
+            },
+          ],
+          name: "AdminChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "beacon",
+              type: "address",
+            },
+          ],
+          name: "BeaconUpgraded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "implementation",
+              type: "address",
+            },
+          ],
+          name: "Upgraded",
+          type: "event",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          inputs: [],
+          name: "admin",
+          outputs: [
+            {
+              internalType: "address",
+              name: "admin_",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newAdmin",
+              type: "address",
+            },
+          ],
+          name: "changeAdmin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "implementation",
+          outputs: [
+            {
+              internalType: "address",
+              name: "implementation_",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newImplementation",
+              type: "address",
+            },
+          ],
+          name: "upgradeTo",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newImplementation",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "upgradeToAndCall",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+        {
+          inputs: [],
+          name: "AlreadyEnabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CallerNotCollectNFT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CallerNotFollowNFT",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CannotInitImplementation",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DisablingAlreadyTriggered",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ExecutorInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "GuardianEnabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InitParamsInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Initialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonERC721ReceiverImplementer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEOA",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotGovernance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotOwnerOrApproved",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotProfileOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotWhitelisted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Paused",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "PublishingPaused",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "fromTokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "toTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "BatchMetadataUpdate",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "collectNFTId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CollectNFTTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "wallet",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "enabled",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokenGuardianDisablingTimestamp",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "TokenGuardianStateChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint16",
+              name: "prevTreasuryFee",
+              type: "uint16",
+            },
+            {
+              indexed: true,
+              internalType: "uint16",
+              name: "newTreasuryFee",
+              type: "uint16",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "TreasuryFeeSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "prevTreasury",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newTreasury",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "TreasurySet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "idOfProfileUnfollowed",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Unfollowed",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "DANGER__disableTokenGuardian",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "TOKEN_GUARDIAN_COOLDOWN",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "address",
+                  name: "actionModuleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PublicationActionParams",
+              name: "publicationActionParams",
+              type: "tuple",
+            },
+          ],
+          name: "act",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "address",
+                  name: "actionModuleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PublicationActionParams",
+              name: "publicationActionParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "actWithSig",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "burn",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+            {
+              internalType: "bool[]",
+              name: "approvals",
+              type: "bool[]",
+            },
+            {
+              internalType: "uint64",
+              name: "configNumber",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "switchToGivenConfig",
+              type: "bool",
+            },
+          ],
+          name: "changeDelegatedExecutorsConfig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+            {
+              internalType: "bool[]",
+              name: "approvals",
+              type: "bool[]",
+            },
+          ],
+          name: "changeDelegatedExecutorsConfig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+            {
+              internalType: "bool[]",
+              name: "approvals",
+              type: "bool[]",
+            },
+            {
+              internalType: "uint64",
+              name: "configNumber",
+              type: "uint64",
+            },
+            {
+              internalType: "bool",
+              name: "switchToGivenConfig",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "changeDelegatedExecutorsConfigWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "referrerProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "referrerPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "collectModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.LegacyCollectParams",
+              name: "collectParams",
+              type: "tuple",
+            },
+          ],
+          name: "collectLegacy",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "referrerProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "referrerPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "collectModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.LegacyCollectParams",
+              name: "collectParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "collectLegacyWithSig",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CommentParams",
+              name: "commentParams",
+              type: "tuple",
+            },
+          ],
+          name: "comment",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CommentParams",
+              name: "commentParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "commentWithSig",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+          ],
+          name: "createProfile",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "collectNFTId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+          ],
+          name: "emitCollectNFTTransferEvent",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "idOfProfileUnfollowed",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+          ],
+          name: "emitUnfollowedEvent",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "enableTokenGuardian",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "idsOfProfilesToFollow",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "followTokenIds",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes[]",
+              name: "datas",
+              type: "bytes[]",
+            },
+          ],
+          name: "follow",
+          outputs: [
+            {
+              internalType: "uint256[]",
+              name: "",
+              type: "uint256[]",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "idsOfProfilesToFollow",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "followTokenIds",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes[]",
+              name: "datas",
+              type: "bytes[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "followWithSig",
+          outputs: [
+            {
+              internalType: "uint256[]",
+              name: "",
+              type: "uint256[]",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getContentURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "getDelegatedExecutorsConfigNumber",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "getDelegatedExecutorsMaxConfigNumberSet",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "getDelegatedExecutorsPrevConfigNumber",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDomainSeparator",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowModule",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getFollowNFTImpl",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getFollowTokenURIContract",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getGovernance",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getLegacyCollectNFTImpl",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleRegistry",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "getProfile",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "pubCount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followNFT",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "__DEPRECATED__handle",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "__DEPRECATED__imageURI",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "__DEPRECATED__followNFTURI",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "metadataURI",
+                  type: "string",
+                },
+              ],
+              internalType: "struct Types.Profile",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getProfileTokenURIContract",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublication",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "__DEPRECATED__collectModule",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "__DEPRECATED__collectNFT",
+                  type: "address",
+                },
+                {
+                  internalType: "enum Types.PublicationType",
+                  name: "pubType",
+                  type: "uint8",
+                },
+                {
+                  internalType: "uint256",
+                  name: "rootProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "rootPubId",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.PublicationMemory",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationType",
+          outputs: [
+            {
+              internalType: "enum Types.PublicationType",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getState",
+          outputs: [
+            {
+              internalType: "enum Types.ProtocolState",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "wallet",
+              type: "address",
+            },
+          ],
+          name: "getTokenGuardianDisablingTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTreasury",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTreasuryData",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint16",
+              name: "",
+              type: "uint16",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTreasuryFee",
+          outputs: [
+            {
+              internalType: "uint16",
+              name: "",
+              type: "uint16",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint8",
+              name: "increment",
+              type: "uint8",
+            },
+          ],
+          name: "incrementNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "symbol",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "newGovernance",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "module",
+              type: "address",
+            },
+          ],
+          name: "isActionModuleEnabledInPublication",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "byProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "isBlocked",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "delegatedExecutor",
+              type: "address",
+            },
+          ],
+          name: "isDelegatedExecutorApproved",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "delegatedExecutor",
+              type: "address",
+            },
+            {
+              internalType: "uint64",
+              name: "configNumber",
+              type: "uint64",
+            },
+          ],
+          name: "isDelegatedExecutorApproved",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followedProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "followerAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "isFollowing",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "followedProfileId",
+              type: "uint256",
+            },
+          ],
+          name: "isFollowing",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "profileCreator",
+              type: "address",
+            },
+          ],
+          name: "isProfileCreatorWhitelisted",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "mintTimestampOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "metadataURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.MirrorParams",
+              name: "mirrorParams",
+              type: "tuple",
+            },
+          ],
+          name: "mirror",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "metadataURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.MirrorParams",
+              name: "mirrorParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "mirrorWithSig",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+          ],
+          name: "post",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "postWithSig",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.QuoteParams",
+              name: "quoteParams",
+              type: "tuple",
+            },
+          ],
+          name: "quote",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.QuoteParams",
+              name: "quoteParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "quoteWithSig",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "salePrice",
+              type: "uint256",
+            },
+          ],
+          name: "royaltyInfo",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "byProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "idsOfProfilesToSetBlockStatus",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bool[]",
+              name: "blockStatus",
+              type: "bool[]",
+            },
+          ],
+          name: "setBlockStatus",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "byProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "idsOfProfilesToSetBlockStatus",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bool[]",
+              name: "blockStatus",
+              type: "bool[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "setBlockStatusWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newEmergencyAdmin",
+              type: "address",
+            },
+          ],
+          name: "setEmergencyAdmin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "followModule",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "followModuleInitData",
+              type: "bytes",
+            },
+          ],
+          name: "setFollowModule",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "followModule",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "followModuleInitData",
+              type: "bytes",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "setFollowModuleWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followTokenURIContract",
+              type: "address",
+            },
+          ],
+          name: "setFollowTokenURIContract",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newGovernance",
+              type: "address",
+            },
+          ],
+          name: "setGovernance",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setProfileMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "setProfileMetadataURIWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "profileTokenURIContract",
+              type: "address",
+            },
+          ],
+          name: "setProfileTokenURIContract",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "royaltiesInBasisPoints",
+              type: "uint256",
+            },
+          ],
+          name: "setRoyalty",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "enum Types.ProtocolState",
+              name: "newState",
+              type: "uint8",
+            },
+          ],
+          name: "setState",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newTreasury",
+              type: "address",
+            },
+          ],
+          name: "setTreasury",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint16",
+              name: "newTreasuryFee",
+              type: "uint16",
+            },
+          ],
+          name: "setTreasuryFee",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenDataOf",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "mintTimestamp",
+                  type: "uint96",
+                },
+              ],
+              internalType: "struct Types.TokenData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFromKeepingDelegates",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "idsOfProfilesToUnfollow",
+              type: "uint256[]",
+            },
+          ],
+          name: "unfollow",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256[]",
+              name: "idsOfProfilesToUnfollow",
+              type: "uint256[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "unfollowWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "profileCreator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "whitelist",
+              type: "bool",
+            },
+          ],
+          name: "whitelistProfileCreator",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_logic",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "admin_",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "constructor",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    LensHub_Proxy: {
+      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_logic",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "admin_",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "previousAdmin",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "newAdmin",
+              type: "address",
+            },
+          ],
+          name: "AdminChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "beacon",
+              type: "address",
+            },
+          ],
+          name: "BeaconUpgraded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "implementation",
+              type: "address",
+            },
+          ],
+          name: "Upgraded",
+          type: "event",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          inputs: [],
+          name: "admin",
+          outputs: [
+            {
+              internalType: "address",
+              name: "admin_",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newAdmin",
+              type: "address",
+            },
+          ],
+          name: "changeAdmin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "implementation",
+          outputs: [
+            {
+              internalType: "address",
+              name: "implementation_",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newImplementation",
+              type: "address",
+            },
+          ],
+          name: "upgradeTo",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newImplementation",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "upgradeToAndCall",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    LitAccessControl: {
+      address: "0xc3e53F4d16Ae77Db1c982e75a937B9f60FE63690",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lensHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "collectPubAction",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "requestorAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "hasAccess",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "requestorAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "publisherId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "collectorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "hasCollected",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "requestorAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "followerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "isFollowing",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    MetaTxLib: {
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      abi: [
+        {
+          inputs: [],
+          name: "SignatureExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SignatureInvalid",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "NonceUpdated",
+          type: "event",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ModuleRegistry: {
+      address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "ModuleDoesNotSupportType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ModuleNotRegistered",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotLensModule",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadata",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ModuleMetadataRefreshed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadata",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ModuleRegistered",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "erc20CurrencyAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "symbol",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint8",
+              name: "decimals",
+              type: "uint8",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "erc20CurrencyRegistered",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "emitModuleMetadataRefresh",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "getModuleTypes",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "isErc20CurrencyRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+          ],
+          name: "isModuleRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "isModuleRegisteredAs",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "registerErc20Currency",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "registrationWasPerformed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "registerModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "registrationWasPerformed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "currencyAddress",
+              type: "address",
+            },
+          ],
+          name: "verifyErc20Currency",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleAddress",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "moduleType",
+              type: "uint256",
+            },
+          ],
+          name: "verifyModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getModuleTypes: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isErc20CurrencyRegistered: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isModuleRegistered: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        isModuleRegisteredAs: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        registerErc20Currency: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        registerModule: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        verifyErc20Currency: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+        verifyModule: "lens-modules/contracts/interfaces/IModuleRegistry.sol",
+      },
+    },
+    MultirecipientFeeCollectModule: {
+      address: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CollectExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InitParamsInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRecipientSplits",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MintLimitExceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ModuleDataMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RecipientSplitCannotBeZero",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "calculateFee",
+          outputs: [
+            {
+              internalType: "uint160",
+              name: "",
+              type: "uint160",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getBasePublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint16",
+                      name: "split",
+                      type: "uint16",
+                    },
+                  ],
+                  internalType: "struct RecipientData[]",
+                  name: "recipients",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct MultirecipientFeeCollectProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationCollectModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "processCollect",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ACTION_MODULE: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        calculateFee: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        getBasePublicationData: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        initializePublicationCollectModule: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        processCollect: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+      },
+    },
+    PayWhatYouWantCollectModule: {
+      address: "0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CollectExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidInitParams",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidOffer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidRecipientSplits",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MintLimitExceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "calculateFee",
+          outputs: [
+            {
+              internalType: "uint160",
+              name: "",
+              type: "uint160",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getBasePublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amountFloor",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "recipient",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint16",
+                      name: "split",
+                      type: "uint16",
+                    },
+                  ],
+                  internalType: "struct RecipientData[]",
+                  name: "recipients",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct PayWhatYouWantCollectProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationCollectModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "processCollect",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ACTION_MODULE: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        calculateFee: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        getBasePublicationData: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        initializePublicationCollectModule: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        processCollect: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+      },
+    },
+    PermissionlessCreator: {
+      address: "0xc5a5C42992dECbae36851359345FE25997F5C42d",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lensHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lensHandles",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "tokenHandleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "HandleAlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "HandleLengthNotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InsufficientCredits",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidFunds",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyCreditProviders",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyOwnerOrHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ProfileAlreadyLinked",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "creditAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "remainingCredits",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CreditBalanceChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "creditProvider",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isCreditProvider",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CreditProviderStatusChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "creator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "HandleCreatedUsingCredits",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newPrice",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "HandleCreationPriceChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint8",
+              name: "newMinLength",
+              type: "uint8",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "HandleLengthMinChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "creator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ProfileCreatedUsingCredits",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newPrice",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ProfileCreationPriceChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "targetAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isUntrusted",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "TrustStatusChanged",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "LENS_HANDLES",
+          outputs: [
+            {
+              internalType: "contract ILensHandles",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "LENS_HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "OWNER",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "TOKEN_HANDLE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract ITokenHandleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "creditProvider",
+              type: "address",
+            },
+          ],
+          name: "addCreditProvider",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+          ],
+          name: "createHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+          ],
+          name: "createHandleUsingCredits",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+          ],
+          name: "createProfile",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+          ],
+          name: "createProfileUsingCredits",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+            {
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+          ],
+          name: "createProfileWithHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+            {
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+          ],
+          name: "createProfileWithHandleUsingCredits",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "decreaseCredits",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "targetAddress",
+              type: "address",
+            },
+          ],
+          name: "getCreditBalance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getHandleCreationPrice",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getHandleLengthMin",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getProfileCreationPrice",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "getProfileCreatorUsingCredits",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getProfileWithHandleCreationPrice",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "increaseCredits",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "targetAddress",
+              type: "address",
+            },
+          ],
+          name: "isCreditProvider",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "targetAddress",
+              type: "address",
+            },
+          ],
+          name: "isUntrusted",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "creditProvider",
+              type: "address",
+            },
+          ],
+          name: "removeCreditProvider",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint128",
+              name: "newPrice",
+              type: "uint128",
+            },
+          ],
+          name: "setHandleCreationPrice",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint8",
+              name: "newMinLength",
+              type: "uint8",
+            },
+          ],
+          name: "setHandleLengthMin",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint128",
+              name: "newPrice",
+              type: "uint128",
+            },
+          ],
+          name: "setProfileCreationPrice",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "targetAddress",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "setAsUntrusted",
+              type: "bool",
+            },
+          ],
+          name: "setTrustStatus",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFromKeepingDelegates",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "withdrawFunds",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    ProfileCreationProxy: {
+      address: "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lensHandles",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "tokenHandleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "OnlyOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyOwnerOrHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ProfileAlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LENS_HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "OWNER",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+          ],
+          name: "proxyCreateHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+          ],
+          name: "proxyCreateProfile",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "followModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "followModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.CreateProfileParams",
+              name: "createProfileParams",
+              type: "tuple",
+            },
+            {
+              internalType: "string",
+              name: "handle",
+              type: "string",
+            },
+          ],
+          name: "proxyCreateProfileWithHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        LENS_HUB: "lens-modules/contracts/misc/ImmutableOwnable.sol",
+        OWNER: "lens-modules/contracts/misc/ImmutableOwnable.sol",
+      },
+    },
+    ProfileLib: {
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      abi: [
+        {
+          inputs: [],
+          name: "ArrayMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelfBlock",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TokenDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "byProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "idOfProfileBlocked",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Blocked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "configNumber",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "DelegatedExecutorsConfigApplied",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "configNumber",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address[]",
+              name: "delegatedExecutors",
+              type: "address[]",
+            },
+            {
+              indexed: false,
+              internalType: "bool[]",
+              name: "approvals",
+              type: "bool[]",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "DelegatedExecutorsConfigChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "followModule",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "followModuleInitData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "followModuleReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "FollowModuleSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "creator",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ProfileCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadata",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "ProfileMetadataSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "byProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "idOfProfileUnblocked",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Unblocked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "unfollowerProfileId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "idOfProfileUnfollowed",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Unfollowed",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "delegatorProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "delegatedExecutor",
+              type: "address",
+            },
+          ],
+          name: "isExecutorApproved",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    PublicActProxy: {
+      address: "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lensHub",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "SignatureExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SignatureInvalid",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "NonceUpdated",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "contract ILensHub",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint8",
+              name: "increment",
+              type: "uint8",
+            },
+          ],
+          name: "incrementNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "address",
+                  name: "actionModuleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PublicationActionParams",
+              name: "publicationActionParams",
+              type: "tuple",
+            },
+          ],
+          name: "publicFreeAct",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "address",
+                  name: "actionModuleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PublicationActionParams",
+              name: "publicationActionParams",
+              type: "tuple",
+            },
+            {
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "approveTo",
+              type: "address",
+            },
+          ],
+          name: "publicPaidAct",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "address",
+                  name: "actionModuleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.PublicationActionParams",
+              name: "publicationActionParams",
+              type: "tuple",
+            },
+            {
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "approveTo",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "publicPaidActWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        incrementNonce: "lens-modules/contracts/misc/PublicActProxy_MetaTx.sol",
+        name: "lens-modules/contracts/misc/PublicActProxy_MetaTx.sol",
+        nonces: "lens-modules/contracts/misc/PublicActProxy_MetaTx.sol",
+      },
+    },
+    PublicActProxy_MetaTx: {
+      address: "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
+      abi: [
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "NonceUpdated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint8",
+              name: "increment",
+              type: "uint8",
+            },
+          ],
+          name: "incrementNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    PublicationLib: {
+      address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+      abi: [
+        {
+          inputs: [],
+          name: "ArrayMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Blocked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidPointedPub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidReferrer",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct Types.CommentParams",
+              name: "commentParams",
+              type: "tuple",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "referenceModuleReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "bytes[]",
+              name: "actionModulesInitReturnDatas",
+              type: "bytes[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "referenceModuleInitReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "CommentCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "metadataURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct Types.MirrorParams",
+              name: "mirrorParams",
+              type: "tuple",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "referenceModuleReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "MirrorCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct Types.PostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes[]",
+              name: "actionModulesInitReturnDatas",
+              type: "bytes[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "referenceModuleInitReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "PostCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "profileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "pointedPubId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleData",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address[]",
+                  name: "actionModules",
+                  type: "address[]",
+                },
+                {
+                  internalType: "bytes[]",
+                  name: "actionModulesInitDatas",
+                  type: "bytes[]",
+                },
+                {
+                  internalType: "address",
+                  name: "referenceModule",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "referenceModuleInitData",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct Types.QuoteParams",
+              name: "quoteParams",
+              type: "tuple",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "referenceModuleReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "bytes[]",
+              name: "actionModulesInitReturnDatas",
+              type: "bytes[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "referenceModuleInitReturnData",
+              type: "bytes",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "QuoteCreated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getContentURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    RevertFollowModule: {
+      address: "0x9E545E3C0baAB3E08CdfD552C960A1050f373042",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "FollowInvalid",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "initializeFollowModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "processFollow",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        initializeFollowModule: "lens-modules/contracts/interfaces/IFollowModule.sol",
+        processFollow: "lens-modules/contracts/interfaces/IFollowModule.sol",
+      },
+    },
+    SimpleFeeCollectModule: {
+      address: "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "actionModule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleRegistry",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "moduleOwner",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CollectExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InitParamsInvalid",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "MintLimitExceeded",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ModuleDataMismatch",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotActionModule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ACTION_MODULE",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "calculateFee",
+          outputs: [
+            {
+              internalType: "uint160",
+              name: "",
+              type: "uint160",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getBasePublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getPublicationData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "currency",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint16",
+                  name: "referralFee",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bool",
+                  name: "followerOnly",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+              ],
+              internalType: "struct BaseProfilePublicationData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationCollectModule",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationCollectedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "collectorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collectorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct ModuleTypes.ProcessCollectParams",
+              name: "processCollectParams",
+              type: "tuple",
+            },
+          ],
+          name: "processCollect",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        ACTION_MODULE: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        calculateFee: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        getBasePublicationData: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        initializePublicationCollectModule: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        processCollect: "lens-modules/contracts/modules/act/collect/base/BaseFeeCollectModule.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        renounceOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+      },
+    },
+    SimpleProfileSVG: {
+      address: "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          name: "getProfileSVG",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    SimpleProfileTokenURI: {
+      address: "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "blockSeed",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "mintTimestamp",
+              type: "uint256",
+            },
+          ],
+          name: "getTokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getTokenURI: "lens-modules/contracts/interfaces/IProfileTokenURI.sol",
+      },
+    },
+    StorageLib: {
+      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      abi: [],
+      inheritedFunctions: {},
+    },
+    TestToken: {
+      address: "0xb7278A61aa25c888815aFC32Ad3cC52fF24fE575",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "allowance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "subtractedValue",
+              type: "uint256",
+            },
+          ],
+          name: "decreaseAllowance",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "addedValue",
+              type: "uint256",
+            },
+          ],
+          name: "increaseAllowance",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "mint",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "transfer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        allowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        approve: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        balanceOf: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        decimals: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        decreaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        increaseAllowance: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        name: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        symbol: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        totalSupply: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      },
+    },
+    TipActionModule: {
+      address: "0x82e01223d51Eb87e16A03E24687EDF0F294da6f1",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "hub",
+              type: "address",
+            },
+            {
+              internalType: "contract IModuleRegistry",
+              name: "moduleRegistry",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CurrencyNotWhitelisted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TipAmountCannotBeZero",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TipAmountNotApproved",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "TipReceiverNotProvided",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [],
+          name: "ModuleRegistered",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "tipReceiver",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "currency",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tipAmount",
+              type: "uint256",
+            },
+          ],
+          name: "TipCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "tipReceiver",
+              type: "address",
+            },
+          ],
+          name: "TipReceiverRegistered",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "HUB",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "MODULE_REGISTRY",
+          outputs: [
+            {
+              internalType: "contract IModuleRegistry",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getModuleMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+          ],
+          name: "getTipReceiver",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "pubId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "initializePublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "isRegistered",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "publicationActedProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "publicationActedId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "actorProfileId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "actorProfileOwner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "transactionExecutor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerProfileIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "referrerPubIds",
+                  type: "uint256[]",
+                },
+                {
+                  internalType: "enum Types.PublicationType[]",
+                  name: "referrerPubTypes",
+                  type: "uint8[]",
+                },
+                {
+                  internalType: "bytes",
+                  name: "actionModuleData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Types.ProcessActionParams",
+              name: "params",
+              type: "tuple",
+            },
+          ],
+          name: "processPublicationAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "registerModule",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setModuleMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceID",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        initializePublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+        processPublicationAction: "lens-modules/contracts/interfaces/IPublicationActionModule.sol",
+        HUB: "lens-modules/contracts/base/HubRestricted.sol",
+        getModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        owner: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        renounceOwnership: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        setModuleMetadataURI: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        supportsInterface: "lens-modules/contracts/modules/LensModuleMetadata.sol",
+        transferOwnership: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        MODULE_REGISTRY: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        isRegistered: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+        registerModule: "lens-modules/contracts/modules/base/LensModuleRegistrant.sol",
+      },
+    },
+    TokenHandleRegistry: {
+      address: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lensHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lensHandles",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotHavePermissions",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "HandleAndTokenNotInSameWallet",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotHandleNorTokenOwner",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotLinked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlyLensHub",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SignatureExpired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SignatureInvalid",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collection",
+                  type: "address",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RegistryTypes.Handle",
+              name: "handle",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collection",
+                  type: "address",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RegistryTypes.Token",
+              name: "token",
+              type: "tuple",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "HandleLinked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collection",
+                  type: "address",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RegistryTypes.Handle",
+              name: "handle",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "collection",
+                  type: "address",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RegistryTypes.Token",
+              name: "token",
+              type: "tuple",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "transactionExecutor",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "HandleUnlinked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "NonceUpdated",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "getDefaultHandle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint8",
+              name: "increment",
+              type: "uint8",
+            },
+          ],
+          name: "incrementNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "link",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "linkWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "migrationLink",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "nonces",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+          ],
+          name: "resolve",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+          ],
+          name: "unlink",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "handleId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "profileId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "signer",
+                  type: "address",
+                },
+                {
+                  internalType: "uint8",
+                  name: "v",
+                  type: "uint8",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "r",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "s",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Types.EIP712Signature",
+              name: "signature",
+              type: "tuple",
+            },
+          ],
+          name: "unlinkWithSig",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        getDefaultHandle: "lens-modules/contracts/interfaces/ITokenHandleRegistry.sol",
+        link: "lens-modules/contracts/interfaces/ITokenHandleRegistry.sol",
+        migrationLink: "lens-modules/contracts/interfaces/ITokenHandleRegistry.sol",
+        resolve: "lens-modules/contracts/interfaces/ITokenHandleRegistry.sol",
+        unlink: "lens-modules/contracts/interfaces/ITokenHandleRegistry.sol",
+      },
+    },
+    Types: {
+      address: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+      abi: [],
+      inheritedFunctions: {},
+    },
+    ValidationLib: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      abi: [
+        {
+          inputs: [],
+          name: "InvalidReferrer",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "referrerProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "referrerPubId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "publicationCollectedProfileId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "publicationCollectedId",
+              type: "uint256",
+            },
+          ],
+          name: "validateLegacyCollectReferrer",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
