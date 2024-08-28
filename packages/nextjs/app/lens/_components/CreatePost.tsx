@@ -155,7 +155,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
         </button>
         {collectModuleRequired && (
           <div className="text-red-500 text-sm">
-            A Collect Module must be selected to create a post with the Collect Publication Action
+            A Collect Module must be selected to create a post with the selected Action Module
           </div>
         )}
         {submitError && <div className="text-red-500 text-sm">{submitError}</div>}
