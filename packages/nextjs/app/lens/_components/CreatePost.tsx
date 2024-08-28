@@ -4,6 +4,7 @@ import { encodeAbiParameters } from "viem";
 import { getParsedContractFunctionArgs } from "~~/app/debug/_components/contract";
 import { CollectModuleDataInput } from "~~/app/lens/_components/CollectModuleDataInput";
 import { OpenActionDataInput } from "~~/app/lens/_components/OpenActionDataInput";
+import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { CollectModuleContract, OpenActionContract, useProfile } from "~~/hooks/scaffold-lens";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
@@ -123,7 +124,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
     <div className="flex flex-col gap-y-2">
       <div className="flex border-2 border-base-200 bg-base-200 rounded-xl text-accent">
         <textarea
-          className="input focus-within:border-transparent focus:outline-none focus:bg-transparent text-neutral w-full h-40 p-4 border w-full font-medium placeholder:text-white/50 rounded-xl"
+          className="input focus-within:border-transparent focus:outline-none focus:bg-transparent text-neutral w-full h-40 p-4 border w-full font-medium rounded-xl"
           ref={inputRef}
           value={postContent}
           onChange={e => setPostContent(e.target.value)}
@@ -131,34 +132,46 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
         />
       </div>
       {openActionModule && !compatibleModules.length ? (
-        <OpenActionDataInput
-          module={openActionModule}
-          form={openActionInitForm}
-          setForm={setOpenActionInitForm}
-          metadata={openActionMetadataABI}
-          setMetadata={setOpenActionMetadataABI}
-        />
+        <div>
+          <div className="pb-3">
+            <div className="text-sm font-bold">Selected Module</div>
+            <Address address={openActionModule.contract.address} />
+          </div>
+          <OpenActionDataInput
+            module={openActionModule}
+            form={openActionInitForm}
+            setForm={setOpenActionInitForm}
+            metadata={openActionMetadataABI}
+            setMetadata={setOpenActionMetadataABI}
+          />
+        </div>
       ) : (
         collectModule && (
-          <CollectModuleDataInput
-            module={collectModule}
-            metadata={collectModuleMetadataABI}
-            setMetadata={setCollectModuleMetadataABI}
-            form={collectModuleInitForm}
-            setForm={setCollectModuleInitForm}
-          />
+          <div>
+            <div className="pb-3">
+              <div className="text-sm font-bold">Selected Module</div>
+              <Address address={collectModule.contract.address} />
+            </div>
+            <CollectModuleDataInput
+              module={collectModule}
+              metadata={collectModuleMetadataABI}
+              setMetadata={setCollectModuleMetadataABI}
+              form={collectModuleInitForm}
+              setForm={setCollectModuleInitForm}
+            />
+          </div>
         )
       )}
-      <div className="flex gap-2 items-center">
-        <button className="btn btn-primary" onClick={submitPost} disabled={collectModuleRequired}>
-          Create Post
-        </button>
+      <div className="flex gap-2 items-center py-1 justify-end">
         {collectModuleRequired && (
           <div className="text-red-500 text-sm">
             A Collect Module must be selected to create a post with the selected Action Module
           </div>
         )}
         {submitError && <div className="text-red-500 text-sm">{submitError}</div>}
+        <button className="btn btn-primary" onClick={submitPost} disabled={collectModuleRequired}>
+          Create Post
+        </button>
       </div>
     </div>
   );

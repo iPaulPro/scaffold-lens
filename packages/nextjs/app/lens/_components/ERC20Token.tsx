@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { formatUnits } from "viem";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
-import { Address, IntegerInput } from "~~/components/scaffold-eth";
+import { Address, AddressInput, IntegerInput } from "~~/components/scaffold-eth";
 import { ERC20TokenContract } from "~~/hooks/scaffold-lens/useERC20Tokens";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -20,6 +20,8 @@ const TxnNotification = ({ message }: { message: string }) => {
 const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
   const [formattedBalance, setFormattedBalance] = useState<string>();
   const [amountToMint, setAmountToMint] = useState<string>("");
+  const [addressToApprove, setAddressToApprove] = useState<string>("");
+  const [amountToApprove, setAmountToApprove] = useState<string>("");
 
   const { writeContract, isPending, isError, isSuccess } = useWriteContract();
   const { address } = useAccount();
@@ -75,6 +77,15 @@ const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
     });
   };
 
+  const approve = async () => {
+    writeContract({
+      abi: token.contract.abi,
+      address: token.contract.address,
+      functionName: "approve",
+      args: [addressToApprove, amountToApprove],
+    });
+  };
+
   return (
     <div className="bg-base-300 border-base-300 border shadow-lg shadow-base-300 rounded-3xl p-6 mb-6 space-y-4 divide-y divide-base-100">
       <div className="flex flex-col space-y-1">
@@ -93,9 +104,27 @@ const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
             setAmountToMint(value.toString());
           }}
         />
-        <button className="btn btn-secondary btn-sm" disabled={isPending} onClick={mint}>
+        <button className="btn btn-primary dark:btn-secondary btn-sm" disabled={isPending} onClick={mint}>
           {isPending && <span className="loading loading-spinner loading-xs"></span>}
           Mint 💸
+        </button>
+      </div>
+      <div className="flex flex-col space-y-2 pt-4">
+        <AddressInput
+          value={addressToApprove}
+          placeholder="address spender"
+          onChange={value => setAddressToApprove(value)}
+        />
+        <IntegerInput
+          value={amountToApprove}
+          placeholder="uint256 amount"
+          onChange={value => {
+            setAmountToApprove(value.toString());
+          }}
+        />
+        <button className="btn btn-primary dark:btn-secondary btn-sm" disabled={isPending} onClick={approve}>
+          {isPending && <span className="loading loading-spinner loading-xs"></span>}
+          Approve 🤝
         </button>
       </div>
     </div>

@@ -52,7 +52,7 @@ export const OpenActionDataInput: React.FC<OpenActionDataInputProps> = ({
   }, [module, publicClient, setMetadata, setForm]);
 
   return (
-    <>
+    <div className="flex flex-col space-y-3">
       {metadata?.map(
         param =>
           param.name && (
@@ -67,6 +67,6 @@ export const OpenActionDataInput: React.FC<OpenActionDataInputProps> = ({
             />
           ),
       )}
-    </>
+    </div>
   );
 };

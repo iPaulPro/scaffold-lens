@@ -24,7 +24,8 @@ export function Profile() {
 
   return (
     <div>
-      Posting as: <span className="font-bold">{localName ?? profileId.toString()}</span>
+      Posting as: <span className="font-bold">{localName ?? profileId.toString()}</span>{" "}
+      <span className="text-sm">(Profile ID: {profileId.toString()})</span>
     </div>
   );
 }
