@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import LensModules from "~~/app/lens/_components/LensModules";
+import { LensModules } from "~~/app/lens/_components";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 export const metadata = getMetadata({
-  title: "Lens Modules",
+  title: "Open Actions",
   description: "Debug your deployed Lens Module contracts in an easy way",
 });
 

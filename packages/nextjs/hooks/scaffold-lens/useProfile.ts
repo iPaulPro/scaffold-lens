@@ -1,6 +1,11 @@
 import { useContext } from "react";
 import { ProfileContext, ProfileContextType } from "~~/components/ProfileProvider";
 
+export interface Profile {
+  id: bigint;
+  handle: string;
+}
+
 export function useProfile(): ProfileContextType {
   const context = useContext(ProfileContext);
   if (context === undefined) {

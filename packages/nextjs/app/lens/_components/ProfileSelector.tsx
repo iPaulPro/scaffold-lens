@@ -7,15 +7,10 @@ import { useAccount } from "wagmi";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import { useOwnedTokens, useProfile } from "~~/hooks/scaffold-lens";
+import { Profile, useOwnedTokens, useProfile } from "~~/hooks/scaffold-lens";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
-interface Profile {
-  id: bigint;
-  handle: string;
-}
-
-const ProfileSelector: React.FC = () => {
+export const ProfileSelector: React.FC = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
 
   const { address: lensHubAddress, abi: lensHubAbi } = deployedContracts[hardhat.id].LensHub;
@@ -112,5 +107,3 @@ const ProfileSelector: React.FC = () => {
     </>
   );
 };
-
-export default ProfileSelector;

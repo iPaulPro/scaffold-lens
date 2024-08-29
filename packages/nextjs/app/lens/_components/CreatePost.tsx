@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { AbiParameter } from "abitype";
 import { encodeAbiParameters } from "viem";
@@ -8,14 +10,21 @@ import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { CollectModuleContract, OpenActionContract, useProfile } from "~~/hooks/scaffold-lens";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
+import { getFormattedABI } from "~~/utils/scaffold-lens";
 
 interface CreatePostProps {
   openActionModule: OpenActionContract | undefined;
   compatibleModules: CollectModuleContract[];
   collectModule: CollectModuleContract | undefined;
+  setPostRefreshCounter: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleModules, collectModule }) => {
+export const CreatePost: React.FC<CreatePostProps> = ({
+  openActionModule,
+  compatibleModules,
+  collectModule,
+  setPostRefreshCounter,
+}) => {
   const [postContent, setPostContent] = useState<string>();
   const [collectModuleRequired, setCollectModuleRequired] = useState<boolean>(true);
   const [collectModuleMetadataABI, setCollectModuleMetadataABI] = useState<AbiParameter[]>([]);
@@ -45,7 +54,12 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
   };
 
   const submitPost = async () => {
-    if (!profileId || !postContent) return;
+    if (!profileId) return;
+
+    if (!postContent) {
+      setSubmitError("Post content is required");
+      return;
+    }
 
     const actionModules: `0x${string}`[] = [];
     const actionModulesInitDatas: `0x${string}`[] = [];
@@ -54,39 +68,32 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
       actionModules.push(openActionModule.contract.address as `0x${string}`);
     }
 
+    const formattedActionABI = getFormattedABI(openActionMetadataABI);
+
     if (collectModule) {
       if (!openActionModule) return;
 
       // If there is a Collect Module we're using CollectPublicationAction
       try {
         const formData = getParsedContractFunctionArgs(collectModuleInitForm);
-        const formattedABI = collectModuleMetadataABI.map(param => ({
-          ...param,
-          // viem only supports standard tuple expressions
-          type: param.type.replace(/tuple\([^)]*\)/, "tuple"),
-        }));
-        const collectInitData = encodeAbiParameters(formattedABI, formData);
+        const formattedCollectABI = getFormattedABI(collectModuleMetadataABI);
+        const collectInitData = encodeAbiParameters(formattedCollectABI, formData);
 
-        const actionInitData = encodeAbiParameters(openActionModule.contract.abi, [
+        const actionInitData = encodeAbiParameters(formattedActionABI, [
           collectModule.contract.address,
           collectInitData,
         ]);
-        console.log("actionInitData", actionInitData);
         actionModulesInitDatas.push(actionInitData);
       } catch (e) {
+        console.error(e);
         setSubmitError("Error initializing Collect Module");
         return;
       }
-    } else {
+    } else if (openActionModule) {
       // If there is no Collect Module we're using the OpenActionModule
       try {
         const formData = getParsedContractFunctionArgs(openActionInitForm);
-        const formattedABI = openActionMetadataABI.map(param => ({
-          ...param,
-          // viem only supports standard tuple expressions
-          type: param.type.replace(/tuple\([^)]*\)/, "tuple"),
-        }));
-        const openActionInitData = encodeAbiParameters(formattedABI, formData);
+        const openActionInitData = encodeAbiParameters(formattedActionABI, formData);
 
         actionModulesInitDatas.push(openActionInitData);
       } catch (e) {
@@ -118,6 +125,8 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
     setPostContent("");
     setCollectModuleInitForm(clearForm(collectModuleInitForm));
     setOpenActionInitForm(clearForm(openActionInitForm));
+    setSubmitError(undefined);
+    setPostRefreshCounter(prev => prev + 1);
   };
 
   return (
@@ -133,7 +142,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
       </div>
       {openActionModule && !compatibleModules.length ? (
         <div>
-          <div className="pb-3">
+          <div className="pb-3 px-2">
             <div className="text-sm font-bold">Selected Module</div>
             <Address address={openActionModule.contract.address} />
           </div>
@@ -148,7 +157,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
       ) : (
         collectModule && (
           <div>
-            <div className="pb-3">
+            <div className="pb-3 px-2">
               <div className="text-sm font-bold">Selected Module</div>
               <Address address={collectModule.contract.address} />
             </div>
@@ -176,5 +185,3 @@ const CreatePost: React.FC<CreatePostProps> = ({ openActionModule, compatibleMod
     </div>
   );
 };
-
-export default CreatePost;

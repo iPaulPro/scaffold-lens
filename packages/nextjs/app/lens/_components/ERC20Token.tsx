@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { formatUnits } from "viem";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { Address, AddressInput, IntegerInput } from "~~/components/scaffold-eth";
-import { ERC20TokenContract } from "~~/hooks/scaffold-lens/useERC20Tokens";
+import { ERC20TokenContract } from "~~/hooks/scaffold-lens";
 import { notification } from "~~/utils/scaffold-eth";
 
 interface ERC20TokenProps {
@@ -17,7 +19,7 @@ const TxnNotification = ({ message }: { message: string }) => {
   );
 };
 
-const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
+export const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
   const [formattedBalance, setFormattedBalance] = useState<string>();
   const [amountToMint, setAmountToMint] = useState<string>("");
   const [addressToApprove, setAddressToApprove] = useState<string>("");
@@ -130,5 +132,3 @@ const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
     </div>
   );
 };
-
-export default ERC20Token;

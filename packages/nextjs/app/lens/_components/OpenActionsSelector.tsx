@@ -9,7 +9,7 @@ interface OpenActionProps {
   openActionSelected: (contract: OpenActionContract) => void;
 }
 
-const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelected }) => {
+export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelected }) => {
   const [selectedAction, setSelectedAction] = useState<OpenActionContract>();
   const { openActions } = useOpenActions();
 
@@ -53,5 +53,3 @@ const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelected }) 
     </>
   );
 };
-
-export default OpenActionsSelector;

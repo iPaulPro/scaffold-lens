@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
 
-const CreateProfile: React.FC = () => {
+export const CreateProfile: React.FC = () => {
   const [handle, setHandle] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -49,5 +49,3 @@ const CreateProfile: React.FC = () => {
     </>
   );
 };
-
-export default CreateProfile;

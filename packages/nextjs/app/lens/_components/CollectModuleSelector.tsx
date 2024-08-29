@@ -10,7 +10,10 @@ interface CollectModuleSelectorProps {
   collectModuleSelected: (contract: CollectModuleContract) => void;
 }
 
-const CollectModuleSelector: React.FC<CollectModuleSelectorProps> = ({ compatibleModules, collectModuleSelected }) => {
+export const CollectModuleSelector: React.FC<CollectModuleSelectorProps> = ({
+  compatibleModules,
+  collectModuleSelected,
+}) => {
   const [selectedModule, setSelectedModule] = useState<CollectModuleContract>();
 
   const dropdownRef = useRef<HTMLDetailsElement>(null);
@@ -57,5 +60,3 @@ const CollectModuleSelector: React.FC<CollectModuleSelectorProps> = ({ compatibl
     </>
   );
 };
-
-export default CollectModuleSelector;

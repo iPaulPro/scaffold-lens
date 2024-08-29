@@ -2,25 +2,35 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { usePublicClient } from "wagmi";
-import CollectModuleSelector from "~~/app/lens/_components/CollectModuleSelector";
-import CreatePost from "~~/app/lens/_components/CreatePost";
-import CreateProfile from "~~/app/lens/_components/CreateProfile";
-import ERC20Token from "~~/app/lens/_components/ERC20Token";
-import OpenActionsSelector from "~~/app/lens/_components/OpenActionsSelector";
-import { Profile } from "~~/app/lens/_components/Profile";
-import ProfileSelector from "~~/app/lens/_components/ProfileSelector";
-import { CollectModuleContract, useCollectModules, useProfile } from "~~/hooks/scaffold-lens";
-import { useERC20Tokens } from "~~/hooks/scaffold-lens/useERC20Tokens";
-import { OpenActionContract } from "~~/hooks/scaffold-lens/useOpenActions";
+import {
+  CollectModuleSelector,
+  CreatePost,
+  CreateProfile,
+  ERC20Token,
+  OpenActionsSelector,
+  Post,
+  Profile,
+  ProfileSelector,
+} from "~~/app/lens/_components";
+import {
+  CollectModuleContract,
+  OpenActionContract,
+  useCollectModules,
+  useERC20Tokens,
+  useProfile,
+  usePublications,
+} from "~~/hooks/scaffold-lens";
 
-const LensModules: React.FC = () => {
+export const LensModules: React.FC = () => {
   const [selectedActionModule, setSelectedActionModule] = useState<OpenActionContract>();
   const [selectedCollectModule, setSelectedCollectModule] = useState<CollectModuleContract>();
   const [compatibleModules, setCompatibleModules] = useState<CollectModuleContract[]>([]);
+  const [postRefreshCounter, setPostRefreshCounter] = useState(0);
 
   const { profileId } = useProfile();
   const { collectModules } = useCollectModules();
   const { erc20Tokens } = useERC20Tokens();
+  const { publications } = usePublications(postRefreshCounter);
 
   const publicClient = usePublicClient();
 
@@ -53,8 +63,8 @@ const LensModules: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("found erc20 tokens:", erc20Tokens);
-  }, [erc20Tokens]);
+    console.log("found publications:", publications);
+  }, [publications]);
 
   return (
     <>
@@ -74,23 +84,33 @@ const LensModules: React.FC = () => {
             <div className="col-span-1 lg:col-span-2 flex flex-col gap-6">
               <div className="z-10">
                 {profileId ? (
-                  <div className="flex flex-col gap-y-4">
-                    <div className="flex gap-4">
-                      <OpenActionsSelector openActionSelected={handleActionModuleChange} />
-                      {compatibleModules.length > 0 && (
-                        <CollectModuleSelector
+                  <div className="flex flex-col">
+                    <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col">
+                      <div className="flex gap-4 px-4 pt-4">
+                        <OpenActionsSelector openActionSelected={handleActionModuleChange} />
+                        {compatibleModules.length > 0 && (
+                          <CollectModuleSelector
+                            compatibleModules={compatibleModules}
+                            collectModuleSelected={setSelectedCollectModule}
+                          />
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-y-2 p-4">
+                        <div className="px-2">
+                          <Profile />
+                        </div>
+                        <CreatePost
+                          openActionModule={selectedActionModule}
                           compatibleModules={compatibleModules}
-                          collectModuleSelected={setSelectedCollectModule}
+                          collectModule={selectedCollectModule}
+                          setPostRefreshCounter={setPostRefreshCounter}
                         />
-                      )}
+                      </div>
                     </div>
-                    <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col gap-y-2 p-4">
-                      <Profile />
-                      <CreatePost
-                        openActionModule={selectedActionModule}
-                        compatibleModules={compatibleModules}
-                        collectModule={selectedCollectModule}
-                      />
+                    <div className="flex flex-col gap-y-2 pt-4 flex-col-reverse">
+                      {publications?.map(publication => (
+                        <Post publication={publication} key={publication.pubId.toString()} />
+                      ))}
                     </div>
                   </div>
                 ) : (
@@ -106,5 +126,3 @@ const LensModules: React.FC = () => {
     </>
   );
 };
-
-export default LensModules;
