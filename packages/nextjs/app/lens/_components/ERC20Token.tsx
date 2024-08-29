@@ -61,6 +61,8 @@ export const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
     if (isSuccess) {
       notification.success(<TxnNotification message="Transaction completed successfully!" />, { icon: "🎉" });
       setAmountToMint("");
+      setAddressToApprove("");
+      setAmountToApprove("");
     }
   }, [isSuccess]);
 

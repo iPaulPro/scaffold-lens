@@ -56,7 +56,7 @@ export const LensModules: React.FC = () => {
     getCompatibleModules();
   }, [collectModules, selectedActionModule, publicClient]);
 
-  const handleActionModuleChange = useCallback((module: OpenActionContract) => {
+  const handleActionModuleChange = useCallback((module: OpenActionContract | undefined) => {
     setCompatibleModules([]);
     setSelectedCollectModule(undefined);
     setSelectedActionModule(module);

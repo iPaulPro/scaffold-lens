@@ -6,7 +6,7 @@ import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions } from "~~/hooks/scaffold-lens";
 
 interface OpenActionProps {
-  openActionSelected: (contract: OpenActionContract) => void;
+  openActionSelected: (contract: OpenActionContract | undefined) => void;
 }
 
 export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelected }) => {
@@ -39,6 +39,17 @@ export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelec
           tabIndex={0}
           className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1 max-h-44 overflow-y-scroll block"
         >
+          <li
+            key="no-module"
+            onClick={() => {
+              setSelectedAction(undefined);
+              openActionSelected(undefined);
+              closeDropdown();
+            }}
+            className={`cursor-pointer hover:bg-accent p-2 rounded-box ${!selectedAction ? "bg-accent" : ""}`}
+          >
+            No Action
+          </li>
           {openActions?.map((action, index) => (
             <li
               key={index}
