@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { AbiParameter } from "abitype";
 import { encodeAbiParameters } from "viem";
 import { getParsedContractFunctionArgs } from "~~/app/debug/_components/contract";
-import { CollectModuleDataInput } from "~~/app/lens/_components/CollectModuleDataInput";
-import { OpenActionDataInput } from "~~/app/lens/_components/OpenActionDataInput";
+import { CollectModuleInitDataInput } from "~~/app/lens/_components/CollectModuleInitDataInput";
+import { OpenActionInitDataInput } from "~~/app/lens/_components/OpenActionInitDataInput";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { CollectModuleContract, OpenActionContract, useProfile } from "~~/hooks/scaffold-lens";
@@ -146,7 +146,7 @@ export const CreatePost: React.FC<CreatePostProps> = ({
             <div className="text-sm font-bold">Selected Module</div>
             <Address address={openActionModule.contract.address} />
           </div>
-          <OpenActionDataInput
+          <OpenActionInitDataInput
             module={openActionModule}
             form={openActionInitForm}
             setForm={setOpenActionInitForm}
@@ -161,7 +161,7 @@ export const CreatePost: React.FC<CreatePostProps> = ({
               <div className="text-sm font-bold">Selected Module</div>
               <Address address={collectModule.contract.address} />
             </div>
-            <CollectModuleDataInput
+            <CollectModuleInitDataInput
               module={collectModule}
               metadata={collectModuleMetadataABI}
               setMetadata={setCollectModuleMetadataABI}
