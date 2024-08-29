@@ -25,7 +25,7 @@ export const CreateProfile: React.FC = () => {
   return (
     <>
       <button className="w-full btn btn-secondary btn-sm" onClick={() => setModalOpen(true)}>
-        Create Profile 👤
+        Add Profile 👤
       </button>
       <dialog id="create_profile_modal" className={`modal ${modalOpen ? "modal-open" : ""}`}>
         <div className="modal-box">
