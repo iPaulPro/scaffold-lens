@@ -2,17 +2,46 @@
 
 import React, { useEffect, useState } from "react";
 import { AbiParameter } from "abitype";
-import { encodeAbiParameters } from "viem";
+import { PublicClient, encodeAbiParameters } from "viem";
 import { usePublicClient } from "wagmi";
 import { ContractInput, getParsedContractFunctionArgs } from "~~/app/debug/_components/contract";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
-import { CollectModuleContract, Publication, useCollectModules, useProfile } from "~~/hooks/scaffold-lens";
+import {
+  CollectModuleContract,
+  OpenActionContract,
+  Publication,
+  useCollectModules,
+  useProfile,
+} from "~~/hooks/scaffold-lens";
 import { notification } from "~~/utils/scaffold-eth";
 import { getFormattedABI, getModuleMetadata } from "~~/utils/scaffold-lens";
 
 interface ActOnPostProps {
   publication: Publication;
 }
+
+const getCollectModuleAddress = async (
+  publicClient: PublicClient,
+  publication: Publication,
+  openAction: OpenActionContract,
+) => {
+  if (!openAction || !publicClient) return null;
+
+  try {
+    const collectData: any = await publicClient.readContract({
+      address: openAction.contract.address,
+      abi: openAction.contract.abi,
+      functionName: "getCollectData",
+      args: [publication.profileId, publication.pubId],
+    });
+    if ("collectModule" in collectData) {
+      return collectData.collectModule;
+    }
+  } catch (e) {
+    // will throw if the action doesn't have a collect module
+  }
+  return null;
+};
 
 export const ActOnPost: React.FC<ActOnPostProps> = ({ publication }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -26,43 +55,24 @@ export const ActOnPost: React.FC<ActOnPostProps> = ({ publication }) => {
   const { collectModules } = useCollectModules();
   const { writeContractAsync } = useScaffoldWriteContract("LensHub");
 
-  const setInitialFormState = (metadata: AbiParameter[]) => {
-    if (Object.keys(form).length) return;
-    const initialForm = metadata.reduce((acc, param) => {
-      if (!param.name) return acc;
-      return {
-        ...acc,
-        [param.name]: "",
-      };
-    }, {});
-    setForm(initialForm);
-  };
-
-  const getCollectModuleAddress = async () => {
-    const openAction = publication.openActions[0];
-    if (!openAction || !publicClient) return null;
-
-    try {
-      const collectData: any = await publicClient.readContract({
-        address: openAction.contract.address,
-        abi: openAction.contract.abi,
-        functionName: "getCollectData",
-        args: [publication.profileId, publication.pubId],
-      });
-      if ("collectModule" in collectData) {
-        return collectData.collectModule;
-      }
-    } catch (e) {
-      // will throw if the action doesn't have a collect module
-    }
-    return null;
-  };
-
   useEffect(() => {
     if (!modalOpen || !publication.openActions.length || !publicClient) return;
 
+    const setInitialFormState = (metadata: AbiParameter[]) => {
+      if (Object.keys(form).length) return;
+      const initialForm = metadata.reduce((acc, param) => {
+        if (!param.name) return acc;
+        return {
+          ...acc,
+          [param.name]: "",
+        };
+      }, {});
+      setForm(initialForm);
+    };
+
     const getCollectMetadata = async () => {
-      const collectModuleAddress = await getCollectModuleAddress();
+      const openAction = publication.openActions[0];
+      const collectModuleAddress = await getCollectModuleAddress(publicClient, publication, openAction);
       if (!collectModuleAddress) return;
       const collectModule = collectModules?.find(module => module.contract.address === collectModuleAddress);
       if (!collectModule) return;
@@ -86,7 +96,7 @@ export const ActOnPost: React.FC<ActOnPostProps> = ({ publication }) => {
 
     getCollectMetadata();
     getActionMetadata();
-  }, [publication, modalOpen]);
+  }, [publication, modalOpen, collectMetadata.length, collectModules, publicClient, form]);
 
   useEffect(() => {
     if (!publicClient || !collectModule) return;
@@ -110,14 +120,13 @@ export const ActOnPost: React.FC<ActOnPostProps> = ({ publication }) => {
         args: [publication.profileId, publication.pubId],
       });
       if (publicationData) {
-        console.log("getPublicationData: publicationData", publicationData, "form", form);
         // mergeObjects(form, publicationData);
         setForm(mergeObjects(form, publicationData));
       }
     };
 
     getPublicationData();
-  }, [collectMetadata, collectModule, publicClient, setForm]);
+  }, [collectMetadata, collectModule, publicClient, setForm, form, publication]);
 
   const getFormMetadata = () => {
     if (collectMetadata.length) {
@@ -127,10 +136,9 @@ export const ActOnPost: React.FC<ActOnPostProps> = ({ publication }) => {
   };
 
   const submitAct = async () => {
-    if (!profileId) return;
+    if (!profileId || !publicClient) return;
 
     const formData = getParsedContractFunctionArgs(form);
-    console.log("submitAct: formData", formData);
 
     let collectProcessData: `0x${string}` | undefined = undefined;
     if (collectMetadata.length) {
@@ -139,14 +147,13 @@ export const ActOnPost: React.FC<ActOnPostProps> = ({ publication }) => {
     }
 
     const openActionModule = publication.openActions[0];
-    let actionProcessData: `0x${string}` | undefined = undefined;
+    let actionProcessData: `0x${string}` | undefined;
     if (collectProcessData) {
-      const collectModuleAddress = await getCollectModuleAddress();
+      const collectModuleAddress = await getCollectModuleAddress(publicClient, publication, openActionModule);
       const formattedABI = getFormattedABI(actionMetadata);
       actionProcessData = encodeAbiParameters(formattedABI, [collectModuleAddress, collectProcessData]);
     } else {
       const formattedABI = getFormattedABI(actionMetadata);
-      console.log("submitAct: formattedABI", formattedABI);
       actionProcessData = encodeAbiParameters(formattedABI, formData);
     }
 
