@@ -57,6 +57,18 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
+  // First check to see if there's a local mocked LensHub contract deployed
+  // This allows us to run tests locally with the same flow as on-chain
+  let lensHub: string | undefined;
+  try {
+    const { address } = await get("LensHub");
+    lensHub = address;
+  } catch (e) {}
+
+  if (!lensHub) {
+    lensHub = LENS_HUB;
+  }
+
   // First check to see if there's a local mocked ModuleRegistry contract deployed
   // This allows us to run tests locally with the same flow as on-chain
   let moduleRegistry: string | undefined;
@@ -86,7 +98,7 @@ const deployPayWhatYouWantCollectModuleContract: DeployFunction = async function
   // Deploy the PayWhatYouWantCollectModule contract
   await deploy("PayWhatYouWantCollectModule", {
     from: deployer,
-    args: [LENS_HUB, collectPublicationAction, moduleRegistry],
+    args: [lensHub, collectPublicationAction, moduleRegistry],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
