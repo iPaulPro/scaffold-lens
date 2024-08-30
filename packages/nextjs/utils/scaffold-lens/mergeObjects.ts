@@ -1,10 +1,11 @@
 type GenericObject = { [key: string]: any };
 
 export const mergeObjects = <T extends GenericObject, U extends GenericObject>(target: T, source: U): T => {
-  Object.keys(target).forEach(key => {
+  const newTarget = { ...target };
+  Object.keys(newTarget).forEach(key => {
     if (key in source) {
-      (target as any)[key] = source[key];
+      (newTarget as any)[key] = source[key];
     }
   });
-  return target;
+  return newTarget;
 };
