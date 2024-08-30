@@ -1,8 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { getTransactionReceipt } from "@wagmi/core";
+import { parseEventLogs } from "viem";
+import { hardhat } from "viem/chains";
 import { useAccount } from "wagmi";
+import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useProfile } from "~~/hooks/scaffold-lens";
+import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
 
 export const CreateProfile: React.FC = () => {
@@ -11,16 +17,36 @@ export const CreateProfile: React.FC = () => {
 
   const { address } = useAccount();
   const { writeContractAsync } = useScaffoldWriteContract("ProfileCreationProxy");
+  const { updateProfileId } = useProfile();
 
-  async function createProfile() {
+  const onProfileCreated = async (hash: `0x${string}`) => {
+    const receipt = await getTransactionReceipt(wagmiConfig, { hash });
+    const logs = parseEventLogs({
+      abi: deployedContracts[hardhat.id].LensHub.abi,
+      eventName: "Transfer",
+      logs: receipt.logs,
+    });
+    const profileId = logs[0]?.args?.tokenId;
+    if (profileId) {
+      updateProfileId(profileId);
+    }
+  };
+
+  const createProfile = async () => {
     if (!address || !handle) return;
-    await writeContractAsync({
+
+    const createTxHash = await writeContractAsync({
       functionName: "proxyCreateProfileWithHandle",
       args: [{ to: address, followModule: ZERO_ADDRESS, followModuleInitData: "0x" }, handle],
     });
+
     setHandle("");
     setModalOpen(false);
-  }
+
+    if (createTxHash) {
+      await onProfileCreated(createTxHash);
+    }
+  };
 
   return (
     <>
