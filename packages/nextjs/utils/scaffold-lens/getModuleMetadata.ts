@@ -1,6 +1,5 @@
 import { AbiParameter } from "abitype";
-import { PublicClient } from "viem";
-import { CollectModuleContract, OpenActionContract } from "~~/hooks/scaffold-lens";
+import { Abi, PublicClient } from "viem";
 import {
   collectPublicationAction,
   collectPublicationAddressInitABI,
@@ -13,29 +12,30 @@ import {
   simpleFeeCollectModuleProcessABI,
 } from "~~/utils/scaffold-lens";
 
-interface ModuleMetadata {
+export interface ModuleMetadata {
   initializeCalldataABI: AbiParameter[];
   processCalldataABI: AbiParameter[];
 }
 
 export const getModuleMetadata = async (
   publicClient: PublicClient,
-  module: CollectModuleContract | OpenActionContract,
+  moduleAddress: string,
+  moduleAbi: Abi,
 ): Promise<ModuleMetadata> => {
   // The core modules don't have metadata URIs
-  if (module.contract.address === collectPublicationAction) {
+  if (moduleAddress === collectPublicationAction) {
     return {
       initializeCalldataABI: collectPublicationAddressInitABI,
       processCalldataABI: collectPublicationAddressProcessABI,
     };
   }
-  if (module.contract.address === simpleFeeCollectModule) {
+  if (moduleAddress === simpleFeeCollectModule) {
     return {
       initializeCalldataABI: simpleFeeCollectModuleInitABI,
       processCalldataABI: simpleFeeCollectModuleProcessABI,
     };
   }
-  if (module.contract.address === multirecipientFeeCollectModule) {
+  if (moduleAddress === multirecipientFeeCollectModule) {
     return {
       initializeCalldataABI: multirecipientFeeCollectModuleInitABI,
       processCalldataABI: multirecipientFeeCollectModuleProcessABI,
@@ -43,8 +43,8 @@ export const getModuleMetadata = async (
   }
 
   const metadataUri = (await publicClient.readContract({
-    address: module.contract.address,
-    abi: module.contract.abi,
+    address: moduleAddress,
+    abi: moduleAbi,
     functionName: "getModuleMetadataURI",
   })) as string;
   const metadataRes = await fetch(metadataUri.replace("ar://", "https://gateway.irys.xyz/"));

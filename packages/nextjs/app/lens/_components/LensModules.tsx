@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { usePublicClient } from "wagmi";
 import {
   CollectModuleSelector,
@@ -31,10 +31,9 @@ export const LensModules: React.FC = () => {
   const { collectModules } = useCollectModules();
   const { erc20Tokens } = useERC20Tokens();
   const { publications } = usePublications(postRefreshCounter);
-
   const publicClient = usePublicClient();
 
-  useEffect(() => {
+  useMemo(() => {
     if (!collectModules || !publicClient) {
       return;
     }
@@ -105,7 +104,11 @@ export const LensModules: React.FC = () => {
                     </div>
                     <div className="flex flex-col gap-y-2 pt-4 flex-col-reverse">
                       {publications?.map(publication => (
-                        <Post publication={publication} key={publication.pubId.toString()} />
+                        <Post
+                          publication={publication}
+                          collectModules={collectModules}
+                          key={publication.pubId.toString()}
+                        />
                       ))}
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { parseAbiItem } from "viem";
 import { usePublicClient, useReadContract, useWatchContractEvent } from "wagmi";
 
@@ -7,39 +7,39 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
   const publicClient = usePublicClient();
   const processedEvents = useRef<Set<string>>(new Set());
 
-  const fetchOwnedTokens = useCallback(async () => {
+  useMemo(() => {
     if (!address || !publicClient) return;
 
     const transferEvent = parseAbiItem(
       "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
     );
 
-    const logs = await publicClient.getLogs({
-      address: contractAddress,
-      event: transferEvent,
-      fromBlock: "earliest",
-      toBlock: "latest",
-    });
+    const getOwnedTokens = async () => {
+      const logs = await publicClient.getLogs({
+        address: contractAddress,
+        event: transferEvent,
+        fromBlock: "earliest",
+        toBlock: "latest",
+      });
 
-    const tokenSet = new Set<bigint>();
+      const tokenSet = new Set<bigint>();
 
-    for (const log of logs) {
-      const { from, to, tokenId } = log.args as { from: string; to: string; tokenId: bigint };
+      for (const log of logs) {
+        const { from, to, tokenId } = log.args as { from: string; to: string; tokenId: bigint };
 
-      if (to.toLowerCase() === address.toLowerCase()) {
-        tokenSet.add(tokenId);
+        if (to.toLowerCase() === address.toLowerCase()) {
+          tokenSet.add(tokenId);
+        }
+        if (from.toLowerCase() === address.toLowerCase()) {
+          tokenSet.delete(tokenId);
+        }
       }
-      if (from.toLowerCase() === address.toLowerCase()) {
-        tokenSet.delete(tokenId);
-      }
-    }
 
-    setOwnedTokens(Array.from(tokenSet));
+      setOwnedTokens(Array.from(tokenSet));
+    };
+
+    getOwnedTokens();
   }, [address, publicClient, contractAddress]);
-
-  useEffect(() => {
-    fetchOwnedTokens();
-  }, [fetchOwnedTokens]);
 
   const handleTransferEvent = useCallback(
     (logs: any[]) => {

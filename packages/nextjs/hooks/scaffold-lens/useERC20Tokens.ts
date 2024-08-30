@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { hardhat } from "viem/chains";
 import { useWatchBlocks } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -19,7 +19,7 @@ export const useERC20Tokens = () => {
     },
   });
 
-  const getERC20Tokens = useCallback(async () => {
+  useMemo(() => {
     const contracts = deployedContracts[hardhat.id];
     const erc20Tokens: ERC20TokenContract[] = [];
     Object.entries(contracts).forEach(([contractName, contract]) => {
@@ -36,10 +36,6 @@ export const useERC20Tokens = () => {
     });
     setERC20Tokens(erc20Tokens);
   }, [latestBlock]);
-
-  useEffect(() => {
-    getERC20Tokens();
-  }, [getERC20Tokens]);
 
   return { erc20Tokens };
 };

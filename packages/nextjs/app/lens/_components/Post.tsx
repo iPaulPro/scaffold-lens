@@ -4,18 +4,18 @@ import React, { useEffect, useState } from "react";
 import { usePublicClient } from "wagmi";
 import { ActOnPost } from "~~/app/lens/_components/ActOnPost";
 import { Address } from "~~/components/scaffold-eth";
-import { CollectModuleContract, Publication, useCollectModules } from "~~/hooks/scaffold-lens";
+import { CollectModuleContract, Publication } from "~~/hooks/scaffold-lens";
 import { getCollectModuleAddress } from "~~/utils/scaffold-lens";
 
 interface PublicationProps {
   publication: Publication;
+  collectModules: CollectModuleContract[] | undefined;
 }
 
-export const Post: React.FC<PublicationProps> = ({ publication }) => {
+export const Post: React.FC<PublicationProps> = ({ publication, collectModules }) => {
   const [collectModule, setCollectModule] = useState<CollectModuleContract>();
 
   const publicClient = usePublicClient();
-  const { collectModules } = useCollectModules();
 
   const openAction = publication.openActions[0];
 
@@ -57,7 +57,7 @@ export const Post: React.FC<PublicationProps> = ({ publication }) => {
           </div>
         )}
       </div>
-      {publication.openActions.length > 0 && <ActOnPost publication={publication} />}
+      {publication.openActions.length > 0 && <ActOnPost publication={publication} collectModule={collectModule} />}
     </div>
   );
 };

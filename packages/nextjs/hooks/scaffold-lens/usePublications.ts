@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { hardhat } from "viem/chains";
 import { usePublicClient } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -27,21 +27,22 @@ export type Publication = {
 
 export const usePublications = (refreshCounter = 0) => {
   const [publications, setPublications] = useState<Publication[]>();
-
-  const publicClient = usePublicClient();
   const { profileId } = useProfile();
   const { openActions } = useOpenActions();
 
-  useEffect(() => {
+  const publicClient = usePublicClient();
+
+  const getPublications = useCallback(async () => {
+    console.log("getPublications called...");
+    if (!profileId || !openActions?.length || !publicClient) return;
+
     const pubs: Publication[] = [];
+    const lensHub = deployedContracts[hardhat.id].LensHub;
+    let hasMore = true;
+    let index = 1n;
 
-    const getPublications = async () => {
-      if (!publicClient || !profileId) return;
-
-      const lensHub = deployedContracts[hardhat.id].LensHub;
-      let hasMore = true;
-      let index = 1n;
-      while (hasMore) {
+    while (hasMore) {
+      try {
         const publicationRes = await publicClient.readContract({
           address: lensHub.address,
           abi: lensHub.abi,
@@ -49,44 +50,49 @@ export const usePublications = (refreshCounter = 0) => {
           args: [profileId, index],
         });
 
-        if (publicationRes.pubType !== PublicationType.Nonexistent) {
-          const enabledActions: OpenActionContract[] = [];
-          for (const action of openActions ?? []) {
+        if (publicationRes.pubType === PublicationType.Nonexistent) {
+          hasMore = false;
+          break;
+        }
+
+        const enabledActions = await Promise.all(
+          openActions.map(async action => {
             const enabled = await publicClient.readContract({
               address: lensHub.address,
               abi: lensHub.abi,
               functionName: "isActionModuleEnabledInPublication",
               args: [profileId, index, action.contract.address],
             });
-            if (enabled) {
-              enabledActions.push(action);
-            }
-          }
+            return enabled ? action : null;
+          }),
+        );
 
-          pubs.push({
-            profileId: profileId,
-            pubId: index,
-            pointedProfileId: publicationRes.pointedProfileId,
-            pointedPubId: publicationRes.pointedPubId,
-            contentURI: publicationRes.contentURI,
-            referenceModule: publicationRes.referenceModule as `0x${string}`,
-            pubType: publicationRes.pubType,
-            rootProfileId: publicationRes.rootProfileId,
-            rootPubId: publicationRes.rootPubId,
-            openActions: enabledActions,
-          });
+        pubs.push({
+          profileId,
+          pubId: index,
+          pointedProfileId: publicationRes.pointedProfileId,
+          pointedPubId: publicationRes.pointedPubId,
+          contentURI: publicationRes.contentURI,
+          referenceModule: publicationRes.referenceModule as `0x${string}`,
+          pubType: publicationRes.pubType,
+          rootProfileId: publicationRes.rootProfileId,
+          rootPubId: publicationRes.rootPubId,
+          openActions: enabledActions.filter((action): action is OpenActionContract => action !== null),
+        });
 
-          index++;
-        } else {
-          hasMore = false;
-        }
+        index++;
+      } catch (error) {
+        console.error("Error fetching publication:", error);
+        hasMore = false;
       }
+    }
 
-      setPublications(pubs);
-    };
+    setPublications(pubs);
+  }, [publicClient, profileId, openActions]); // Dependencies for getPublications
 
+  useEffect(() => {
     getPublications();
-  }, [publicClient, profileId, openActions, refreshCounter]);
+  }, [getPublications, refreshCounter]);
 
   return { publications };
 };
