@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AbiParameter } from "abitype";
 import { usePublicClient } from "wagmi";
 import { ContractInput } from "~~/app/debug/_components/contract";
@@ -8,20 +8,18 @@ import { CollectModuleContract } from "~~/hooks/scaffold-lens";
 
 interface CollectModuleDataInputProps {
   module: CollectModuleContract;
-  form: Record<string, any>;
-  setForm: (data: Record<string, any>) => void;
-  metadata: AbiParameter[];
-  setMetadata: (metadata: AbiParameter[]) => void;
+  onMetadataChange: (metadata: AbiParameter[]) => void;
+  onFormChange: (form: Record<string, any>) => void;
 }
 
 export const CollectModuleInitDataInput: React.FC<CollectModuleDataInputProps> = ({
   module,
-  form,
-  setForm,
-  metadata,
-  setMetadata,
+  onMetadataChange,
+  onFormChange,
 }) => {
   const publicClient = usePublicClient();
+  const [metadata, setMetadata] = useState<AbiParameter[]>([]);
+  const [form, setForm] = useState<Record<string, any>>({});
 
   useEffect(() => {
     if (!publicClient || !module) {
@@ -44,6 +42,14 @@ export const CollectModuleInitDataInput: React.FC<CollectModuleDataInputProps> =
     setInitialFormState(params);
     setMetadata(params);
   }, [module, publicClient, setMetadata, setForm]);
+
+  useEffect(() => {
+    onFormChange(form);
+  }, [form, onFormChange]);
+
+  useEffect(() => {
+    onMetadataChange(metadata);
+  }, [metadata, onMetadataChange]);
 
   return (
     <div className="flex flex-col space-y-3">

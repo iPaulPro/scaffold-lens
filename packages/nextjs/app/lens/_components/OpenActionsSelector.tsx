@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions } from "~~/hooks/scaffold-lens";
 
 interface OpenActionProps {
-  openActionSelected: (contract: OpenActionContract | undefined) => void;
+  selectedActionModule: OpenActionContract | undefined;
+  setSelectedActionModule: (contract: OpenActionContract | undefined) => void;
 }
 
-export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelected }) => {
-  const [selectedAction, setSelectedAction] = useState<OpenActionContract>();
+export const OpenActionsSelector: React.FC<OpenActionProps> = ({ selectedActionModule, setSelectedActionModule }) => {
   const { openActions } = useOpenActions();
 
   const dropdownRef = useRef<HTMLDetailsElement>(null);
@@ -20,8 +20,7 @@ export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelec
   useOutsideClick(dropdownRef, closeDropdown);
 
   const onActionClick = (action: OpenActionContract) => {
-    setSelectedAction(action);
-    openActionSelected(action);
+    setSelectedActionModule(action);
     closeDropdown();
   };
 
@@ -32,7 +31,9 @@ export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelec
           tabIndex={0}
           className="w-fit flex justify-between btn btn-secondary btn-sm shadow-md dropdown-toggle gap-0 !h-auto"
         >
-          <span className="pr-2">{selectedAction ? selectedAction.contractName : "Select Open Action"}</span>
+          <span className="pr-2">
+            {selectedActionModule ? selectedActionModule.contractName : "Select Open Action"}
+          </span>
           <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
         </summary>
         <ul
@@ -42,11 +43,10 @@ export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelec
           <li
             key="no-module"
             onClick={() => {
-              setSelectedAction(undefined);
-              openActionSelected(undefined);
+              setSelectedActionModule(undefined);
               closeDropdown();
             }}
-            className={`cursor-pointer hover:bg-accent p-2 rounded-box ${!selectedAction ? "bg-accent" : ""}`}
+            className={`cursor-pointer hover:bg-accent p-2 rounded-box ${!selectedActionModule ? "bg-accent" : ""}`}
           >
             No Action
           </li>
@@ -54,7 +54,7 @@ export const OpenActionsSelector: React.FC<OpenActionProps> = ({ openActionSelec
             <li
               key={index}
               onClick={() => onActionClick(action)}
-              className={`cursor-pointer hover:bg-accent p-2 rounded-box ${selectedAction?.contract.address === action.contract.address ? "bg-accent" : ""}`}
+              className={`cursor-pointer hover:bg-accent p-2 rounded-box ${selectedActionModule?.contract.address === action.contract.address ? "bg-accent" : ""}`}
             >
               {action.contractName}
             </li>

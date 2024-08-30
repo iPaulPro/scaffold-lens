@@ -1,65 +1,20 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
-import { usePublicClient } from "wagmi";
-import {
-  CollectModuleSelector,
-  CreatePost,
-  CreateProfile,
-  ERC20Token,
-  OpenActionsSelector,
-  Post,
-  Profile,
-  ProfileSelector,
-} from "~~/app/lens/_components";
-import {
-  CollectModuleContract,
-  OpenActionContract,
-  useCollectModules,
-  useERC20Tokens,
-  useProfile,
-  usePublications,
-} from "~~/hooks/scaffold-lens";
+import React, { useState } from "react";
+import { CreatePost, CreateProfile, ERC20Token, Post, ProfileSelector } from "~~/app/lens/_components";
+import { useCollectModules, useERC20Tokens, useProfile, usePublications } from "~~/hooks/scaffold-lens";
 
 export const LensModules: React.FC = () => {
-  const [selectedActionModule, setSelectedActionModule] = useState<OpenActionContract>();
-  const [selectedCollectModule, setSelectedCollectModule] = useState<CollectModuleContract>();
-  const [compatibleModules, setCompatibleModules] = useState<CollectModuleContract[]>([]);
   const [postRefreshCounter, setPostRefreshCounter] = useState(0);
 
   const { profileId } = useProfile();
   const { collectModules } = useCollectModules();
   const { erc20Tokens } = useERC20Tokens();
   const { publications } = usePublications(postRefreshCounter);
-  const publicClient = usePublicClient();
 
-  useMemo(() => {
-    if (!collectModules || !publicClient) {
-      return;
-    }
-
-    const compatModules: CollectModuleContract[] = [];
-    const getCompatibleModules = async () => {
-      for (const collectModule of collectModules) {
-        const actionModule = await publicClient.readContract({
-          address: collectModule.contract.address,
-          abi: collectModule.contract.abi,
-          functionName: "ACTION_MODULE",
-        });
-        if (actionModule === selectedActionModule?.contract.address) {
-          compatModules.push(collectModule);
-        }
-      }
-      setCompatibleModules(compatModules);
-    };
-    getCompatibleModules();
-  }, [collectModules, selectedActionModule, publicClient]);
-
-  const handleActionModuleChange = useCallback((module: OpenActionContract | undefined) => {
-    setCompatibleModules([]);
-    setSelectedCollectModule(undefined);
-    setSelectedActionModule(module);
-  }, []);
+  const onPostCreated = () => {
+    setPostRefreshCounter(count => count + 1);
+  };
 
   return (
     <>
@@ -80,28 +35,7 @@ export const LensModules: React.FC = () => {
               <div className="z-10">
                 {profileId ? (
                   <div className="flex flex-col">
-                    <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col">
-                      <div className="flex gap-4 px-4 pt-4">
-                        <OpenActionsSelector openActionSelected={handleActionModuleChange} />
-                        {compatibleModules.length > 0 && (
-                          <CollectModuleSelector
-                            compatibleModules={compatibleModules}
-                            collectModuleSelected={setSelectedCollectModule}
-                          />
-                        )}
-                      </div>
-                      <div className="flex flex-col gap-y-2 p-4">
-                        <div className="px-2">
-                          <Profile />
-                        </div>
-                        <CreatePost
-                          openActionModule={selectedActionModule}
-                          compatibleModules={compatibleModules}
-                          collectModule={selectedCollectModule}
-                          setPostRefreshCounter={setPostRefreshCounter}
-                        />
-                      </div>
-                    </div>
+                    <CreatePost onPostCreated={onPostCreated} />
                     <div className="flex flex-col gap-y-2 pt-4 flex-col-reverse">
                       {publications?.map(publication => (
                         <Post

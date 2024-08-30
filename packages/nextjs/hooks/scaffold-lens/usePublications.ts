@@ -88,7 +88,7 @@ export const usePublications = (refreshCounter = 0) => {
     }
 
     setPublications(pubs);
-  }, [publicClient, profileId, openActions]);
+  }, [publicClient, profileId, openActions, refreshCounter]);
 
   useEffect(() => {
     getPublications();
