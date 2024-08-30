@@ -5,7 +5,6 @@ import { AbiParameter } from "abitype";
 import { usePublicClient } from "wagmi";
 import { ContractInput } from "~~/app/debug/_components/contract";
 import { OpenActionContract } from "~~/hooks/scaffold-lens";
-import { getModuleMetadata } from "~~/utils/scaffold-lens";
 
 interface OpenActionDataInputProps {
   module: OpenActionContract;
@@ -41,14 +40,9 @@ export const OpenActionInitDataInput: React.FC<OpenActionDataInputProps> = ({
       setForm(initialForm);
     };
 
-    const getModuleInitABI = async () => {
-      const metadataJson = await getModuleMetadata(publicClient, module);
-      const params: AbiParameter[] = metadataJson.initializeCalldataABI;
-      setInitialFormState(params);
-      setMetadata(params);
-    };
-
-    getModuleInitABI();
+    const params: AbiParameter[] = module.metadata.initializeCalldataABI;
+    setInitialFormState(params);
+    setMetadata(params);
   }, [module, publicClient, setMetadata, setForm]);
 
   return (

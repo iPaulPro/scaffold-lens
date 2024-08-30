@@ -24,7 +24,7 @@ export const useOpenActions = () => {
   });
 
   useMemo(() => {
-    if (!latestBlock || !publicClient) return;
+    if (!publicClient) return;
 
     const fetchOpenActions = async () => {
       const contracts = deployedContracts[hardhat.id];
@@ -39,7 +39,7 @@ export const useOpenActions = () => {
     };
 
     fetchOpenActions();
-  }, [latestBlock]);
+  }, [latestBlock, publicClient]);
 
   return { openActions };
 };

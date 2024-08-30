@@ -24,7 +24,7 @@ export const useCollectModules = () => {
   });
 
   useMemo(() => {
-    if (!latestBlock || !publicClient) return;
+    if (!publicClient) return;
 
     const fetchCollectModules = async () => {
       const contracts = deployedContracts[hardhat.id];
