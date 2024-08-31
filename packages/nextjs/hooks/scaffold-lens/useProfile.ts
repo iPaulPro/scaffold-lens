@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ProfileContext, ProfileContextType } from "~~/components/ProfileProvider";
+import { ProfileContext, ProfileContextType } from "~~/components/LensProfileProvider";
 
 export interface Profile {
   id: bigint;

@@ -20,7 +20,7 @@ interface CreatePostProps {
   onPostCreated: () => void;
 }
 
-export const CreatePost: React.FC<CreatePostProps> = () => {
+export const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
   const [selectedActionModule, setSelectedActionModule] = useState<OpenActionContract>();
   const [selectedCollectModule, setSelectedCollectModule] = useState<CollectModuleContract>();
   const [compatibleModules, setCompatibleModules] = useState<CollectModuleContract[]>([]);
@@ -142,6 +142,7 @@ export const CreatePost: React.FC<CreatePostProps> = () => {
     setPostContent("");
     setSubmitError(undefined);
     setSelectedActionModule(undefined);
+    onPostCreated();
   };
 
   useEffect(() => {

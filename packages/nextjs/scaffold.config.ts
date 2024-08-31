@@ -6,7 +6,6 @@ export type ScaffoldConfig = {
   alchemyApiKey: string;
   walletConnectProjectId: string;
   onlyLocalBurnerWallet: boolean;
-  burnerPrivateKey: string;
 };
 
 const scaffoldConfig = {
@@ -31,10 +30,6 @@ const scaffoldConfig = {
 
   // Only show the Burner Wallet when running on hardhat network
   onlyLocalBurnerWallet: true,
-
-  // The private key for the burner wallet, whitelisted on Lens contracts
-  burnerPrivateKey:
-    process.env.NEXT_PUBLIC_BURNER_PRIVATE_KEY || "0xf63df6f85a8a01eeed7eb110f19d5812cf3da44d946d98daca77514341d6c708",
 } as const satisfies ScaffoldConfig;
 
 export default scaffoldConfig;
