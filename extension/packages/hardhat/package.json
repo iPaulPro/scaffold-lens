@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@irys/sdk": "^0.1.1",
+    "@lens-protocol/metadata": "^1.1.5",
+    "zod": "^3.22.4"
+  }
+}
