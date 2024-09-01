@@ -2,7 +2,8 @@
 
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 
-// The private key for the burner wallet, whitelisted on Lens contracts
+// The private key for the burner wallet, whitelisted on Lens contracts.
+// If this is changed, the public key must also be changed in packages/hardhat/deploy/00_deploy_lens_protocol.ts
 const burnerPrivateKey =
   process.env.NEXT_PUBLIC_BURNER_PRIVATE_KEY || "0xf63df6f85a8a01eeed7eb110f19d5812cf3da44d946d98daca77514341d6c708";
 

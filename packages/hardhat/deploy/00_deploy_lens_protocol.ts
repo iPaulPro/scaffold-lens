@@ -3,7 +3,6 @@ import { DeployFunction } from "hardhat-deploy/types";
 import getNextContractAddress from "../lib/getNextContractAddress";
 import { ethers } from "hardhat";
 import { DeployOptions } from "hardhat-deploy/dist/types";
-import { ZeroAddress } from "ethers";
 import { BURNER_PUBLIC_KEY } from "../config";
 
 const GUARDIAN_COOLDOWN_PERIOD = 300n; // 5 minutes
@@ -52,7 +51,7 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   // deploy LensHub
   const lensHub = await deploy("LensHub", {
     from: deployer,
-    args: [followNft.address, ZeroAddress, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
+    args: [followNft.address, moduleRegistry.address, GUARDIAN_COOLDOWN_PERIOD],
     log: true,
     autoMine: true,
     proxy: {
@@ -67,7 +66,6 @@ const deployLensHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
       ActionLib: actionLib.address,
       FollowLib: followLib.address,
       GovernanceLib: governanceLib.address,
-      LegacyCollectLib: ZeroAddress,
       MetaTxLib: metaTxLib.address,
       ProfileLib: profileLib.address,
       PublicationLib: publicationLib.address,

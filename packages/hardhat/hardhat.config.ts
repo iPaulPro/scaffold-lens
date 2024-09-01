@@ -15,7 +15,6 @@ import "@nomicfoundation/hardhat-verify";
 import "hardhat-dependency-compiler";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
-import "@openzeppelin/hardhat-upgrades";
 
 import { HardhatUserConfig } from "hardhat/config";
 
@@ -37,7 +36,6 @@ const config: HardhatUserConfig = {
         // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
         runs: 200,
       },
-      viaIR: true, // required to compile LensHubInitializable
     },
   },
   dependencyCompiler: {
