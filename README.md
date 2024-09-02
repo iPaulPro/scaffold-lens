@@ -1,6 +1,6 @@
 # 🏗🌿 Scaffold-Lens Extension
 
-A [Scaffold-ETH 2 extension](https://docs.scaffoldeth.io/extensions) for building, debuging, testing, and deploying [Open Actions](https://www.lens.xyz/docs/concepts/open-actions) and [Collect Modules](https://www.lens.xyz/docs/primitives/collect/collect-modules) on Lens Protocol using [Hardhat](https://hardhat.org/).
+A [Scaffold-ETH 2 extension](https://docs.scaffoldeth.io/extensions) for building, debugging, testing, and deploying [Open Actions](https://www.lens.xyz/docs/concepts/open-actions) and [Collect Modules](https://www.lens.xyz/docs/primitives/collect/collect-modules) on Lens Protocol using [Hardhat](https://hardhat.org/).
 
 Features:
 - ✅ Run a local EVM chain and test contracts locally with Hardhat
@@ -28,7 +28,7 @@ To get started with Scaffold-Lens Extension, follow the steps below:
     ```shell
     npx create-eth@latest -e iPaulPro/scaffold-lens:ext
     ```
-   The wizard will prompt you to name your project, then it will clone Scaffold-ETH 2, install dependencies, and set up the Lens extension.
+   The wizard will prompt you to name your project, then it will clone Scaffold-ETH 2, set up the Lens extension, and, install dependencies.
 2. **Start a chain**  
    Switch to the directory of the new project and run a local network in a terminal from the root directory:
     ```shell
@@ -52,7 +52,8 @@ To get started with Scaffold-Lens Extension, follow the steps below:
     yarn deploy
     ```
 
-   This command deploys the full Lens Protocol on the local network. Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
+   This command deploys the full Lens Protocol on the local network. It will also deploy the example contracts, `TipActionModule` and `PayWhatYouWantCollectModule`, to the network.  
+   Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
 
 5. **Start the app**  
    On a third terminal, from the root directory, start your NextJS app:
@@ -73,12 +74,16 @@ The `TipActionModule` corresponds to the [example from the Lens Docs](https://ww
 1. **Create a Profile**  
    Before you can create publications, you need to create a profile. Click on the "Add Profile" button in the sidebar and follow the instructions to create a profile.
 2. **Create a Publication**  
-   Use the textarea in the main content section to create a new publication. You can select the Open Action and Collect Module to use. For example, you can create a new publication with tipping enabled using the `TipActionModule` contract.
+   Use the textarea in the main content section to create a new publication. You can select an Open Action and Collect Module to use. For example, you can create a new publication with tipping enabled using the `TipActionModule` contract.
 3. **Act on a Publication**  
    You can act on publications by clicking on the "Act" button in the publication card.
+
+## Demo
+
+You can find a full walkthrough of the extension setup and usage on YouTube: https://youtu.be/ZdL5cGaXlas
 
 ## More on Scaffold-ETH 2
 
 Scaffold-ETH is an open-source toolkit for building Ethereum dapps, built using NextJS, RainbowKit, Hardhat, Wagmi, and Typescript.
 
-Learn more about Scaffold-ETH 2 and find the docs [here](https://github.com/scaffold-eth/scaffold-eth-2).
+For more details on how to test, debug, and deploy your own contracts refer to the Scaffold-ETH 2 documentation [here](https://github.com/scaffold-eth/scaffold-eth-2).
