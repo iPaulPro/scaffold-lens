@@ -67,9 +67,11 @@ To get started with Scaffold-Lens Extension, follow the steps below:
 
 To debug your Lens Modules, you can use the Lens Protocol UI to create and act on publications. The UI is available at `http://localhost:3000/lens`, or you can click on the "Open Actions" navigation link in the header.
 
-The Scaffold-Lens Extension includes example contracts for Open Actions and Collect Modules in the `packages/hardhat/contracts` directory. You can use these contracts as a starting point for your own Lens Modules.
+The Scaffold-Lens Extension includes example contracts for Open Actions and Collect Modules in the `packages/hardhat/contracts` directory. You can use these contracts as a starting point for your own Lens Modules. The Open Actions page will automatically include any deployed Open Actions and Collect Modules in the dropdowns.
 
 The `TipActionModule` corresponds to the [example from the Lens Docs](https://www.lens.xyz/docs/primitives/publications/open-actions#creating-open-actions-example). The `PayWhatYouWantCollectModule` is an example of an Open Action Collect Module that can be used with the core `CollectPublicationAction` Open Action.
+
+The `/lens` page will also automatically display any ERC-20 tokens that were deployed locally in the sidebar to make it easier to use these tokens to initialize and act on publications that require token transfers.
 
 1. **Create a Profile**  
    Before you can create publications, you need to create a profile. Click on the "Add Profile" button in the sidebar and follow the instructions to create a profile.
