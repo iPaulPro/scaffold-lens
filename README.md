@@ -3,13 +3,11 @@
 A [Scaffold-ETH 2 extension](https://docs.scaffoldeth.io/extensions) for building, debugging, testing, and deploying [Open Actions](https://www.lens.xyz/docs/concepts/open-actions) and [Collect Modules](https://www.lens.xyz/docs/primitives/collect/collect-modules) on Lens Protocol using [Hardhat](https://hardhat.org/).
 
 Features:
-- ✅ Run a local EVM chain and test contracts locally with Hardhat
-- ✅ Deploy the full Lens Protocol on a local network
+- ✅ Deploy the full Lens Protocol on a local hardhat network
+- ✅ Create and act on Lens publications with a graphical interface
 - ✅ Deploy an Open Action Module contract
 - ✅ Deploy a Collect Action Module contract
-- ✅ Debug local contract calls with a graphical interface
-- ✅ Create and act on Lens publications with a graphical interface
-- ✅ Verify contracts on Etherscan
+- ✅ Deploy an ERC-20 contract to be used with Open Actions
 
 ## Requirements
 
@@ -37,25 +35,16 @@ To get started with Scaffold-Lens Extension, follow the steps below:
 
    This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
 
-3. **Configure the project**  
-   The Lens contracts require a newer Solidity compiler version than the one used by `create-eth`. Update the Solidity compiler version in `packages/hardhat/hardhat.config.ts` to `0.8.19` or higher.
-   ```typescript
-   solidity: {
-     version: "0.8.19"
-     // ...
-   }
-   ```
-
-4. **Deploy**  
-   On a second terminal, from the root directory, deploy the Lens contracts locally:
+3. **Deploy contracts**  
+   On a second terminal, from the root directory, deploy the protocol and module contracts locally:
     ```bash
     yarn deploy
     ```
 
-   This command deploys the full Lens Protocol on the local network. It will also deploy the example contracts, `TipActionModule` and `PayWhatYouWantCollectModule`, to the network.  
-   Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
+   This command deploys the full Lens Protocol on the local network. It will also deploy the example modules, `TipActionModule` and `PayWhatYouWantCollectModule`, to the network.  
+   Put your contracts  in `packages/hardhat/contracts`. The `deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
 
-5. **Start the app**  
+4. **Start the app**  
    On a third terminal, from the root directory, start your NextJS app:
     ```shell
     yarn start

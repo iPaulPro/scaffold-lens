@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "deploy:amoy": "hardhat deploy --tags TipActionModule,PayWhatYouWantCollectModule,generateTsAbis --network polygonAmoy",
+    "verify:amoy": "hardhat etherscan-verify --network polygonAmoy --api-url https://api-amoy.polygonscan.com"
+  },
   "dependencies": {
     "@irys/sdk": "^0.1.1",
     "@lens-protocol/metadata": "^1.1.5",
