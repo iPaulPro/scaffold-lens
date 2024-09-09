@@ -1,14 +1,27 @@
-# 🏗 ~~Scaffold-ETH 2~~ Scaffold-Lens
+# 🏗🌿 Scaffold-Lens
 
 This project is a fork of [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2) that demonstrates how to build, debug, test, and deploy an [Open Action](https://docs.lens.xyz/docs/publication-actions-aka-open-actions) Module on Lens Protocol using [Hardhat](https://hardhat.org/).
 
+## Extension 🆕
+
+Scaffold-Lens can be used as a Scaffold-ETH 2 Extension, instead of forking the project. You can install it when using `create-eth` to create a new project:
+
+```shell
+npx create-eth@latest -e iPaulPro/scaffold-lens:ext
+```
+
+See the [ext](https://github.com/iPaulPro/scaffold-lens/tree/ext) branch for the extension-specific docs.
+
+## Overview
+
 Features:
 - ✅ Run a local EVM chain and test contracts locally with Hardhat
-- ✅ Deploy a mock ModuleRegistry contract
-- ✅ Deploy an ERC20 token contract used for whitelisted tips
+- ✅ Deploy the full Lens Protocol on a local network 🆕
+- ✅ Debug local contract calls with a graphical interface
+- ✅ Create and act on Lens publications with a graphical interface 🆕
+- ✅ Deploy an ERC20 token contract used for Open Actions
 - ✅ Deploy an Open Action Module contract
 - ✅ Deploy a Collect Action Module contract
-- ✅ Debug local contract calls with a graphical interface
 - ✅ Verify contracts on Etherscan
 
 ## Contents
@@ -49,8 +62,16 @@ To get started with Scaffold-Lens, follow the steps below:
 
    This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
 
-3. **Start the app**  
-   On a second terminal, from the root directory, start your NextJS app:
+3. **Deploy**  
+   On a second terminal, from the root directory, deploy the Lens contracts locally:
+    ```bash
+    yarn deploy
+    ```
+
+   This command deploys the full Lens Protocol on the local network as well as the example Open Action and Collect Module contracts. Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
+
+4. **Start the app**  
+   On a third terminal, from the root directory, start your NextJS app:
     ```shell
     yarn start
     ```
@@ -58,17 +79,6 @@ To get started with Scaffold-Lens, follow the steps below:
    Visit your app on: `http://localhost:3000`. You can interact with your smart contracts using the contract component and review all transactions in the block explorer. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
    
    Copy the burner wallet address from the top-right navbar menu.
-
-4. **Set up environment**  
-    Open `config.ts` in the `packages/hardhat` directory and set `LENS_HUB` to the address of the burner wallet provided by the nextjs project.
-
-5. **Deploy**  
-   On a third terminal, from the root directory, deploy the Lens contracts locally:
-    ```bash
-    yarn deploy:lens
-    ```
-
-   This command deploys the full Lens Protocol on the local network. Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
 
 ## Debugging
 
@@ -79,19 +89,22 @@ yarn start
 
 Then navigate to http://localhost:3000/debug to open the debugger. You can now call functions on your smart contracts and debug them in the browser.
 
-### Debugging contracts
+## Debugging Lens Modules
 
-1. Run the chain and deploy the `YourActionModule` and mock contracts to the local network, and start the app:
-    ```shell
-    yarn chain
-    yarn deploy:action:local
-    yarn start
-    ```
-2. Navigate to http://localhost:3000/debug.
-3. Select the `TestToken` contract and call the `mint` function to mint tokens for the burner wallet.
-4. Copy the address of the `YourActionModule` and the `approve` spending from the `YourActionModule`.
-5. Select the `YourActionModule` contract and call the `initializePublicationAction` function with a receiver address.
-6. Call the `processPublicationAction` with the call data. 
+To debug your Lens Modules, you can use the Open Actions Debugger UI to create and act on publications. The UI is available at `http://localhost:3000/lens`, or you can click on the "Open Actions" navigation link in the header.
+
+Scaffold-Lens includes example contracts for Open Actions and Collect Modules in the `packages/hardhat/contracts` directory. You can use these contracts as a starting point for your own Lens Modules. The Open Actions page will automatically include any deployed Open Actions and Collect Modules in the dropdowns.
+
+The `TipActionModule` corresponds to the [example from the Lens Docs](https://www.lens.xyz/docs/primitives/publications/open-actions#creating-open-actions-example). The `PayWhatYouWantCollectModule` is an example of an Open Action Collect Module that can be used with the core `CollectPublicationAction` Open Action.
+
+The `/lens` page will also automatically display any ERC-20 tokens that were deployed locally in the sidebar to make it easier to use these tokens to initialize and act on publications that require token transfers.
+
+1. **Create a Profile**  
+   Before you can create publications, you need to create a profile. Click on the "Add Profile" button in the sidebar and follow the instructions to create a profile.
+2. **Create a Publication**  
+   Use the textarea in the main content section to create a new publication. You can select an Open Action and Collect Module to use. For example, you can create a new publication with tipping enabled using the `TipActionModule` contract.
+3. **Act on a Publication**  
+   You can act on publications by clicking on the "Act" button in the publication card.
 
 ## Testing
 
@@ -120,10 +133,10 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    You can generate a random account / private key with `yarn generate` or add the private key of your crypto wallet. `yarn generate` will create a random account and add the DEPLOYER_PRIVATE_KEY to the .env file. You can check the generated account with `yarn account`.
 
 2. **Deploy**  
-   To deploy the `YourActionModule` to Amoy you can run
+   To deploy the `TipActionModule` and `PayWhatYouWantCollectModule` to Amoy you can run
 
    ```shell
-   yarn deploy:action:testnet
+   yarn deploy:testnet
    ```
 
 3. **Verify**  
@@ -136,13 +149,15 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
 
 ## Deploying to Polygon Mainnet
 
-Follow the same directions for deploying to Amoy, but use the `.env` file instead of `.env.staging` and `:mainnet` in the yarn commands, instead of `:testnet`. You will also need to set the `ALCHEMY_API_KEY` with a valid API key.
+Follow the same directions for deploying to Amoy, but use the `.env` file instead of `.env.staging`. Then, add a `:mainnet` script entry in the yarn commands, instead of `:testnet` and use `--network polygonAmoy`.
+
+⚠️ **NOTE**: There is no reason to deploy `TipActionModule` and `PayWhatYouWantCollectModule` as they are already deployed and verified with the Protocol on mainnet.
 
 ## Using your own contracts
 
 If you want to use your own contracts there are a few simple steps. 
 
-1. Replace the `YourActionModule.sol` contract in `/packages/hardhat/contracts` with your own. 
+1. Replace the `TipActionModule.sol` and/or `PayWhatYouWantCollectModule` contracts in `/packages/hardhat/contracts` with your own. 
 2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the mock contracts.
 3. Change the tag in the `deploy:*` scripts in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
 4. (Optional) Remove the `/packages/hardhat/contracts/helpers` directory and related deploy scripts unless you want to use the `TestToken` contract for testing and debugging.
