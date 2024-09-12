@@ -1,9 +1,8 @@
-import { useMemo, useState } from "react";
-import { hardhat } from "viem/chains";
+import { useEffect, useState } from "react";
 import { usePublicClient, useWatchBlocks } from "wagmi";
-import deployedContracts from "~~/contracts/deployedContracts";
-import { GenericContract } from "~~/utils/scaffold-eth/contract";
-import { ModuleMetadata, getModuleMetadata } from "~~/utils/scaffold-lens";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { ModuleMetadata, useModuleMetadata } from "~~/hooks/scaffold-lens";
+import { GenericContract, contracts } from "~~/utils/scaffold-eth/contract";
 
 export interface CollectModuleContract {
   contractName: string;
@@ -16,6 +15,8 @@ export const useCollectModules = () => {
   const [collectModules, setCollectModules] = useState<CollectModuleContract[]>();
 
   const publicClient = usePublicClient();
+  const { targetNetwork } = useTargetNetwork();
+  const { getModuleMetadata } = useModuleMetadata();
 
   useWatchBlocks({
     onBlock(block) {
@@ -23,14 +24,15 @@ export const useCollectModules = () => {
     },
   });
 
-  useMemo(() => {
+  useEffect(() => {
     if (!publicClient) return;
 
     const fetchCollectModules = async () => {
-      const contracts = deployedContracts[hardhat.id];
+      const deployedContracts = contracts?.[targetNetwork.id];
+      if (!deployedContracts) return;
       const collectModules: CollectModuleContract[] = [];
-      for (const [contractName, contract] of Object.entries(contracts)) {
-        if ("initializePublicationCollectModule" in contract.inheritedFunctions) {
+      for (const [contractName, contract] of Object.entries(deployedContracts)) {
+        if (contract.inheritedFunctions && "initializePublicationCollectModule" in contract.inheritedFunctions) {
           const metadata = await getModuleMetadata(publicClient, contract.address, contract.abi);
           collectModules.push({ contractName, contract, metadata });
         }
@@ -39,7 +41,7 @@ export const useCollectModules = () => {
     };
 
     fetchCollectModules();
-  }, [latestBlock, publicClient]);
+  }, [latestBlock, publicClient, getModuleMetadata, targetNetwork.id]);
 
   return { collectModules };
 };

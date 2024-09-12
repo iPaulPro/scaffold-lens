@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { hardhat } from "viem/chains";
 import { usePublicClient } from "wagmi";
-import deployedContracts from "~~/contracts/deployedContracts";
+import { useDeployedContractInfo, useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions, useProfile } from "~~/hooks/scaffold-lens";
+import { contracts } from "~~/utils/scaffold-eth/contract";
 
 export enum PublicationType {
   Nonexistent,
@@ -31,24 +32,29 @@ export const usePublications = (refreshCounter = 0) => {
   const { openActions } = useOpenActions();
 
   const publicClient = usePublicClient();
+  const { targetNetwork } = useTargetNetwork();
+  const { data: lensHubData } = useDeployedContractInfo("LensHub");
 
   const getPublications = useCallback(async () => {
     console.log("getPublications called...");
     if (!profileId || !openActions?.length || !publicClient) return;
 
+    const deployedContracts = contracts?.[targetNetwork.id];
+    if (!deployedContracts || !lensHubData) return;
+
     const pubs: Publication[] = [];
-    const lensHub = deployedContracts[hardhat.id].LensHub;
     let hasMore = true;
     let index = 1n;
 
     while (hasMore) {
       try {
         const publicationRes = await publicClient.readContract({
-          address: lensHub.address,
-          abi: lensHub.abi,
+          address: lensHubData.address,
+          abi: lensHubData.abi,
           functionName: "getPublication",
           args: [profileId, index],
         });
+        console.log("publicationRes:", publicationRes);
 
         if (publicationRes.pubType === PublicationType.Nonexistent) {
           hasMore = false;
@@ -58,8 +64,8 @@ export const usePublications = (refreshCounter = 0) => {
         const enabledActions = await Promise.all(
           openActions.map(async action => {
             const enabled = await publicClient.readContract({
-              address: lensHub.address,
-              abi: lensHub.abi,
+              address: lensHubData.address,
+              abi: lensHubData.abi,
               functionName: "isActionModuleEnabledInPublication",
               args: [profileId, index, action.contract.address],
             });
@@ -80,6 +86,10 @@ export const usePublications = (refreshCounter = 0) => {
           openActions: enabledActions.filter((action): action is OpenActionContract => action !== null),
         });
 
+        if (targetNetwork.id !== hardhat.id) {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+
         index++;
       } catch (error) {
         console.error("Error fetching publication:", error);
@@ -88,7 +98,7 @@ export const usePublications = (refreshCounter = 0) => {
     }
 
     setPublications(pubs);
-  }, [publicClient, profileId, openActions, refreshCounter]);
+  }, [publicClient, profileId, openActions, refreshCounter, lensHubData, targetNetwork.id]);
 
   useEffect(() => {
     getPublications();

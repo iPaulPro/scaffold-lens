@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
-import { hardhat } from "viem/chains";
 import { useWatchBlocks } from "wagmi";
-import deployedContracts from "~~/contracts/deployedContracts";
-import { ContractName, GenericContract } from "~~/utils/scaffold-eth/contract";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { ContractName, GenericContract, contracts } from "~~/utils/scaffold-eth/contract";
 
 export interface ERC20TokenContract {
   contractName: ContractName;
@@ -13,6 +12,8 @@ export const useERC20Tokens = () => {
   const [latestBlock, setLatestBlock] = useState<bigint>();
   const [erc20Tokens, setERC20Tokens] = useState<ERC20TokenContract[]>();
 
+  const { targetNetwork } = useTargetNetwork();
+
   useWatchBlocks({
     onBlock(block) {
       setLatestBlock(block.number);
@@ -20,10 +21,12 @@ export const useERC20Tokens = () => {
   });
 
   useMemo(() => {
-    const contracts = deployedContracts[hardhat.id];
+    const deployedContracts = contracts?.[targetNetwork.id];
+    if (!deployedContracts) return;
     const erc20Tokens: ERC20TokenContract[] = [];
-    Object.entries(contracts).forEach(([contractName, contract]) => {
+    Object.entries(deployedContracts).forEach(([contractName, contract]) => {
       if (
+        contract.inheritedFunctions &&
         "totalSupply" in contract.inheritedFunctions &&
         "balanceOf" in contract.inheritedFunctions &&
         "transfer" in contract.inheritedFunctions &&
@@ -35,7 +38,7 @@ export const useERC20Tokens = () => {
       }
     });
     setERC20Tokens(erc20Tokens);
-  }, [latestBlock]);
+  }, [latestBlock, targetNetwork.id]);
 
   return { erc20Tokens };
 };

@@ -2,57 +2,60 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { readContract } from "@wagmi/core";
-import { hardhat } from "viem/chains";
 import { useAccount } from "wagmi";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import deployedContracts from "~~/contracts/deployedContracts";
-import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import { useDeployedContractInfo, useOutsideClick } from "~~/hooks/scaffold-eth";
 import { Profile, useOwnedTokens, useProfile } from "~~/hooks/scaffold-lens";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 export const ProfileSelector: React.FC = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
 
-  const { address: lensHubAddress, abi: lensHubAbi } = deployedContracts[hardhat.id].LensHub;
-  const { address: tokenHandleRegistryAddress, abi: tokenHandleRegistryAbi } =
-    deployedContracts[hardhat.id].TokenHandleRegistry;
-  const { address: lensHandlesAddress, abi: lensHandlesAbi } = deployedContracts[hardhat.id].LensHandles;
+  const { data: lensHub } = useDeployedContractInfo("LensHub");
+  const { data: lensHandles } = useDeployedContractInfo("LensHandles");
+  const { data: tokenHandleRegistry } = useDeployedContractInfo("TokenHandleRegistry");
 
   const { address } = useAccount();
   const { profileId, updateProfileId } = useProfile();
-  const { ownedTokens } = useOwnedTokens(address, lensHubAddress, lensHubAbi);
+  const { ownedTokens } = useOwnedTokens(address, lensHub?.address, lensHub?.abi);
 
   const getHandleId = useCallback(
     async (tokenId: bigint) => {
+      if (!tokenHandleRegistry) return;
       return await readContract(wagmiConfig, {
-        abi: tokenHandleRegistryAbi,
-        address: tokenHandleRegistryAddress,
+        abi: tokenHandleRegistry.abi,
+        address: tokenHandleRegistry.address,
         functionName: "getDefaultHandle",
         args: [tokenId],
       });
     },
-    [tokenHandleRegistryAbi, tokenHandleRegistryAddress],
+    [tokenHandleRegistry],
   );
 
   const getHandle = useCallback(
     async (handleId: bigint) => {
+      if (!lensHandles) return;
       return await readContract(wagmiConfig, {
-        abi: lensHandlesAbi,
-        address: lensHandlesAddress,
+        abi: lensHandles.abi,
+        address: lensHandles.address,
         functionName: "getLocalName",
         args: [handleId],
       });
     },
-    [lensHandlesAbi, lensHandlesAddress],
+    [lensHandles],
   );
 
   useEffect(() => {
     async function fetchProfiles() {
-      const profiles = [];
+      const profiles: Profile[] = [];
       for (const tokenId of ownedTokens) {
         const handleId = await getHandleId(tokenId);
-        const handle = await getHandle(handleId);
-        profiles.push({ id: tokenId, handle });
+        if (handleId) {
+          const handle = await getHandle(handleId);
+          if (handle) {
+            profiles.push({ id: tokenId, handle });
+          }
+        }
       }
       setProfiles(profiles);
     }

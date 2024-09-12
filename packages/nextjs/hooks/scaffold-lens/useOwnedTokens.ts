@@ -1,8 +1,9 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { parseAbiItem } from "viem";
 import { usePublicClient, useReadContract, useWatchContractEvent } from "wagmi";
+import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
 
-export const useOwnedTokens = (address: string | undefined, contractAddress: `0x${string}`, abi: any) => {
+export const useOwnedTokens = (address: string | undefined, contractAddress: `0x${string}` | undefined, abi: any) => {
   const [ownedTokens, setOwnedTokens] = useState<bigint[]>([]);
   const publicClient = usePublicClient();
   const processedEvents = useRef<Set<string>>(new Set());
@@ -15,6 +16,7 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
     );
 
     const getOwnedTokens = async () => {
+      if (!contractAddress) return;
       const logs = await publicClient.getLogs({
         address: contractAddress,
         event: transferEvent,
@@ -79,7 +81,7 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
     address: contractAddress,
     abi: abi,
     functionName: "balanceOf",
-    args: [address!],
+    args: [address || ZERO_ADDRESS],
   });
 
   return { ownedTokens, balanceOf };

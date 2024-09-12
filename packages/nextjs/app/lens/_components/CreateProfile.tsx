@@ -3,10 +3,8 @@
 import React, { useState } from "react";
 import { getTransactionReceipt } from "@wagmi/core";
 import { parseEventLogs } from "viem";
-import { hardhat } from "viem/chains";
 import { useAccount } from "wagmi";
-import deployedContracts from "~~/contracts/deployedContracts";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useDeployedContractInfo, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { useProfile } from "~~/hooks/scaffold-lens";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
@@ -18,11 +16,14 @@ export const CreateProfile: React.FC = () => {
   const { address } = useAccount();
   const { writeContractAsync } = useScaffoldWriteContract("ProfileCreationProxy");
   const { updateProfileId } = useProfile();
+  const { data: lensHub } = useDeployedContractInfo("LensHub");
 
   const onProfileCreated = async (hash: `0x${string}`) => {
+    if (!lensHub) return;
+
     const receipt = await getTransactionReceipt(wagmiConfig, { hash });
     const logs = parseEventLogs({
-      abi: deployedContracts[hardhat.id].LensHub.abi,
+      abi: lensHub.abi,
       eventName: "Transfer",
       logs: receipt.logs,
     });

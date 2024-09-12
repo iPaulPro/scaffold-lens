@@ -1,8 +1,4 @@
 import { AbiParameter } from "abitype";
-import { hardhat } from "viem/chains";
-import deployedContracts from "~~/contracts/deployedContracts";
-
-export const simpleFeeCollectModule = deployedContracts[hardhat.id].SimpleFeeCollectModule.address;
 
 export const simpleFeeCollectModuleInitABI: AbiParameter[] = [
   { type: "uint160", name: "amount" },
