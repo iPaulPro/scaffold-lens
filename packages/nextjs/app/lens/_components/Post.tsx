@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { usePublicClient } from "wagmi";
 import { ActOnPost } from "~~/app/lens/_components/ActOnPost";
 import { Address } from "~~/components/scaffold-eth";
@@ -34,7 +34,7 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
     getCollectModule();
   }, [openAction, publicClient, collectModules, publication]);
 
-  const fetchContent = async () => {
+  const fetchContent = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -55,11 +55,11 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [publication.contentURI]);
 
   useEffect(() => {
     fetchContent();
-  }, [publication.contentURI]);
+  }, [fetchContent]);
 
   return (
     <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col space-y-2 p-4">
