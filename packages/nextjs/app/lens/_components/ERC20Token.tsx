@@ -100,19 +100,21 @@ export const ERC20Token: React.FC<ERC20TokenProps> = ({ token }) => {
           <span className="px-1 text-xs font-bold">{symbol as string}</span>
         </div>
       </div>
-      <div className="flex flex-col space-y-2 pt-4">
-        <IntegerInput
-          value={amountToMint}
-          placeholder="uint256 amount"
-          onChange={value => {
-            setAmountToMint(value.toString());
-          }}
-        />
-        <button className="btn btn-primary dark:btn-secondary btn-sm" disabled={isPending} onClick={mint}>
-          {isPending && <span className="loading loading-spinner loading-xs"></span>}
-          Mint 💸
-        </button>
-      </div>
+      {token.canMint && (
+        <div className="flex flex-col space-y-2 pt-4">
+          <IntegerInput
+            value={amountToMint}
+            placeholder="uint256 amount"
+            onChange={value => {
+              setAmountToMint(value.toString());
+            }}
+          />
+          <button className="btn btn-primary dark:btn-secondary btn-sm" disabled={isPending} onClick={mint}>
+            {isPending && <span className="loading loading-spinner loading-xs"></span>}
+            Mint 💸
+          </button>
+        </div>
+      )}
       <div className="flex flex-col space-y-2 pt-4">
         <AddressInput
           value={addressToApprove}

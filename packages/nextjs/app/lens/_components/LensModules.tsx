@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CreatePost, CreateProfile, ERC20Token, Post, ProfileSelector } from "~~/app/lens/_components";
 import { useCollectModules, useERC20Tokens, useProfile, usePublications } from "~~/hooks/scaffold-lens";
 
 export const LensModules: React.FC = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const [postRefreshCounter, setPostRefreshCounter] = useState(0);
 
   const { profileId } = useProfile();
+
   const { collectModules } = useCollectModules();
   const { erc20Tokens } = useERC20Tokens();
   const { publications } = usePublications(postRefreshCounter);
@@ -15,6 +17,10 @@ export const LensModules: React.FC = () => {
   const onPostCreated = () => {
     setPostRefreshCounter(count => count + 1);
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <>
@@ -33,10 +39,10 @@ export const LensModules: React.FC = () => {
             </div>
             <div className="col-span-1 lg:col-span-2 flex flex-col gap-6">
               <div className="z-10">
-                {profileId ? (
+                {isMounted && profileId ? (
                   <div className="flex flex-col">
                     <CreatePost onPostCreated={onPostCreated} />
-                    <div className="flex flex-col gap-y-2 pt-4 flex-col-reverse">
+                    <div className="flex flex-col gap-y-2 pt-4">
                       {publications?.map(publication => (
                         <Post
                           publication={publication}

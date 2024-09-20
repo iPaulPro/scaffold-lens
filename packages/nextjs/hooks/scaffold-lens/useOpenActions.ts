@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { usePublicClient, useWatchBlocks } from "wagmi";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useIsMounted } from "usehooks-ts";
+import { usePublicClient } from "wagmi";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { ModuleMetadata, useModuleMetadata } from "~~/hooks/scaffold-lens";
 import { GenericContract, contracts } from "~~/utils/scaffold-eth/contract";
@@ -11,37 +12,42 @@ export interface OpenActionContract {
 }
 
 export const useOpenActions = () => {
-  const [latestBlock, setLatestBlock] = useState<bigint>();
   const [openActions, setOpenActions] = useState<OpenActionContract[]>();
 
+  const isMounted = useIsMounted();
   const publicClient = usePublicClient();
   const { targetNetwork } = useTargetNetwork();
   const { getModuleMetadata } = useModuleMetadata();
 
-  useWatchBlocks({
-    onBlock(block) {
-      setLatestBlock(block.number);
+  const deployedContracts = useMemo(() => contracts?.[targetNetwork.id], [contracts, targetNetwork.id]);
+
+  const getMetadata = useCallback(
+    async (contract: GenericContract) => {
+      if (!publicClient) return undefined;
+      return getModuleMetadata(publicClient, contract.address, contract.abi);
     },
-  });
+    [publicClient, getModuleMetadata],
+  );
 
   useEffect(() => {
-    if (!publicClient) return;
-
     const fetchOpenActions = async () => {
-      const deployedContracts = contracts?.[targetNetwork.id];
-      if (!deployedContracts) return;
-      const openActions: OpenActionContract[] = [];
-      for (const [contractName, contract] of Object.entries(deployedContracts)) {
-        if (contract.inheritedFunctions && "initializePublicationAction" in contract.inheritedFunctions) {
-          const metadata = await getModuleMetadata(publicClient, contract.address, contract.abi);
-          openActions.push({ contractName, contract, metadata });
-        }
-      }
-      setOpenActions(openActions);
+      if (!isMounted() || !deployedContracts) return;
+
+      const openActionsPromises = Object.entries(deployedContracts)
+        .filter(([, contract]) => contract.abi.find(abi => "name" in abi && abi.name === "initializePublicationAction"))
+        .map(async ([contractName, contract]) => {
+          const metadata = await getMetadata(contract);
+          return metadata ? { contractName, contract, metadata } : null;
+        });
+
+      const results = await Promise.all(openActionsPromises);
+      const newOpenActions = results.filter((module): module is OpenActionContract => module !== null);
+
+      setOpenActions(newOpenActions);
     };
 
     fetchOpenActions();
-  }, [latestBlock, publicClient, getModuleMetadata, targetNetwork.id]);
+  }, [isMounted, deployedContracts, getMetadata]);
 
-  return { openActions };
+  return useMemo(() => ({ openActions }), [openActions]);
 };

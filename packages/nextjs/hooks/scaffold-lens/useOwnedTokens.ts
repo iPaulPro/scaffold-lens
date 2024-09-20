@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { parseAbiItem } from "viem";
-import { usePublicClient, useReadContract, useWatchContractEvent } from "wagmi";
-import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
+import { usePublicClient, useWatchContractEvent } from "wagmi";
 
 export const useOwnedTokens = (address: string | undefined, contractAddress: `0x${string}` | undefined, abi: any) => {
   const [ownedTokens, setOwnedTokens] = useState<bigint[]>([]);
@@ -25,18 +24,17 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
       });
 
       const tokenSet = new Set<bigint>();
-
       for (const log of logs) {
         const { from, to, tokenId } = log.args as { from: string; to: string; tokenId: bigint };
 
         if (to.toLowerCase() === address.toLowerCase()) {
           tokenSet.add(tokenId);
         }
+        // Remove any tokens that were transferred away
         if (from.toLowerCase() === address.toLowerCase()) {
           tokenSet.delete(tokenId);
         }
       }
-
       setOwnedTokens(Array.from(tokenSet));
     };
 
@@ -48,7 +46,7 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
       for (const log of logs) {
         const eventKey = `${log.transactionHash}-${log.logIndex}`;
         if (processedEvents.current.has(eventKey)) {
-          continue; // Skip already processed events
+          continue;
         }
 
         processedEvents.current.add(eventKey);
@@ -77,12 +75,5 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
     onLogs: handleTransferEvent,
   });
 
-  const { data: balanceOf } = useReadContract({
-    address: contractAddress,
-    abi: abi,
-    functionName: "balanceOf",
-    args: [address || ZERO_ADDRESS],
-  });
-
-  return { ownedTokens, balanceOf };
+  return useMemo(() => ({ ownedTokens }), [ownedTokens]);
 };

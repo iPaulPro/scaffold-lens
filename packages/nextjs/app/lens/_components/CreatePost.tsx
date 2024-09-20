@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import { textOnly } from "@lens-protocol/metadata";
 import { AbiParameter } from "abitype";
 import { encodeAbiParameters } from "viem";
 import { usePublicClient } from "wagmi";
@@ -15,6 +16,7 @@ import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { CollectModuleContract, OpenActionContract, useCollectModules, useProfile } from "~~/hooks/scaffold-lens";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
 import { getFormattedABI } from "~~/utils/scaffold-lens";
+import { uploadPostMetadata } from "~~/utils/scaffold-lens/uploadPostMetadata";
 
 interface CreatePostProps {
   onPostCreated: () => void;
@@ -119,13 +121,24 @@ export const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
       }
     }
 
+    const metadata = textOnly({ content: postContent });
+    const contentURI = await uploadPostMetadata(metadata);
+    console.log(
+      "submitPost: contentURI",
+      contentURI,
+      "actionModules",
+      actionModules,
+      "actionModulesInitDatas",
+      actionModulesInitDatas,
+    );
+
     try {
       await writeContractAsync({
         functionName: "post",
         args: [
           {
             profileId,
-            contentURI: postContent,
+            contentURI,
             actionModules,
             actionModulesInitDatas,
             referenceModule: ZERO_ADDRESS,

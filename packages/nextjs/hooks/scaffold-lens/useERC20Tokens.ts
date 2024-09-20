@@ -1,44 +1,44 @@
-import { useMemo, useState } from "react";
-import { useWatchBlocks } from "wagmi";
+import { useEffect, useMemo, useState } from "react";
+import { useIsMounted } from "usehooks-ts";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { ContractName, GenericContract, contracts } from "~~/utils/scaffold-eth/contract";
 
 export interface ERC20TokenContract {
   contractName: ContractName;
   contract: GenericContract;
+  canMint: boolean;
 }
 
+const isAbiFunction = (abi: any, name: string) => "name" in abi && abi.name === name;
+
 export const useERC20Tokens = () => {
-  const [latestBlock, setLatestBlock] = useState<bigint>();
   const [erc20Tokens, setERC20Tokens] = useState<ERC20TokenContract[]>();
 
+  const isMounted = useIsMounted();
   const { targetNetwork } = useTargetNetwork();
 
-  useWatchBlocks({
-    onBlock(block) {
-      setLatestBlock(block.number);
-    },
-  });
+  const deployedContracts = useMemo(() => contracts?.[targetNetwork.id], [contracts, targetNetwork.id]);
 
-  useMemo(() => {
-    const deployedContracts = contracts?.[targetNetwork.id];
-    if (!deployedContracts) return;
-    const erc20Tokens: ERC20TokenContract[] = [];
-    Object.entries(deployedContracts).forEach(([contractName, contract]) => {
-      if (
-        contract.inheritedFunctions &&
-        "totalSupply" in contract.inheritedFunctions &&
-        "balanceOf" in contract.inheritedFunctions &&
-        "transfer" in contract.inheritedFunctions &&
-        "allowance" in contract.inheritedFunctions &&
-        "approve" in contract.inheritedFunctions &&
-        "transferFrom" in contract.inheritedFunctions
-      ) {
-        erc20Tokens.push({ contractName: contractName as ContractName, contract });
-      }
-    });
+  useEffect(() => {
+    if (!isMounted() || !deployedContracts) return;
+    const erc20Tokens: ERC20TokenContract[] = Object.entries(deployedContracts)
+      .filter(
+        ([, contract]) =>
+          contract.abi.some(abi => isAbiFunction(abi, "balanceOf")) &&
+          contract.abi.some(abi => isAbiFunction(abi, "transfer")) &&
+          contract.abi.some(abi => isAbiFunction(abi, "allowance")) &&
+          contract.abi.some(abi => isAbiFunction(abi, "approve")) &&
+          contract.abi.some(abi => isAbiFunction(abi, "transferFrom")),
+      )
+      .map(([contractName, contract]) => ({
+        contractName: contractName as ContractName,
+        contract,
+        canMint:
+          contract.abi.some(abi => isAbiFunction(abi, "mint")) &&
+          !contract.abi.some(abi => isAbiFunction(abi, "minterAllowance")),
+      }));
     setERC20Tokens(erc20Tokens);
-  }, [latestBlock, targetNetwork.id]);
+  }, [isMounted, deployedContracts]);
 
-  return { erc20Tokens };
+  return useMemo(() => ({ erc20Tokens }), [erc20Tokens]);
 };

@@ -19,22 +19,18 @@ export const ProfileSelector: React.FC = () => {
   const { profileId, updateProfileId } = useProfile();
   const { ownedTokens } = useOwnedTokens(address, lensHub?.address, lensHub?.abi);
 
-  const getHandleId = useCallback(
+  const currentProfile = profiles.find(profile => profile.id === profileId);
+
+  const getHandle = useCallback(
     async (tokenId: bigint) => {
-      if (!tokenHandleRegistry) return;
-      return await readContract(wagmiConfig, {
+      if (!lensHandles || !tokenHandleRegistry) return;
+      const handleId = await readContract(wagmiConfig, {
         abi: tokenHandleRegistry.abi,
         address: tokenHandleRegistry.address,
         functionName: "getDefaultHandle",
         args: [tokenId],
       });
-    },
-    [tokenHandleRegistry],
-  );
 
-  const getHandle = useCallback(
-    async (handleId: bigint) => {
-      if (!lensHandles) return;
       return await readContract(wagmiConfig, {
         abi: lensHandles.abi,
         address: lensHandles.address,
@@ -42,16 +38,15 @@ export const ProfileSelector: React.FC = () => {
         args: [handleId],
       });
     },
-    [lensHandles],
+    [lensHandles, tokenHandleRegistry],
   );
 
   useEffect(() => {
     async function fetchProfiles() {
       const profiles: Profile[] = [];
       for (const tokenId of ownedTokens) {
-        const handleId = await getHandleId(tokenId);
-        if (handleId) {
-          const handle = await getHandle(handleId);
+        if (tokenId) {
+          const handle = await getHandle(tokenId);
           if (handle) {
             profiles.push({ id: tokenId, handle });
           }
@@ -60,12 +55,7 @@ export const ProfileSelector: React.FC = () => {
       setProfiles(profiles);
     }
     fetchProfiles();
-  }, [ownedTokens, getHandle, getHandleId]);
-
-  const getCurrentProfile = (): Profile | undefined => {
-    if (!profiles.length) return undefined;
-    return profiles.find(profile => profile.id === profileId);
-  };
+  }, [ownedTokens, getHandle]);
 
   const dropdownRef = useRef<HTMLDetailsElement>(null);
   const closeDropdown = () => {
@@ -86,7 +76,7 @@ export const ProfileSelector: React.FC = () => {
             tabIndex={0}
             className="w-full flex justify-between btn btn-secondary btn-sm shadow-md dropdown-toggle gap-0 !h-auto"
           >
-            <span className="pr-2">{profileId ? getCurrentProfile()?.handle : "No Profile"}</span>
+            <span className="pr-2">{currentProfile?.handle || "No Profile"}</span>
             <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
           </summary>
           {profiles.length > 0 && (

@@ -1,108 +1,199 @@
-import { useCallback, useEffect, useState } from "react";
-import { hardhat } from "viem/chains";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { LensClient, LimitType, PublicationType, development } from "@lens-protocol/client";
+import { useIsMounted } from "usehooks-ts";
+import { polygonAmoy } from "viem/chains";
 import { usePublicClient } from "wagmi";
 import { useDeployedContractInfo, useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions, useProfile } from "~~/hooks/scaffold-lens";
-import { contracts } from "~~/utils/scaffold-eth/contract";
-
-export enum PublicationType {
-  Nonexistent,
-  Post,
-  Comment,
-  Mirror,
-  Quote,
-}
 
 export type Publication = {
   profileId: bigint;
   pubId: bigint;
-  pointedProfileId: bigint;
-  pointedPubId: bigint;
   contentURI: string;
-  referenceModule: `0x${string}`;
-  pubType: PublicationType;
-  rootProfileId: bigint;
-  rootPubId: bigint;
   openActions: OpenActionContract[];
 };
 
+const lensClient = new LensClient({
+  environment: development,
+});
+
 export const usePublications = (refreshCounter = 0) => {
   const [publications, setPublications] = useState<Publication[]>();
+  const [isLoadingRemote, setIsLoadingRemote] = useState<boolean>(false);
+
+  const isMounted = useIsMounted();
+  const publicClient = usePublicClient();
   const { profileId } = useProfile();
   const { openActions } = useOpenActions();
-
-  const publicClient = usePublicClient();
   const { targetNetwork } = useTargetNetwork();
-  const { data: lensHubData } = useDeployedContractInfo("LensHub");
 
-  const getPublications = useCallback(async () => {
-    console.log("getPublications called...");
-    if (!profileId || !openActions?.length || !publicClient) return;
+  const chainId = useMemo(() => targetNetwork?.id, [targetNetwork]);
 
-    const deployedContracts = contracts?.[targetNetwork.id];
-    if (!deployedContracts || !lensHubData) return;
+  const { data: lensHubData, isLoading: loadingLensHubData } = useDeployedContractInfo("LensHub");
 
-    const pubs: Publication[] = [];
-    let hasMore = true;
-    let index = 1n;
+  const getBatchPublications = useCallback(
+    async (profileId: bigint, index = 1n) => {
+      if (!publicClient || !lensHubData) return undefined;
+      const getPublicationsContractConfig = {
+        address: lensHubData.address,
+        abi: lensHubData.abi,
+        functionName: "getPublication",
+      } as const;
 
-    while (hasMore) {
-      try {
-        const publicationRes = await publicClient.readContract({
-          address: lensHubData.address,
-          abi: lensHubData.abi,
-          functionName: "getPublication",
-          args: [profileId, index],
+      const contracts = Array.from({ length: 10 }, (_, i) => ({
+        ...getPublicationsContractConfig,
+        args: [profileId, index + BigInt(i)],
+      }));
+      const call = await publicClient.multicall({ contracts });
+      return call
+        .filter(res => res.status === "success")
+        .map(
+          (res: any, i: number) =>
+            ({
+              profileId,
+              pubId: BigInt(i + 1),
+              contentURI: res.result.contentURI,
+              openActions: [],
+            }) satisfies Publication,
+        );
+    },
+    [publicClient, lensHubData, loadingLensHubData],
+  );
+
+  const getEnabledOpenActions = useCallback(
+    async (profileId: bigint, publications: Publication[]) => {
+      console.log(
+        "usePublications: getEnabledOpenActions: checking",
+        openActions?.length,
+        "open actions",
+        "lensHubData=",
+        lensHubData,
+      );
+      if (!openActions?.length || !publicClient || !lensHubData) return undefined;
+
+      const getOpenActionsContractConfig = {
+        address: lensHubData.address,
+        abi: lensHubData.abi,
+        functionName: "isActionModuleEnabledInPublication",
+      } as const;
+
+      const actionsOnPublications = new Map<bigint, OpenActionContract[]>();
+
+      for (let i = 0; i < openActions.length; i++) {
+        const action = openActions[i];
+        const contracts = publications.map(publication => ({
+          ...getOpenActionsContractConfig,
+          args: [profileId, publication.pubId, action.contract.address],
+        }));
+        const call = await publicClient.multicall({ contracts });
+
+        publications.forEach((publication, j) => {
+          const res = call[j];
+          if (res.status === "success" && res.result) {
+            if (!actionsOnPublications.has(publication.pubId)) {
+              actionsOnPublications.set(publication.pubId, []);
+            }
+            actionsOnPublications.get(publication.pubId)?.push(action);
+          }
         });
-        console.log("publicationRes:", publicationRes);
+      }
 
-        if (publicationRes.pubType === PublicationType.Nonexistent) {
-          hasMore = false;
-          break;
-        }
+      return actionsOnPublications;
+    },
+    [openActions, publicClient, lensHubData, loadingLensHubData],
+  );
 
-        const enabledActions = await Promise.all(
-          openActions.map(async action => {
-            const enabled = await publicClient.readContract({
-              address: lensHubData.address,
-              abi: lensHubData.abi,
-              functionName: "isActionModuleEnabledInPublication",
-              args: [profileId, index, action.contract.address],
-            });
-            return enabled ? action : null;
-          }),
+  const getLocalPublications = useCallback(
+    async (profileId: bigint) => {
+      const pubs: Publication[] = [];
+      const index = 1n;
+
+      try {
+        const publications = await getBatchPublications(profileId, index);
+        if (!publications) return pubs;
+
+        const enabledActions = await getEnabledOpenActions(profileId, publications);
+
+        publications.forEach(publication => {
+          pubs.push({
+            ...publication,
+            openActions: enabledActions?.get(publication.pubId) ?? [],
+          });
+        });
+      } catch (error) {
+        console.error("Error fetching local publications:", error);
+      }
+
+      return pubs;
+    },
+    [getBatchPublications, getEnabledOpenActions],
+  );
+
+  const getRemotePublications = useCallback(
+    async (profileId: bigint) => {
+      if (isLoadingRemote || loadingLensHubData) return undefined;
+
+      const result = await lensClient.publication.fetchAll({
+        where: {
+          from: ["0x" + profileId.toString(16)],
+          publicationTypes: [PublicationType.Post],
+          // metadata: {
+          //   publishedOn: ["scaffold-lens"]
+          // }
+        },
+        limit: LimitType.Fifty,
+      });
+
+      const publications = result.items
+        .filter(item => !item.momoka)
+        .map(
+          item =>
+            ({
+              profileId: profileId,
+              pubId: BigInt(item.id.split("-")[1]),
+              contentURI: "metadata" in item ? item.metadata.rawURI : "",
+              openActions: [],
+            }) satisfies Publication,
         );
 
+      const enabledActions = await getEnabledOpenActions(profileId, publications);
+
+      const pubs: Publication[] = [];
+
+      publications.forEach(publication => {
         pubs.push({
-          profileId,
-          pubId: index,
-          pointedProfileId: publicationRes.pointedProfileId,
-          pointedPubId: publicationRes.pointedPubId,
-          contentURI: publicationRes.contentURI,
-          referenceModule: publicationRes.referenceModule as `0x${string}`,
-          pubType: publicationRes.pubType,
-          rootProfileId: publicationRes.rootProfileId,
-          rootPubId: publicationRes.rootPubId,
-          openActions: enabledActions.filter((action): action is OpenActionContract => action !== null),
+          ...publication,
+          openActions: enabledActions?.get(publication.pubId) ?? [],
         });
+      });
 
-        if (targetNetwork.id !== hardhat.id) {
-          await new Promise(resolve => setTimeout(resolve, 2000));
-        }
-
-        index++;
-      } catch (error) {
-        console.error("Error fetching publication:", error);
-        hasMore = false;
-      }
-    }
-
-    setPublications(pubs);
-  }, [publicClient, profileId, openActions, refreshCounter, lensHubData, targetNetwork.id]);
+      return pubs;
+    },
+    [isLoadingRemote, getEnabledOpenActions, loadingLensHubData],
+  );
 
   useEffect(() => {
-    getPublications();
-  }, [getPublications, refreshCounter]);
+    const getPublications = async () => {
+      if (!isMounted || !profileId || !openActions) {
+        return;
+      }
 
-  return { publications };
+      if (chainId === polygonAmoy.id) {
+        setIsLoadingRemote(true);
+        try {
+          const publications = await getRemotePublications(profileId);
+          setPublications(publications);
+        } finally {
+          setIsLoadingRemote(false);
+        }
+      } else {
+        const publications = await getLocalPublications(profileId);
+        setPublications(publications?.reverse());
+      }
+    };
+
+    getPublications();
+  }, [isMounted, refreshCounter, profileId, chainId, openActions]);
+
+  return useMemo(() => ({ publications }), [publications]);
 };
