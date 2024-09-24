@@ -33,7 +33,6 @@ jobs:
       - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
         env:
           NETWORK: ${{ secrets.NETWORK }}
-          BURNER_PUBLIC_KEY: ${{ secrets.BURNER_PUBLIC_KEY }}
         run: yarn chain & yarn deploy:lens
 
       - name: Run nextjs lint

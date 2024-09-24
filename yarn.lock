@@ -862,42 +862,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@irys/bundles@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@irys/bundles@npm:0.0.1"
-  dependencies:
-    "@ethersproject/bytes": ^5.7.0
-    "@ethersproject/hash": ^5.7.0
-    "@ethersproject/providers": ^5.7.2
-    "@ethersproject/signing-key": ^5.7.0
-    "@ethersproject/transactions": ^5.7.0
-    "@ethersproject/wallet": ^5.7.0
-    "@irys/arweave": ^0.0.2
-    "@noble/ed25519": ^1.6.1
-    "@randlabs/myalgo-connect": ^1.1.2
-    algosdk: ^1.13.1
-    arweave-stream-tx: ^1.1.0
-    base64url: ^3.0.1
-    bs58: ^4.0.1
-    keccak: ^3.0.2
-    multistream: ^4.1.0
-    secp256k1: ^5.0.0
-    tmp-promise: ^3.0.2
-  dependenciesMeta:
-    "@randlabs/myalgo-connect":
-      optional: true
-    algosdk:
-      optional: true
-    arweave-stream-tx:
-      optional: true
-    multistream:
-      optional: true
-    tmp-promise:
-      optional: true
-  checksum: 86ca779dbb44b3c5e348fa2a9fd1bbede96e56fdcb0a95a2d7c3b4ce86f8c484cd41320e43ec33def1259e0b529728919f167944b4944ca448a48dc3e202737b
-  languageName: node
-  linkType: hard
-
 "@irys/query@npm:^0.0.8":
   version: 0.0.8
   resolution: "@irys/query@npm:0.0.8"
@@ -905,16 +869,6 @@ __metadata:
     async-retry: ^1.3.3
     axios: ^1.4.0
   checksum: 5cc0cdcc1b62d9ad0ca071c73c048fdda2a59c7d6e51ed1f39b8d38c25be53f2e8307f9c2ce99d90b4775bfe9ed163770477e980d501b6a6ab353f6a288a90c0
-  languageName: node
-  linkType: hard
-
-"@irys/query@npm:^0.0.9":
-  version: 0.0.9
-  resolution: "@irys/query@npm:0.0.9"
-  dependencies:
-    async-retry: ^1.3.3
-    axios: ^1.4.0
-  checksum: 14f38bffd3f4cb1b926ba32f1173a3aa2add04ded25faffd2e438d8aa9433b31d26e8c6455bc25ad89a6c61bb45f8902038b37ae03eae60bb0d7fe901cf256e0
   languageName: node
   linkType: hard
 
@@ -952,65 +906,6 @@ __metadata:
     irys: build/cjs/node/cli.js
     irys-esm: build/esm/node/cli.js
   checksum: e537bfa9811d9104446de1c1999be8dfdb6c966612bbd30810535822b7fc8b3eb3656f158b8385e14977f292f7ecea3f1000ad8a994dad424b73176f06212839
-  languageName: node
-  linkType: hard
-
-"@irys/upload-core@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "@irys/upload-core@npm:0.0.5"
-  dependencies:
-    "@irys/bundles": ^0.0.1
-    "@irys/query": ^0.0.9
-    "@supercharge/promise-pool": ^3.1.1
-    async-retry: ^1.3.3
-    axios: ^1.7.5
-    base64url: ^3.0.1
-    bignumber.js: ^9.1.2
-  checksum: d4078b8543c654b101c28804d96f9fa4df7d1ac5f189d07036b5a505b43c66be0c341e8e171a132417321df3f131fe09e53b0d46f3e0816ed50d9adc6840cb6d
-  languageName: node
-  linkType: hard
-
-"@irys/web-upload-ethereum-viem-v2@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "@irys/web-upload-ethereum-viem-v2@npm:0.0.8"
-  dependencies:
-    "@ethersproject/bignumber": ^5.7.0
-    "@irys/bundles": ^0.0.1
-    "@irys/upload-core": ^0.0.5
-    "@irys/web-upload": ^0.0.7
-    "@irys/web-upload-ethereum": ^0.0.7
-    bignumber.js: ^9.1.2
-  checksum: 4eda33255c6b32f47b8719906042d4a225871217781219f30d898d569d35c8dc0e4f1b5b2c8b8c17827f9c337565cf828de564034f05ecb2048763ef095cb8f3
-  languageName: node
-  linkType: hard
-
-"@irys/web-upload-ethereum@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "@irys/web-upload-ethereum@npm:0.0.7"
-  dependencies:
-    "@ethersproject/bignumber": ^5.7.0
-    "@ethersproject/contracts": ^5.7.0
-    "@ethersproject/providers": ^5.7.2
-    "@irys/bundles": ^0.0.1
-    "@irys/upload-core": ^0.0.5
-    "@irys/web-upload": ^0.0.7
-    bignumber.js: ^9.1.2
-  checksum: 757d1573c5e57e795c956ee91fbd5068d8c8d13cf6738a807aec26980e3f9550363e15e66e1126639290e54961c34666c7c81f5240422709dd62d8895e050b47
-  languageName: node
-  linkType: hard
-
-"@irys/web-upload@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "@irys/web-upload@npm:0.0.7"
-  dependencies:
-    "@irys/bundles": ^0.0.1
-    "@irys/upload-core": ^0.0.5
-    async-retry: ^1.3.3
-    axios: ^1.7.5
-    base64url: ^3.0.1
-    bignumber.js: ^9.1.2
-    mime-types: ^2.1.35
-  checksum: 6af352492cabcf9d7b34c2c567c241614b11a376acd37ca9540ec5dd486b846cb8105ba5b5c820c932e06bc784636538dca011e5f4627f12f572d75b254b04ee
   languageName: node
   linkType: hard
 
@@ -2862,9 +2757,6 @@ __metadata:
   dependencies:
     "@heroicons/react": ^2.0.11
     "@irys/sdk": ^0.1.24
-    "@irys/web-upload": ^0.0.7
-    "@irys/web-upload-ethereum": ^0.0.7
-    "@irys/web-upload-ethereum-viem-v2": ^0.0.8
     "@lens-protocol/client": ^2.3.1
     "@lens-protocol/metadata": ^1.2.0
     "@rainbow-me/rainbowkit": 2.1.2
@@ -3161,7 +3053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supercharge/promise-pool@npm:^3.0.0, @supercharge/promise-pool@npm:^3.1.1":
+"@supercharge/promise-pool@npm:^3.0.0":
   version: 3.2.0
   resolution: "@supercharge/promise-pool@npm:3.2.0"
   checksum: 2a53c08669017a16baf540970923af7736e78cb07dda6f268608ed7f9b952b6b94010ad43b8b61c70c8ad6725625ad8314821e003a836bab277ff5171bd65ffb
@@ -5521,17 +5413,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.5":
-  version: 1.7.7
-  resolution: "axios@npm:1.7.7"
-  dependencies:
-    follow-redirects: ^1.15.6
-    form-data: ^4.0.0
-    proxy-from-env: ^1.1.0
-  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
-  languageName: node
-  linkType: hard
-
 "axobject-query@npm:~3.1.1":
   version: 3.1.1
   resolution: "axobject-query@npm:3.1.1"
@@ -5602,7 +5483,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bignumber.js@npm:^9.0.0, bignumber.js@npm:^9.0.1, bignumber.js@npm:^9.1.1, bignumber.js@npm:^9.1.2":
+"bignumber.js@npm:^9.0.0, bignumber.js@npm:^9.0.1, bignumber.js@npm:^9.1.1":
   version: 9.1.2
   resolution: "bignumber.js@npm:9.1.2"
   checksum: 582c03af77ec9cb0ebd682a373ee6c66475db94a4325f92299621d544aa4bd45cb45fd60001610e94aef8ae98a0905fa538241d9638d4422d57abbeeac6fadaf
@@ -11351,7 +11232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12, mime-types@npm:^2.1.34, mime-types@npm:^2.1.35":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:

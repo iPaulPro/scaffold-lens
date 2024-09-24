@@ -10,5 +10,3 @@ export const MODULE_REGISTRY = isMainnet ? LensContracts.mainnet.ModuleRegistry 
 export const COLLECT_PUBLICATION_ACTION = isMainnet
   ? LensContracts.mainnet.Modules.act.find(a => a.name === "CollectPublicationAction")?.address
   : LensContracts.testnet.Modules.act.find(a => a.name === "CollectPublicationAction")?.address;
-
-export const BURNER_PUBLIC_KEY = process.env.BURNER_PUBLIC_KEY || "0xCcF81EA786Eb3DfB66EF87862e23D6b1426be65c";

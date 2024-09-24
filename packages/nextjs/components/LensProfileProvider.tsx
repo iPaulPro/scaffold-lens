@@ -1,11 +1,6 @@
 "use client";
 
-import React, { ReactNode, createContext, useEffect, useMemo, useState } from "react";
-
-// The private key for the burner wallet, whitelisted on Lens contracts.
-// If this is changed, the public key must also be changed in packages/hardhat/deploy/00_deploy_lens_protocol.ts
-const burnerPrivateKey =
-  process.env.NEXT_PUBLIC_BURNER_PRIVATE_KEY || "0xf63df6f85a8a01eeed7eb110f19d5812cf3da44d946d98daca77514341d6c708";
+import React, { ReactNode, createContext, useMemo, useState } from "react";
 
 export interface ProfileContextType {
   profileId: bigint | undefined;
@@ -26,13 +21,6 @@ export function LensProfileProvider({ children }: ProfileProviderProps) {
     }
     return undefined;
   });
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Set burnerWallet.pk to whitelisted private key
-      localStorage.setItem("burnerWallet.pk", burnerPrivateKey);
-    }
-  }, []);
 
   const updateProfileId = (newProfileId: bigint) => {
     setProfileId(newProfileId);

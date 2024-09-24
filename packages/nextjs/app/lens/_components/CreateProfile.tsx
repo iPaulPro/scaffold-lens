@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { getTransactionReceipt } from "@wagmi/core";
 import { parseEventLogs } from "viem";
 import { useAccount } from "wagmi";
-import { useDeployedContractInfo, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { useProfile } from "~~/hooks/scaffold-lens";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
@@ -14,9 +14,14 @@ export const CreateProfile: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const { address } = useAccount();
-  const { writeContractAsync } = useScaffoldWriteContract("ProfileCreationProxy");
+  const { writeContractAsync } = useScaffoldWriteContract("PermissionlessCreator");
   const { updateProfileId } = useProfile();
   const { data: lensHub } = useDeployedContractInfo("LensHub");
+
+  const { data: price } = useScaffoldReadContract({
+    contractName: "PermissionlessCreator",
+    functionName: "getProfileWithHandleCreationPrice",
+  });
 
   const onProfileCreated = async (hash: `0x${string}`) => {
     if (!lensHub) return;
@@ -33,12 +38,13 @@ export const CreateProfile: React.FC = () => {
     }
   };
 
-  const createProfile = async () => {
+  const createProfile = useCallback(async () => {
     if (!address || !handle) return;
 
     const createTxHash = await writeContractAsync({
-      functionName: "proxyCreateProfileWithHandle",
-      args: [{ to: address, followModule: ZERO_ADDRESS, followModuleInitData: "0x" }, handle],
+      functionName: "createProfileWithHandle",
+      args: [{ to: address, followModule: ZERO_ADDRESS, followModuleInitData: "0x" }, handle, []],
+      value: price,
     });
 
     setHandle("");
@@ -47,7 +53,7 @@ export const CreateProfile: React.FC = () => {
     if (createTxHash) {
       await onProfileCreated(createTxHash);
     }
-  };
+  }, [price, address, handle]);
 
   return (
     <>
