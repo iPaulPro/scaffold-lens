@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LensClient, LimitType, PublicationType, development } from "@lens-protocol/client";
 import { useIsMounted } from "usehooks-ts";
-import { polygonAmoy } from "viem/chains";
+import { hardhat, polygonAmoy } from "viem/chains";
 import { usePublicClient } from "wagmi";
 import { useDeployedContractInfo, useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions, useProfile } from "~~/hooks/scaffold-lens";
@@ -31,44 +31,58 @@ export const usePublications = (refreshCounter = 0) => {
 
   const { data: lensHubData, isLoading: loadingLensHubData } = useDeployedContractInfo("LensHub");
 
-  const getBatchPublications = useCallback(
-    async (profileId: bigint, index = 1n) => {
-      if (!publicClient || !lensHubData) return undefined;
-      const getPublicationsContractConfig = {
-        address: lensHubData.address,
-        abi: lensHubData.abi,
-        functionName: "getPublication",
-      } as const;
+  const getLocalPublications = useCallback(async () => {
+    if (!profileId || !openActions?.length || !publicClient || !lensHubData) return [];
 
-      const contracts = Array.from({ length: 10 }, (_, i) => ({
-        ...getPublicationsContractConfig,
-        args: [profileId, index + BigInt(i)],
-      }));
-      const call = await publicClient.multicall({ contracts });
-      return call
-        .filter(res => res.status === "success")
-        .map(
-          (res: any, i: number) =>
-            ({
-              profileId,
-              pubId: BigInt(i + 1),
-              contentURI: res.result.contentURI,
-              openActions: [],
-            }) satisfies Publication,
+    const pubs: Publication[] = [];
+    let hasMore = true;
+    let index = 1n;
+
+    while (hasMore) {
+      try {
+        const publicationRes = await publicClient.readContract({
+          address: lensHubData.address,
+          abi: lensHubData.abi,
+          functionName: "getPublication",
+          args: [profileId, index],
+        });
+
+        if (publicationRes.pubType === 0) {
+          hasMore = false;
+          break;
+        }
+
+        const enabledActions = await Promise.all(
+          openActions.map(async action => {
+            const enabled = await publicClient.readContract({
+              address: lensHubData.address,
+              abi: lensHubData.abi,
+              functionName: "isActionModuleEnabledInPublication",
+              args: [profileId, index, action.contract.address],
+            });
+            return enabled ? action : null;
+          }),
         );
-    },
-    [publicClient, lensHubData, loadingLensHubData],
-  );
 
-  const getEnabledOpenActions = useCallback(
+        pubs.push({
+          profileId,
+          pubId: index,
+          contentURI: publicationRes.contentURI,
+          openActions: enabledActions.filter((action): action is OpenActionContract => action !== null),
+        });
+
+        index++;
+      } catch (error) {
+        console.error("Error fetching publication:", error);
+        hasMore = false;
+      }
+    }
+
+    return pubs;
+  }, [publicClient, lensHubData, loadingLensHubData]);
+
+  const getEnabledOpenActionsBatch = useCallback(
     async (profileId: bigint, publications: Publication[]) => {
-      console.log(
-        "usePublications: getEnabledOpenActions: checking",
-        openActions?.length,
-        "open actions",
-        "lensHubData=",
-        lensHubData,
-      );
       if (!openActions?.length || !publicClient || !lensHubData) return undefined;
 
       const getOpenActionsContractConfig = {
@@ -103,32 +117,6 @@ export const usePublications = (refreshCounter = 0) => {
     [openActions, publicClient, lensHubData, loadingLensHubData],
   );
 
-  const getLocalPublications = useCallback(
-    async (profileId: bigint) => {
-      const pubs: Publication[] = [];
-      const index = 1n;
-
-      try {
-        const publications = await getBatchPublications(profileId, index);
-        if (!publications) return pubs;
-
-        const enabledActions = await getEnabledOpenActions(profileId, publications);
-
-        publications.forEach(publication => {
-          pubs.push({
-            ...publication,
-            openActions: enabledActions?.get(publication.pubId) ?? [],
-          });
-        });
-      } catch (error) {
-        console.error("Error fetching local publications:", error);
-      }
-
-      return pubs;
-    },
-    [getBatchPublications, getEnabledOpenActions],
-  );
-
   const getRemotePublications = useCallback(
     async (profileId: bigint) => {
       if (isLoadingRemote || loadingLensHubData) return undefined;
@@ -137,9 +125,6 @@ export const usePublications = (refreshCounter = 0) => {
         where: {
           from: ["0x" + profileId.toString(16)],
           publicationTypes: [PublicationType.Post],
-          // metadata: {
-          //   publishedOn: ["scaffold-lens"]
-          // }
         },
         limit: LimitType.Fifty,
       });
@@ -156,7 +141,7 @@ export const usePublications = (refreshCounter = 0) => {
             }) satisfies Publication,
         );
 
-      const enabledActions = await getEnabledOpenActions(profileId, publications);
+      const enabledActions = await getEnabledOpenActionsBatch(profileId, publications);
 
       const pubs: Publication[] = [];
 
@@ -169,7 +154,7 @@ export const usePublications = (refreshCounter = 0) => {
 
       return pubs;
     },
-    [isLoadingRemote, getEnabledOpenActions, loadingLensHubData],
+    [isLoadingRemote, getEnabledOpenActionsBatch, loadingLensHubData],
   );
 
   useEffect(() => {
@@ -178,7 +163,10 @@ export const usePublications = (refreshCounter = 0) => {
         return;
       }
 
-      if (chainId === polygonAmoy.id) {
+      if (chainId === hardhat.id) {
+        const publications = await getLocalPublications();
+        setPublications(publications?.reverse());
+      } else if (chainId === polygonAmoy.id) {
         setIsLoadingRemote(true);
         try {
           const publications = await getRemotePublications(profileId);
@@ -186,9 +174,6 @@ export const usePublications = (refreshCounter = 0) => {
         } finally {
           setIsLoadingRemote(false);
         }
-      } else {
-        const publications = await getLocalPublications(profileId);
-        setPublications(publications?.reverse());
       }
     };
 

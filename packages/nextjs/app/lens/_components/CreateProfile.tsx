@@ -23,20 +23,23 @@ export const CreateProfile: React.FC = () => {
     functionName: "getProfileWithHandleCreationPrice",
   });
 
-  const onProfileCreated = async (hash: `0x${string}`) => {
-    if (!lensHub) return;
+  const onProfileCreated = useCallback(
+    async (hash: `0x${string}`) => {
+      if (!lensHub) return;
 
-    const receipt = await getTransactionReceipt(wagmiConfig, { hash });
-    const logs = parseEventLogs({
-      abi: lensHub.abi,
-      eventName: "Transfer",
-      logs: receipt.logs,
-    });
-    const profileId = logs[0]?.args?.tokenId;
-    if (profileId) {
-      updateProfileId(profileId);
-    }
-  };
+      const receipt = await getTransactionReceipt(wagmiConfig, { hash });
+      const logs = parseEventLogs({
+        abi: lensHub.abi,
+        eventName: "Transfer",
+        logs: receipt.logs,
+      });
+      const profileId = logs[0]?.args?.tokenId;
+      if (profileId) {
+        updateProfileId(profileId);
+      }
+    },
+    [lensHub, updateProfileId],
+  );
 
   const createProfile = useCallback(async () => {
     if (!address || !handle) return;
@@ -53,7 +56,7 @@ export const CreateProfile: React.FC = () => {
     if (createTxHash) {
       await onProfileCreated(createTxHash);
     }
-  }, [price, address, handle]);
+  }, [price, address, handle, onProfileCreated, writeContractAsync]);
 
   return (
     <>
