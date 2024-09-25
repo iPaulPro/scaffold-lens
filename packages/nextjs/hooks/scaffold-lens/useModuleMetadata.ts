@@ -53,17 +53,24 @@ export const useModuleMetadata = () => {
         };
       }
 
-      const metadataUri = (await publicClient.readContract({
-        address: moduleAddress,
-        abi: moduleAbi,
-        functionName: "getModuleMetadataURI",
-      })) as string;
-      const metadataRes = await fetch(metadataUri.replace("ar://", "https://gateway.irys.xyz/"));
-      const json = await metadataRes.json();
-      return {
-        initializeCalldataABI: JSON.parse(json.initializeCalldataABI),
-        processCalldataABI: JSON.parse(json.processCalldataABI),
-      };
+      try {
+        const metadataUri = (await publicClient.readContract({
+          address: moduleAddress,
+          abi: moduleAbi,
+          functionName: "getModuleMetadataURI",
+        })) as string;
+        const metadataRes = await fetch(metadataUri.replace("ar://", "https://gateway.irys.xyz/"));
+        const json = await metadataRes.json();
+        return {
+          initializeCalldataABI: JSON.parse(json.initializeCalldataABI),
+          processCalldataABI: JSON.parse(json.processCalldataABI),
+        };
+      } catch (e) {
+        return {
+          initializeCalldataABI: [],
+          processCalldataABI: [],
+        };
+      }
     },
     [collectPublicationAction, multirecipientFeeCollectModule, simpleFeeCollectModule],
   );

@@ -48,13 +48,17 @@ export const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
     const compatModules: CollectModuleContract[] = [];
     const getCompatibleModules = async () => {
       for (const collectModule of collectModules) {
-        const actionModule = await publicClient.readContract({
-          address: collectModule.contract.address,
-          abi: collectModule.contract.abi,
-          functionName: "ACTION_MODULE",
-        });
-        if (actionModule === selectedActionModule?.contract.address) {
-          compatModules.push(collectModule);
+        try {
+          const actionModule = await publicClient.readContract({
+            address: collectModule.contract.address,
+            abi: collectModule.contract.abi,
+            functionName: "ACTION_MODULE",
+          });
+          if (actionModule === selectedActionModule?.contract.address) {
+            compatModules.push(collectModule);
+          }
+        } catch (e) {
+          // not all modules have ACTION_MODULE
         }
       }
       setCompatibleModules(compatModules);

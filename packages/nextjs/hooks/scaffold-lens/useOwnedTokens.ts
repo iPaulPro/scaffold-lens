@@ -8,7 +8,12 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
   const processedEvents = useRef<Set<string>>(new Set());
 
   useMemo(() => {
-    if (!address || !publicClient) return;
+    if (!publicClient) return;
+
+    if (!address) {
+      setOwnedTokens([]);
+      return;
+    }
 
     const transferEvent = parseAbiItem(
       "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { CreatePost, CreateProfile, ERC20Token, Post, ProfileSelector } from "~~/app/lens/_components";
 import { useCollectModules, useERC20Tokens, useProfile, usePublications } from "~~/hooks/scaffold-lens";
 
@@ -8,6 +9,7 @@ export const LensModules: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [postRefreshCounter, setPostRefreshCounter] = useState(0);
 
+  const { address } = useAccount();
   const { profileId } = useProfile();
 
   const { collectModules } = useCollectModules();
@@ -21,6 +23,18 @@ export const LensModules: React.FC = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  if (!address) {
+    return (
+      <>
+        <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
+          <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col gap-y-2 p-4">
+            <div>Connect a wallet to interact with Lens contracts</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
