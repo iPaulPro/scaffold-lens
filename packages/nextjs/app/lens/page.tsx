@@ -1,11 +1,18 @@
+import { fetchMetadata } from "frames.js/next";
 import type { NextPage } from "next";
 import { LensModules } from "~~/app/lens/_components";
-import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
-export const metadata = getMetadata({
-  title: "Open Actions",
-  description: "Debug your deployed Lens Module contracts in an easy way",
-});
+export async function generateMetadata() {
+  return {
+    title: "Open Actions",
+    description: "Debug your deployed Lens Module contracts in an easy way",
+    other: {
+      ...(await fetchMetadata(
+        new URL("/frames", process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
+      )),
+    },
+  };
+}
 
 const Lens: NextPage = () => {
   return (
