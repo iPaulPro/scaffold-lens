@@ -3,9 +3,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { usePublicClient } from "wagmi";
 import { ActOnPost } from "~~/app/lens/_components/ActOnPost";
+import { Frame } from "~~/app/lens/_components/Frame";
 import { Address } from "~~/components/scaffold-eth";
 import { CollectModuleContract, Publication } from "~~/hooks/scaffold-lens";
-import { getCollectModuleAddress } from "~~/utils/scaffold-lens";
+import { extractUrls, fetchMetaTags, getCollectModuleAddress, parseMetaTags, toHex } from "~~/utils/scaffold-lens";
 
 interface PublicationProps {
   publication: Publication;
@@ -17,6 +18,7 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
   const [content, setContent] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [frameUrl, setFrameUrl] = useState<string | null>(null);
 
   const publicClient = usePublicClient();
 
@@ -61,6 +63,30 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
     fetchContent();
   }, [fetchContent]);
 
+  const getFrameUrl = useCallback(async () => {
+    const urls = extractUrls(content);
+    if (urls.length === 0) return null;
+
+    for (const url of urls) {
+      const metaTags = await fetchMetaTags(url);
+      const ofTags = parseMetaTags(metaTags, ["of"]);
+      if (ofTags.of.accepts?.lens) {
+        return url;
+      }
+    }
+
+    return null;
+  }, [content]);
+
+  useEffect(() => {
+    const loadFrameUrl = async () => {
+      const url = await getFrameUrl();
+      setFrameUrl(url);
+    };
+
+    loadFrameUrl();
+  }, [getFrameUrl]);
+
   return (
     <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col space-y-2 p-4">
       <div className="text-sm opacity-70">Publication {publication.pubId.toString()}</div>
@@ -74,7 +100,7 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
           </button>
         </div>
       ) : (
-        <div>{content}</div>
+        <div className="whitespace-break-spaces break-words">{content}</div>
       )}
       <div className="flex gap-2 flex-wrap">
         {openAction && (
@@ -98,6 +124,7 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
           </div>
         )}
       </div>
+      {frameUrl && <Frame frameUrl={frameUrl} pubId={`${toHex(publication.profileId)}-${toHex(publication.pubId)}`} />}
       {publication.openActions.length > 0 && <ActOnPost publication={publication} collectModule={collectModule} />}
     </div>
   );

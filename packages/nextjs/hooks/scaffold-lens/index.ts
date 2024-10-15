@@ -5,3 +5,5 @@ export * from "./useCollectModules";
 export * from "./useERC20Tokens";
 export * from "./usePublications";
 export * from "./useModuleMetadata";
+export * from "./useLocalLensIdentity";
+export * from "./useLensIdentity";

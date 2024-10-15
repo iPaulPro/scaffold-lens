@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LensClient, LimitType, PublicationType, development } from "@lens-protocol/client";
 import { useIsMounted } from "usehooks-ts";
 import { hardhat, polygonAmoy } from "viem/chains";
 import { usePublicClient } from "wagmi";
 import { useDeployedContractInfo, useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions, useProfile } from "~~/hooks/scaffold-lens";
+import { toHex } from "~~/utils/scaffold-lens";
 
 export type Publication = {
   profileId: bigint;
@@ -12,10 +13,6 @@ export type Publication = {
   contentURI: string;
   openActions: OpenActionContract[];
 };
-
-const lensClient = new LensClient({
-  environment: development,
-});
 
 export const usePublications = (refreshCounter = 0) => {
   const [publications, setPublications] = useState<Publication[]>();
@@ -31,8 +28,14 @@ export const usePublications = (refreshCounter = 0) => {
 
   const { data: lensHubData, isLoading: loadingLensHubData } = useDeployedContractInfo("LensHub");
 
+  const lensClient = useRef(
+    new LensClient({
+      environment: development,
+    }),
+  ).current;
+
   const getLocalPublications = useCallback(async () => {
-    if (!profileId || !openActions?.length || !publicClient || !lensHubData) return [];
+    if (!profileId || !publicClient || !lensHubData) return [];
 
     const pubs: Publication[] = [];
     let hasMore = true;
@@ -52,17 +55,20 @@ export const usePublications = (refreshCounter = 0) => {
           break;
         }
 
-        const enabledActions = await Promise.all(
-          openActions.map(async action => {
-            const enabled = await publicClient.readContract({
-              address: lensHubData.address,
-              abi: lensHubData.abi,
-              functionName: "isActionModuleEnabledInPublication",
-              args: [profileId, index, action.contract.address],
-            });
-            return enabled ? action : null;
-          }),
-        );
+        let enabledActions: (OpenActionContract | null)[] = [];
+        if (openActions?.length) {
+          enabledActions = await Promise.all(
+            openActions.map(async action => {
+              const enabled = await publicClient.readContract({
+                address: lensHubData.address,
+                abi: lensHubData.abi,
+                functionName: "isActionModuleEnabledInPublication",
+                args: [profileId, index, action.contract.address],
+              });
+              return enabled ? action : null;
+            }),
+          );
+        }
 
         pubs.push({
           profileId,
@@ -79,7 +85,7 @@ export const usePublications = (refreshCounter = 0) => {
     }
 
     return pubs;
-  }, [publicClient, lensHubData, loadingLensHubData]);
+  }, [publicClient, lensHubData, loadingLensHubData, openActions, profileId]);
 
   const getEnabledOpenActionsBatch = useCallback(
     async (profileId: bigint, publications: Publication[]) => {
@@ -114,7 +120,7 @@ export const usePublications = (refreshCounter = 0) => {
 
       return actionsOnPublications;
     },
-    [openActions, publicClient, lensHubData, loadingLensHubData],
+    [openActions, publicClient, lensHubData],
   );
 
   const getRemotePublications = useCallback(
@@ -123,7 +129,7 @@ export const usePublications = (refreshCounter = 0) => {
 
       const result = await lensClient.publication.fetchAll({
         where: {
-          from: ["0x" + profileId.toString(16)],
+          from: [toHex(profileId)],
           publicationTypes: [PublicationType.Post],
         },
         limit: LimitType.Fifty,
@@ -154,12 +160,12 @@ export const usePublications = (refreshCounter = 0) => {
 
       return pubs;
     },
-    [isLoadingRemote, getEnabledOpenActionsBatch, loadingLensHubData],
+    [isLoadingRemote, getEnabledOpenActionsBatch, loadingLensHubData, lensClient.publication],
   );
 
   useEffect(() => {
     const getPublications = async () => {
-      if (!isMounted || !profileId || !openActions) {
+      if (!isMounted || !profileId) {
         return;
       }
 
@@ -178,7 +184,7 @@ export const usePublications = (refreshCounter = 0) => {
     };
 
     getPublications();
-  }, [isMounted, refreshCounter, profileId, chainId, openActions]);
+  }, [isMounted, refreshCounter, profileId, chainId, getLocalPublications, getRemotePublications]);
 
   return useMemo(() => ({ publications }), [publications]);
 };

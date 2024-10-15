@@ -8,7 +8,10 @@ export async function generateMetadata() {
     description: "Debug your deployed Lens Module contracts in an easy way",
     other: {
       ...(await fetchMetadata(
-        new URL("/frames", process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
+        new URL(
+          "/frames/serve",
+          process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000",
+        ),
       )),
     },
   };

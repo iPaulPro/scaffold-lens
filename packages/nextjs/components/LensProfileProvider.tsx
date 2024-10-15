@@ -25,6 +25,13 @@ export function LensProfileProvider({ children }: ProfileProviderProps) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (!address) {
+      setProfileId(undefined);
+    }
+  }, [address]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !chainId) return;
     const storedProfileId = localStorage.getItem("profileId-" + chainId);
     if (storedProfileId) {
       setProfileId(BigInt(storedProfileId));
@@ -32,12 +39,6 @@ export function LensProfileProvider({ children }: ProfileProviderProps) {
       setProfileId(undefined);
     }
   }, [chainId]);
-
-  useEffect(() => {
-    if (!address) {
-      setProfileId(undefined);
-    }
-  }, [address]);
 
   const updateProfileId = useCallback(
     (newProfileId: bigint) => {
