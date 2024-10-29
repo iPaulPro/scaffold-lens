@@ -70,7 +70,7 @@ export const Post: React.FC<PublicationProps> = ({ publication, collectModules }
     for (const url of urls) {
       const metaTags = await fetchMetaTags(url);
       const ofTags = parseMetaTags(metaTags, ["of"]);
-      if (ofTags.of.accepts?.lens) {
+      if (ofTags.of?.accepts?.lens) {
         return url;
       }
     }

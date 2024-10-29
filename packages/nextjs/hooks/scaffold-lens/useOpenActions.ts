@@ -19,7 +19,7 @@ export const useOpenActions = () => {
   const { targetNetwork } = useTargetNetwork();
   const { getModuleMetadata } = useModuleMetadata();
 
-  const deployedContracts = useMemo(() => contracts?.[targetNetwork.id], [contracts, targetNetwork.id]);
+  const deployedContracts = useMemo(() => contracts?.[targetNetwork.id], [targetNetwork.id]);
 
   const getMetadata = useCallback(
     async (contract: GenericContract) => {
@@ -47,7 +47,7 @@ export const useOpenActions = () => {
     };
 
     fetchOpenActions();
-  }, [isMounted, deployedContracts, getMetadata]);
+  }, [isMounted, deployedContracts]);
 
   return useMemo(() => ({ openActions }), [openActions]);
 };

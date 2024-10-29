@@ -2,7 +2,11 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { parseAbiItem } from "viem";
 import { usePublicClient, useWatchContractEvent } from "wagmi";
 
-export const useOwnedTokens = (address: string | undefined, contractAddress: `0x${string}` | undefined, abi: any) => {
+export const useOwnedTokens = (
+  address: string | undefined,
+  contractAddress: `0x${string}` | undefined,
+  abi: any | undefined,
+) => {
   const [ownedTokens, setOwnedTokens] = useState<bigint[]>([]);
   const publicClient = usePublicClient();
   const processedEvents = useRef<Set<string>>(new Set());
@@ -10,7 +14,7 @@ export const useOwnedTokens = (address: string | undefined, contractAddress: `0x
   useMemo(() => {
     if (!publicClient) return;
 
-    if (!address) {
+    if (!address || !abi) {
       setOwnedTokens([]);
       return;
     }

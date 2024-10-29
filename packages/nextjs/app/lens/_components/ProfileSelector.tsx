@@ -4,20 +4,22 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { readContract } from "@wagmi/core";
 import { useAccount } from "wagmi";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useDeployedContractInfo, useOutsideClick } from "~~/hooks/scaffold-eth";
+import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { Profile, useOwnedTokens, useProfile } from "~~/hooks/scaffold-lens";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
+import { Contract, contracts } from "~~/utils/scaffold-eth/contract";
 
 export const ProfileSelector: React.FC = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
 
-  const { data: lensHub } = useDeployedContractInfo("LensHub");
-  const { data: lensHandles } = useDeployedContractInfo("LensHandles");
-  const { data: tokenHandleRegistry } = useDeployedContractInfo("TokenHandleRegistry");
+  const { targetNetwork } = useTargetNetwork();
+  const lensHub = contracts?.[targetNetwork.id]?.["LensHub"];
+  const lensHandles = contracts?.[targetNetwork.id]?.["LensHandles"] as Contract<"LensHandles">;
+  const tokenHandleRegistry = contracts?.[targetNetwork.id]?.["TokenHandleRegistry"] as Contract<"TokenHandleRegistry">;
 
   const { address } = useAccount();
   const { profileId, updateProfileId } = useProfile();
-  const { ownedTokens } = useOwnedTokens(address, lensHub?.address, lensHub?.abi);
+  const { ownedTokens } = useOwnedTokens(address, lensHub?.address as `0x${string}`, lensHub?.abi);
 
   const currentProfile = profiles.find(profile => profile.id === profileId);
 
@@ -45,11 +47,9 @@ export const ProfileSelector: React.FC = () => {
     async function fetchProfiles() {
       const profiles: Profile[] = [];
       for (const tokenId of ownedTokens) {
-        if (tokenId) {
-          const handle = await getHandle(tokenId);
-          if (handle) {
-            profiles.push({ id: tokenId, handle });
-          }
+        const handle = await getHandle(tokenId);
+        if (handle) {
+          profiles.push({ id: tokenId, handle });
         }
       }
       setProfiles(profiles);

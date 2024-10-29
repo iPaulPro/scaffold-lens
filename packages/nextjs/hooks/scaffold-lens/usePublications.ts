@@ -3,8 +3,9 @@ import { LensClient, LimitType, PublicationType, development } from "@lens-proto
 import { useIsMounted } from "usehooks-ts";
 import { hardhat, polygonAmoy } from "viem/chains";
 import { usePublicClient } from "wagmi";
-import { useDeployedContractInfo, useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { OpenActionContract, useOpenActions, useProfile } from "~~/hooks/scaffold-lens";
+import { Contract, contracts } from "~~/utils/scaffold-eth/contract";
 import { toHex } from "~~/utils/scaffold-lens";
 
 export type Publication = {
@@ -26,7 +27,7 @@ export const usePublications = (refreshCounter = 0) => {
 
   const chainId = useMemo(() => targetNetwork?.id, [targetNetwork]);
 
-  const { data: lensHubData, isLoading: loadingLensHubData } = useDeployedContractInfo("LensHub");
+  const lensHub = contracts?.[targetNetwork.id]?.["LensHub"] as Contract<"LensHub">;
 
   const lensClient = useRef(
     new LensClient({
@@ -35,7 +36,7 @@ export const usePublications = (refreshCounter = 0) => {
   ).current;
 
   const getLocalPublications = useCallback(async () => {
-    if (!profileId || !publicClient || !lensHubData) return [];
+    if (!profileId || !publicClient || !lensHub) return [];
 
     const pubs: Publication[] = [];
     let hasMore = true;
@@ -44,8 +45,8 @@ export const usePublications = (refreshCounter = 0) => {
     while (hasMore) {
       try {
         const publicationRes = await publicClient.readContract({
-          address: lensHubData.address,
-          abi: lensHubData.abi,
+          address: lensHub.address,
+          abi: lensHub.abi,
           functionName: "getPublication",
           args: [profileId, index],
         });
@@ -60,8 +61,8 @@ export const usePublications = (refreshCounter = 0) => {
           enabledActions = await Promise.all(
             openActions.map(async action => {
               const enabled = await publicClient.readContract({
-                address: lensHubData.address,
-                abi: lensHubData.abi,
+                address: lensHub.address,
+                abi: lensHub.abi,
                 functionName: "isActionModuleEnabledInPublication",
                 args: [profileId, index, action.contract.address],
               });
@@ -85,15 +86,15 @@ export const usePublications = (refreshCounter = 0) => {
     }
 
     return pubs;
-  }, [publicClient, lensHubData, loadingLensHubData, openActions, profileId]);
+  }, [publicClient, lensHub, openActions, profileId]);
 
   const getEnabledOpenActionsBatch = useCallback(
     async (profileId: bigint, publications: Publication[]) => {
-      if (!openActions?.length || !publicClient || !lensHubData) return undefined;
+      if (!openActions?.length || !publicClient || !lensHub) return undefined;
 
       const getOpenActionsContractConfig = {
-        address: lensHubData.address,
-        abi: lensHubData.abi,
+        address: lensHub.address,
+        abi: lensHub.abi,
         functionName: "isActionModuleEnabledInPublication",
       } as const;
 
@@ -120,12 +121,12 @@ export const usePublications = (refreshCounter = 0) => {
 
       return actionsOnPublications;
     },
-    [openActions, publicClient, lensHubData],
+    [openActions, publicClient, lensHub],
   );
 
   const getRemotePublications = useCallback(
     async (profileId: bigint) => {
-      if (isLoadingRemote || loadingLensHubData) return undefined;
+      if (isLoadingRemote) return undefined;
 
       const result = await lensClient.publication.fetchAll({
         where: {
@@ -160,7 +161,7 @@ export const usePublications = (refreshCounter = 0) => {
 
       return pubs;
     },
-    [isLoadingRemote, getEnabledOpenActionsBatch, loadingLensHubData, lensClient.publication],
+    [isLoadingRemote, getEnabledOpenActionsBatch, lensClient.publication],
   );
 
   useEffect(() => {
@@ -184,7 +185,7 @@ export const usePublications = (refreshCounter = 0) => {
     };
 
     getPublications();
-  }, [isMounted, refreshCounter, profileId, chainId, getLocalPublications, getRemotePublications]);
+  }, [isMounted, refreshCounter, profileId, chainId]);
 
   return useMemo(() => ({ publications }), [publications]);
 };

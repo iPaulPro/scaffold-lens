@@ -267,7 +267,7 @@ export function useLensIdentity({
         searchParams,
       };
     },
-    [activeConnection, config, lensClient.frames, lensClient.profile, lensSigner],
+    [activeConnection, config, lensSigner],
   );
 
   const closeProfileSelector = useCallback(() => {

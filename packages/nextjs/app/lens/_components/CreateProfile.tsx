@@ -4,19 +4,21 @@ import React, { useCallback, useState } from "react";
 import { getTransactionReceipt } from "@wagmi/core";
 import { parseEventLogs } from "viem";
 import { useAccount } from "wagmi";
-import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract, useTargetNetwork } from "~~/hooks/scaffold-eth";
 import { useProfile } from "~~/hooks/scaffold-lens";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 import { ZERO_ADDRESS } from "~~/utils/scaffold-eth/common";
+import { Contract, contracts } from "~~/utils/scaffold-eth/contract";
 
 export const CreateProfile: React.FC = () => {
   const [handle, setHandle] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const { targetNetwork } = useTargetNetwork();
   const { address } = useAccount();
   const { writeContractAsync } = useScaffoldWriteContract("PermissionlessCreator");
   const { updateProfileId } = useProfile();
-  const { data: lensHub } = useDeployedContractInfo("LensHub");
+  const lensHub = contracts?.[targetNetwork.id]?.["LensHub"] as Contract<"LensHub">;
 
   const { data: price } = useScaffoldReadContract({
     contractName: "PermissionlessCreator",

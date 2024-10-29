@@ -143,8 +143,6 @@ export function useLocalLensIdentity({
         await switchChain(config, { chainId });
       }
 
-      console.log("signFrameAction: lensSigner", lensSigner);
-
       const message = {
         url: actionContext.url,
         inputText: actionContext.inputText || "",

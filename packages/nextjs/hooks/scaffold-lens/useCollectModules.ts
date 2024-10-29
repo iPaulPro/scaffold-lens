@@ -19,7 +19,7 @@ export const useCollectModules = () => {
   const { targetNetwork } = useTargetNetwork();
   const { getModuleMetadata } = useModuleMetadata();
 
-  const deployedContracts = useMemo(() => contracts?.[targetNetwork.id], [contracts, targetNetwork.id]);
+  const deployedContracts = useMemo(() => contracts?.[targetNetwork.id], [targetNetwork.id]);
 
   const getMetadata = useCallback(
     async (contract: GenericContract) => {
@@ -49,7 +49,7 @@ export const useCollectModules = () => {
     };
 
     fetchCollectModules();
-  }, [isMounted, deployedContracts, getMetadata]);
+  }, [isMounted, deployedContracts]);
 
   return useMemo(() => ({ collectModules }), [collectModules]);
 };

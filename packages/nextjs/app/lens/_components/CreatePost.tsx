@@ -41,7 +41,7 @@ export const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
   const { writeContractAsync } = useScaffoldWriteContract("LensHub");
 
   useMemo(() => {
-    if (!collectModules || !publicClient) {
+    if (!collectModules || !selectedActionModule || !publicClient) {
       return;
     }
 
@@ -114,7 +114,6 @@ export const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
       // If there is no Collect Module we're using the OpenActionModule
       try {
         const formData = getParsedContractFunctionArgs(openActionInitForm);
-        console.log("submitPost: formData", formData, "formattedActionABI", formattedActionABI);
         const openActionInitData = encodeAbiParameters(formattedActionABI, formData);
 
         actionModulesInitDatas.push(openActionInitData);
@@ -127,14 +126,6 @@ export const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
 
     const metadata = textOnly({ content: postContent });
     const contentURI = await uploadPostMetadata(metadata);
-    console.log(
-      "submitPost: contentURI",
-      contentURI,
-      "actionModules",
-      actionModules,
-      "actionModulesInitDatas",
-      actionModulesInitDatas,
-    );
 
     try {
       await writeContractAsync({
