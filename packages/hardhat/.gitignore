@@ -15,7 +15,9 @@ typechain-types
 
 # hardhat files
 cache
+cache-zk
 artifacts
+artifacts-zk
 
 # hardhat-dependency-compiler
 contracts/hardhat-dependency-compiler
