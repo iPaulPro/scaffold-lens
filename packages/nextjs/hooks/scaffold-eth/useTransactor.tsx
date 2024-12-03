@@ -1,5 +1,6 @@
 import { getPublicClient } from "@wagmi/core";
-import { Hash, SendTransactionParameters, WalletClient } from "viem";
+import { Hash, SendTransactionParameters, TransactionReceipt, WalletClient } from "viem";
+import { ZkSyncTransactionReceipt } from "viem/_types/zksync/types/transaction";
 import { Config, useWalletClient } from "wagmi";
 import { SendTransactionMutate } from "wagmi/query";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
@@ -25,6 +26,12 @@ const TxnNotification = ({ message, blockExplorerLink }: { message: string; bloc
       ) : null}
     </div>
   );
+};
+
+const isZkSyncTransactionReceipt = (
+  receipt: ZkSyncTransactionReceipt | TransactionReceipt,
+): receipt is ZkSyncTransactionReceipt => {
+  return "l1BatchNumber" in receipt && "l1BatchTxIndex" in receipt && "l2ToL1Logs" in receipt;
 };
 
 /**
@@ -84,7 +91,9 @@ export const useTransactor = (_walletClient?: WalletClient): TransactionFunc => 
         },
       );
 
-      if (options?.onBlockConfirmation) options.onBlockConfirmation(transactionReceipt);
+      if (options?.onBlockConfirmation && isZkSyncTransactionReceipt(transactionReceipt)) {
+        options.onBlockConfirmation(transactionReceipt);
+      }
     } catch (error: any) {
       if (notificationId) {
         notification.remove(notificationId);

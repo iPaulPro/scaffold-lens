@@ -36,7 +36,7 @@ const config: HardhatUserConfig = {
     version: "latest",
     settings: {},
   },
-  defaultNetwork: "inMemoryNode",
+  defaultNetwork: "localhost",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -49,10 +49,11 @@ const config: HardhatUserConfig = {
     hardhat: {
       zksync: true,
     },
-    inMemoryNode: {
+    localhost: {
       url: "http://127.0.0.1:8011",
       ethNetwork: "localhost", // in-memory node doesn't support eth node; removing this line will cause an error
       zksync: true,
+      accounts: [deployerPrivateKey],
     },
     lensTestnet: {
       chainId: 37111,

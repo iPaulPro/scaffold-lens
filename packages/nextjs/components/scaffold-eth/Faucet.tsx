@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Address as AddressType, createWalletClient, http, parseEther } from "viem";
-import { hardhat } from "viem/chains";
+import { privateKeyToAccount } from "viem/accounts";
+import { zkSyncInMemoryNode } from "viem/chains";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, AddressInput, Balance, EtherInput } from "~~/components/scaffold-eth";
@@ -11,11 +12,14 @@ import { notification } from "~~/utils/scaffold-eth";
 
 // Account index to use from generated hardhat accounts.
 const FAUCET_ACCOUNT_INDEX = 0;
+const FAUCET_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 const localWalletClient = createWalletClient({
-  chain: hardhat,
+  chain: zkSyncInMemoryNode,
   transport: http(),
 });
+
+const account = privateKeyToAccount(FAUCET_PRIVATE_KEY);
 
 /**
  * Faucet modal which lets you send ETH to any address.
@@ -63,7 +67,7 @@ export const Faucet = () => {
       await faucetTxn({
         to: inputAddress,
         value: parseEther(sendValue as `${number}`),
-        account: faucetAddress,
+        account,
       });
       setLoading(false);
       setInputAddress(undefined);
@@ -75,7 +79,7 @@ export const Faucet = () => {
   };
 
   // Render only on local chain
-  if (ConnectedChain?.id !== hardhat.id) {
+  if (ConnectedChain?.id !== zkSyncInMemoryNode.id) {
     return null;
   }
 

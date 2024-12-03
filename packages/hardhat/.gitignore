@@ -28,6 +28,7 @@ cache-zk
 
 # deployments
 deployments/localhost
+deployments-zk/localhost
 
 # other
 temp

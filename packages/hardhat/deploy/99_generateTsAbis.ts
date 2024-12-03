@@ -17,8 +17,8 @@ const generatedContractComment = `
  */
 `;
 
-const DEPLOYMENTS_DIR = "./deployments";
-const ARTIFACTS_DIR = "./artifacts";
+const DEPLOYMENTS_DIR = "./deployments-zk";
+const ARTIFACTS_DIR = "./artifacts-zk";
 
 function getDirectories(path: string) {
   return fs
@@ -27,12 +27,24 @@ function getDirectories(path: string) {
     .map(dirent => dirent.name);
 }
 
-function getContractNames(path: string) {
-  return fs
-    .readdirSync(path, { withFileTypes: true })
-    .filter(dirent => dirent.isFile() && dirent.name.endsWith(".json"))
-    .filter(dirent => !dirent.name.includes("LensHubInitializable"))
-    .map(dirent => dirent.name.split(".")[0]);
+function getContractNames(path: string): string[] {
+  const contractNames: string[] = [];
+
+  function findContracts(dir: string) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) {
+        findContracts(fullPath);
+      } else if (entry.isFile() && entry.name.endsWith(".json")) {
+        const relativePath = fullPath.replace(`${path}/`, "").replace(".json", "");
+        contractNames.push(relativePath);
+      }
+    }
+  }
+
+  findContracts(path);
+  return contractNames;
 }
 
 function getActualSourcesForContract(sources: Record<string, any>, contractName: string) {
@@ -84,12 +96,14 @@ function getContractDataFromDeployments() {
   for (const chainName of getDirectories(DEPLOYMENTS_DIR)) {
     const chainId = fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/.chainId`).toString();
     const contracts = {} as Record<string, any>;
-    for (const contractName of getContractNames(`${DEPLOYMENTS_DIR}/${chainName}`)) {
-      const { abi, address, metadata } = JSON.parse(
-        fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/${contractName}.json`).toString(),
+    for (const contractPath of getContractNames(`${DEPLOYMENTS_DIR}/${chainName}`)) {
+      const { abi, entries, metadata, contractName } = JSON.parse(
+        fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/${contractPath}.json`).toString(),
       );
-      const inheritedFunctions = getInheritedFunctions(JSON.parse(metadata).sources, contractName);
-      contracts[contractName] = { address, abi, inheritedFunctions };
+      const inheritedFunctions = metadata?.sources
+        ? getInheritedFunctions(JSON.parse(metadata).sources, contractPath)
+        : undefined;
+      contracts[contractName] = { address: entries[0].address, abi, inheritedFunctions };
     }
     output[chainId] = contracts;
   }

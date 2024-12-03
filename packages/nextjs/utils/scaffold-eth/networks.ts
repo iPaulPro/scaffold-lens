@@ -40,7 +40,7 @@ export const getAlchemyHttpUrl = (chainId: number) => {
 };
 
 export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
-  [chains.hardhat.id]: {
+  [chains.zkSyncInMemoryNode.id]: {
     color: "#b8af0c",
   },
   [chains.mainnet.id]: {
@@ -114,7 +114,7 @@ export function getBlockExplorerTxLink(chainId: number, txnHash: string) {
  */
 export function getBlockExplorerAddressLink(network: chains.Chain, address: string) {
   const blockExplorerBaseURL = network.blockExplorers?.default?.url;
-  if (network.id === chains.hardhat.id) {
+  if (network.id === chains.zkSyncInMemoryNode.id) {
     return `/blockexplorer/address/${address}`;
   }
 

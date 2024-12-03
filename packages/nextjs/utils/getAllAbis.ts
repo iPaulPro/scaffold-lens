@@ -1,23 +1,21 @@
-import deployedContracts from "~~/contracts/deployedContracts";
+import { contracts } from "~~/utils/scaffold-eth/contract";
 
 /**
  * Fetches all ABIs from the deployment data.
  * @returns {Array} - The array of all ABIs.
  */
-export function getAllAbis(): any[] {
-  const networkId = 31337; // Adjust based on your hardhat network ID
-  // @ts-ignore
-  const contracts = deployedContracts[networkId];
+export function getAllAbis(chainId: number): any[] {
+  const deployedContracts = contracts?.[chainId];
 
   const allAbis: any[] = [];
 
-  for (const contractName in contracts) {
+  for (const contractName in deployedContracts) {
     // @ts-ignore
-    const contract = contracts[contractName];
+    const contract = deployedContract[contractName];
     allAbis.push(...contract.abi);
     for (const inheritedContractName in contract.inheritedFunctions) {
       // @ts-ignore
-      const inheritedContract = contracts[inheritedContractName];
+      const inheritedContract = deployedContract[inheritedContractName];
       if (inheritedContract) {
         allAbis.push(...inheritedContract.abi);
       }

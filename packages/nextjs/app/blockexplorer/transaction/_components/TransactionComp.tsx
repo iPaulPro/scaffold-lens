@@ -2,56 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Hash, Log, Transaction, TransactionReceipt, decodeEventLog, formatEther, formatUnits } from "viem";
-import { hardhat } from "viem/chains";
+import { Hash, Transaction, TransactionReceipt, formatEther, formatUnits } from "viem";
+import { zkSyncInMemoryNode } from "viem/chains";
 import { usePublicClient } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
-import { getAllAbis } from "~~/utils/getAllAbis";
 import { decodeTransactionData, getFunctionDetails } from "~~/utils/scaffold-eth";
 import { replacer } from "~~/utils/scaffold-eth/common";
 
 const TransactionComp = ({ txHash }: { txHash: Hash }) => {
-  const client = usePublicClient({ chainId: hardhat.id });
+  const client = usePublicClient({ chainId: zkSyncInMemoryNode.id });
   const router = useRouter();
   const [transaction, setTransaction] = useState<Transaction>();
   const [receipt, setReceipt] = useState<TransactionReceipt>();
   const [functionCalled, setFunctionCalled] = useState<string>();
-  const [decodedLogs, setDecodedLogs] = useState<any[]>([]);
 
   const { targetNetwork } = useTargetNetwork();
-
-  async function decodeLogs(logs: Log<bigint, number, false>[]) {
-    const allAbis = getAllAbis(); // Get all ABIs once
-
-    const decodedLogs = await Promise.all(
-      logs.map(async log => {
-        let decodedLog: any;
-
-        for (const abi of allAbis) {
-          try {
-            decodedLog = decodeEventLog({
-              abi: [abi], // Try with each ABI
-              data: log.data,
-              topics: log.topics,
-            });
-            break;
-          } catch (error) {
-            // Continue trying with other ABIs
-          }
-        }
-
-        if (!decodedLog) {
-          console.error("Failed to decode log with provided ABIs");
-          return log; // Return the original log if decoding fails
-        }
-
-        return decodedLog;
-      }),
-    );
-
-    setDecodedLogs(decodedLogs);
-  }
 
   useEffect(() => {
     if (txHash && client) {
@@ -65,8 +31,6 @@ const TransactionComp = ({ txHash }: { txHash: Hash }) => {
 
         const functionCalled = transactionWithDecodedData.input.substring(0, 10);
         setFunctionCalled(functionCalled);
-
-        decodeLogs(receipt.logs);
       };
 
       fetchTransaction();
@@ -158,24 +122,17 @@ const TransactionComp = ({ txHash }: { txHash: Hash }) => {
                 </td>
               </tr>
               <tr>
-                <td className="flex justify-start">
+                <td>
                   <strong>Logs:</strong>
                 </td>
                 <td>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Event Name</th>
-                        <th>Arguments</th>
-                      </tr>
-                    </thead>
-                    {decodedLogs?.map((log: { eventName: string; args: any }, i: number) => (
-                      <tr key={i}>
-                        <td>{log.eventName}</td>
-                        <td>{JSON.stringify(log.args, replacer, 4)}</td>
-                      </tr>
+                  <ul>
+                    {receipt?.logs?.map((log, i) => (
+                      <li key={i}>
+                        <strong>Log {i} topics:</strong> {JSON.stringify(log.topics, replacer, 2)}
+                      </li>
                     ))}
-                  </table>
+                  </ul>
                 </td>
               </tr>
             </tbody>

@@ -18,9 +18,9 @@ import {
   GetTransactionReceiptReturnType,
   GetTransactionReturnType,
   Log,
-  TransactionReceipt,
   WriteContractErrorType,
 } from "viem";
+import { ZkSyncTransactionReceipt } from "viem/chains";
 import { Config, UseReadContractParameters, UseWatchContractEventParameters } from "wagmi";
 import { WriteContractParameters, WriteContractReturnType } from "wagmi/actions";
 import { WriteContractVariables } from "wagmi/query";
@@ -154,16 +154,17 @@ type OptionalTupple<T> = T extends readonly [infer H, ...infer R] ? readonly [H 
 type UseScaffoldArgsParam<
   TContractName extends ContractName,
   TFunctionName extends ExtractAbiFunctionNames<ContractAbi<TContractName>>,
-> = TFunctionName extends FunctionNamesWithInputs<TContractName>
-  ? {
-      args: OptionalTupple<UnionToIntersection<AbiFunctionArguments<ContractAbi<TContractName>, TFunctionName>>>;
-      value?: ExtractAbiFunction<ContractAbi<TContractName>, TFunctionName>["stateMutability"] extends "payable"
-        ? bigint | undefined
-        : undefined;
-    }
-  : {
-      args?: never;
-    };
+> =
+  TFunctionName extends FunctionNamesWithInputs<TContractName>
+    ? {
+        args: OptionalTupple<UnionToIntersection<AbiFunctionArguments<ContractAbi<TContractName>, TFunctionName>>>;
+        value?: ExtractAbiFunction<ContractAbi<TContractName>, TFunctionName>["stateMutability"] extends "payable"
+          ? bigint | undefined
+          : undefined;
+      }
+    : {
+        args?: never;
+      };
 
 export type UseScaffoldReadConfig<
   TContractName extends ContractName,
@@ -193,7 +194,7 @@ export type ScaffoldWriteContractVariables<
 type WriteVariables = WriteContractVariables<Abi, string, any[], Config, number>;
 
 export type TransactorFuncOptions = {
-  onBlockConfirmation?: (txnReceipt: TransactionReceipt) => void;
+  onBlockConfirmation?: (txnReceipt: ZkSyncTransactionReceipt) => void;
   blockConfirmations?: number;
 };
 

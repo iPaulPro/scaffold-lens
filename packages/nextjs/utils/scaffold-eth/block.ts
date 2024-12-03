@@ -1,4 +1,5 @@
-import { Block, Transaction, TransactionReceipt } from "viem";
+import { Transaction, TransactionReceipt } from "viem";
+import { ZkSyncBlock } from "viem/chains";
 
 export type TransactionWithFunction = Transaction & {
   functionName?: string;
@@ -12,6 +13,6 @@ type TransactionReceipts = {
 };
 
 export type TransactionsTableProps = {
-  blocks: Block[];
+  blocks: ZkSyncBlock[];
   transactionReceipts: TransactionReceipts;
 };

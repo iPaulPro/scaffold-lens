@@ -1,29 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  Block,
-  Hash,
-  Transaction,
-  TransactionReceipt,
-  createTestClient,
-  publicActions,
-  walletActions,
-  webSocket,
-} from "viem";
-import { hardhat } from "viem/chains";
+import { Hash, Transaction, TransactionReceipt, createTestClient, http, publicActions, walletActions } from "viem";
+import { ZkSyncBlock, zkSyncInMemoryNode } from "viem/chains";
 import { decodeTransactionData } from "~~/utils/scaffold-eth";
 
 const BLOCKS_PER_PAGE = 20;
 
 export const testClient = createTestClient({
-  chain: hardhat,
+  chain: zkSyncInMemoryNode,
   mode: "hardhat",
-  transport: webSocket("ws://127.0.0.1:8545"),
+  transport: http(),
 })
   .extend(publicActions)
   .extend(walletActions);
 
 export const useFetchBlocks = () => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [blocks, setBlocks] = useState<ZkSyncBlock[]>([]);
   const [transactionReceipts, setTransactionReceipts] = useState<{
     [key: string]: TransactionReceipt;
   }>({});

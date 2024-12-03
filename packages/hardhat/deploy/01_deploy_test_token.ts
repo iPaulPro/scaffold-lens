@@ -1,16 +1,18 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { Deployer } from "@matterlabs/hardhat-zksync";
 
 const deployTestToken: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
+  const wallet = await hre.deployer.getWallet(0);
 
-  await deploy("TestToken", {
-    from: deployer,
-    args: [],
-    log: true,
-    autoMine: true,
-  });
+  // Create deployer object and load the artifact of the contract we want to deploy.
+  const deployer = new Deployer(hre, wallet);
+
+  // Load contract
+  const artifact = await deployer.loadArtifact("TestToken");
+
+  const contract = await deployer.deploy(artifact);
+  console.log("TestToken deployed to:", await contract.getAddress());
 };
 
 export default deployTestToken;
