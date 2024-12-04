@@ -40,16 +40,17 @@ To get started with Scaffold-Lens, follow the steps below:
     ```shell
     git clone https://github.com/iPaulPro/scaffold-lens
     cd scaffold-lens
+    git checkout feat/lens-network
     yarn install
     ```
 
 2. **Start a chain**  
-   Run a local network in a terminal from the root directory:
+   Run a local Lens Network in a terminal from the root directory:
     ```shell
     yarn chain
     ```
 
-   This command starts a local Ethereum network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+   This command starts a local zkSync network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
 
 3. **Deploy**  
    On a second terminal, from the root directory, deploy the Lens contracts locally:
