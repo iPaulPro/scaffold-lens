@@ -32,3 +32,10 @@ deployments-zk/localhost
 
 # other
 temp
+
+# lens
+deployed_primitives.txt
+deployed_rules.txt
+
+# hardhat-zksync-node
+era_test_node.log

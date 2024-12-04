@@ -8,9 +8,16 @@ import "@matterlabs/hardhat-zksync-node/dist/type-extensions";
 import "@matterlabs/hardhat-zksync-verify/dist/src/type-extensions";
 import { ZkSyncArtifact } from "@matterlabs/hardhat-zksync-deploy/dist/types";
 import { Artifact } from "hardhat/types";
+import path from "path";
 
 // Load env file
-dotenv.config();
+const envFileName =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "production" ? ".env" : `.env.${process.env.NODE_ENV}`;
+const envFile = path.resolve(process.cwd(), envFileName);
+dotenv.config({ path: envFile });
+
+const deployerPrivateKey =
+  process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 export const getProvider = () => {
   const rpcUrl = hre.network.config.url;
@@ -24,15 +31,10 @@ export const getProvider = () => {
 };
 
 export const getWallet = (privateKey?: string) => {
-  if (!privateKey) {
-    // Get wallet private key from .env file
-    if (!process.env.WALLET_PRIVATE_KEY) throw "⛔️ Wallet private key wasn't found in .env file!";
-  }
-
   const provider = getProvider();
 
   // Initialize ZKsync Wallet
-  const wallet = new Wallet(privateKey ?? process.env.WALLET_PRIVATE_KEY!, provider);
+  const wallet = new Wallet(privateKey ?? deployerPrivateKey, provider);
 
   return wallet;
 };
@@ -52,7 +54,7 @@ export const verifyEnoughBalance = async (wallet: Wallet, amount: bigint) => {
 export const verifyContract = async (data: {
   address: string;
   contract: string;
-  constructorArguments: string;
+  constructorArguments?: string;
   bytecode: string;
 }) => {
   const verificationRequestId: number = await hre.run("verify:verify", {
@@ -65,13 +67,15 @@ export const verifyContract = async (data: {
 export const verifyZkDeployedContract = async (data: {
   address: string;
   artifact: ZkSyncArtifact;
-  constructorArguments: any[];
+  constructorArguments?: any[];
 }) => {
   const contractToVerify = new ethers.Contract(data.address, data.artifact.abi);
   return verifyContract({
     address: data.address,
     contract: `${data.artifact.sourceName}:${data.artifact.contractName}`,
-    constructorArguments: contractToVerify.interface.encodeDeploy(data.constructorArguments),
+    constructorArguments: data.constructorArguments
+      ? contractToVerify.interface.encodeDeploy(data.constructorArguments)
+      : undefined,
     bytecode: data.artifact.bytecode,
   });
 };
@@ -79,13 +83,15 @@ export const verifyZkDeployedContract = async (data: {
 export const verifyDeployedContract = async (data: {
   address: string;
   artifact: Artifact;
-  constructorArguments: any[];
+  constructorArguments?: any[];
 }) => {
   const contractToVerify = new ethers.Contract(data.address, data.artifact.abi);
   return verifyContract({
     address: data.address,
     contract: `${data.artifact.sourceName}:${data.artifact.contractName}`,
-    constructorArguments: contractToVerify.interface.encodeDeploy(data.constructorArguments),
+    constructorArguments: data.constructorArguments
+      ? contractToVerify.interface.encodeDeploy(data.constructorArguments)
+      : undefined,
     bytecode: data.artifact.bytecode,
   });
 };

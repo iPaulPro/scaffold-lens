@@ -7,15 +7,16 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile --show-stack-traces",
     "deploy": "NODE_ENV=local hardhat deploy-zksync",
-    "deploy:testnet": "NODE_ENV=staging hardhat deploy-zksync --network lensTestnet",
+    "deploy:testnet": "NODE_ENV=staging hardhat deploy-zksync --network lensTestnet --tags AccountVerificationAction,LimitedRepliesPostRule,generateTsAbis",
     "generate": "NODE_ENV=local hardhat run scripts/generateAccount.ts",
     "flatten": "hardhat flatten",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts",
     "lint-staged": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore",
     "format": "prettier --write ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
+    "format-sol": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
     "verify:mainnet": "NODE_ENV=production hardhat etherscan-verify --network polygon",
-    "verify:testnet": "NODE_ENV=staging hardhat verify --network lensTestnet 0x8827054498a0B36259A51e675Feb13C1fCa9f591"
+    "verify:testnet": "NODE_ENV=staging hardhat verify --network lensTestnet 0xA7214006038D501271a1a770e4451bdcCb473Fb8"
   },
   "dependencies": {
     "@irys/sdk": "^0.1.1",
