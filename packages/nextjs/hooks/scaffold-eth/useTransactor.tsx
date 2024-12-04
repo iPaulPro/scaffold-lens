@@ -1,6 +1,6 @@
 import { getPublicClient } from "@wagmi/core";
 import { Hash, SendTransactionParameters, TransactionReceipt, WalletClient } from "viem";
-import { ZkSyncTransactionReceipt } from "viem/_types/zksync/types/transaction";
+import { ZkSyncTransactionReceipt } from "viem/chains";
 import { Config, useWalletClient } from "wagmi";
 import { SendTransactionMutate } from "wagmi/query";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
