@@ -83,6 +83,7 @@ export const isValidInteger = (dataType: IntegerVariant, value: bigint | string,
   let valueAsBigInt;
   try {
     valueAsBigInt = BigInt(value);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {}
   if (typeof valueAsBigInt !== "bigint") {
     if (strict) {
