@@ -1,6 +1,8 @@
 import { defineChain } from "viem";
+import { chainConfig } from "viem/zksync";
 
 export const lensTestnet = defineChain({
+  ...chainConfig,
   id: 37111,
   name: "Lens Testnet",
   nativeCurrency: {
