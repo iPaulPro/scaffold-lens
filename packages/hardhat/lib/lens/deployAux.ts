@@ -1,5 +1,5 @@
 import * as hre from "hardhat";
-import { getAddressFromEvents, getWallet, parseLensContractDeployedEventsFromReceipt } from "./utils";
+import { getAddressFromEvents, getWallet, parseLensContractDeployedEventsFromReceipt, verifyPrimitive } from "./utils";
 import { ethers, ZeroAddress } from "ethers";
 
 const metadataURI = "https://ipfs.io/ipfs/QmZ";
@@ -20,14 +20,6 @@ export interface AppInitialProperties {
   signers: string[];
   paymaster: string;
   treasury: string;
-}
-
-export default async function () {
-  const lensFactoryAddress = "0x0D68809ccC9638CC8B15dA9F86B0249b4edDc60A";
-  const accessControlFactoryAddress = "0xd3CF2F709d4338Ec5aa38B001a4996543B79fB95";
-
-  await deployPrimitives(lensFactoryAddress);
-  await deployAccessControl(accessControlFactoryAddress);
 }
 
 export async function deployPrimitives(lensFactoryAddress: string) {
@@ -77,7 +69,11 @@ async function deployAccount(lensFactory: ethers.Contract): Promise<string> {
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const accountAddress = getAddressFromEvents(events, "account");
 
-  // await verifyPrimitive("Account", accountAddress, [getWallet().address, metadataURI, [], [], emptySourceStamp]);
+  await verifyPrimitive(
+    "Account",
+    accountAddress,
+    // [getWallet().address, metadataURI, [], [], emptySourceStamp]
+  );
 
   return accountAddress;
 }
@@ -90,8 +86,12 @@ async function deployFeed(lensFactory: ethers.Contract): Promise<string> {
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const feedAddress = getAddressFromEvents(events, "feed");
   // const accessControlAddress = getAddressFromEvents(events, "access-control");
-  //
-  // await verifyPrimitive("Feed", feedAddress, [metadataURI, accessControlAddress]);
+
+  await verifyPrimitive(
+    "Feed",
+    feedAddress,
+    // [metadataURI, accessControlAddress]
+  );
 
   return feedAddress;
 }
@@ -104,8 +104,12 @@ async function deployGroup(lensFactory: ethers.Contract): Promise<string> {
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const groupAddress = getAddressFromEvents(events, "group");
   // const accessControlAddress = getAddressFromEvents(events, "access-control");
-  //
-  // await verifyPrimitive("Group", groupAddress, [metadataURI, accessControlAddress]);
+
+  await verifyPrimitive(
+    "Group",
+    groupAddress,
+    // [metadataURI, accessControlAddress]
+  );
 
   return groupAddress;
 }
@@ -118,8 +122,12 @@ async function deployGraph(lensFactory: ethers.Contract): Promise<string> {
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const graphAddress = getAddressFromEvents(events, "graph");
   // const accessControlAddress = getAddressFromEvents(events, "access-control");
-  //
-  // await verifyPrimitive("Graph", graphAddress, [metadataURI, accessControlAddress]);
+
+  await verifyPrimitive(
+    "Graph",
+    graphAddress,
+    // [metadataURI, accessControlAddress]
+  );
 
   return graphAddress;
 }
@@ -146,16 +154,20 @@ export async function deployUsername(lensFactory: ethers.Contract, noVerify: boo
   const usernameAddress = getAddressFromEvents(events, "username");
   // const accessControlAddress = getAddressFromEvents(events, "access-control");
   // const lensUsernameTokenURIProviderAddress = getAddressFromEvents(events, "username-token-uri-provider");
-  //
+
   if (!noVerify) {
-    //   await verifyPrimitive("Username", usernameAddress, [
-    //     namespace,
-    //     metadataURI,
-    //     accessControlAddress,
-    //     nftName,
-    //     nftSymbol,
-    //     lensUsernameTokenURIProviderAddress,
-    //   ]);
+    await verifyPrimitive(
+      "Username",
+      usernameAddress,
+      // [
+      //   namespace,
+      //   metadataURI,
+      //   accessControlAddress,
+      //   nftName,
+      //   nftSymbol,
+      //   lensUsernameTokenURIProviderAddress,
+      // ]
+    );
   }
 
   return usernameAddress;
@@ -175,8 +187,12 @@ export async function deployApp(
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const appAddress = getAddressFromEvents(events, "app");
   // const accessControlAddress = getAddressFromEvents(events, "access-control");
-  //
-  // await verifyPrimitive("App", appAddress, [metadataURI, false, accessControlAddress, initialProperties, []]);
+
+  await verifyPrimitive(
+    "App",
+    appAddress,
+    // [metadataURI, false, accessControlAddress, initialProperties, []]
+  );
 
   return appAddress;
 }
@@ -197,7 +213,11 @@ export async function deployAccessControl(accessControlFactoryAddress: string) {
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const accessControlAddress = getAddressFromEvents(events, "access-control");
 
-  // await verifyPrimitive("OwnerAdminOnlyAccessControl", accessControlAddress, [getWallet().address]);
+  await verifyPrimitive(
+    "OwnerAdminOnlyAccessControl",
+    accessControlAddress,
+    // [getWallet().address]
+  );
 
   return accessControlAddress;
 }

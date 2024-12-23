@@ -3,6 +3,7 @@ import * as hre from "hardhat";
 import { Deployer } from "@matterlabs/hardhat-zksync";
 import dotenv from "dotenv";
 import { ethers } from "ethers";
+import { DeploymentsExtension } from "hardhat-deploy/types";
 
 import "@matterlabs/hardhat-zksync-node/dist/type-extensions";
 import "@matterlabs/hardhat-zksync-verify/dist/src/type-extensions";
@@ -197,25 +198,31 @@ export const getAddressFromEvents = (events: ParsedEvent[], primitiveName: strin
   return events.filter(e => e?.primitive === primitiveName)[0]!.address;
 };
 
-export async function verifyPrimitive(primitiveName: string, primitiveAddress: string, constructorArgs: any[]) {
+export async function verifyPrimitive(
+  primitiveName: string,
+  primitiveAddress: string,
+  // constructorArgs: any[],
+) {
   // Load compiled contract info
   const primitiveArtifact = await hre.artifacts.readArtifact(primitiveName);
 
   const deployer = new Deployer(hre, getWallet());
   const artifact = await deployer.loadArtifact(primitiveName);
 
-  // Initialize contract instance for interaction
-  const primitive = new ethers.Contract(primitiveAddress, primitiveArtifact.abi);
+  await saveDeployment(hre, artifact.contractName, primitiveAddress, primitiveArtifact.abi);
 
-  const encodedConstructorArgs = primitive.interface.encodeDeploy(constructorArgs);
-  const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;
-
-  await verifyContract({
-    address: primitiveAddress,
-    contract: fullContractSource,
-    constructorArguments: encodedConstructorArgs,
-    bytecode: artifact.bytecode,
-  });
+  // // Initialize contract instance for interaction
+  // const primitive = new ethers.Contract(primitiveAddress, primitiveArtifact.abi);
+  //
+  // const encodedConstructorArgs = primitive.interface.encodeDeploy(constructorArgs);
+  // const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;
+  //
+  // await verifyContract({
+  //   address: primitiveAddress,
+  //   contract: fullContractSource,
+  //   constructorArguments: encodedConstructorArgs,
+  //   bytecode: artifact.bytecode,
+  // });
 }
 
 type DeployContractOptions = {
@@ -301,6 +308,20 @@ export function camelToAllCaps(camelCase: string): string {
   return camelCase
     .replace(/([a-z])([A-Z])/g, "$1_$2") // Insert underscore between lowercase and uppercase letters
     .toUpperCase(); // Convert to uppercase
+}
+
+export async function saveDeployment(
+  hre: { deployments: DeploymentsExtension },
+  contractName: string,
+  contractAddress: string,
+  abi: any[],
+) {
+  const { save } = hre.deployments;
+
+  await save(contractName, {
+    address: contractAddress,
+    abi: abi,
+  });
 }
 
 /**

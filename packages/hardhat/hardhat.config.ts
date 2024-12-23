@@ -64,6 +64,9 @@ const config: HardhatUserConfig = {
       accounts: [deployerPrivateKey],
     },
   },
+  paths: {
+    deployments: "./deployments-zk",
+  },
 };
 
 export default config;
