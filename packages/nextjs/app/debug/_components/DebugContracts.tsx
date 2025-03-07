@@ -52,13 +52,10 @@ export function DebugContracts() {
               ))}
             </div>
           )}
-          {contractNames.map(contractName => (
-            <ContractUI
-              key={contractName}
-              contractName={contractName}
-              className={contractName === selectedContract ? "" : "hidden"}
-            />
-          ))}
+          {contractNames.map(
+            contractName =>
+              contractName === selectedContract && <ContractUI key={contractName} contractName={contractName} />,
+          )}
         </>
       )}
     </div>
