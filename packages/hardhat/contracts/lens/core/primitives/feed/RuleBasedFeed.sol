@@ -1,28 +1,32 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
-import {IPostRule} from "./../../interfaces/IPostRule.sol";
-import {IFeedRule} from "./../../interfaces/IFeedRule.sol";
-import {FeedCore as Core} from "./FeedCore.sol";
-import {RulesStorage, RulesLib} from "./../../libraries/RulesLib.sol";
-import {RuleConfiguration, RuleChange, RuleExecutionData} from "./../../types/Types.sol";
-import {EditPostParams, CreatePostParams} from "./../../interfaces/IFeed.sol";
+import {IPostRule} from "contracts/lens/core/interfaces/IPostRule.sol";
+import {IFeedRule} from "contracts/lens/core/interfaces/IFeedRule.sol";
+import {IFeed} from "contracts/lens/core/interfaces/IFeed.sol";
+import {RulesStorage, RulesLib} from "contracts/lens/core/libraries/RulesLib.sol";
+import {RuleProcessingParams, Rule, RuleChange, KeyValue} from "contracts/lens/core/types/Types.sol";
+import {EditPostParams, CreatePostParams} from "contracts/lens/core/interfaces/IFeed.sol";
+import {RuleBasedPrimitive} from "contracts/lens/core/base/RuleBasedPrimitive.sol";
+import {CallLib} from "contracts/lens/core/libraries/CallLib.sol";
+import {Errors} from "contracts/lens/core/types/Errors.sol";
 
-contract RuleBasedFeed {
+abstract contract RuleBasedFeed is IFeed, RuleBasedPrimitive {
     using RulesLib for RulesStorage;
+    using CallLib for address;
 
     struct RuleBasedStorage {
         RulesStorage feedRulesStorage;
         mapping(uint256 => RulesStorage) postRulesStorage;
     }
 
-    // keccak256('lens.rule.based.feed.storage')
-    bytes32 constant RULE_BASED_FEED_STORAGE_SLOT = 0x02d31ef96f666bf684ab1c8a89d21f38a88719152ba49251cdaacb4c11cdae39;
+    /// @custom:keccak lens.storage.RuleBasedStorage
+    bytes32 constant STORAGE__RULE_BASED_FEED = 0x5d84583cb768017b44ca3aec8199901a24d17ed118ff103b086430f4dac47b71;
 
     function $ruleBasedStorage() private pure returns (RuleBasedStorage storage _storage) {
         assembly {
-            _storage.slot := RULE_BASED_FEED_STORAGE_SLOT
+            _storage.slot := STORAGE__RULE_BASED_FEED
         }
     }
 
@@ -34,237 +38,446 @@ contract RuleBasedFeed {
         return $ruleBasedStorage().postRulesStorage[postId];
     }
 
-    // Internal
+    ////////////////////////////  CONFIGURATION FUNCTIONS  ////////////////////////////
 
-    function _addFeedRule(RuleConfiguration memory rule) internal {
-        $feedRulesStorage().addRule(rule, abi.encodeCall(IFeedRule.configure, (rule.configData)));
+    function changeFeedRules(RuleChange[] calldata ruleChanges) external virtual override {
+        _changePrimitiveRules($feedRulesStorage(), ruleChanges);
     }
 
-    function _updateFeedRule(RuleConfiguration memory rule) internal {
-        $feedRulesStorage().updateRule(rule, abi.encodeCall(IFeedRule.configure, (rule.configData)));
-    }
-
-    function _removeFeedRule(address rule) internal {
-        $feedRulesStorage().removeRule(rule);
-    }
-
-    function _addPostRule(uint256 postId, RuleConfiguration memory rule) internal {
-        $postRulesStorage(postId).addRule(rule, abi.encodeCall(IPostRule.configure, (postId, rule.configData)));
-    }
-
-    function _updatePostRule(uint256 postId, RuleConfiguration memory rule) internal {
-        $postRulesStorage(postId).updateRule(rule, abi.encodeCall(IPostRule.configure, (postId, rule.configData)));
-    }
-
-    function _removePostRule(uint256 postId, address rule) internal {
-        $postRulesStorage(postId).removeRule(rule);
-    }
-
-    function _processQuotedPostRules(
-        uint256 quotedPostId,
+    function changePostRules(
         uint256 postId,
-        RuleExecutionData calldata quotedPostRulesData
-    ) internal {
-        uint256 rootPostId = Core.$storage().posts[quotedPostId].rootPostId;
-        RulesStorage storage rulesToProcess = $postRulesStorage(rootPostId);
-
-        // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < rulesToProcess.requiredRules.length; i++) {
-            (bool callNotReverted,) = rulesToProcess.requiredRules[i].call(
-                abi.encodeCall(
-                    IPostRule.processQuote,
-                    (rootPostId, quotedPostId, postId, quotedPostRulesData.dataForRequiredRules[i])
-                )
-            );
-            require(callNotReverted, "Some required rule failed");
-        }
-        // Check any-of rules (OR-combined rules)
-        if (rulesToProcess.anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < rulesToProcess.anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = rulesToProcess.anyOfRules[i].call(
-                abi.encodeCall(
-                    IPostRule.processQuote, (rootPostId, quotedPostId, postId, quotedPostRulesData.dataForAnyOfRules[i])
-                )
-            );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
-                return; // If any of the OR-combined rules passed, it means they succeed and we can return
-            }
-        }
-        revert("All of the OR rules failed");
+        RuleChange[] calldata ruleChanges,
+        RuleProcessingParams[] calldata feedRulesParams
+    ) external virtual override {
+        _changeEntityRules($postRulesStorage(postId), postId, ruleChanges, feedRulesParams);
     }
 
-    function _processRepliedPostRules(
-        uint256 repliedPostId,
-        uint256 postId,
-        RuleExecutionData calldata parentPostRulesData
-    ) internal {
-        uint256 rootPostId = Core.$storage().posts[repliedPostId].rootPostId;
-        RulesStorage storage rulesToProcess = $postRulesStorage(rootPostId);
-
-        // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < rulesToProcess.requiredRules.length; i++) {
-            (bool callNotReverted,) = rulesToProcess.requiredRules[i].call(
-                abi.encodeCall(
-                    IPostRule.processReply,
-                    (rootPostId, repliedPostId, postId, parentPostRulesData.dataForRequiredRules[i])
-                )
-            );
-            require(callNotReverted, "Some required rule failed");
-        }
-        // Check any-of rules (OR-combined rules)
-        if (rulesToProcess.anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < rulesToProcess.anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = rulesToProcess.anyOfRules[i].call(
-                abi.encodeCall(
-                    IPostRule.processReply,
-                    (rootPostId, repliedPostId, postId, parentPostRulesData.dataForAnyOfRules[i])
-                )
-            );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
-                return; // If any of the OR-combined rules passed, it means they succeed and we can return
-            }
-        }
-        revert("All of the OR rules failed");
-    }
-
-    function _processRepostedPostRules(
-        uint256 repostedPostId,
-        uint256 postId,
-        RuleExecutionData calldata parentPostRulesData
-    ) internal {
-        uint256 rootPostId = Core.$storage().posts[repostedPostId].rootPostId;
-        RulesStorage storage rulesToProcess = $postRulesStorage(rootPostId);
-
-        // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < rulesToProcess.requiredRules.length; i++) {
-            (bool callNotReverted,) = rulesToProcess.requiredRules[i].call(
-                abi.encodeCall(
-                    IPostRule.processRepost,
-                    (rootPostId, repostedPostId, postId, parentPostRulesData.dataForRequiredRules[i])
-                )
-            );
-            require(callNotReverted, "Some required rule failed");
-        }
-        // Check any-of rules (OR-combined rules)
-        if (rulesToProcess.anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < rulesToProcess.anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = rulesToProcess.anyOfRules[i].call(
-                abi.encodeCall(
-                    IPostRule.processRepost,
-                    (rootPostId, repostedPostId, postId, parentPostRulesData.dataForAnyOfRules[i])
-                )
-            );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
-                return; // If any of the OR-combined rules passed, it means they succeed and we can return
-            }
-        }
-        revert("All of the OR rules failed");
-    }
-
-    function _processPostCreation(uint256 postId, CreatePostParams calldata postParams) internal {
-        // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < $feedRulesStorage().requiredRules.length; i++) {
-            (bool callNotReverted,) = $feedRulesStorage().requiredRules[i].call(
-                abi.encodeCall(
-                    IFeedRule.processCreatePost, (postId, postParams, postParams.feedRulesData.dataForRequiredRules[i])
-                )
-            );
-            require(callNotReverted, "Some required rule failed");
-        }
-        // Check any-of rules (OR-combined rules)
-        if ($feedRulesStorage().anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < $feedRulesStorage().anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = $feedRulesStorage().anyOfRules[i].call(
-                abi.encodeCall(
-                    IFeedRule.processCreatePost, (postId, postParams, postParams.feedRulesData.dataForAnyOfRules[i])
-                )
-            );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
-                return; // If any of the OR-combined rules passed, it means they succeed and we can return
-            }
-        }
-        revert("All of the OR rules failed");
-    }
-
-    function _feedProcessEditPost(
-        uint256 postId,
-        EditPostParams calldata newPostParams,
-        RuleExecutionData calldata feedRulesData
-    ) internal {
-        // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < $feedRulesStorage().requiredRules.length; i++) {
-            (bool callNotReverted,) = $feedRulesStorage().requiredRules[i].call(
-                abi.encodeCall(
-                    IFeedRule.processEditPost, (postId, newPostParams, feedRulesData.dataForRequiredRules[i])
-                )
-            );
-            require(callNotReverted, "Some required rule failed");
-        }
-        // Check any-of rules (OR-combined rules)
-        if ($feedRulesStorage().anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < $feedRulesStorage().anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = $feedRulesStorage().anyOfRules[i].call(
-                abi.encodeCall(IFeedRule.processEditPost, (postId, newPostParams, feedRulesData.dataForAnyOfRules[i]))
-            );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
-                return; // If any of the OR-combined rules passed, it means they succeed and we can return
-            }
-        }
-        revert("All of the OR rules failed");
-    }
-
-    function _processChangesOnPostRules(
+    function _processEntityRulesChanges(
         uint256 postId,
         RuleChange[] memory ruleChanges,
-        RuleExecutionData calldata feedRulesData
-    ) internal {
-        // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < $feedRulesStorage().requiredRules.length; i++) {
-            (bool callNotReverted,) = $feedRulesStorage().requiredRules[i].call(
-                abi.encodeCall(
-                    IFeedRule.processPostRuleChanges, (postId, ruleChanges, feedRulesData.dataForRequiredRules[i])
-                )
+        RuleProcessingParams[] memory feedRulesParams
+    ) internal virtual override {
+        _processPostRulesChanges(postId, ruleChanges, feedRulesParams);
+    }
+
+    function _supportedPrimitiveRuleSelectors() internal view virtual override returns (bytes4[] memory) {
+        bytes4[] memory selectors = new bytes4[](4);
+        selectors[0] = IFeedRule.processCreatePost.selector;
+        selectors[1] = IFeedRule.processEditPost.selector;
+        selectors[2] = IFeedRule.processDeletePost.selector;
+        selectors[3] = IFeedRule.processPostRuleChanges.selector;
+        return selectors;
+    }
+
+    function _supportedEntityRuleSelectors() internal view virtual override returns (bytes4[] memory) {
+        bytes4[] memory selectors = new bytes4[](2);
+        selectors[0] = IPostRule.processCreatePost.selector;
+        selectors[1] = IPostRule.processEditPost.selector;
+        return selectors;
+    }
+
+    function _encodePrimitiveConfigureCall(bytes32 configSalt, KeyValue[] memory ruleParams)
+        internal
+        pure
+        override
+        returns (bytes memory)
+    {
+        return abi.encodeCall(IFeedRule.configure, (configSalt, ruleParams));
+    }
+
+    function _encodeEntityConfigureCall(uint256 postId, bytes32 configSalt, KeyValue[] memory ruleParams)
+        internal
+        pure
+        override
+        returns (bytes memory)
+    {
+        return abi.encodeCall(IPostRule.configure, (configSalt, postId, ruleParams));
+    }
+
+    function _emitPrimitiveRuleConfiguredEvent(
+        bool wasAlreadyConfigured,
+        address ruleAddress,
+        bytes32 configSalt,
+        KeyValue[] memory ruleParams
+    ) internal override {
+        if (wasAlreadyConfigured) {
+            emit IFeed.Lens_Feed_RuleReconfigured(ruleAddress, configSalt, ruleParams);
+        } else {
+            emit IFeed.Lens_Feed_RuleConfigured(ruleAddress, configSalt, ruleParams);
+        }
+    }
+
+    function _emitPrimitiveRuleSelectorEvent(
+        bool enabled,
+        address ruleAddress,
+        bytes32 configSalt,
+        bool isRequired,
+        bytes4 ruleSelector
+    ) internal override {
+        if (enabled) {
+            emit Lens_Feed_RuleSelectorEnabled(ruleAddress, configSalt, isRequired, ruleSelector);
+        } else {
+            emit Lens_Feed_RuleSelectorDisabled(ruleAddress, configSalt, isRequired, ruleSelector);
+        }
+    }
+
+    function _emitEntityRuleConfiguredEvent(
+        bool wasAlreadyConfigured,
+        uint256 entityId,
+        address ruleAddress,
+        bytes32 configSalt,
+        KeyValue[] memory ruleParams
+    ) internal override {
+        if (wasAlreadyConfigured) {
+            emit IFeed.Lens_Feed_Post_RuleReconfigured(entityId, msg.sender, ruleAddress, configSalt, ruleParams);
+        } else {
+            emit IFeed.Lens_Feed_Post_RuleConfigured(entityId, msg.sender, ruleAddress, configSalt, ruleParams);
+        }
+    }
+
+    function _emitEntityRuleSelectorEvent(
+        bool enabled,
+        uint256 entityId,
+        address ruleAddress,
+        bytes32 configSalt,
+        bool isRequired,
+        bytes4 selector
+    ) internal override {
+        if (enabled) {
+            emit IFeed.Lens_Feed_Post_RuleSelectorEnabled(
+                entityId, msg.sender, ruleAddress, configSalt, isRequired, selector
             );
-            require(callNotReverted, "Some required rule failed");
+        } else {
+            emit IFeed.Lens_Feed_Post_RuleSelectorDisabled(
+                entityId, msg.sender, ruleAddress, configSalt, isRequired, selector
+            );
+        }
+    }
+
+    function _amountOfRules(bytes4 ruleSelector) internal view returns (uint256) {
+        return $feedRulesStorage()._getRulesArray(ruleSelector, false).length
+            + $feedRulesStorage()._getRulesArray(ruleSelector, true).length;
+    }
+
+    function getFeedRules(bytes4 ruleSelector, bool isRequired) external view virtual override returns (Rule[] memory) {
+        return $feedRulesStorage()._getRulesArray(ruleSelector, isRequired);
+    }
+
+    function getPostRules(bytes4 ruleSelector, uint256 postId, bool isRequired)
+        external
+        view
+        virtual
+        override
+        returns (Rule[] memory)
+    {
+        return $postRulesStorage(postId)._getRulesArray(ruleSelector, isRequired);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    function _addPostRulesAtCreation(
+        uint256 postId,
+        CreatePostParams memory postParams,
+        RuleProcessingParams[] memory feedRulesParams
+    ) internal {
+        _changeEntityRules($postRulesStorage(postId), postId, postParams.ruleChanges, feedRulesParams);
+    }
+
+    // Internal
+
+    function _encodeAndCallProcessCreatePostOnFeed(
+        Rule memory rule,
+        ProcessPostCreationParams memory processParams,
+        KeyValue[] memory ruleParams
+    ) internal returns (bool, bytes memory) {
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IFeedRule.processCreatePost,
+                (
+                    rule.configSalt,
+                    processParams.postId,
+                    processParams.postParams,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
+    }
+
+    function _encodeAndCallProcessCreatePostOnRootPost(
+        Rule memory rule,
+        ProcessPostCreationParams memory processParams,
+        KeyValue[] memory ruleParams
+    ) internal returns (bool, bytes memory) {
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IPostRule.processCreatePost,
+                (
+                    rule.configSalt,
+                    processParams.rootPostId,
+                    processParams.postId,
+                    processParams.postParams,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
+    }
+
+    struct ProcessPostCreationParams {
+        bytes4 ruleSelector;
+        uint256 rootPostId;
+        uint256 postId;
+        CreatePostParams postParams;
+        KeyValue[] primitiveCustomParams;
+        RuleProcessingParams[] rulesProcessingParams;
+    }
+
+    function _processPostCreation(
+        function(Rule memory,ProcessPostCreationParams memory,KeyValue[] memory) internal returns (bool, bytes memory)
+            encodeAndCall,
+        ProcessPostCreationParams memory processParams
+    ) internal {
+        RulesStorage storage _rulesStorage =
+            processParams.rootPostId == 0 ? $feedRulesStorage() : $postRulesStorage(processParams.rootPostId);
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
+        // Check required rules (AND-combined rules)
+        for (uint256 i = 0; i < _rulesStorage.requiredRules[processParams.ruleSelector].length; i++) {
+            rule = _rulesStorage.requiredRules[processParams.ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            require(callSucceeded, Errors.RequiredRuleReverted());
         }
         // Check any-of rules (OR-combined rules)
-        if ($feedRulesStorage().anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < $feedRulesStorage().anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = $feedRulesStorage().anyOfRules[i].call(
-                abi.encodeCall(
-                    IFeedRule.processPostRuleChanges, (postId, ruleChanges, feedRulesData.dataForAnyOfRules[i])
-                )
-            );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
+        for (uint256 i = 0; i < _rulesStorage.anyOfRules[processParams.ruleSelector].length; i++) {
+            rule = _rulesStorage.anyOfRules[processParams.ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            if (callSucceeded) {
                 return; // If any of the OR-combined rules passed, it means they succeed and we can return
             }
         }
-        revert("All of the OR rules failed");
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require(_rulesStorage.anyOfRules[processParams.ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
     }
 
-    function _getFeedRules(bool isRequired) internal view returns (address[] memory) {
-        return $feedRulesStorage().getRulesArray(isRequired);
+    function _processPostCreationOnRootPost(
+        uint256 rootPostId,
+        uint256 postId,
+        CreatePostParams memory postParams,
+        KeyValue[] memory primitiveCustomParams,
+        RuleProcessingParams[] memory postRulesParams
+    ) internal {
+        _processPostCreation(
+            _encodeAndCallProcessCreatePostOnRootPost,
+            ProcessPostCreationParams({
+                ruleSelector: IPostRule.processCreatePost.selector,
+                rootPostId: rootPostId,
+                postId: postId,
+                postParams: postParams,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: postRulesParams
+            })
+        );
     }
 
-    function _getPostRules(uint256 postId, bool isRequired) internal view returns (address[] memory) {
-        return $postRulesStorage(postId).getRulesArray(isRequired);
+    function _processPostCreationOnFeed(
+        uint256 postId,
+        CreatePostParams memory postParams,
+        KeyValue[] memory primitiveCustomParams,
+        RuleProcessingParams[] memory feedRulesParams
+    ) internal {
+        _processPostCreation(
+            _encodeAndCallProcessCreatePostOnFeed,
+            ProcessPostCreationParams({
+                ruleSelector: IFeedRule.processCreatePost.selector,
+                rootPostId: 0,
+                postId: postId,
+                postParams: postParams,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: feedRulesParams
+            })
+        );
+    }
+
+    function _processPostEditingOnRootPost(
+        uint256 rootPostId,
+        uint256 postId,
+        EditPostParams memory postParams,
+        KeyValue[] memory primitiveCustomParams,
+        RuleProcessingParams[] memory postRulesParams
+    ) internal {
+        _processPostEditing(
+            _encodeAndCallProcessEditPostOnRootPost,
+            ProcessPostEditingParams({
+                ruleSelector: IPostRule.processEditPost.selector,
+                rootPostId: rootPostId,
+                postId: postId,
+                postParams: postParams,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: postRulesParams
+            })
+        );
+    }
+
+    function _processPostEditingOnFeed(
+        uint256 postId,
+        EditPostParams memory postParams,
+        KeyValue[] memory primitiveCustomParams,
+        RuleProcessingParams[] memory feedRulesParams
+    ) internal virtual {
+        _processPostEditing(
+            _encodeAndCallProcessEditPostOnFeed,
+            ProcessPostEditingParams({
+                ruleSelector: IFeedRule.processEditPost.selector,
+                rootPostId: 0,
+                postId: postId,
+                postParams: postParams,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: feedRulesParams
+            })
+        );
+    }
+
+    function _encodeAndCallProcessEditPostOnFeed(
+        Rule memory rule,
+        ProcessPostEditingParams memory processParams,
+        KeyValue[] memory ruleParams
+    ) internal returns (bool, bytes memory) {
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IFeedRule.processEditPost,
+                (
+                    rule.configSalt,
+                    processParams.postId,
+                    processParams.postParams,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
+    }
+
+    function _encodeAndCallProcessEditPostOnRootPost(
+        Rule memory rule,
+        ProcessPostEditingParams memory processParams,
+        KeyValue[] memory ruleParams
+    ) internal returns (bool, bytes memory) {
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IPostRule.processEditPost,
+                (
+                    rule.configSalt,
+                    processParams.rootPostId,
+                    processParams.postId,
+                    processParams.postParams,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
+    }
+
+    struct ProcessPostEditingParams {
+        bytes4 ruleSelector;
+        uint256 rootPostId;
+        uint256 postId;
+        EditPostParams postParams;
+        KeyValue[] primitiveCustomParams;
+        RuleProcessingParams[] rulesProcessingParams;
+    }
+
+    function _processPostEditing(
+        function(Rule memory,ProcessPostEditingParams memory,KeyValue[] memory) internal returns (bool,bytes memory)
+            encodeAndCall,
+        ProcessPostEditingParams memory processParams
+    ) internal {
+        RulesStorage storage _rulesStorage =
+            processParams.rootPostId == 0 ? $feedRulesStorage() : $postRulesStorage(processParams.rootPostId);
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
+        // Check required rules (AND-combined rules)
+        for (uint256 i = 0; i < _rulesStorage.requiredRules[processParams.ruleSelector].length; i++) {
+            rule = _rulesStorage.requiredRules[processParams.ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            require(callSucceeded, Errors.RequiredRuleReverted());
+        }
+        // Check any-of rules (OR-combined rules)
+        for (uint256 i = 0; i < _rulesStorage.anyOfRules[processParams.ruleSelector].length; i++) {
+            rule = _rulesStorage.anyOfRules[processParams.ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            if (callSucceeded) {
+                return; // If any of the OR-combined rules passed, it means they succeed and we can return
+            }
+        }
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require(_rulesStorage.anyOfRules[processParams.ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
+    }
+
+    function _processPostDeletion(
+        uint256 postId,
+        KeyValue[] calldata customParams,
+        RuleProcessingParams[] calldata rulesProcessingParams
+    ) internal {
+        bytes4 ruleSelector = IFeedRule.processDeletePost.selector;
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
+        // Check required rules (AND-combined rules)
+        for (uint256 i = 0; i < $feedRulesStorage().requiredRules[ruleSelector].length; i++) {
+            rule = $feedRulesStorage().requiredRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, rulesProcessingParams);
+            (bool callSucceeded,) = rule.ruleAddress.safecall(
+                abi.encodeCall(IFeedRule.processDeletePost, (rule.configSalt, postId, customParams, ruleParams))
+            );
+            require(callSucceeded, Errors.RequiredRuleReverted());
+        }
+        // Check any-of rules (OR-combined rules)
+        for (uint256 i = 0; i < $feedRulesStorage().anyOfRules[ruleSelector].length; i++) {
+            rule = $feedRulesStorage().anyOfRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, rulesProcessingParams);
+            (bool callSucceeded,) = rule.ruleAddress.safecall(
+                abi.encodeCall(IFeedRule.processDeletePost, (rule.configSalt, postId, customParams, ruleParams))
+            );
+            if (callSucceeded) {
+                return; // If any of the OR-combined rules passed, it means they succeed and we can return
+            }
+        }
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require($feedRulesStorage().anyOfRules[ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
+    }
+
+    function _processPostRulesChanges(
+        uint256 postId,
+        RuleChange[] memory ruleChanges,
+        RuleProcessingParams[] memory rulesProcessingParams
+    ) internal {
+        bytes4 ruleSelector = IFeedRule.processPostRuleChanges.selector;
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
+        // Check required rules (AND-combined rules)
+        for (uint256 i = 0; i < $feedRulesStorage().requiredRules[ruleSelector].length; i++) {
+            rule = $feedRulesStorage().requiredRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, rulesProcessingParams);
+            (bool callSucceeded,) = rule.ruleAddress.safecall(
+                abi.encodeCall(IFeedRule.processPostRuleChanges, (rule.configSalt, postId, ruleChanges, ruleParams))
+            );
+            require(callSucceeded, Errors.RequiredRuleReverted());
+        }
+        // Check any-of rules (OR-combined rules)
+        for (uint256 i = 0; i < $feedRulesStorage().anyOfRules[ruleSelector].length; i++) {
+            rule = $feedRulesStorage().anyOfRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, rulesProcessingParams);
+            (bool callSucceeded,) = rule.ruleAddress.safecall(
+                abi.encodeCall(IFeedRule.processPostRuleChanges, (rule.configSalt, postId, ruleChanges, ruleParams))
+            );
+            if (callSucceeded) {
+                return; // If any of the OR-combined rules passed, it means they succeed and we can return
+            }
+        }
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require($feedRulesStorage().anyOfRules[ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
     }
 }

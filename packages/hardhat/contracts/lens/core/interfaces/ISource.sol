@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.26;
 
-import {SourceStamp} from "./../types/Types.sol";
+import {SourceStamp} from "contracts/lens/core/types/Types.sol";
 
 interface ISource {
     function getTreasury() external view returns (address);

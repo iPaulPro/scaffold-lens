@@ -9,6 +9,7 @@
 import * as fs from "fs";
 import prettier from "prettier";
 import { DeployFunction } from "hardhat-deploy/types";
+import { ContractType, loadAddressBook } from "../lib/lens/lensUtils";
 
 const generatedContractComment = `
 /**
@@ -108,6 +109,30 @@ function getContractDataFromDeployments() {
     }
     output[chainId] = contracts;
   }
+
+  // Add the LensGlobal primitive instance contracts
+  const localContracts: Record<string, any> = output["0x104"];
+  if (!localContracts) return output;
+
+  const addressBook = loadAddressBook();
+  const lensContracts = Object.entries(addressBook).reduce(
+    (acc, [name, contract]) => {
+      if (contract.contractType === ContractType.Primitive) {
+        acc[name] = {
+          address: contract.address,
+          abi: localContracts[contract.contractName].abi || [],
+        };
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
+
+  output["0x104"] = {
+    ...output["0x104"],
+    ...lensContracts,
+  };
+
   return output;
 }
 

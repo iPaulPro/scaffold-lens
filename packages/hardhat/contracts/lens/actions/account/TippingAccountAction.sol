@@ -1,28 +1,41 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
-import {IAccountAction} from "./../../core/interfaces/IAccountAction.sol";
+import {OwnableMetadataBasedAccountAction} from "contracts/lens/actions/account/base/OwnableMetadataBasedAccountAction.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {KeyValue} from "contracts/lens/core/types/Types.sol";
+import {Errors} from "contracts/lens/core/types/Errors.sol";
 
-contract TippingAccountAction is IAccountAction {
+contract TippingAccountAction is OwnableMetadataBasedAccountAction {
     using SafeERC20 for IERC20;
 
-    function configure(address, /* account */ bytes calldata /* data */ )
-        external
-        pure
+    /// @custom:keccak lens.param.amount
+    bytes32 constant PARAM__TIP_AMOUNT = 0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49;
+    /// @custom:keccak lens.param.token
+    bytes32 constant PARAM__TIP_TOKEN = 0xee737c77be2981e91c179485406e6d793521b20aca5e2137b6c497949a74bc94;
+
+    constructor(address actionHub, address owner, string memory metadataURI)
+        OwnableMetadataBasedAccountAction(actionHub, owner, metadataURI)
+    {}
+
+    function _execute(address originalMsgSender, address account, KeyValue[] calldata params)
+        internal
         override
         returns (bytes memory)
     {
-        revert(); // Configuration not needed for tipping.
-    }
-
-    function execute(address account, bytes calldata data) external override returns (bytes memory) {
-        (address erc20Token, uint256 tipAmount) = abi.decode(data, (address, uint256));
-        require(tipAmount > 0);
-        IERC20(erc20Token).safeTransferFrom(msg.sender, account, tipAmount);
-        emit Lens_AccountAction_Executed(account, data);
+        address erc20Token;
+        uint256 tipAmount;
+        for (uint256 i = 0; i < params.length; i++) {
+            if (params[i].key == PARAM__TIP_AMOUNT) {
+                tipAmount = abi.decode(params[i].value, (uint256));
+            } else if (params[i].key == PARAM__TIP_TOKEN) {
+                erc20Token = abi.decode(params[i].value, (address));
+            }
+        }
+        require(tipAmount > 0, Errors.InvalidParameter());
+        IERC20(erc20Token).safeTransferFrom(originalMsgSender, account, tipAmount);
         return "";
     }
 }

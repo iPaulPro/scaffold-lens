@@ -39,3 +39,5 @@ deployed_rules.txt
 
 # hardhat-zksync-node
 era_test_node.log
+
+addressBook.json

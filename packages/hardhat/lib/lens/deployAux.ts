@@ -1,11 +1,21 @@
+import {
+  ContractType,
+  loadAddressBook,
+  saveContractToAddressBook,
+  loadContractFromAddressBook,
+  loadContractAddressFromAddressBook,
+  deployLensContractAsProxy,
+} from "./lensUtils";
 import * as hre from "hardhat";
-import { getAddressFromEvents, getWallet, parseLensContractDeployedEventsFromReceipt, verifyPrimitive } from "./utils";
+import { getWallet, parseLensContractDeployedEventsFromReceipt, getAddressFromEvents } from "./utils";
 import { ethers, ZeroAddress } from "ethers";
 
-const metadataURI = "https://ipfs.io/ipfs/QmZ";
+const metadataURI = "";
 
 export const emptySourceStamp = {
   source: ZeroAddress,
+  originalMsgSender: ZeroAddress,
+  validator: ZeroAddress,
   nonce: 0,
   deadline: 0,
   signature: "0x",
@@ -14,7 +24,7 @@ export const emptySourceStamp = {
 export interface AppInitialProperties {
   graph: string;
   feeds: string[];
-  username: string;
+  namespace: string;
   groups: string[];
   defaultFeed: string;
   signers: string[];
@@ -22,7 +32,11 @@ export interface AppInitialProperties {
   treasury: string;
 }
 
-export async function deployPrimitives(lensFactoryAddress: string) {
+export async function deployLensPrimitives(primitivesOwner: string, DEPLOYING_MIGRATION: boolean) {
+  const lensFactoryAddress = loadAddressBook()["LensFactory"].address;
+  if (!lensFactoryAddress) {
+    throw new Error("LensFactory not found in address book");
+  }
   console.log(`Running script to interact with LensFactory at ${lensFactoryAddress}`);
 
   // Load compiled contract info
@@ -35,113 +49,172 @@ export async function deployPrimitives(lensFactoryAddress: string) {
     getWallet(), // Interact with the contract on behalf of this wallet
   );
 
-  const account = await deployAccount(lensFactory);
-  console.log(`Account deployed: ${account}`);
-  const feed = await deployFeed(lensFactory);
-  console.log(`Feed deployed: ${feed}`);
-  const group = await deployGroup(lensFactory);
-  console.log(`Group deployed: ${group}`);
-  const graph = await deployGraph(lensFactory);
-  console.log(`Graph deployed: ${graph}`);
-  const username = await deployUsername(lensFactory);
-  console.log(`Username deployed: ${username}`);
+  let group = ZeroAddress;
+  if (!DEPLOYING_MIGRATION) {
+    await deployLensAccount(lensFactory, primitivesOwner);
+    group = await deployLensGroup(lensFactory, primitivesOwner);
+  }
 
-  const initialProperties: AppInitialProperties = {
-    graph,
-    feeds: [feed],
-    username,
-    groups: [group],
-    defaultFeed: feed,
-    signers: [],
-    paymaster: getWallet().address,
-    treasury: getWallet().address,
-  };
+  const feed = await deployLensFeed(lensFactory, primitivesOwner);
+  const graph = await deployLensGraph(lensFactory, primitivesOwner);
+  const namespace = await deployLensNamespace(lensFactory, primitivesOwner);
 
-  const app = await deployApp(lensFactory, initialProperties);
-  console.log(`App deployed: ${app}`);
+  if (!DEPLOYING_MIGRATION) {
+    const initialProperties: AppInitialProperties = {
+      graph,
+      feeds: [feed],
+      namespace,
+      groups: [group],
+      defaultFeed: feed,
+      signers: [],
+      paymaster: getWallet().address,
+      treasury: getWallet().address,
+    };
+
+    await deployLensApp(lensFactory, initialProperties, primitivesOwner);
+  }
 }
 
-async function deployAccount(lensFactory: ethers.Contract): Promise<string> {
-  console.log("Deploying Account");
-  const transaction = await lensFactory.deployAccount(metadataURI, getWallet().address, [], [], emptySourceStamp);
+async function deployLensAccount(lensFactory: ethers.Contract, primitivesOwner: string): Promise<string> {
+  const contractName = "Account";
+  const name = "LensExampleAccount";
+  const existingContract = loadContractFromAddressBook(name);
+  if (existingContract && existingContract.address) {
+    console.log(`${contractName} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  console.log("Deploying " + name);
+  const transaction = await lensFactory.deployAccount(metadataURI, primitivesOwner, [], [], emptySourceStamp, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const accountAddress = getAddressFromEvents(events, "account");
+  const accountAddress = getAddressFromEvents(events, contractName);
 
-  await verifyPrimitive(
-    "Account",
-    accountAddress,
-    // [getWallet().address, metadataURI, [], [], emptySourceStamp]
-  );
+  // await verifyPrimitive('Account', accountAddress, [
+  //   getWallet().address,
+  //   metadataURI,
+  //   [],
+  //   [],
+  //   emptySourceStamp,
+  //   []
+  // ]);
+
+  saveContractToAddressBook({
+    name: name,
+    contractName: contractName,
+    contractType: ContractType.Misc,
+    address: accountAddress,
+  });
 
   return accountAddress;
 }
 
-async function deployFeed(lensFactory: ethers.Contract): Promise<string> {
-  console.log("Deploying Feed");
-  const transaction = await lensFactory.deployFeed(metadataURI, getWallet().address, [], [], []);
+async function deployLensFeed(lensFactory: ethers.Contract, primitivesOwner: string): Promise<string> {
+  const contractName = "Feed";
+  const name = "LensGlobal" + contractName;
+  const existingContract = loadContractFromAddressBook(name);
+  if (existingContract && existingContract.address) {
+    console.log(`${name} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  console.log("Deploying " + name);
+  const transaction = await lensFactory.deployFeed(metadataURI, primitivesOwner, [], [], []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const feedAddress = getAddressFromEvents(events, "feed");
-  // const accessControlAddress = getAddressFromEvents(events, "access-control");
+  const primitiveAddress = getAddressFromEvents(events, contractName);
+  // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
-  await verifyPrimitive(
-    "Feed",
-    feedAddress,
-    // [metadataURI, accessControlAddress]
-  );
+  // await verifyPrimitive(contractName, primitiveAddress, [metadataURI, accessControlAddress]);
 
-  return feedAddress;
+  saveContractToAddressBook({
+    name: name,
+    contractName: contractName,
+    contractType: ContractType.Primitive,
+    address: primitiveAddress,
+  });
+
+  return primitiveAddress;
 }
 
-async function deployGroup(lensFactory: ethers.Contract): Promise<string> {
-  console.log("Deploying Group");
-  const transaction = await lensFactory.deployGroup(metadataURI, getWallet().address, [], [], []);
+async function deployLensGroup(lensFactory: ethers.Contract, primitivesOwner: string): Promise<string> {
+  const contractName = "Group";
+  const name = "LensGlobal" + contractName;
+  const existingContract = loadContractFromAddressBook(name);
+  if (existingContract && existingContract.address) {
+    console.log(`${name} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  console.log("Deploying " + name);
+  const transaction = await lensFactory.deployGroup(metadataURI, primitivesOwner, [], [], [], ZeroAddress, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const groupAddress = getAddressFromEvents(events, "group");
-  // const accessControlAddress = getAddressFromEvents(events, "access-control");
+  const primitiveAddress = getAddressFromEvents(events, contractName);
+  // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
-  await verifyPrimitive(
-    "Group",
-    groupAddress,
-    // [metadataURI, accessControlAddress]
-  );
+  // await verifyPrimitive(contractName, primitiveAddress, [metadataURI, accessControlAddress]);
 
-  return groupAddress;
+  saveContractToAddressBook({
+    name: name,
+    contractName: contractName,
+    contractType: ContractType.Primitive,
+    address: primitiveAddress,
+  });
+
+  return primitiveAddress;
 }
 
-async function deployGraph(lensFactory: ethers.Contract): Promise<string> {
-  console.log("Deploying Graph");
-  const transaction = await lensFactory.deployGraph(metadataURI, getWallet().address, [], [], []);
+async function deployLensGraph(lensFactory: ethers.Contract, primitivesOwner: string): Promise<string> {
+  const contractName = "Graph";
+  const name = "LensGlobal" + contractName;
+  const existingContract = loadContractFromAddressBook(name);
+  if (existingContract && existingContract.address) {
+    console.log(`${name} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  console.log("Deploying " + name);
+  const transaction = await lensFactory.deployGraph(metadataURI, primitivesOwner, [], [], []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const graphAddress = getAddressFromEvents(events, "graph");
-  // const accessControlAddress = getAddressFromEvents(events, "access-control");
+  const primitiveAddress = getAddressFromEvents(events, contractName);
+  // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
-  await verifyPrimitive(
-    "Graph",
-    graphAddress,
-    // [metadataURI, accessControlAddress]
-  );
+  // await verifyPrimitive(contractName, primitiveAddress, [metadataURI, accessControlAddress]);
 
-  return graphAddress;
+  saveContractToAddressBook({
+    name: name,
+    contractName: contractName,
+    contractType: ContractType.Primitive,
+    address: primitiveAddress,
+  });
+
+  return primitiveAddress;
 }
 
-export async function deployUsername(lensFactory: ethers.Contract, noVerify: boolean = false): Promise<string> {
-  console.log("Deploying Username");
+export async function deployLensNamespace(lensFactory: ethers.Contract, primitivesOwner: string): Promise<string> {
+  const contractName = "Namespace";
+  const name = "LensGlobal" + contractName;
+  const existingContract = loadContractFromAddressBook(name);
+  if (existingContract && existingContract.address) {
+    console.log(`${name} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  console.log("Deploying " + name);
   const namespace = "lens";
   const nftName = "nftName";
   const nftSymbol = "nftSymbol";
 
-  const transaction = await lensFactory.deployUsername(
+  const transaction = await lensFactory.deployNamespace(
     namespace,
     metadataURI,
-    getWallet().address,
+    primitivesOwner,
     [],
     [],
     [],
@@ -151,54 +224,90 @@ export async function deployUsername(lensFactory: ethers.Contract, noVerify: boo
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const usernameAddress = getAddressFromEvents(events, "username");
-  // const accessControlAddress = getAddressFromEvents(events, "access-control");
-  // const lensUsernameTokenURIProviderAddress = getAddressFromEvents(events, "username-token-uri-provider");
+  const primitiveAddress = getAddressFromEvents(events, contractName);
+  // const accessControlAddress = getAddressFromEvents(events, 'access-control');
+  // const lensUsernameTokenURIProviderAddress = getAddressFromEvents(
+  //   events,
+  //   'username-token-uri-provider'
+  // );
 
-  if (!noVerify) {
-    await verifyPrimitive(
-      "Username",
-      usernameAddress,
-      // [
-      //   namespace,
-      //   metadataURI,
-      //   accessControlAddress,
-      //   nftName,
-      //   nftSymbol,
-      //   lensUsernameTokenURIProviderAddress,
-      // ]
-    );
-  }
+  // await verifyPrimitive('Namespace', primitiveAddress, [
+  //   namespace,
+  //   metadataURI,
+  //   accessControlAddress,
+  //   nftName,
+  //   nftSymbol,
+  //   lensUsernameTokenURIProviderAddress,
+  // ]);
 
-  return usernameAddress;
+  saveContractToAddressBook({
+    name: name,
+    contractName: contractName,
+    contractType: ContractType.Primitive,
+    address: primitiveAddress,
+  });
+
+  return primitiveAddress;
 }
 
-export async function deployApp(
+export async function deployLensApp(
   lensFactory: ethers.Contract,
   initialProperties: AppInitialProperties,
+  primitivesOwner: string,
 ): Promise<string> {
-  console.log("Deploying App");
+  const contractName = "App";
+  const name = "LensGlobal" + contractName;
+  const existingContract = loadContractFromAddressBook(name);
+  if (existingContract && existingContract.address) {
+    console.log(`${name} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  console.log("Deploying " + name);
   console.log("Using the following initial properties:");
   console.log(initialProperties);
-  const transaction = await lensFactory.deployApp(metadataURI, false, getWallet().address, [], initialProperties, []);
+  const transaction = await lensFactory.deployApp(metadataURI, false, primitivesOwner, [], initialProperties, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
 
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const appAddress = getAddressFromEvents(events, "app");
-  // const accessControlAddress = getAddressFromEvents(events, "access-control");
+  const primitiveAddress = getAddressFromEvents(events, contractName);
+  // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
-  await verifyPrimitive(
-    "App",
-    appAddress,
-    // [metadataURI, false, accessControlAddress, initialProperties, []]
-  );
+  // await verifyPrimitive('App', appAddress, [
+  //   metadataURI,
+  //   false,
+  //   accessControlAddress,
+  //   initialProperties,
+  //   [],
+  // ]);
 
-  return appAddress;
+  saveContractToAddressBook({
+    name: name,
+    contractName: contractName,
+    contractType: ContractType.Primitive,
+    address: primitiveAddress,
+  });
+
+  return primitiveAddress;
 }
 
-export async function deployAccessControl(accessControlFactoryAddress: string) {
+export async function deployLensAccessControl(primitivesOwner: string) {
+  const contractName = "OwnerAdminOnlyAccessControl";
+  const contractType = "AccessControl";
+  const existingContract = loadContractFromAddressBook(contractName);
+  if (existingContract && existingContract.address) {
+    console.log(`${contractName} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
   console.log("Deploying Access Control");
+
+  const accessControlFactoryAddress = loadContractFromAddressBook("AccessControlFactory")?.address;
+  if (!accessControlFactoryAddress) {
+    throw new Error("AccessControlFactory not found in address book");
+  }
+
   const accessControlFactoryArtifact = await hre.artifacts.readArtifact("AccessControlFactory");
 
   const accessControlFactory = new ethers.Contract(
@@ -207,17 +316,52 @@ export async function deployAccessControl(accessControlFactoryAddress: string) {
     getWallet(),
   );
 
-  const transaction = await accessControlFactory.deployOwnerAdminOnlyAccessControl(getWallet().address, []);
+  const transaction = await accessControlFactory.deployOwnerAdminOnlyAccessControl(primitivesOwner, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
-  const accessControlAddress = getAddressFromEvents(events, "access-control");
+  const accessControlAddress = getAddressFromEvents(events, contractType);
 
-  await verifyPrimitive(
-    "OwnerAdminOnlyAccessControl",
-    accessControlAddress,
-    // [getWallet().address]
-  );
+  const accessControlLock = loadContractAddressFromAddressBook("AccessControlLock");
+  if (!accessControlLock) {
+    throw new Error("AccessControlLock not found in address book");
+  }
+
+  // await verifyPrimitive('OwnerAdminOnlyAccessControl', accessControlAddress, [
+  //   primitivesOwner,
+  //   accessControlLock,
+  // ]);
+
+  saveContractToAddressBook({
+    contractName: "OwnerAdminOnlyAccessControl",
+    contractType: ContractType.Aux,
+    address: accessControlAddress,
+  });
 
   return accessControlAddress;
+}
+
+export async function deployLensActionHub(proxyOwner: string): Promise<string> {
+  const contractName = "ActionHub";
+  const existingContract = loadContractFromAddressBook(contractName);
+  if (existingContract && existingContract.address) {
+    console.log(`${contractName} already deployed at ${existingContract.address}. Skipping...`);
+    return existingContract.address;
+  }
+
+  // deploy action hub
+  console.log("Deploying Action Hub...");
+  const actionHub_artifactName = "ActionHub";
+  const actionHub_args: any[] = [];
+
+  const actionHub = await deployLensContractAsProxy(
+    {
+      contractName: actionHub_artifactName,
+      contractType: ContractType.Aux,
+      constructorArguments: actionHub_args,
+    },
+    proxyOwner,
+  );
+
+  return actionHub.address!;
 }

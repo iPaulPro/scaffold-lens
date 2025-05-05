@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
 // Modified from OpenZeppelin's v4.9.0 contracts
+pragma solidity ^0.8.26;
 
-import "./../interfaces/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
-import "./../interfaces/ITokenURIProvider.sol";
-import "./../interfaces/IERC4906Events.sol";
+import "contracts/lens/core/interfaces/ITokenURIProvider.sol";
+import "contracts/lens/core/interfaces/IERC4906Events.sol";
+import {Errors} from "contracts/lens/core/types/Errors.sol";
+import {IERC165} from "@openzeppelin/contracts/interfaces/IERC165.sol";
+import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
-pragma solidity ^0.8.0;
-
-contract LensERC721 is IERC721 {
+abstract contract LensERC721 is IERC721Metadata, ERC165 {
     using AddressUpgradeable for address;
 
     event Lens_ERC721_TokenURIProviderSet(address indexed tokenURIProvider);
@@ -32,16 +34,16 @@ contract LensERC721 is IERC721 {
         mapping(address => mapping(address => bool)) operatorApprovals;
     }
 
-    // keccak256('lens.erc721.core.storage')
-    bytes32 constant ERC721_STORAGE_SLOT = 0xac58803b788368130c11d5bafac7ab92ca2b9d10691d402b06996b767d7246ac;
+    /// @custom:keccak lens.storage.ERC721
+    bytes32 constant STORAGE__ERC721 = 0x9773440c5f3d31ef6a1be068fec8ef97f4aa1ba801bb599e82d4fd5382955955;
 
     function $erc721Storage() internal pure returns (ERC721Storage storage _storage) {
         assembly {
-            _storage.slot := ERC721_STORAGE_SLOT
+            _storage.slot := STORAGE__ERC721
         }
     }
 
-    constructor(string memory nftName, string memory nftSymbol, ITokenURIProvider tokenURIProvider) {
+    function _initialize(string memory nftName, string memory nftSymbol, ITokenURIProvider tokenURIProvider) internal {
         $erc721Storage().name = nftName;
         $erc721Storage().symbol = nftSymbol;
         $erc721Storage().tokenURIProvider = tokenURIProvider;
@@ -52,7 +54,7 @@ contract LensERC721 is IERC721 {
      * @dev See {IERC721-balanceOf}.
      */
     function balanceOf(address owner) public view virtual override returns (uint256) {
-        require(owner != address(0), "ERC721: address zero is not a valid owner");
+        require(owner != address(0), Errors.InvalidParameter());
         return $erc721Storage().balances[owner];
     }
 
@@ -61,7 +63,7 @@ contract LensERC721 is IERC721 {
      */
     function ownerOf(uint256 tokenId) public view virtual override returns (address) {
         address owner = _ownerOf(tokenId);
-        require(owner != address(0), "ERC721: invalid token ID");
+        require(owner != address(0), Errors.DoesNotExist());
         return owner;
     }
 
@@ -100,12 +102,9 @@ contract LensERC721 is IERC721 {
      */
     function approve(address to, uint256 tokenId) public virtual override {
         address owner = LensERC721.ownerOf(tokenId);
-        require(to != owner, "ERC721: approval to current owner");
+        require(to != owner, Errors.InvalidParameter());
 
-        require(
-            msg.sender == owner || isApprovedForAll(owner, msg.sender),
-            "ERC721: approve caller is not token owner or approved for all"
-        );
+        require(msg.sender == owner || isApprovedForAll(owner, msg.sender), Errors.InvalidMsgSender());
 
         _approve(to, tokenId);
     }
@@ -138,7 +137,7 @@ contract LensERC721 is IERC721 {
      */
     function transferFrom(address from, address to, uint256 tokenId) public virtual override {
         //solhint-disable-next-line max-line-length
-        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: caller is not token owner or approved");
+        require(_isApprovedOrOwner(msg.sender, tokenId), Errors.InvalidMsgSender());
 
         _transfer(from, to, tokenId);
     }
@@ -154,7 +153,7 @@ contract LensERC721 is IERC721 {
      * @dev See {IERC721-safeTransferFrom}.
      */
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) public virtual override {
-        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: caller is not token owner or approved");
+        require(_isApprovedOrOwner(msg.sender, tokenId), Errors.InvalidMsgSender());
         _safeTransfer(from, to, tokenId, data);
     }
 
@@ -178,7 +177,7 @@ contract LensERC721 is IERC721 {
      */
     function _safeTransfer(address from, address to, uint256 tokenId, bytes memory data) internal virtual {
         _transfer(from, to, tokenId);
-        require(_checkOnERC721Received(from, to, tokenId, data), "ERC721: transfer to non ERC721Receiver implementer");
+        require(_checkOnERC721Received(from, to, tokenId, data), Errors.UnexpectedContractImpl());
     }
 
     /**
@@ -232,9 +231,7 @@ contract LensERC721 is IERC721 {
      */
     function _safeMint(address to, uint256 tokenId, bytes memory data) internal virtual {
         _mint(to, tokenId);
-        require(
-            _checkOnERC721Received(address(0), to, tokenId, data), "ERC721: transfer to non ERC721Receiver implementer"
-        );
+        require(_checkOnERC721Received(address(0), to, tokenId, data), Errors.UnexpectedContractImpl());
     }
 
     /**
@@ -250,13 +247,13 @@ contract LensERC721 is IERC721 {
      * Emits a {Transfer} event.
      */
     function _mint(address to, uint256 tokenId) internal virtual {
-        require(to != address(0), "ERC721: mint to the zero address");
-        require(!_exists(tokenId), "ERC721: token already minted");
+        require(to != address(0), Errors.InvalidParameter());
+        require(!_exists(tokenId), Errors.AlreadyExists());
 
         _beforeTokenTransfer(address(0), to, tokenId);
 
         // Check that tokenId was not minted by `_beforeTokenTransfer` hook
-        require(!_exists(tokenId), "ERC721: token already minted");
+        require(!_exists(tokenId), Errors.AlreadyExists());
 
         unchecked {
             // Will not overflow unless all 2**256 token ids are minted to the same owner.
@@ -319,13 +316,13 @@ contract LensERC721 is IERC721 {
      * Emits a {Transfer} event.
      */
     function _transfer(address from, address to, uint256 tokenId) internal virtual {
-        require(LensERC721.ownerOf(tokenId) == from, "ERC721: transfer from incorrect owner");
-        require(to != address(0), "ERC721: transfer to the zero address");
+        require(LensERC721.ownerOf(tokenId) == from, Errors.InvalidParameter());
+        require(to != address(0), Errors.InvalidParameter());
 
         _beforeTokenTransfer(from, to, tokenId);
 
         // Check that tokenId was not transferred by `_beforeTokenTransfer` hook
-        require(LensERC721.ownerOf(tokenId) == from, "ERC721: transfer from incorrect owner");
+        require(LensERC721.ownerOf(tokenId) == from, Errors.InvalidParameter());
 
         // Clear approvals from the previous owner
         delete $erc721Storage().tokenApprovals[tokenId];
@@ -362,7 +359,7 @@ contract LensERC721 is IERC721 {
      * Emits an {ApprovalForAll} event.
      */
     function _setApprovalForAll(address owner, address operator, bool approved) internal virtual {
-        require(owner != operator, "ERC721: approve to caller");
+        require(owner != operator, Errors.InvalidParameter());
         $erc721Storage().operatorApprovals[owner][operator] = approved;
         emit ApprovalForAll(owner, operator, approved);
     }
@@ -371,7 +368,7 @@ contract LensERC721 is IERC721 {
      * @dev Reverts if the `tokenId` has not been minted yet.
      */
     function _requireMinted(uint256 tokenId) internal view virtual {
-        require(_exists(tokenId), "ERC721: invalid token ID");
+        require(_exists(tokenId), Errors.DoesNotExist());
     }
 
     /**
@@ -394,7 +391,7 @@ contract LensERC721 is IERC721 {
                 return retval == IERC721ReceiverUpgradeable.onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
-                    revert("ERC721: transfer to non ERC721Receiver implementer");
+                    revert Errors.UnexpectedContractImpl();
                 } else {
                     /// @solidity memory-safe-assembly
                     assembly {
@@ -449,5 +446,13 @@ contract LensERC721 is IERC721 {
     // solhint-disable-next-line func-name-mixedcase
     function __unsafe_increaseBalance(address account, uint256 amount) internal {
         $erc721Storage().balances[account] += amount;
+    }
+
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
+        return interfaceId == type(IERC721).interfaceId || interfaceId == type(IERC721Metadata).interfaceId
+            || super.supportsInterface(interfaceId);
     }
 }

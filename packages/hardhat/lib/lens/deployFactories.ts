@@ -1,176 +1,139 @@
-import { AppInitialProperties, deployApp } from "./deployAux";
 import {
-  deployContract,
-  getWallet,
-  verifyLensFactoryDeployedPrimitive,
-  verifyLensFactoryDeployedUsername,
-} from "./utils";
-import { writeFileSync } from "fs";
+  deployLensContract,
+  deployLensContractAsProxy,
+  ContractType,
+  ContractInfo,
+  loadContractAddressFromAddressBook,
+} from "./lensUtils";
+import { ZeroAddress } from "ethers";
 
-export default async function deployFactories(): Promise<{
-  lensFactory: string;
-  accessControlFactory: string;
-}> {
-  const outputLines: string[] = [];
-  outputLines.push("\n\n--- Indexer file ---\n\n");
-  outputLines.push("# CONTRACTS");
+export default async function deployFactories(
+  rulesOwner: string,
+  factoriesProxyOwner: string,
+  DEPLOYING_MIGRATION: boolean,
+): Promise<void> {
+  const metadataURI = "";
 
-  // accessControl factory
-  const accessControlFactory_artifactName = "AccessControlFactory";
-  const accessControlFactory_args: any[] = [];
-
-  const accessControlFactory = await deployContract(accessControlFactory_artifactName, accessControlFactory_args);
-
-  console.log(`\n✔ AccessControlFactory deployed at ${await accessControlFactory.getAddress()}`);
-  outputLines.push(`ACCESS_CONTROL_FACTORY="${await accessControlFactory.getAddress()}"`);
-
-  // userBlocking rule/registry
-
-  const userBlockingRule_artifactName = "UserBlockingRule";
-  const userBlockingRule_args: any[] = [];
-
-  const userBlockingRule = await deployContract(userBlockingRule_artifactName, userBlockingRule_args);
-
-  console.log(`\n✔ UserBlockingRule deployed at ${await userBlockingRule.getAddress()}`);
-  outputLines.push(`USER_BLOCKING_RULE="${await userBlockingRule.getAddress()}"`);
-
-  // username factory
-  const usernameFactory_artifactName = "UsernameFactory";
-  const usernameFactory_args: any[] = [];
-
-  const usernameFactory = await deployContract(usernameFactory_artifactName, usernameFactory_args);
-
-  console.log(`\n✔ UsernameFactory deployed at ${await usernameFactory.getAddress()}`);
-  outputLines.push(`USERNAME_FACTORY="${await usernameFactory.getAddress()}"`);
-
-  // graph factory
-  const graphFactory_artifactName = "GraphFactory";
-  const graphFactory_args: any[] = [];
-
-  const graphFactory = await deployContract(graphFactory_artifactName, graphFactory_args);
-
-  console.log(`\n✔ GraphFactory deployed at ${await graphFactory.getAddress()}`);
-  outputLines.push(`GRAPH_FACTORY="${await graphFactory.getAddress()}"`);
-
-  // feed factory
-  const feedFactory_artifactName = "FeedFactory";
-  const feedFactory_args: any[] = [];
-
-  const feedFactory = await deployContract(feedFactory_artifactName, feedFactory_args);
-
-  console.log(`\n✔ FeedFactory deployed at ${await feedFactory.getAddress()}`);
-  outputLines.push(`FEED_FACTORY="${await feedFactory.getAddress()}"`);
-
-  // group factory
-  const groupFactory_artifactName = "GroupFactory";
-  const groupFactory_args: any[] = [];
-
-  const groupFactory = await deployContract(groupFactory_artifactName, groupFactory_args);
-
-  console.log(`\n✔ GroupFactory deployed at ${await groupFactory.getAddress()}`);
-  outputLines.push(`GROUP_FACTORY="${await groupFactory.getAddress()}"`);
-
-  // account factory
-  const accountFactory_artifactName = "AccountFactory";
-  const accountFactory_args: any[] = [];
-
-  const accountFactory = await deployContract(accountFactory_artifactName, accountFactory_args);
-
-  console.log(`\n✔ AccountFactory deployed at ${await accountFactory.getAddress()}`);
-  outputLines.push(`ACCOUNT_FACTORY="${await accountFactory.getAddress()}"`);
-
-  // app factory
-  const appFactory_artifactName = "AppFactory";
-  const appFactory_args: any[] = [];
-
-  const appFactory = await deployContract(appFactory_artifactName, appFactory_args);
-
-  console.log(`\n✔ AppFactory deployed at ${await appFactory.getAddress()}`);
-  outputLines.push(`APP_FACTORY="${await appFactory.getAddress()}"`);
-
-  // lens factory
-  const lensFactory_artifactName = "LensFactory";
-  const lensFactory_args = [
-    await accessControlFactory.getAddress(),
-    await accountFactory.getAddress(),
-    await appFactory.getAddress(),
-    await groupFactory.getAddress(),
-    await feedFactory.getAddress(),
-    await graphFactory.getAddress(),
-    await usernameFactory.getAddress(),
-    await userBlockingRule.getAddress(),
+  const factories: ContractInfo[] = [
+    // Factories
+    {
+      name: "AccessControlFactory",
+      contractName: DEPLOYING_MIGRATION ? "MigrationAccessControlFactory" : "AccessControlFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [loadContractAddressFromAddressBook("AccessControlLock")],
+    },
+    {
+      name: "AccountFactory",
+      contractName: DEPLOYING_MIGRATION ? "MigrationAccountFactory" : "AccountFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [
+        loadContractAddressFromAddressBook("AccountBeacon"),
+        loadContractAddressFromAddressBook("AccountLock"),
+      ],
+    },
+    {
+      name: "AppFactory",
+      contractName: DEPLOYING_MIGRATION ? "MigrationAppFactory" : "AppFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [
+        loadContractAddressFromAddressBook("AppBeacon"),
+        loadContractAddressFromAddressBook("AppLock"),
+      ],
+    },
+    {
+      name: "FeedFactory",
+      contractName: DEPLOYING_MIGRATION ? "MigrationFeedFactory" : "FeedFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [
+        loadContractAddressFromAddressBook("FeedBeacon"),
+        loadContractAddressFromAddressBook("FeedLock"),
+      ],
+    },
+    {
+      name: "GraphFactory",
+      contractName: DEPLOYING_MIGRATION ? "MigrationGraphFactory" : "GraphFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [
+        loadContractAddressFromAddressBook("GraphBeacon"),
+        loadContractAddressFromAddressBook("GraphLock"),
+      ],
+    },
+    {
+      name: "GroupFactory",
+      contractName: "GroupFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [
+        loadContractAddressFromAddressBook("GroupBeacon"),
+        loadContractAddressFromAddressBook("GroupLock"),
+      ],
+    },
+    {
+      name: "NamespaceFactory",
+      contractName: DEPLOYING_MIGRATION ? "MigrationNamespaceFactory" : "NamespaceFactory",
+      contractType: ContractType.Factory,
+      constructorArguments: [
+        loadContractAddressFromAddressBook("NamespaceBeacon"),
+        loadContractAddressFromAddressBook("NamespaceLock"),
+      ],
+    },
   ];
 
-  const lensFactory = await deployContract(lensFactory_artifactName, lensFactory_args);
+  const rules: ContractInfo[] = [
+    // Prerequisite rules for LensFactory
+    {
+      contractName: "AccountBlockingRule",
+      contractType: ContractType.Rule,
+      constructorArguments: [rulesOwner, metadataURI],
+    },
+    {
+      contractName: "GroupGatedFeedRule",
+      contractType: ContractType.Rule,
+      constructorArguments: [rulesOwner, metadataURI],
+    },
+    {
+      contractName: "UsernameSimpleCharsetNamespaceRule",
+      contractType: ContractType.Rule,
+      constructorArguments: [rulesOwner, metadataURI],
+    },
+  ];
 
-  console.log(`\n✔ LensFactory deployed at ${await lensFactory.getAddress()}`);
-  outputLines.push(`LENS_FACTORY="${await lensFactory.getAddress()}"`);
+  const deployedContracts: Record<string, ContractInfo> = {};
 
-  // deploy global feed
-  console.log("Deploying Global Feed...");
-  const metadataURI = "https://ipfs.io/ipfs/TezTUri";
-  const ownerAddress = getWallet().address;
-  const admins: string[] = [];
-  const rules: any[] = [];
-  const extraData: any[] = [];
-  const feedDeploymentTx = await lensFactory.deployFeed(metadataURI, ownerAddress, admins, rules, extraData);
-  const globalFeedAddress = await verifyLensFactoryDeployedPrimitive({
-    tx: feedDeploymentTx,
-    lensContractArtifactName: "Feed",
-    metadataURIConstructorParam: metadataURI,
-  });
-  outputLines.push(`GLOBAL_FEED="${globalFeedAddress}"`);
+  for (const factory of factories) {
+    deployedContracts[factory.name ?? factory.contractName] = await deployLensContractAsProxy(
+      factory,
+      factoriesProxyOwner,
+    );
+  }
 
-  // deploy global graph
-  console.log("Deploying Global Graph...");
-  const graphDeploymentTx = await lensFactory.deployGraph(metadataURI, ownerAddress, admins, rules, extraData);
-  const globalGraphAddress = await verifyLensFactoryDeployedPrimitive({
-    tx: graphDeploymentTx,
-    lensContractArtifactName: "Graph",
-    metadataURIConstructorParam: metadataURI,
-  });
-  outputLines.push(`GLOBAL_GRAPH="${globalGraphAddress}"`);
+  if (!DEPLOYING_MIGRATION) {
+    for (const rule of rules) {
+      deployedContracts[rule.contractName] = await deployLensContract(rule);
+    }
+  }
 
-  // deploy lens username
-  console.log("Deploying Lens Username...");
-  const usernameDeploymentTx = await lensFactory.deployUsername(
-    "lens",
-    metadataURI,
-    ownerAddress,
-    admins,
-    rules,
-    extraData,
-    "Lens Usernames",
-    "LENS",
+  // lens factory
+  const lensFactory_artifactName = DEPLOYING_MIGRATION ? "MigrationLensFactory" : "LensFactory";
+  const lensFactory_args = [
+    deployedContracts["AccessControlFactory"].address,
+    deployedContracts["AccountFactory"].address,
+    deployedContracts["AppFactory"].address,
+    deployedContracts["GroupFactory"].address,
+    deployedContracts["FeedFactory"].address,
+    deployedContracts["GraphFactory"].address,
+    deployedContracts["NamespaceFactory"].address,
+    DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["AccountBlockingRule"].address,
+    DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["GroupGatedFeedRule"].address,
+    DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["UsernameSimpleCharsetNamespaceRule"].address,
+  ];
+
+  await deployLensContractAsProxy(
+    {
+      name: "LensFactory",
+      contractName: lensFactory_artifactName,
+      contractType: ContractType.Factory,
+      constructorArguments: lensFactory_args,
+    },
+    factoriesProxyOwner,
   );
-  const lensUsernameAddress = await verifyLensFactoryDeployedUsername({
-    tx: usernameDeploymentTx,
-    constructorParams: ["lens", metadataURI, ownerAddress, "Lens Usernames", "LENS"],
-  });
-  outputLines.push(`LENS_USERNAME="${lensUsernameAddress}"`);
-
-  // deploy testnet app
-  console.log("Deploying Testnet App...");
-  const initialProperties: AppInitialProperties = {
-    graph: globalGraphAddress,
-    feeds: [globalFeedAddress],
-    username: lensUsernameAddress,
-    groups: [],
-    defaultFeed: globalFeedAddress,
-    signers: [],
-    paymaster: getWallet().address,
-    treasury: getWallet().address,
-  };
-
-  const testnetAppAddress = await deployApp(lensFactory, initialProperties);
-  outputLines.push(`TESTNET_APP="${testnetAppAddress}"`);
-
-  const output = outputLines.join("\n");
-  writeFileSync("deployed_primitives.txt", output);
-  console.log(output);
-
-  return {
-    lensFactory: await lensFactory.getAddress(),
-    accessControlFactory: await accessControlFactory.getAddress(),
-  };
 }

@@ -1,26 +1,31 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
-import {IFollowRule} from "./../../interfaces/IFollowRule.sol";
-import {IGraphRule} from "./../../interfaces/IGraphRule.sol";
-import {RulesStorage, RulesLib} from "./../../libraries/RulesLib.sol";
-import {RuleConfiguration, RuleChange, RuleExecutionData} from "./../../types/Types.sol";
+import {IFollowRule} from "contracts/lens/core/interfaces/IFollowRule.sol";
+import {IGraphRule} from "contracts/lens/core/interfaces/IGraphRule.sol";
+import {RulesStorage, RulesLib} from "contracts/lens/core/libraries/RulesLib.sol";
+import {RuleProcessingParams, RuleChange, Rule, KeyValue} from "contracts/lens/core/types/Types.sol";
+import {IGraph} from "contracts/lens/core/interfaces/IGraph.sol";
+import {RuleBasedPrimitive} from "contracts/lens/core/base/RuleBasedPrimitive.sol";
+import {CallLib} from "contracts/lens/core/libraries/CallLib.sol";
+import {Errors} from "contracts/lens/core/types/Errors.sol";
 
-contract RuleBasedGraph {
+abstract contract RuleBasedGraph is IGraph, RuleBasedPrimitive {
     using RulesLib for RulesStorage;
+    using CallLib for address;
 
     struct RuleBasedStorage {
         RulesStorage graphRulesStorage;
         mapping(address => RulesStorage) followRulesStorage;
     }
 
-    // keccak256('lens.rule.based.graph.storage')
-    bytes32 constant RULE_BASED_GRAPH_STORAGE_SLOT = 0x02d31ef96f666bf684ab1c8a89d21f38a88719152ba49251cdaacb4c11cdae39;
+    /// @custom:keccak lens.storage.RuleBasedGraph
+    bytes32 constant STORAGE__RULE_BASED_GRAPH = 0x6644773a6cb3d68b635cf6054580d77eff2d2b0b6851802f2c6d1adbf85026f9;
 
     function $ruleBasedStorage() private pure returns (RuleBasedStorage storage _storage) {
         assembly {
-            _storage.slot := RULE_BASED_GRAPH_STORAGE_SLOT
+            _storage.slot := STORAGE__RULE_BASED_GRAPH
         }
     }
 
@@ -32,141 +37,362 @@ contract RuleBasedGraph {
         return $ruleBasedStorage().followRulesStorage[account];
     }
 
+    ////////////////////////////  CONFIGURATION FUNCTIONS  ////////////////////////////
+
+    function changeGraphRules(RuleChange[] calldata ruleChanges) external virtual override {
+        _changePrimitiveRules($graphRulesStorage(), ruleChanges);
+    }
+
+    function changeFollowRules(
+        address account,
+        RuleChange[] calldata ruleChanges,
+        RuleProcessingParams[] calldata ruleChangesProcessingParams
+    ) external virtual override {
+        _changeEntityRules(
+            $followRulesStorage(account), uint256(uint160(account)), ruleChanges, ruleChangesProcessingParams
+        );
+    }
+
+    function _processEntityRulesChanges(
+        uint256 entityId,
+        RuleChange[] memory ruleChanges,
+        RuleProcessingParams[] memory ruleChangesProcessingParams
+    ) internal virtual override {
+        _graphProcessFollowRuleChanges(address(uint160(entityId)), ruleChanges, ruleChangesProcessingParams);
+    }
+
+    function _supportedPrimitiveRuleSelectors() internal view virtual override returns (bytes4[] memory) {
+        bytes4[] memory selectors = new bytes4[](3);
+        selectors[0] = IGraphRule.processFollow.selector;
+        selectors[1] = IGraphRule.processUnfollow.selector;
+        selectors[2] = IGraphRule.processFollowRuleChanges.selector;
+        return selectors;
+    }
+
+    function _supportedEntityRuleSelectors() internal view virtual override returns (bytes4[] memory) {
+        bytes4[] memory selectors = new bytes4[](1);
+        selectors[0] = IFollowRule.processFollow.selector;
+        return selectors;
+    }
+
+    function _encodePrimitiveConfigureCall(bytes32 configSalt, KeyValue[] memory ruleParams)
+        internal
+        pure
+        override
+        returns (bytes memory)
+    {
+        return abi.encodeCall(IGraphRule.configure, (configSalt, ruleParams));
+    }
+
+    function _encodeEntityConfigureCall(uint256 accountAsUint256, bytes32 configSalt, KeyValue[] memory ruleParams)
+        internal
+        pure
+        override
+        returns (bytes memory)
+    {
+        return abi.encodeCall(IFollowRule.configure, (configSalt, address(uint160(accountAsUint256)), ruleParams));
+    }
+
+    function _emitPrimitiveRuleConfiguredEvent(
+        bool wasAlreadyConfigured,
+        address ruleAddress,
+        bytes32 configSalt,
+        KeyValue[] memory ruleParams
+    ) internal override {
+        if (wasAlreadyConfigured) {
+            emit IGraph.Lens_Graph_RuleReconfigured(ruleAddress, configSalt, ruleParams);
+        } else {
+            emit IGraph.Lens_Graph_RuleConfigured(ruleAddress, configSalt, ruleParams);
+        }
+    }
+
+    function _emitPrimitiveRuleSelectorEvent(
+        bool enabled,
+        address ruleAddress,
+        bytes32 configSalt,
+        bool isRequired,
+        bytes4 ruleSelector
+    ) internal override {
+        if (enabled) {
+            emit Lens_Graph_RuleSelectorEnabled(ruleAddress, configSalt, isRequired, ruleSelector);
+        } else {
+            emit Lens_Graph_RuleSelectorDisabled(ruleAddress, configSalt, isRequired, ruleSelector);
+        }
+    }
+
+    function _emitEntityRuleConfiguredEvent(
+        bool wasAlreadyConfigured,
+        uint256 entityId,
+        address ruleAddress,
+        bytes32 configSalt,
+        KeyValue[] memory ruleParams
+    ) internal override {
+        address account = address(uint160(entityId));
+        if (wasAlreadyConfigured) {
+            emit IGraph.Lens_Graph_Follow_RuleReconfigured(account, ruleAddress, configSalt, ruleParams);
+        } else {
+            emit IGraph.Lens_Graph_Follow_RuleConfigured(account, ruleAddress, configSalt, ruleParams);
+        }
+    }
+
+    function _emitEntityRuleSelectorEvent(
+        bool enabled,
+        uint256 entityId,
+        address ruleAddress,
+        bytes32 configSalt,
+        bool isRequired,
+        bytes4 selector
+    ) internal override {
+        address account = address(uint160(entityId));
+        if (enabled) {
+            emit IGraph.Lens_Graph_Follow_RuleSelectorEnabled(account, ruleAddress, configSalt, isRequired, selector);
+        } else {
+            emit IGraph.Lens_Graph_Follow_RuleSelectorDisabled(account, ruleAddress, configSalt, isRequired, selector);
+        }
+    }
+
+    function _amountOfRules(bytes4 ruleSelector) internal view returns (uint256) {
+        return $graphRulesStorage()._getRulesArray(ruleSelector, false).length
+            + $graphRulesStorage()._getRulesArray(ruleSelector, true).length;
+    }
+
+    function getGraphRules(bytes4 ruleSelector, bool isRequired)
+        external
+        view
+        virtual
+        override
+        returns (Rule[] memory)
+    {
+        return $graphRulesStorage()._getRulesArray(ruleSelector, isRequired);
+    }
+
+    function getFollowRules(address account, bytes4 ruleSelector, bool isRequired)
+        external
+        view
+        virtual
+        override
+        returns (Rule[] memory)
+    {
+        return $followRulesStorage(account)._getRulesArray(ruleSelector, isRequired);
+    }
+
     // Internal
-
-    function _addGraphRule(RuleConfiguration memory rule) internal {
-        $graphRulesStorage().addRule(rule, abi.encodeCall(IGraphRule.configure, (rule.configData)));
-    }
-
-    function _updateGraphRule(RuleConfiguration memory rule) internal {
-        $graphRulesStorage().updateRule(rule, abi.encodeCall(IGraphRule.configure, (rule.configData)));
-    }
-
-    function _removeGraphRule(address rule) internal {
-        $graphRulesStorage().removeRule(rule);
-    }
-
-    function _addFollowRule(address account, RuleConfiguration memory rule) internal {
-        $followRulesStorage(account).addRule(rule, abi.encodeCall(IFollowRule.configure, (account, rule.configData)));
-    }
-
-    function _updateFollowRule(address account, RuleConfiguration memory rule) internal {
-        $followRulesStorage(account).updateRule(rule, abi.encodeCall(IFollowRule.configure, (account, rule.configData)));
-    }
-
-    function _removeFollowRule(address account, address rule) internal {
-        $followRulesStorage(account).removeRule(rule);
-    }
-
-    // TODO: Unfortunately we had to copy-paste this code because we couldn't think of a better solution for encoding yet.
 
     function _graphProcessFollowRuleChanges(
         address account,
-        RuleChange[] calldata ruleChanges,
-        RuleExecutionData calldata graphRulesData
+        RuleChange[] memory ruleChanges,
+        RuleProcessingParams[] memory graphRulesProcessingParams
     ) internal {
+        bytes4 ruleSelector = IGraphRule.processFollowRuleChanges.selector;
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
         // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < $graphRulesStorage().requiredRules.length; i++) {
-            (bool callNotReverted,) = $graphRulesStorage().requiredRules[i].call(
-                abi.encodeCall(
-                    IGraphRule.processFollowRuleChanges, (account, ruleChanges, graphRulesData.dataForRequiredRules[i])
-                )
+        for (uint256 i = 0; i < $graphRulesStorage().requiredRules[ruleSelector].length; i++) {
+            rule = $graphRulesStorage().requiredRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, graphRulesProcessingParams);
+            (bool callSucceeded,) = rule.ruleAddress.safecall(
+                abi.encodeCall(IGraphRule.processFollowRuleChanges, (rule.configSalt, account, ruleChanges, ruleParams))
             );
-            require(callNotReverted, "Some required rule failed");
+            require(callSucceeded, Errors.RequiredRuleReverted());
         }
         // Check any-of rules (OR-combined rules)
-        if ($graphRulesStorage().anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < $graphRulesStorage().anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) = $graphRulesStorage().anyOfRules[i].call(
-                abi.encodeCall(
-                    IGraphRule.processFollowRuleChanges, (account, ruleChanges, graphRulesData.dataForAnyOfRules[i])
-                )
+        for (uint256 i = 0; i < $graphRulesStorage().anyOfRules[ruleSelector].length; i++) {
+            rule = $graphRulesStorage().anyOfRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, graphRulesProcessingParams);
+            (bool callSucceeded,) = rule.ruleAddress.safecall(
+                abi.encodeCall(IGraphRule.processFollowRuleChanges, (rule.configSalt, account, ruleChanges, ruleParams))
             );
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
+            if (callSucceeded) {
                 return; // If any of the OR-combined rules passed, it means they succeed and we can return
             }
         }
-        revert("All of the any-of rules failed");
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require($graphRulesStorage().anyOfRules[ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
     }
 
-    function _internalGraphProcessFollow(
-        address rule,
-        address followerAccount,
-        address accountToFollow,
-        bytes calldata data
+    struct ProcessParams {
+        address originalMsgSender;
+        address sourceAccount;
+        address targetAccount;
+        KeyValue[] primitiveCustomParams;
+        RuleProcessingParams[] rulesProcessingParams;
+    }
+
+    function _encodeAndCallGraphProcessFollow(
+        Rule memory rule,
+        ProcessParams memory processParams,
+        KeyValue[] memory ruleParams
     ) internal returns (bool, bytes memory) {
-        return rule.call(abi.encodeCall(IGraphRule.processFollow, (followerAccount, accountToFollow, data)));
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IGraphRule.processFollow,
+                (
+                    rule.configSalt,
+                    processParams.originalMsgSender,
+                    processParams.sourceAccount,
+                    processParams.targetAccount,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
     }
 
     function _graphProcessFollow(
+        address originalMsgSender,
         address followerAccount,
         address accountToFollow,
-        RuleExecutionData calldata graphRulesData
+        KeyValue[] calldata primitiveCustomParams,
+        RuleProcessingParams[] calldata rulesProcessingParams
     ) internal {
         _processFollow(
-            $graphRulesStorage(), _internalGraphProcessFollow, followerAccount, accountToFollow, graphRulesData
+            $graphRulesStorage(),
+            _encodeAndCallGraphProcessFollow,
+            IGraphRule.processFollow.selector,
+            ProcessParams({
+                originalMsgSender: originalMsgSender,
+                sourceAccount: followerAccount,
+                targetAccount: accountToFollow,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: rulesProcessingParams
+            })
         );
     }
 
-    function _internalAccountProcessFollow(
-        address rule,
-        address followerAccount,
-        address accountToFollow,
-        bytes calldata data
+    function _encodeAndCallGraphProcessUnfollow(
+        Rule memory rule,
+        ProcessParams memory processParams,
+        KeyValue[] memory ruleParams
     ) internal returns (bool, bytes memory) {
-        return rule.call(abi.encodeCall(IFollowRule.processFollow, (followerAccount, accountToFollow, data)));
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IGraphRule.processUnfollow,
+                (
+                    rule.configSalt,
+                    processParams.originalMsgSender,
+                    processParams.sourceAccount,
+                    processParams.targetAccount,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
+    }
+
+    function _graphProcessUnfollow(
+        address originalMsgSender,
+        address followerAccount,
+        address accountToUnfollow,
+        KeyValue[] calldata primitiveCustomParams,
+        RuleProcessingParams[] calldata rulesProcessingParams
+    ) internal {
+        _processUnfollow(
+            $graphRulesStorage(),
+            _encodeAndCallGraphProcessUnfollow,
+            ProcessParams({
+                originalMsgSender: originalMsgSender,
+                sourceAccount: followerAccount,
+                targetAccount: accountToUnfollow,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: rulesProcessingParams
+            })
+        );
+    }
+
+    function _encodeAndCallAccountProcessFollow(
+        Rule memory rule,
+        ProcessParams memory processParams,
+        KeyValue[] memory ruleParams
+    ) internal returns (bool, bytes memory) {
+        return rule.ruleAddress.safecall(
+            abi.encodeCall(
+                IFollowRule.processFollow,
+                (
+                    rule.configSalt,
+                    processParams.originalMsgSender,
+                    processParams.sourceAccount,
+                    processParams.targetAccount,
+                    processParams.primitiveCustomParams,
+                    ruleParams
+                )
+            )
+        );
     }
 
     function _accountProcessFollow(
+        address originalMsgSender,
         address followerAccount,
         address accountToFollow,
-        RuleExecutionData calldata followRulesData
+        KeyValue[] calldata primitiveCustomParams,
+        RuleProcessingParams[] calldata rulesProcessingParams
     ) internal {
         _processFollow(
             $followRulesStorage(accountToFollow),
-            _internalAccountProcessFollow,
-            followerAccount,
-            accountToFollow,
-            followRulesData
+            _encodeAndCallAccountProcessFollow,
+            IFollowRule.processFollow.selector,
+            ProcessParams({
+                originalMsgSender: originalMsgSender,
+                sourceAccount: followerAccount,
+                targetAccount: accountToFollow,
+                primitiveCustomParams: primitiveCustomParams,
+                rulesProcessingParams: rulesProcessingParams
+            })
         );
+    }
+
+    function _processUnfollow(
+        RulesStorage storage rulesStorage,
+        function(Rule memory,ProcessParams memory,KeyValue[] memory) internal returns (bool,bytes memory) encodeAndCall,
+        ProcessParams memory processParams
+    ) internal {
+        bytes4 ruleSelector = IGraphRule.processUnfollow.selector;
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
+        // Check required rules (AND-combined rules)
+        for (uint256 i = 0; i < rulesStorage.requiredRules[ruleSelector].length; i++) {
+            rule = rulesStorage.requiredRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            require(callSucceeded, Errors.RequiredRuleReverted());
+        }
+        // Check any-of rules (OR-combined rules)
+        for (uint256 i = 0; i < rulesStorage.anyOfRules[ruleSelector].length; i++) {
+            rule = rulesStorage.anyOfRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            if (callSucceeded) {
+                return; // If any of the OR-combined rules passed, it means they succeed and we can return
+            }
+        }
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require(rulesStorage.anyOfRules[ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
     }
 
     function _processFollow(
         RulesStorage storage rulesStorage,
-        function(address,address,address,bytes calldata) internal returns (bool,bytes memory) func,
-        address followerAccount,
-        address accountToFollow,
-        RuleExecutionData calldata data
+        function(Rule memory,ProcessParams memory,KeyValue[] memory) internal returns (bool,bytes memory) encodeAndCall,
+        bytes4 ruleSelector,
+        ProcessParams memory processParams
     ) internal {
+        Rule memory rule;
+        KeyValue[] memory ruleParams;
         // Check required rules (AND-combined rules)
-        for (uint256 i = 0; i < rulesStorage.requiredRules.length; i++) {
-            (bool callNotReverted,) =
-                func(rulesStorage.requiredRules[i], followerAccount, accountToFollow, data.dataForRequiredRules[i]);
-            require(callNotReverted, "Some required rule failed");
+        for (uint256 i = 0; i < rulesStorage.requiredRules[ruleSelector].length; i++) {
+            rule = rulesStorage.requiredRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            require(callSucceeded, Errors.RequiredRuleReverted());
         }
         // Check any-of rules (OR-combined rules)
-        if (rulesStorage.anyOfRules.length == 0) {
-            return; // If there are no OR-combined rules, we can return
-        }
-        for (uint256 i = 0; i < rulesStorage.anyOfRules.length; i++) {
-            (bool callNotReverted, bytes memory returnData) =
-                func(rulesStorage.anyOfRules[i], followerAccount, accountToFollow, data.dataForAnyOfRules[i]);
-            if (callNotReverted && abi.decode(returnData, (bool))) {
-                // Note: abi.decode would fail if call reverted, so don't put this out of the brackets!
+        for (uint256 i = 0; i < rulesStorage.anyOfRules[ruleSelector].length; i++) {
+            rule = rulesStorage.anyOfRules[ruleSelector][i];
+            ruleParams = _getRuleParamsOrEmptyArray(rule, processParams.rulesProcessingParams);
+            (bool callSucceeded,) = encodeAndCall(rule, processParams, ruleParams);
+            if (callSucceeded) {
                 return; // If any of the OR-combined rules passed, it means they succeed and we can return
             }
         }
-        revert("All of the any-of rules failed");
-    }
-
-    function _getGraphRules(bool isRequired) internal view returns (address[] memory) {
-        return $graphRulesStorage().getRulesArray(isRequired);
-    }
-
-    function _getFollowRules(address account, bool isRequired) internal view returns (address[] memory) {
-        return $followRulesStorage(account).getRulesArray(isRequired);
+        // If there are any-of rules and it reached this point, it means all of them failed.
+        require(rulesStorage.anyOfRules[ruleSelector].length == 0, Errors.AllAnyOfRulesReverted());
     }
 }

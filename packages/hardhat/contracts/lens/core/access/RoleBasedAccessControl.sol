@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
-import {Access, IRoleBasedAccessControl} from "./../interfaces/IRoleBasedAccessControl.sol";
-import {Events} from "./../types/Events.sol";
+import {Access, IRoleBasedAccessControl} from "contracts/lens/core/interfaces/IRoleBasedAccessControl.sol";
+import {Ownable} from "contracts/lens/core/access/Ownable.sol";
+import {Events} from "contracts/lens/core/types/Events.sol";
+import {Errors} from "contracts/lens/core/types/Errors.sol";
 
 /**
  * This Access Control:
@@ -17,35 +19,32 @@ import {Events} from "./../types/Events.sol";
  * - Within an specific role the denied-overrides strategy is applied (in case of same amount of wildcards).
  * - When some account has many roles, the final permission is the most permissive one (i.e. granted-overrides strategy).
  */
-contract RoleBasedAccessControl is IRoleBasedAccessControl {
-    event Lens_OwnershipTransferred(address indexed previousOwner, address indexed newOwner); // TODO: Do we need it?
-
+contract RoleBasedAccessControl is Ownable, IRoleBasedAccessControl {
     address internal constant ANY_CONTRACT_ADDRESS = address(0);
     uint256 internal constant ANY_PERMISSION_ID = uint256(0);
-    uint256 constant OWNER_ROLE_ID = uint256(keccak256("OWNER"));
+    /// @custom:keccak lens.role.Owner
+    uint256 constant OWNER_ROLE_ID = uint256(0x441b0c1da21837a189de2bb219f231a98e08a545e9ede0b2874dec4807e57e7e);
+    /// @custom:keccak lens.contract.AccessControl.RoleBasedAccessControl
+    bytes32 constant CONTRACT_TYPE = 0xd7f02d8d0f478fc8e4dfbe64bafebbee03e9d359c4395bdbf35858b495f3daaa;
 
-    address internal _owner;
     mapping(address => uint256[]) internal _roles;
     mapping(uint256 => mapping(address => mapping(uint256 => Access))) internal _access;
 
     constructor(address owner) {
         _emitLensContractDeployedEvent();
-        _owner = owner;
         _grantRole(owner, OWNER_ROLE_ID);
         _setAccess(OWNER_ROLE_ID, ANY_CONTRACT_ADDRESS, ANY_PERMISSION_ID, Access.GRANTED);
+        _transferOwnership(owner);
     }
 
-    function transferOwnership(address newOwner) external virtual {
-        address oldOwner = _owner;
-        require(msg.sender == oldOwner, "Only owner can transfer ownership");
-        _owner = newOwner;
-        _revokeRole(oldOwner, OWNER_ROLE_ID);
+    function transferOwnership(address newOwner) public virtual override {
+        _revokeRole(owner(), OWNER_ROLE_ID);
         _grantRole(newOwner, OWNER_ROLE_ID);
-        emit Lens_OwnershipTransferred(oldOwner, newOwner);
+        super.transferOwnership(newOwner);
     }
 
     function getType() external pure virtual override returns (bytes32) {
-        return keccak256("lens.access-control.role-based-access-control");
+        return CONTRACT_TYPE;
     }
 
     function canChangeAccessControl(address account, address /* contractAddress */ )
@@ -55,7 +54,7 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
         override
         returns (bool)
     {
-        return account == _owner;
+        return account == owner();
     }
 
     function hasAccess(address account, address contractAddress, uint256 permissionId)
@@ -73,13 +72,12 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
         _grantRole(account, roleId);
     }
 
-    function _beforeGrantingRole(address, /* account */ uint256 roleId) internal virtual {
-        require(msg.sender == _owner, "Only owner can assign roles");
-        require(roleId != OWNER_ROLE_ID, "Cannot grant owner role");
+    function _beforeGrantingRole(address, /* account */ uint256 roleId) internal virtual onlyOwner {
+        require(roleId != OWNER_ROLE_ID, Errors.InvalidParameter());
     }
 
     function _grantRole(address account, uint256 roleId) internal virtual {
-        require(!_hasRole(account, roleId));
+        require(!_hasRole(account, roleId), Errors.RedundantStateChange());
         _roles[account].push(roleId);
         emit Lens_AccessControl_RoleGranted(account, roleId);
     }
@@ -89,14 +87,13 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
         _revokeRole(account, roleId);
     }
 
-    function _beforeRevokingRole(address, /* account */ uint256 roleId) internal virtual {
-        require(msg.sender == _owner, "Only owner can revoke roles");
-        require(roleId != OWNER_ROLE_ID, "Cannot revoke owner role");
+    function _beforeRevokingRole(address, /* account */ uint256 roleId) internal virtual onlyOwner {
+        require(roleId != OWNER_ROLE_ID, Errors.InvalidParameter());
     }
 
     function _revokeRole(address account, uint256 roleId) internal virtual {
         uint256 accountRolesLength = _roles[account].length;
-        require(accountRolesLength > 0);
+        require(accountRolesLength > 0, Errors.RedundantStateChange());
         uint256 roleIndex = 0;
         while (roleIndex < accountRolesLength) {
             if (_roles[account][roleIndex] == roleId) {
@@ -105,7 +102,7 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
                 roleIndex++;
             }
         }
-        require(roleIndex < accountRolesLength); // Index must be found before reaching the end of the array
+        require(roleIndex < accountRolesLength, Errors.RedundantStateChange()); // Index must be found before reaching the end of the array
         _roles[account][roleIndex] = _roles[account][accountRolesLength - 1];
         _roles[account].pop();
         emit Lens_AccessControl_RoleRevoked(account, roleId);
@@ -129,19 +126,15 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
         address, /* contractAddress */
         uint256, /* permissionId */
         Access /* access */
-    ) internal virtual {
-        require(msg.sender == _owner, "Only owner can set access");
-        require(roleId != OWNER_ROLE_ID, "Cannot set access for owner role");
+    ) internal virtual onlyOwner {
+        require(roleId != OWNER_ROLE_ID, Errors.InvalidParameter());
     }
 
-    function _setAccess(uint256 roleId, address contractAddress, uint256 permissionId, Access access)
-        internal
-        virtual
-    {
+    function _setAccess(uint256 roleId, address contractAddress, uint256 permissionId, Access access) internal virtual {
         Access perviousAccess = _access[roleId][contractAddress][permissionId];
+        require(access != perviousAccess, Errors.RedundantStateChange());
         _access[roleId][contractAddress][permissionId] = access;
         if (perviousAccess == Access.UNDEFINED) {
-            require(access != Access.UNDEFINED);
             emit Lens_AccessControl_AccessAdded(roleId, contractAddress, permissionId, access == Access.GRANTED);
         } else if (access == Access.UNDEFINED) {
             emit Lens_AccessControl_AccessRemoved(roleId, contractAddress, permissionId);
@@ -156,6 +149,8 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
         virtual
         returns (bool)
     {
+        require(contractAddress != ANY_CONTRACT_ADDRESS, Errors.InvalidParameter());
+        require(permissionId != ANY_PERMISSION_ID, Errors.InvalidParameter());
         for (uint256 i = 0; i < _roles[account].length; i++) {
             if (_hasAccess(_roles[account][i], contractAddress, permissionId)) {
                 // GRANTED-overrides strategy
@@ -171,9 +166,6 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
         virtual
         returns (bool)
     {
-        require(contractAddress != ANY_CONTRACT_ADDRESS);
-        require(permissionId != ANY_PERMISSION_ID);
-
         Access fullySpecifiedAccess = _access[roleId][contractAddress][permissionId];
 
         if (fullySpecifiedAccess != Access.UNDEFINED) {
@@ -211,11 +203,9 @@ contract RoleBasedAccessControl is IRoleBasedAccessControl {
     }
 
     function _emitLensContractDeployedEvent() internal virtual {
-        emit Events.Lens_Contract_Deployed(
-            "access-control",
-            "lens.access-control.role-based-access-control",
-            "access-control",
-            "lens.access-control.role-based-access-control"
-        );
+        emit Events.Lens_Contract_Deployed({
+            contractType: "lens.contract.AccessControl",
+            flavour: "lens.contract.AccessControl.RoleBasedAccessControl"
+        });
     }
 }

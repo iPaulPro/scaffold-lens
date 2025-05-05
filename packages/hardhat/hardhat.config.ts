@@ -7,6 +7,7 @@ const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
 import "@matterlabs/hardhat-zksync";
+import "@openzeppelin/hardhat-upgrades";
 import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@typechain/hardhat";
@@ -16,6 +17,8 @@ import "@nomicfoundation/hardhat-verify";
 import "hardhat-dependency-compiler";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import "hardhat-contract-sizer";
+import "hardhat-ignore-warnings";
 
 import { HardhatUserConfig } from "hardhat/config";
 
@@ -30,7 +33,7 @@ const deployerPrivateKey =
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.23",
+    version: "0.8.28",
   },
   zksolc: {
     version: "latest",
@@ -65,7 +68,11 @@ const config: HardhatUserConfig = {
     },
   },
   paths: {
+    sources: "./contracts",
     deployments: "./deployments-zk",
+  },
+  dependencyCompiler: {
+    paths: ["@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol"],
   },
 };
 

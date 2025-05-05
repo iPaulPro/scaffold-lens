@@ -1,42 +1,69 @@
 // SPDX-License-Identifier: UNLICENSED
 // Copyright (C) 2024 Lens Labs. All Rights Reserved.
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
-import {CreatePostParams, EditPostParams} from "./../../core/interfaces/IFeed.sol";
-import {IFeedRule} from "./../../core/interfaces/IFeedRule.sol";
-import {RuleChange} from "./../../core/types/Types.sol";
-import {IGroup} from "./../../core/interfaces/IGroup.sol";
+import {CreatePostParams, EditPostParams} from "contracts/lens/core/interfaces/IFeed.sol";
+import {IFeedRule} from "contracts/lens/core/interfaces/IFeedRule.sol";
+import {IGroup} from "contracts/lens/core/interfaces/IGroup.sol";
+import {KeyValue, RuleChange} from "contracts/lens/core/types/Types.sol";
+import {OwnableMetadataBasedRule} from "contracts/lens/rules/base/OwnableMetadataBasedRule.sol";
+import {Errors} from "contracts/lens/core/types/Errors.sol";
 
-contract GroupGatedFeedRule is IFeedRule {
-    mapping(address => address) internal _groupGate;
+/// @custom:keccak lens.param.group
+bytes32 constant PARAM__GROUP = 0xa92ea569d1a9f915f96759ba7cea5f135d011c442b0508dbef76a309e55f4458;
 
-    function configure(bytes calldata data) external override {
-        _groupGate[msg.sender] = abi.decode(data, (address));
+contract GroupGatedFeedRule is IFeedRule, OwnableMetadataBasedRule {
+    mapping(address => mapping(bytes32 => address)) internal _groupGate;
+
+    constructor(address owner, string memory metadataURI) OwnableMetadataBasedRule(owner, metadataURI) {}
+
+    function configure(bytes32 configSalt, KeyValue[] calldata ruleParams) external override {
+        address groupGate;
+        for (uint256 i = 0; i < ruleParams.length; i++) {
+            if (ruleParams[i].key == PARAM__GROUP) {
+                groupGate = abi.decode(ruleParams[i].value, (address));
+                break;
+            }
+        }
+        _groupGate[msg.sender][configSalt] = groupGate;
+        IGroup(groupGate).isMember(address(this)); // Aims to verify the provided address is a valid group
     }
 
-    function processCreatePost(uint256, /* postId */ CreatePostParams calldata postParams, bytes calldata /* data */ )
-        external
-        view
-        override
-        returns (bool)
-    {
-        require(IGroup(_groupGate[msg.sender]).getMembershipId(postParams.author) != 0, "NotAMember()");
-        return true;
+    function processCreatePost(
+        bytes32 configSalt,
+        uint256, /* postId */
+        CreatePostParams calldata postParams,
+        KeyValue[] calldata, /* primitiveParams */
+        KeyValue[] calldata /* ruleParams */
+    ) external view override {
+        require(IGroup(_groupGate[msg.sender][configSalt]).isMember(postParams.author), Errors.NotAMember());
     }
 
     function processEditPost(
+        bytes32, /* configSalt */
         uint256, /* postId */
-        EditPostParams calldata, /* editPostParams */
-        bytes calldata /* data */
-    ) external pure override returns (bool) {
-        return false;
+        EditPostParams calldata, /* postParams */
+        KeyValue[] calldata, /* primitiveParams */
+        KeyValue[] calldata /* ruleParams */
+    ) external pure override {
+        revert Errors.NotImplemented();
+    }
+
+    function processDeletePost(
+        bytes32, /* configSalt */
+        uint256, /* postId */
+        KeyValue[] calldata, /* primitiveParams */
+        KeyValue[] calldata /* ruleParams */
+    ) external pure override {
+        revert Errors.NotImplemented();
     }
 
     function processPostRuleChanges(
+        bytes32, /* configSalt */
         uint256, /* postId */
         RuleChange[] calldata, /* ruleChanges */
-        bytes calldata /* data */
-    ) external pure override returns (bool) {
-        return false;
+        KeyValue[] calldata /* ruleParams */
+    ) external pure override {
+        revert Errors.NotImplemented();
     }
 }

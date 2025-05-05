@@ -3,22 +3,14 @@ import * as hre from "hardhat";
 import { Deployer } from "@matterlabs/hardhat-zksync";
 import dotenv from "dotenv";
 import { ethers } from "ethers";
-import { DeploymentsExtension } from "hardhat-deploy/types";
 
 import "@matterlabs/hardhat-zksync-node/dist/type-extensions";
 import "@matterlabs/hardhat-zksync-verify/dist/src/type-extensions";
 import { ZkSyncArtifact } from "@matterlabs/hardhat-zksync-deploy/dist/types";
 import { Artifact } from "hardhat/types";
-import path from "path";
 
 // Load env file
-const envFileName =
-  !process.env.NODE_ENV || process.env.NODE_ENV === "production" ? ".env" : `.env.${process.env.NODE_ENV}`;
-const envFile = path.resolve(process.cwd(), envFileName);
-dotenv.config({ path: envFile });
-
-const deployerPrivateKey =
-  process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+dotenv.config();
 
 export const getProvider = () => {
   const rpcUrl = hre.network.config.url;
@@ -32,10 +24,15 @@ export const getProvider = () => {
 };
 
 export const getWallet = (privateKey?: string) => {
+  if (!privateKey) {
+    // Get wallet private key from .env file
+    if (!process.env.DEPLOYER_PRIVATE_KEY) throw "⛔️ Wallet private key wasn't found in .env file!";
+  }
+
   const provider = getProvider();
 
   // Initialize ZKsync Wallet
-  const wallet = new Wallet(privateKey ?? deployerPrivateKey, provider);
+  const wallet = new Wallet(privateKey ?? process.env.DEPLOYER_PRIVATE_KEY!, provider);
 
   return wallet;
 };
@@ -55,9 +52,14 @@ export const verifyEnoughBalance = async (wallet: Wallet, amount: bigint) => {
 export const verifyContract = async (data: {
   address: string;
   contract: string;
-  constructorArguments?: string;
+  constructorArguments: string;
   bytecode: string;
 }) => {
+  // Skip verification for local networks
+  if (hre.network.name === "inMemoryNode" || hre.network.name === "zkstackMigrationNode") {
+    console.log("Skipping contract verification on local network");
+    return 0;
+  }
   const verificationRequestId: number = await hre.run("verify:verify", {
     ...data,
     noCompile: true,
@@ -68,15 +70,13 @@ export const verifyContract = async (data: {
 export const verifyZkDeployedContract = async (data: {
   address: string;
   artifact: ZkSyncArtifact;
-  constructorArguments?: any[];
+  constructorArguments: any[];
 }) => {
   const contractToVerify = new ethers.Contract(data.address, data.artifact.abi);
   return verifyContract({
     address: data.address,
     contract: `${data.artifact.sourceName}:${data.artifact.contractName}`,
-    constructorArguments: data.constructorArguments
-      ? contractToVerify.interface.encodeDeploy(data.constructorArguments)
-      : undefined,
+    constructorArguments: contractToVerify.interface.encodeDeploy(data.constructorArguments),
     bytecode: data.artifact.bytecode,
   });
 };
@@ -84,15 +84,13 @@ export const verifyZkDeployedContract = async (data: {
 export const verifyDeployedContract = async (data: {
   address: string;
   artifact: Artifact;
-  constructorArguments?: any[];
+  constructorArguments: any[];
 }) => {
   const contractToVerify = new ethers.Contract(data.address, data.artifact.abi);
   return verifyContract({
     address: data.address,
     contract: `${data.artifact.sourceName}:${data.artifact.contractName}`,
-    constructorArguments: data.constructorArguments
-      ? contractToVerify.interface.encodeDeploy(data.constructorArguments)
-      : undefined,
+    constructorArguments: contractToVerify.interface.encodeDeploy(data.constructorArguments),
     bytecode: data.artifact.bytecode,
   });
 };
@@ -104,85 +102,52 @@ export const verifyLensFactoryDeployedPrimitive = async (data: {
 }) => {
   const txReceipt = (await data.tx.wait()) as ethers.TransactionReceipt;
 
-  const eventInterface = new ethers.Interface([
-    "event Lens_Contract_Deployed(string indexed indexedContractType, string indexed indexedFlavour, string contractType, string flavour)",
-  ]);
+  const eventInterface = new ethers.Interface(["event Lens_Contract_Deployed(string contractType, string flavour)"]);
 
   // Parse event logs
   const events = txReceipt.logs.map(log => {
     try {
       const decodedLog = eventInterface.decodeEventLog("Lens_Contract_Deployed", log.data, log.topics);
-      return { primitive: decodedLog[2], primitiveType: decodedLog[3], address: log.address };
+      console.log(decodedLog);
+      return { contractType: decodedLog[0], flavor: decodedLog[1], address: log.address };
     } catch {
       return null;
     }
   });
 
-  const deployedAddress = events.filter(e => e?.primitive === data.lensContractArtifactName.toLowerCase())[0]!.address;
-  // const accessControlAddress = events.filter(e => e?.primitive === "access-control")[0]?.address;
+  const deployedAddress = events.filter(e => e?.contractType === `lens.contract.${data.lensContractArtifactName}`)[0]!
+    .address;
+  const accessControlAddress = events.filter(e => e?.contractType === "lens.contract.AccessControl")[0]?.address;
 
-  // if (accessControlAddress) {
-  //   const deployedArtifact = await hre.artifacts.readArtifact(data.lensContractArtifactName);
-  //
-  //   await verifyDeployedContract({
-  //     address: deployedAddress,
-  //     artifact: deployedArtifact,
-  //     constructorArguments: [data.metadataURIConstructorParam, accessControlAddress],
-  //   });
-  // }
+  if (accessControlAddress) {
+    const deployedArtifact = await hre.artifacts.readArtifact(data.lensContractArtifactName);
 
-  return deployedAddress;
-};
-
-export const verifyLensFactoryDeployedUsername = async (data: { tx: any; constructorParams: any[] }) => {
-  const txReceipt = (await data.tx.wait()) as ethers.TransactionReceipt;
-
-  const eventInterface = new ethers.Interface([
-    "event Lens_Contract_Deployed(string indexed indexedContractType, string indexed indexedFlavour, string contractType, string flavour)",
-  ]);
-
-  // Parse event logs
-  const events = txReceipt.logs.map(log => {
-    try {
-      const decodedLog = eventInterface.decodeEventLog("Lens_Contract_Deployed", log.data, log.topics);
-      return { primitive: decodedLog[2], primitiveType: decodedLog[3], address: log.address };
-    } catch {
-      return null;
-    }
-  });
-
-  const deployedAddress = events.filter(e => e?.primitive === "username")[0]!.address;
-  // const tokenUriProviderAddress = events.filter(e => e?.primitive === "username-token-uri-provider")[0]?.address;
-  //
-  // const deployedArtifact = await hre.artifacts.readArtifact("Username");
-  //
-  // await verifyDeployedContract({
-  //   address: deployedAddress,
-  //   artifact: deployedArtifact,
-  //   constructorArguments: [...data.constructorParams, tokenUriProviderAddress],
-  // });
+    await verifyDeployedContract({
+      address: deployedAddress,
+      artifact: deployedArtifact,
+      constructorArguments: [data.metadataURIConstructorParam, accessControlAddress],
+    });
+  }
 
   return deployedAddress;
 };
 
 interface ParsedEvent {
-  primitive: string;
-  primitiveType: string;
+  contractType: string;
+  flavor: string;
   address: string;
 }
 
 export function parseLensContractDeployedEventsFromReceipt(txReceipt: ethers.TransactionReceipt): ParsedEvent[] {
-  const eventInterface = new ethers.Interface([
-    "event Lens_Contract_Deployed(string indexed indexedContractType, string indexed indexedFlavour, string contractType, string flavour)",
-  ]);
+  const eventInterface = new ethers.Interface(["event Lens_Contract_Deployed(string contractType, string flavour)"]);
 
   // Parse event logs
   const events = txReceipt.logs.reduce<ParsedEvent[]>((acc, log) => {
     try {
       const decodedLog = eventInterface.decodeEventLog("Lens_Contract_Deployed", log.data, log.topics);
       acc.push({
-        primitive: decodedLog[2],
-        primitiveType: decodedLog[3],
+        contractType: decodedLog[0],
+        flavor: decodedLog[1],
         address: log.address,
       });
     } catch {
@@ -195,34 +160,28 @@ export function parseLensContractDeployedEventsFromReceipt(txReceipt: ethers.Tra
 }
 
 export const getAddressFromEvents = (events: ParsedEvent[], primitiveName: string) => {
-  return events.filter(e => e?.primitive === primitiveName)[0]!.address;
+  return events.filter(e => e?.contractType === `lens.contract.${primitiveName}`)[0]!.address;
 };
 
-export async function verifyPrimitive(
-  primitiveName: string,
-  primitiveAddress: string,
-  // constructorArgs: any[],
-) {
+export async function verifyPrimitive(primitiveName: string, primitiveAddress: string, constructorArgs: any[]) {
   // Load compiled contract info
   const primitiveArtifact = await hre.artifacts.readArtifact(primitiveName);
 
   const deployer = new Deployer(hre, getWallet());
   const artifact = await deployer.loadArtifact(primitiveName);
 
-  await saveDeployment(hre, artifact.contractName, primitiveAddress, primitiveArtifact.abi);
+  // Initialize contract instance for interaction
+  const primitive = new ethers.Contract(primitiveAddress, primitiveArtifact.abi);
 
-  // // Initialize contract instance for interaction
-  // const primitive = new ethers.Contract(primitiveAddress, primitiveArtifact.abi);
-  //
-  // const encodedConstructorArgs = primitive.interface.encodeDeploy(constructorArgs);
-  // const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;
-  //
-  // await verifyContract({
-  //   address: primitiveAddress,
-  //   contract: fullContractSource,
-  //   constructorArguments: encodedConstructorArgs,
-  //   bytecode: artifact.bytecode,
-  // });
+  const encodedConstructorArgs = primitive.interface.encodeDeploy(constructorArgs);
+  const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;
+
+  await verifyContract({
+    address: primitiveAddress,
+    contract: fullContractSource,
+    constructorArguments: encodedConstructorArgs,
+    bytecode: artifact.bytecode,
+  });
 }
 
 type DeployContractOptions = {
@@ -248,7 +207,8 @@ export const deployContract = async (
     if (!options?.silent) console.log(message);
   };
 
-  log(`\nStarting deployment process of "${contractArtifactName}"...`);
+  console.log(`\nStarting deployment process of "${contractArtifactName}"...`);
+  console.log(`\nConstructor arguments: ${constructorArguments}`);
 
   const wallet = options?.wallet ?? getWallet();
   const deployer = new Deployer(hre, wallet);
@@ -262,11 +222,16 @@ export const deployContract = async (
   });
 
   // Estimate contract deployment fee
-  const deploymentFee = await deployer.estimateDeployFee(artifact, constructorArguments || []);
-  log(`Estimated deployment cost: ${ethers.formatEther(deploymentFee)} ETH`);
+  const estimatedDeployGas = await deployer.estimateDeployGas(artifact, constructorArguments || []);
+  const estimatedDeployFee = await deployer.estimateDeployFee(artifact, constructorArguments || []);
+  const gasPrice = await wallet.provider.getGasPrice();
+  console.log(`Estimated deployment costs:`);
+  console.log(` - Estimated gas used: ${estimatedDeployGas.toString()}`);
+  console.log(` - Estimated gas price: ${ethers.formatUnits(gasPrice, "gwei")} Gwei`);
+  console.log(` - Estimated deployment fee: ${ethers.formatEther(estimatedDeployFee)} ETH`);
 
   // Check if the wallet has enough balance
-  await verifyEnoughBalance(wallet, deploymentFee);
+  await verifyEnoughBalance(wallet, estimatedDeployFee);
 
   // Deploy the contract to ZKsync
   const contract = await deployer.deploy(artifact, constructorArguments);
@@ -280,49 +245,28 @@ export const deployContract = async (
   log(` - Contract source: ${fullContractSource}`);
   log(` - Encoded constructor arguments: ${constructorArgs}\n`);
 
-  // if (!options?.noVerify && hre.network.config.verifyURL) {
-  //   log(`Requesting contract verification...`);
-  //   await verifyContract({
-  //     address,
-  //     contract: fullContractSource,
-  //     constructorArguments: constructorArgs,
-  //     bytecode: artifact.bytecode,
-  //   });
-  // }
+  if (!options?.noVerify && hre.network.config.verifyURL) {
+    log(`Requesting contract verification...`);
+    await verifyContract({
+      address,
+      contract: fullContractSource,
+      constructorArguments: constructorArgs,
+      bytecode: artifact.bytecode,
+    });
+  }
 
   return contract;
 };
 
 export const deploy = async (artifactName: string): Promise<string> => {
-  // accessControl factory
-  const accessControlFactory_artifactName = artifactName;
-  const accessControlFactory_args: any[] = [];
+  const contract_artifactName = artifactName;
+  const contract_args: any[] = [];
 
-  const accessControlFactory = await deployContract(accessControlFactory_artifactName, accessControlFactory_args);
+  const contract = await deployContract(contract_artifactName, contract_args);
 
-  console.log(`\n✔ ${artifactName} deployed at ${await accessControlFactory.getAddress()}`);
-  return await accessControlFactory.getAddress();
+  console.log(`\n✔ ${artifactName} deployed at ${await contract.getAddress()}`);
+  return await contract.getAddress();
 };
-
-export function camelToAllCaps(camelCase: string): string {
-  return camelCase
-    .replace(/([a-z])([A-Z])/g, "$1_$2") // Insert underscore between lowercase and uppercase letters
-    .toUpperCase(); // Convert to uppercase
-}
-
-export async function saveDeployment(
-  hre: { deployments: DeploymentsExtension },
-  contractName: string,
-  contractAddress: string,
-  abi: any[],
-) {
-  const { save } = hre.deployments;
-
-  await save(contractName, {
-    address: contractAddress,
-    abi: abi,
-  });
-}
 
 /**
  * Rich wallets can be used for testing purposes.
