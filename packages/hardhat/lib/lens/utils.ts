@@ -24,15 +24,15 @@ export const getProvider = () => {
 };
 
 export const getWallet = (privateKey?: string) => {
-  if (!privateKey) {
-    // Get wallet private key from .env file
-    if (!process.env.DEPLOYER_PRIVATE_KEY) throw "⛔️ Wallet private key wasn't found in .env file!";
-  }
-
   const provider = getProvider();
 
   // Initialize ZKsync Wallet
-  const wallet = new Wallet(privateKey ?? process.env.DEPLOYER_PRIVATE_KEY!, provider);
+  const wallet = new Wallet(
+    privateKey ??
+      process.env.DEPLOYER_PRIVATE_KEY ??
+      "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    provider,
+  );
 
   return wallet;
 };

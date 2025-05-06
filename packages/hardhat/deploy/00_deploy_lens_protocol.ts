@@ -1,6 +1,6 @@
 import deployImplementations from "../lib/lens/deployImplementations";
 import deployFactories from "../lib/lens/deployFactories";
-import { deployLensPrimitives, deployLensAccessControl, deployLensActionHub } from "../lib/lens/deployAux";
+import { deployLensAccessControl, deployLensActionHub, deployLensPrimitives } from "../lib/lens/deployAux";
 import { deployRules } from "../lib/lens/deployRules";
 import { deployActions } from "../lib/lens/deployActions";
 import { generateEnvFile } from "../lib/lens/lensUtils";
