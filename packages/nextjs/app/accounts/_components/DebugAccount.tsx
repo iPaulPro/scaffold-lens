@@ -22,9 +22,9 @@ export const DebugAccount = ({ addingAccount }: { addingAccount: boolean }) => {
     username: "",
   });
 
-  const { data: deployedContractData } = useDeployedContractInfo("AccountImpl");
+  const { data: deployedContractData } = useDeployedContractInfo("Account");
   const { data: lensNamespace } = useScaffoldContract({
-    contractName: "LensNamespace",
+    contractName: "LensGlobalNamespace",
   });
 
   const { targetNetwork } = useTargetNetwork();
@@ -187,7 +187,7 @@ export const DebugAccount = ({ addingAccount }: { addingAccount: boolean }) => {
           <div className="bg-base-300 rounded-3xl px-6 lg:px-8 py-4 shadow-lg shadow-base-300">
             <ContractVariables
               refreshDisplayVariables={refreshDisplayVariables}
-              deployedContractData={contract as Contract<"AccountImpl">}
+              deployedContractData={contract as Contract<"Account">}
             />
           </div>
         </div>
@@ -200,7 +200,7 @@ export const DebugAccount = ({ addingAccount }: { addingAccount: boolean }) => {
                 </div>
               </div>
               <div className="p-5 divide-y divide-base-300">
-                <ContractReadMethods deployedContractData={contract as Contract<"AccountImpl">} />
+                <ContractReadMethods deployedContractData={contract as Contract<"Account">} />
               </div>
             </div>
           </div>
@@ -213,7 +213,7 @@ export const DebugAccount = ({ addingAccount }: { addingAccount: boolean }) => {
               </div>
               <div className="p-5 divide-y divide-base-300">
                 <ContractWriteMethods
-                  deployedContractData={contract as Contract<"AccountImpl">}
+                  deployedContractData={contract as Contract<"Account">}
                   onChange={triggerRefreshDisplayVariables}
                 />
               </div>

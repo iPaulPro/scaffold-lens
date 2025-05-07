@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "start": "next dev",
+    "start": "next dev -p 3001",
     "build": "next build",
     "serve": "next start",
     "lint": "next lint",
@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.11",
+    "@lens-chain/storage-client": "^1.0.3",
     "@lens-protocol/metadata": "^2.0.0-next.6",
-    "@lens-protocol/storage-node-client": "^0.0.0-next-20250114134800",
     "@rainbow-me/rainbowkit": "2.1.2",
     "@tanstack/react-query": "^5.28.6",
     "@uniswap/sdk-core": "^4.0.1",

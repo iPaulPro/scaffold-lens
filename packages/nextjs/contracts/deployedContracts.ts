@@ -285,6 +285,32507 @@ const deployedContracts = {
       ],
     },
   },
+  260: {
+    TransparentUpgradeableProxy: {
+      address: "0xb9695C94f3aACCE22921Ae4B6539481EA190Af43",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_logic",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "admin_",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_data",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "previousAdmin",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "newAdmin",
+              type: "address",
+            },
+          ],
+          name: "AdminChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "beacon",
+              type: "address",
+            },
+          ],
+          name: "BeaconUpgraded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "implementation",
+              type: "address",
+            },
+          ],
+          name: "Upgraded",
+          type: "event",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+    },
+    Multicall3: {
+      address: "0x07De5CBeaB32e6b86ae6b993A62B4a1759c66217",
+      abi: [
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Call[]",
+              name: "calls",
+              type: "tuple[]",
+            },
+          ],
+          name: "aggregate",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes[]",
+              name: "returnData",
+              type: "bytes[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "allowFailure",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Call3[]",
+              name: "calls",
+              type: "tuple[]",
+            },
+          ],
+          name: "aggregate3",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "success",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "returnData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Result[]",
+              name: "returnData",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "allowFailure",
+                  type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Call3Value[]",
+              name: "calls",
+              type: "tuple[]",
+            },
+          ],
+          name: "aggregate3Value",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "success",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "returnData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Result[]",
+              name: "returnData",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Call[]",
+              name: "calls",
+              type: "tuple[]",
+            },
+          ],
+          name: "blockAndAggregate",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "blockHash",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "success",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "returnData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Result[]",
+              name: "returnData",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getBasefee",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "basefee",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+          ],
+          name: "getBlockHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "blockHash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getBlockNumber",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getChainId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "chainid",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCurrentBlockCoinbase",
+          outputs: [
+            {
+              internalType: "address",
+              name: "coinbase",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCurrentBlockDifficulty",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "difficulty",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCurrentBlockGasLimit",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "gaslimit",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCurrentBlockTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "addr",
+              type: "address",
+            },
+          ],
+          name: "getEthBalance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "balance",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getLastBlockHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "blockHash",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "requireSuccess",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Call[]",
+              name: "calls",
+              type: "tuple[]",
+            },
+          ],
+          name: "tryAggregate",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "success",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "returnData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Result[]",
+              name: "returnData",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "requireSuccess",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Call[]",
+              name: "calls",
+              type: "tuple[]",
+            },
+          ],
+          name: "tryBlockAndAggregate",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "blockNumber",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "blockHash",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "success",
+                  type: "bool",
+                },
+                {
+                  internalType: "bytes",
+                  name: "returnData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Multicall3.Result[]",
+              name: "returnData",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+      ],
+    },
+    TippingAccountAction: {
+      address: "0xc2b90756F90B3ab9d19a925fA758A84097a6B08b",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "actionHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_AccountAction_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "execute",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isDisabled",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "setDisabled",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    TippingPostAction: {
+      address: "0x8354d2a82D224A65F04eA8ABEA3B03534c89Ee6D",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "actionHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_PostAction_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "execute",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isDisabled",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "setDisabled",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    SimpleCollectAction: {
+      address: "0xDaf593649EDCcDF1a378FE4Cf4A364eC08A0AF33",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "actionHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "Disabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Expired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Immutable",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_PostAction_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "execute",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getCollectActionData",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint160",
+                  name: "amount",
+                  type: "uint160",
+                },
+                {
+                  internalType: "uint96",
+                  name: "collectLimit",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "token",
+                  type: "address",
+                },
+                {
+                  internalType: "uint96",
+                  name: "currentCollects",
+                  type: "uint96",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint72",
+                  name: "endTimestamp",
+                  type: "uint72",
+                },
+                {
+                  internalType: "address",
+                  name: "followerOnlyGraph",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "collectionAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "isImmutable",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "isDisabled",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct CollectActionData",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isDisabled",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "setDisabled",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    Feed: {
+      address: "0xAAd187d2a5b80Ae1DD49eB5428Fe304D70Cc58eB",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CannotHaveRules",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnexpectedValue",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Feed_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Feed_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "localSequentialId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "rootPostId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Feed_PostCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Feed_PostDeleted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EditPostParams",
+              name: "newPostParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Feed_PostEdited",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_Post_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Feed_Post_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_Post_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeFeedRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "changePostRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "createPost",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "deletePost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "editPost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getAuthorPostSequentialId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getFeedRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+          ],
+          name: "getNextPostId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getPost",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "authorPostSequentialId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "postSequentialId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "rootPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint80",
+                  name: "creationTimestamp",
+                  type: "uint80",
+                },
+                {
+                  internalType: "address",
+                  name: "creationSource",
+                  type: "address",
+                },
+                {
+                  internalType: "uint80",
+                  name: "lastUpdatedTimestamp",
+                  type: "uint80",
+                },
+                {
+                  internalType: "address",
+                  name: "lastUpdateSource",
+                  type: "address",
+                },
+              ],
+              internalType: "struct Post",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getPostAuthor",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+          ],
+          name: "getPostCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getPostCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getPostExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getPostRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getPostSequentialId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "postExists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    Graph: {
+      address: "0x44c642eDCaC91Ba176B4dDF09EdA16658f542D89",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ActionOnSelf",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CannotFollowAgain",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Graph_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Graph_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Graph_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "followId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "followRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_Followed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Graph_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accountToUnfollow",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "followId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Graph_Unfollowed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleChangesProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeFollowRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeGraphRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "followRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "follow",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "targetAccount",
+              type: "address",
+            },
+          ],
+          name: "getFollow",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Follow",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getFollowRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "followId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowerById",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getFollowersCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getFollowingCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getGraphRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "targetAccount",
+              type: "address",
+            },
+          ],
+          name: "isFollowing",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToUnfollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "unfollow",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    Group: {
+      address: "0x24CC5E26A432b7f8ff1119FB68196cD873286677",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Group_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Group_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Group_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberJoined",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberLeft",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Group_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Group_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Group_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Group_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Group_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "addMember",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeGroupRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getGroupRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getMembership",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Membership",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getMembershipId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getMembershipTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNumberOfMembers",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "isMember",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "joinGroup",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "leaveGroup",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "removeMember",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    Namespace: {
+      address: "0xBE7614cfAF94e477B42AfC233D2a6c495e32e94C",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnexpectedContractImpl",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UsernameAssigned",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "_fromTokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "_toTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "BatchMetadataUpdate",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+          ],
+          name: "Lens_ERC721_TokenURIProviderSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Namespace_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Namespace_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Namespace_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Namespace_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Namespace_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Namespace_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Namespace_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Namespace_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Username_Assigned",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Username_Created",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Username_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Username_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Username_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Username_Removed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_Username_Transfer",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousAccount",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Username_Unassigned",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "accountOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassignAccountRuleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassignUsernameRuleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "assignRuleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "assignUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeNamespaceRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassigningProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "creationProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "assigningProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "createAndAssignUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "createUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNamespace",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getNamespaceRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "getTokenIdByUsername",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getUsernameByTokenId",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getUsernameExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "nftName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "nftSymbol",
+              type: "string",
+            },
+            {
+              internalType: "contract ITokenURIProvider",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassigningRuleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "removalRuleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "removeUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract ITokenURIProvider",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+          ],
+          name: "setTokenURIProvider",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setUsernameExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "unassignUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "usernameOf",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
+    Beacon: {
+      address: "0xE00A695e460e44194fF851a4E8F7fa9529fD6EA2",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "version",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "initialImplementation",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "version",
+              type: "uint256",
+            },
+          ],
+          name: "DefaultVersionSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "version",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "implementation",
+              type: "address",
+            },
+          ],
+          name: "ImplementationSetForVersion",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "implementation",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "implementationVersion",
+              type: "uint256",
+            },
+          ],
+          name: "implementation",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "version",
+              type: "uint256",
+            },
+          ],
+          name: "setDefaultVersion",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "version",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "implementationToSet",
+              type: "address",
+            },
+          ],
+          name: "setImplementationForVersion",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    Lock: {
+      address: "0xb98e374C912ff8C02ac7363c57d5bfdb48f40d53",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "locked",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "locked",
+              type: "bool",
+            },
+          ],
+          name: "Lens_Lock_LockStatusSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "locked",
+              type: "bool",
+            },
+          ],
+          name: "Lens_Lock_LockStatusSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "isLocked",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "locked",
+              type: "bool",
+            },
+          ],
+          name: "setLockStatus",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "locked",
+              type: "bool",
+            },
+          ],
+          name: "setLockStatusForAddress",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    Account: {
+      address: "0x46F2Dc79c3D6E9DDb3F263FF3B6331d4938f198b",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              indexed: false,
+              internalType: "struct AccountManagerPermissions",
+              name: "permissions",
+              type: "tuple",
+            },
+          ],
+          name: "Lens_Account_AccountManagerAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+          ],
+          name: "Lens_Account_AccountManagerRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              indexed: false,
+              internalType: "struct AccountManagerPermissions",
+              name: "permissions",
+              type: "tuple",
+            },
+          ],
+          name: "Lens_Account_AccountManagerUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "allow",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_Account_AllowNonOwnerSpending",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Account_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Account_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Account_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Account_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Account_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Account_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "executor",
+              type: "address",
+            },
+          ],
+          name: "Lens_Account_TransactionExecuted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct AccountManagerPermissions",
+              name: "accountManagerPermissions",
+              type: "tuple",
+            },
+          ],
+          name: "addAccountManager",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "allow",
+              type: "bool",
+            },
+          ],
+          name: "allowNonOwnerSpending",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "executor",
+              type: "address",
+            },
+          ],
+          name: "canExecuteTransactions",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "executeTransaction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct Transaction[]",
+              name: "transactions",
+              type: "tuple[]",
+            },
+          ],
+          name: "executeTransactions",
+          outputs: [
+            {
+              internalType: "bytes[]",
+              name: "",
+              type: "bytes[]",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+          ],
+          name: "getAccountManagerPermissions",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct AccountManagerPermissions",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "accountManagers",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct AccountManagerPermissions[]",
+              name: "accountManagerPermissions",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "source",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "originalMsgSender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "validator",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SourceStamp",
+              name: "sourceStamp",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256[]",
+              name: "",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "onERC1155BatchReceived",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "",
+              type: "bytes4",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "onERC1155Received",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "",
+              type: "bytes4",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "onERC721Received",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "",
+              type: "bytes4",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+          ],
+          name: "removeAccountManager",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "source",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "originalMsgSender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "validator",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SourceStamp",
+              name: "sourceStamp",
+              type: "tuple",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "accountManager",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct AccountManagerPermissions",
+              name: "accountManagerPermissions",
+              type: "tuple",
+            },
+          ],
+          name: "updateAccountManagerPermissions",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+    },
+    ActionHub: {
+      address: "0x08CA9bf962B08381A65B3417a68459fB1868B4Fa",
+      abi: [
+        {
+          inputs: [],
+          name: "Disabled",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnexpectedContractImpl",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_AccountAction_Configured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_AccountAction_Disabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_AccountAction_Enabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_AccountAction_Executed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_AccountAction_Reconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+          ],
+          name: "Lens_ActionHub_AccountAction_Universal",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_PostAction_Configured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_PostAction_Disabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_PostAction_Enabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_PostAction_Executed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "msgSender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "returnData",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ActionHub_PostAction_Reconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+          ],
+          name: "Lens_ActionHub_PostAction_Universal",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "configureAccountAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "configurePostAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "disableAccountAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "disablePostAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "enableAccountAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "enablePostAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "executeAccountAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "executePostAction",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+          ],
+          name: "signalUniversalAccountAction",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "action",
+              type: "address",
+            },
+          ],
+          name: "signalUniversalPostAction",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    AccessControlFactory: {
+      address: "0x22719C7546DA37C629085e0b7333Cd1118604F6c",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "lock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "Lens_AccessControlFactory_OwnerAdminDeployment",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+          ],
+          name: "deployOwnerAdminOnlyAccessControl",
+          outputs: [
+            {
+              internalType: "contract IRoleBasedAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    AccountFactory: {
+      address: "0xee1AD27D771E1888Bc34E29546B9Ebffe297eC30",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "beacon",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address[]",
+              name: "accountManagers",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              indexed: false,
+              internalType: "struct AccountManagerPermissions[]",
+              name: "accountManagersPermissions",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Account_Created",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address[]",
+              name: "accountManagers",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct AccountManagerPermissions[]",
+              name: "accountManagersPermissions",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "source",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "originalMsgSender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "validator",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SourceStamp",
+              name: "sourceStamp",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployAccount",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    AppFactory: {
+      address: "0x84C084579Daa3c6a6f600657969a38e8D3fBEB5F",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "beacon",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "lock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "app",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_AppFactory_Deployment",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "sourceStampVerificationEnabled",
+              type: "bool",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminOwner",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "graph",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "feeds",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "namespace",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "groups",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "defaultFeed",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "signers",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "paymaster",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "treasury",
+                  type: "address",
+                },
+              ],
+              internalType: "struct AppInitialProperties",
+              name: "initialProperties",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployApp",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    FeedFactory: {
+      address: "0x3E71984C1e7726eFc29F19f118eBdBF83951CAad",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "primitiveBeacon",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminLock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_FeedFactory_Deployment",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminOwner",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployFeed",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    GraphFactory: {
+      address: "0x6a7d65c87dAa5c9ad98DBD1eF8567c2056989272",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "primitiveBeacon",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminLock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_GraphFactory_Deployment",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminOwner",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployGraph",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    GroupFactory: {
+      address: "0x5686c890827423ff58eb4C8fDe8D18C3cbCc11b3",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "primitiveBeacon",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminLock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_GroupFactory_Deployment",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminOwner",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+            {
+              internalType: "address",
+              name: "foundingMember",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "addFoundingMemberCustomParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployGroup",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    LensFactory: {
+      address: "0x8A547aeA7258D4470372bbeAC924eCCD154D6689",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "contract AccessControlFactory",
+              name: "accessControlFactory",
+              type: "address",
+            },
+            {
+              internalType: "contract AccountFactory",
+              name: "accountFactory",
+              type: "address",
+            },
+            {
+              internalType: "contract AppFactory",
+              name: "appFactory",
+              type: "address",
+            },
+            {
+              internalType: "contract GroupFactory",
+              name: "groupFactory",
+              type: "address",
+            },
+            {
+              internalType: "contract FeedFactory",
+              name: "feedFactory",
+              type: "address",
+            },
+            {
+              internalType: "contract GraphFactory",
+              name: "graphFactory",
+              type: "address",
+            },
+            {
+              internalType: "contract NamespaceFactory",
+              name: "namespaceFactory",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountBlockingRule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "groupGatedFeedRule",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "usernameSimpleCharsetRule",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "DuplicatedValue",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "namespacePrimitiveAddress",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "metadataURI",
+                  type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "accountManagers",
+                  type: "address[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "canExecuteTransactions",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "canTransferTokens",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "canTransferNative",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "canSetMetadataURI",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct AccountManagerPermissions[]",
+                  name: "accountManagersPermissions",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "source",
+                      type: "address",
+                    },
+                    {
+                      internalType: "address",
+                      name: "originalMsgSender",
+                      type: "address",
+                    },
+                    {
+                      internalType: "address",
+                      name: "validator",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "nonce",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "deadline",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "signature",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct SourceStamp",
+                  name: "accountCreationSourceStamp",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "accountExtraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreateAccountParams",
+              name: "accountParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "username",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "createUsernameCustomParams",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleProcessingParams[]",
+                  name: "createUsernameRuleProcessingParams",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "assignUsernameCustomParams",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleProcessingParams[]",
+                  name: "unassignAccountRuleProcessingParams",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleProcessingParams[]",
+                  name: "assignRuleProcessingParams",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "usernameExtraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreateUsernameParams",
+              name: "usernameParams",
+              type: "tuple",
+            },
+          ],
+          name: "createAccountWithUsernameFree",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+            {
+              internalType: "string",
+              name: "groupMetadataURI",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "groupRules",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "groupExtraData",
+              type: "tuple[]",
+            },
+            {
+              internalType: "address",
+              name: "groupFoundingMember",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "groupAddFoundingMemberCustomParams",
+              type: "tuple[]",
+            },
+            {
+              internalType: "string",
+              name: "feedMetadataURI",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "feedRules",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "feedExtraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "createGroupWithFeed",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "accountManagers",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bool",
+                  name: "canExecuteTransactions",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferTokens",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canTransferNative",
+                  type: "bool",
+                },
+                {
+                  internalType: "bool",
+                  name: "canSetMetadataURI",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct AccountManagerPermissions[]",
+              name: "accountManagersPermissions",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "source",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "originalMsgSender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "validator",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SourceStamp",
+              name: "sourceStamp",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployAccount",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "sourceStampVerificationEnabled",
+              type: "bool",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "graph",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "feeds",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "namespace",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "groups",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "defaultFeed",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "signers",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "paymaster",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "treasury",
+                  type: "address",
+                },
+              ],
+              internalType: "struct AppInitialProperties",
+              name: "initialProperties",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployApp",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "rules",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployFeed",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "rules",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployGraph",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "rules",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+            {
+              internalType: "address",
+              name: "foundingMember",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "addFoundingMemberCustomParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "deployGroup",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address[]",
+              name: "admins",
+              type: "address[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "rules",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+            {
+              internalType: "string",
+              name: "nftName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "nftSymbol",
+              type: "string",
+            },
+          ],
+          name: "deployNamespace",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getFactories",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getRules",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTemporaryAccessControl",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
+    NamespaceFactory: {
+      address: "0xCEE92F4e26B57e03510211760330cD787479957B",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "primitiveBeacon",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminLock",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "namespaceAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_NamespaceFactory_Deployment",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "proxyAdminOwner",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+            {
+              internalType: "string",
+              name: "nftName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "nftSymbol",
+              type: "string",
+            },
+            {
+              internalType: "contract ITokenURIProvider",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+          ],
+          name: "deployNamespace",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    App: {
+      address: "0x1B69c60F3ac12BC305C96D927573102f6617eb16",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Expired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonceUsed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "WrongSigner",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_DefaultFeedSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_DefaultGroupSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_App_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_App_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_App_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_FeedAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_FeedRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GraphAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GraphRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GroupAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GroupRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_App_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "namespace",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_NamespaceAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "namespace",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_NamespaceRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "paymaster",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_PaymasterAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "paymaster",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_PaymasterRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_SignerAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_SignerRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "isEnabled",
+              type: "bool",
+            },
+          ],
+          name: "Lens_App_SourceStampVerificationSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "treasury",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_TreasurySet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_Source_NonceUsed",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "feeds",
+              type: "address[]",
+            },
+          ],
+          name: "addFeeds",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "groups",
+              type: "address[]",
+            },
+          ],
+          name: "addGroups",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "signers",
+              type: "address[]",
+            },
+          ],
+          name: "addSigners",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          name: "cancelNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultFeed",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultGraph",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultGroup",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultNamespace",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultPaymaster",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getFeeds",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getGraphs",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getGroups",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNamespaces",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getPaymaster",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getSigners",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTreasury",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "isSourceStampVerificationEnabled",
+              type: "bool",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "graph",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "feeds",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "namespace",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "groups",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "defaultFeed",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "signers",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "paymaster",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "treasury",
+                  type: "address",
+                },
+              ],
+              internalType: "struct AppInitialProperties",
+              name: "initialProps",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "feeds",
+              type: "address[]",
+            },
+          ],
+          name: "removeFeeds",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "groups",
+              type: "address[]",
+            },
+          ],
+          name: "removeGroups",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "signers",
+              type: "address[]",
+            },
+          ],
+          name: "removeSigners",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "setDefaultFeed",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "setDefaultGroup",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+          ],
+          name: "setGraph",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "namespace",
+              type: "address",
+            },
+          ],
+          name: "setNamespace",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "paymaster",
+              type: "address",
+            },
+          ],
+          name: "setPaymaster",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "isEnabled",
+              type: "bool",
+            },
+          ],
+          name: "setSourceStampVerification",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "treasury",
+              type: "address",
+            },
+          ],
+          name: "setTreasury",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "source",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "originalMsgSender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "validator",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SourceStamp",
+              name: "sourceStamp",
+              type: "tuple",
+            },
+          ],
+          name: "validateSource",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    AccountBlockingRule: {
+      address: "0x8BCF6fbF29032B3DDCf91634951f4beF51333191",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "ActionOnSelf",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Blocked",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "timestamp",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_AccountBlocking_AccountBlocked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "Lens_AccountBlocking_UserUnblocked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "accountBlocks",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "blockUser",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "blockTarget",
+              type: "address",
+            },
+          ],
+          name: "isBlocked",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processDeletePost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollow",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollowRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processPostRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnfollow",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "unblockUser",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    GroupGatedFeedRule: {
+      address: "0xD2eC86FD1a1B29a90881348463a3C6131F593EA0",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAMember",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processDeletePost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processPostRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    RestrictedSignersFeedRule: {
+      address: "0x9E7FF9Ec5f88F734a4Af0D56cFBa3Df968e343e6",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "Expired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidSignature",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonceUsed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "WrongSigner",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "label",
+              type: "string",
+            },
+          ],
+          name: "Lens_RestrictedSignersRule_SignerAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_RestrictedSignersRule_SignerNonceUsed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "Lens_RestrictedSignersRule_SignerRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "primitiveParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "primitiveParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processDeletePost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "primitiveParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processPostRuleChanges",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    SimplePaymentFeedRule: {
+      address: "0xeD1089E91f095904370A5B00091d56C9bCE69D9b",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Untrusted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "trustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Trusted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "untrustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Untrusted",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processDeletePost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processPostRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isTrusted",
+              type: "bool",
+            },
+          ],
+          name: "setTrust",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    TokenGatedFeedRule: {
+      address: "0x3a2E06605Bc70740B7ED8dD65fC35d749Abf4976",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEnough",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processDeletePost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processPostRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    SimplePaymentFollowRule: {
+      address: "0x39FEce741e1a7a6700051a864dC447B0E288f7CE",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Untrusted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "trustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Trusted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "untrustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Untrusted",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollow",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isTrusted",
+              type: "bool",
+            },
+          ],
+          name: "setTrust",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    TokenGatedFollowRule: {
+      address: "0x5082DA3eFf3a4a26D4d947D547e354Dcc11CDcA8",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEnough",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFound",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollow",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    GroupGatedGraphRule: {
+      address: "0x78b16Da41CA7fa7211Df2A57D6A490627c76545E",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAMember",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollow",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollowRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnfollow",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    RestrictedSignersGraphRule: {
+      address: "0x64AF459E9FAF028CC7c48f528d9454002420953b",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "Expired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidSignature",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonceUsed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "WrongSigner",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "label",
+              type: "string",
+            },
+          ],
+          name: "Lens_RestrictedSignersRule_SignerAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_RestrictedSignersRule_SignerNonceUsed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "Lens_RestrictedSignersRule_SignerRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "primitiveParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollow",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollowRuleChanges",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToUnfollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "primitiveParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnfollow",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    TokenGatedGraphRule: {
+      address: "0x919dF8C7574b51D27E445e8439FE15234ccE2c05",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEnough",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollow",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processFollowRuleChanges",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnfollow",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    MembershipApprovalGroupRule: {
+      address: "0xC64ef69D6e2570EaCC3CFBF325A64eba97C6a759",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "approvedBy",
+              type: "address",
+            },
+          ],
+          name: "Lens_ApprovalGroupRule_MembershipApproved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "rejectedBy",
+              type: "address",
+            },
+          ],
+          name: "Lens_ApprovalGroupRule_MembershipRejected",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "Lens_ApprovalGroupRule_MembershipRequestCancelled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "Lens_ApprovalGroupRule_MembershipRequested",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "cancelMembershipRequest",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAddition",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processJoining",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processLeaving",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "rejectMembershipRequest",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "requestMembership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    SimplePaymentGroupRule: {
+      address: "0x23cDEa54442E71239a60Df6FE6Cc23b8Ed52A2Fb",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Untrusted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "trustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Trusted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "untrustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Untrusted",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAddition",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processJoining",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processLeaving",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isTrusted",
+              type: "bool",
+            },
+          ],
+          name: "setTrust",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    TokenGatedGroupRule: {
+      address: "0x1E0f44712cEd7A3c35dCb67869De5a222f3F4760",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEnough",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAddition",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processJoining",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processLeaving",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    TokenGatedNamespaceRule: {
+      address: "0xc9Be17C424924308894E1d91A12fE13A7f32B947",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotEnough",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAssigning",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreation",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnassigning",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    UsernameLengthNamespaceRule: {
+      address: "0x61f0bAaaF39a2b8D3280dc2c2302248f818AFB8C",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAssigning",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreation",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnassigning",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    UsernamePricePerLengthNamespaceRule: {
+      address: "0x1b3F44D343f56131025212548F809107DF3FEC84",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Untrusted",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "trustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Trusted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "untrustedAddress",
+              type: "address",
+            },
+          ],
+          name: "Lens_Rule_Untrusted",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleConfigurationParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAssigning",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreation",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnassigning",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isTrusted",
+              type: "bool",
+            },
+          ],
+          name: "setTrust",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    UsernameReservedNamespaceRule: {
+      address: "0x1b104D0a825E2b40cD1CA62dc800a6993104E79D",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "usernamePrimitive",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "string",
+              name: "indexedUsername",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "createdBy",
+              type: "address",
+            },
+          ],
+          name: "Lens_UsernameReservedNamespaceRule_ReservedUsernameCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "usernamePrimitive",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "string",
+              name: "indexedUsername",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "Lens_UsernameReservedNamespaceRule_UsernameReleased",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "usernamePrimitive",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "string",
+              name: "indexedUsername",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "Lens_UsernameReservedNamespaceRule_UsernameReserved",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAssigning",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreation",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnassigning",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    UsernameSimpleCharsetNamespaceRule: {
+      address: "0x7D1419854CeA805411641251b0D02Cc87650e4d0",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "CannotStartWithThat",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processAssigning",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreation",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processRemoval",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processUnassigning",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    FollowersOnlyPostRule: {
+      address: "0x1f6A315850489B949735Dc3F37ca90B2d1d4A2B8",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "rootPostId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    LensGlobalGroup: {
+      address: "0x37cFC8b84CCd975Be89B88D5a924f47AA2df23Fa",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Group_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Group_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Group_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberJoined",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberLeft",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "membershipId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Group_MemberRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Group_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Group_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Group_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Group_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Group_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "addMember",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeGroupRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getGroupRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getMembership",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Membership",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getMembershipId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getMembershipTimestamp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNumberOfMembers",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "isMember",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "joinGroup",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "leaveGroup",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "removeMember",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    LensGlobalFeed: {
+      address: "0x7aC9da1341B53E345bC6724a4833f06Fe4d65a75",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CannotHaveRules",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnexpectedValue",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Feed_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Feed_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "localSequentialId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "rootPostId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Feed_PostCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Feed_PostDeleted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EditPostParams",
+              name: "newPostParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Feed_PostEdited",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_Post_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Feed_Post_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Feed_Post_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_Post_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Feed_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Feed_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeFeedRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "changePostRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "createPost",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "deletePost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "feedRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "rootPostRulesParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "quotedPostRulesParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "editPost",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getAuthorPostSequentialId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getFeedRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+          ],
+          name: "getNextPostId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getPost",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "authorPostSequentialId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "postSequentialId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "rootPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint80",
+                  name: "creationTimestamp",
+                  type: "uint80",
+                },
+                {
+                  internalType: "address",
+                  name: "creationSource",
+                  type: "address",
+                },
+                {
+                  internalType: "uint80",
+                  name: "lastUpdatedTimestamp",
+                  type: "uint80",
+                },
+                {
+                  internalType: "address",
+                  name: "lastUpdateSource",
+                  type: "address",
+                },
+              ],
+              internalType: "struct Post",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getPostAuthor",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "author",
+              type: "address",
+            },
+          ],
+          name: "getPostCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getPostCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getPostExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getPostRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "getPostSequentialId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+          ],
+          name: "postExists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    LensGlobalGraph: {
+      address: "0xC94A4aCD64418Fe7fDC7193acF9d3d53f5a71461",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ActionOnSelf",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "CannotFollowAgain",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Graph_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Graph_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Graph_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_Follow_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "followId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "followRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_Followed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Graph_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Graph_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Graph_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accountToUnfollow",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "followId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Graph_Unfollowed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleChangesProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeFollowRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeGraphRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToFollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "followRulesProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "follow",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "targetAccount",
+              type: "address",
+            },
+          ],
+          name: "getFollow",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "timestamp",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Follow",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getFollowRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "followId",
+              type: "uint256",
+            },
+          ],
+          name: "getFollowerById",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getFollowersCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "getFollowingCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getGraphRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "targetAccount",
+              type: "address",
+            },
+          ],
+          name: "isFollowing",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "followerAccount",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "accountToUnfollow",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "graphRulesProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "unfollow",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    LensGlobalNamespace: {
+      address: "0xC737025BabA0362987CA4D8d52ED3a79CDb7255a",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AllAnyOfRulesReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyExists",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "ConfigureCallReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "DoesNotExist",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidConfigSalt",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotAContract",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RequiredRuleReverted",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RuleNotConfigured",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelectorEnabledForDifferentRuleType",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SingleAnyOfRule",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnexpectedContractImpl",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UnsupportedSelector",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "UsernameAssigned",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "approved",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "ApprovalForAll",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "_fromTokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "_toTokenId",
+              type: "uint256",
+            },
+          ],
+          name: "BatchMetadataUpdate",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+          ],
+          name: "Lens_ERC721_TokenURIProviderSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Namespace_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Namespace_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Namespace_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Namespace_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Namespace_RuleConfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "configParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Namespace_RuleReconfigured",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Namespace_RuleSelectorDisabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "rule",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+          ],
+          name: "Lens_Namespace_RuleSelectorEnabled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Username_Assigned",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "Lens_Username_Created",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Username_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_Username_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_Username_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Username_Removed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_Username_Transfer",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousAccount",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              indexed: false,
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "Lens_Username_Unassigned",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "accountOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassignAccountRuleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassignUsernameRuleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "assignRuleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "assignUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bool",
+                      name: "configure",
+                      type: "bool",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes32",
+                          name: "key",
+                          type: "bytes32",
+                        },
+                        {
+                          internalType: "bytes",
+                          name: "value",
+                          type: "bytes",
+                        },
+                      ],
+                      internalType: "struct KeyValue[]",
+                      name: "ruleParams",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleConfigurationChange",
+                  name: "configurationChanges",
+                  type: "tuple",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes4",
+                      name: "ruleSelector",
+                      type: "bytes4",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "isRequired",
+                      type: "bool",
+                    },
+                    {
+                      internalType: "bool",
+                      name: "enabled",
+                      type: "bool",
+                    },
+                  ],
+                  internalType: "struct RuleSelectorChange[]",
+                  name: "selectorChanges",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleChange[]",
+              name: "ruleChanges",
+              type: "tuple[]",
+            },
+          ],
+          name: "changeNamespaceRules",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassigningProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "creationProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "assigningProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "createAndAssignUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "createUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "exists",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getApproved",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNamespace",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "ruleSelector",
+              type: "bytes4",
+            },
+            {
+              internalType: "bool",
+              name: "isRequired",
+              type: "bool",
+            },
+          ],
+          name: "getNamespaceRules",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+              ],
+              internalType: "struct Rule[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "getTokenIdByUsername",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "getUsernameByTokenId",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getUsernameExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "namespace",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "nftName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "nftSymbol",
+              type: "string",
+            },
+            {
+              internalType: "contract ITokenURIProvider",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+          ],
+          name: "isApprovedForAll",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+          ],
+          name: "ownerOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "unassigningRuleProcessingParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "removalRuleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "removeUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "data",
+              type: "bytes",
+            },
+          ],
+          name: "safeTransferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "operator",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "approved",
+              type: "bool",
+            },
+          ],
+          name: "setApprovalForAll",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract ITokenURIProvider",
+              name: "tokenURIProvider",
+              type: "address",
+            },
+          ],
+          name: "setTokenURIProvider",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setUsernameExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "tokenURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "username",
+              type: "string",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "customParams",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "ruleAddress",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "configSalt",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "ruleParams",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct RuleProcessingParams[]",
+              name: "ruleProcessingParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "unassignUsername",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "user",
+              type: "address",
+            },
+          ],
+          name: "usernameOf",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+    },
+    LensGlobalApp: {
+      address: "0xbAa870BecC5E4d4C9210a8b49809ea318b870cF6",
+      abi: [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessDenied",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "AlreadyInitialized",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "Expired",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LimitReached",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NonceUsed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFound",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "WrongSigner",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "accessControlType",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_AccessControlUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_DefaultFeedSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_DefaultGroupSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_App_ExtraDataAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "Lens_App_ExtraDataRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+            {
+              indexed: true,
+              internalType: "bytes",
+              name: "valueIndexed",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_App_ExtraDataUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_FeedAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_FeedRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GraphAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GraphRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GroupAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_GroupRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_App_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "namespace",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_NamespaceAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "namespace",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_NamespaceRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "paymaster",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_PaymasterAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "paymaster",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_PaymasterRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_SignerAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "signer",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_SignerRemoved",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "isEnabled",
+              type: "bool",
+            },
+          ],
+          name: "Lens_App_SourceStampVerificationSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "treasury",
+              type: "address",
+            },
+          ],
+          name: "Lens_App_TreasurySet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "contractType",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "flavour",
+              type: "string",
+            },
+          ],
+          name: "Lens_Contract_Deployed",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "addressScope",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "entityId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes",
+              name: "value",
+              type: "bytes",
+            },
+          ],
+          name: "Lens_ExtraStorageSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "permissionId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "Lens_PermissionId_Available",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          name: "Lens_Source_NonceUsed",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "feeds",
+              type: "address[]",
+            },
+          ],
+          name: "addFeeds",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "groups",
+              type: "address[]",
+            },
+          ],
+          name: "addGroups",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "signers",
+              type: "address[]",
+            },
+          ],
+          name: "addSigners",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "nonce",
+              type: "uint256",
+            },
+          ],
+          name: "cancelNonce",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAccessControl",
+          outputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultFeed",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultGraph",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultGroup",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultNamespace",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getDefaultPaymaster",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "key",
+              type: "bytes32",
+            },
+          ],
+          name: "getExtraData",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getFeeds",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getGraphs",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getGroups",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNamespaces",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getPaymaster",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getSigners",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTreasury",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "isSourceStampVerificationEnabled",
+              type: "bool",
+            },
+            {
+              internalType: "contract IAccessControl",
+              name: "accessControl",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "graph",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "feeds",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "namespace",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "groups",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "defaultFeed",
+                  type: "address",
+                },
+                {
+                  internalType: "address[]",
+                  name: "signers",
+                  type: "address[]",
+                },
+                {
+                  internalType: "address",
+                  name: "paymaster",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "treasury",
+                  type: "address",
+                },
+              ],
+              internalType: "struct AppInitialProperties",
+              name: "initialProps",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraData",
+              type: "tuple[]",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "feeds",
+              type: "address[]",
+            },
+          ],
+          name: "removeFeeds",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "groups",
+              type: "address[]",
+            },
+          ],
+          name: "removeGroups",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address[]",
+              name: "signers",
+              type: "address[]",
+            },
+          ],
+          name: "removeSigners",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "contract IAccessControl",
+              name: "newAccessControl",
+              type: "address",
+            },
+          ],
+          name: "setAccessControl",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "feed",
+              type: "address",
+            },
+          ],
+          name: "setDefaultFeed",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "group",
+              type: "address",
+            },
+          ],
+          name: "setDefaultGroup",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "extraDataToSet",
+              type: "tuple[]",
+            },
+          ],
+          name: "setExtraData",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "graph",
+              type: "address",
+            },
+          ],
+          name: "setGraph",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "namespace",
+              type: "address",
+            },
+          ],
+          name: "setNamespace",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "paymaster",
+              type: "address",
+            },
+          ],
+          name: "setPaymaster",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bool",
+              name: "isEnabled",
+              type: "bool",
+            },
+          ],
+          name: "setSourceStampVerification",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "treasury",
+              type: "address",
+            },
+          ],
+          name: "setTreasury",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "source",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "originalMsgSender",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "validator",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "nonce",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "signature",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SourceStamp",
+              name: "sourceStamp",
+              type: "tuple",
+            },
+          ],
+          name: "validateSource",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+  },
 } as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;

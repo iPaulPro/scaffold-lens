@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { immutable } from "@lens-chain/storage-client";
+import { Resource, StorageClient } from "@lens-chain/storage-client";
 import { AccountMetadataSchema, account } from "@lens-protocol/metadata";
-import { Resource, StorageClient, testnet } from "@lens-protocol/storage-node-client";
 import { uuidv4 } from "@walletconnect/utils";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { InputBase } from "~~/components/scaffold-eth";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth";
 
 export function CreateAccountMetadata() {
   const [form, setForm] = useState<Record<string, any>>({
@@ -19,7 +21,9 @@ export function CreateAccountMetadata() {
   const [metadata, setMetadata] = useState<Resource | undefined>(undefined);
   const [metadataURICopied, setMetadataURICopied] = useState(false);
 
-  const storageClient = StorageClient.create(testnet);
+  const storageClient = StorageClient.create();
+
+  const { targetNetwork } = useTargetNetwork();
 
   const formToAccount = () => {
     const copy = { ...form };
@@ -40,7 +44,8 @@ export function CreateAccountMetadata() {
 
     try {
       const account = formToAccount();
-      const metadata = await storageClient.uploadAsJson(account);
+      const acl = immutable(targetNetwork.id);
+      const metadata = await storageClient.uploadAsJson(account, { acl });
       setMetadata(metadata);
     } catch (e) {
       console.error(e);

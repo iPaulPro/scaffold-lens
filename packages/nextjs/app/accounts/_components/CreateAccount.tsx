@@ -114,7 +114,7 @@ export function CreateAccount() {
 
   const { data: result, isPending, writeContractAsync } = useScaffoldWriteContract("LensFactory");
   const { data: LensNamespace } = useScaffoldContract({
-    contractName: "LensNamespace",
+    contractName: "LensGlobalNamespace",
   });
 
   const { data: txResult } = useWaitForTransactionReceipt({ hash: result });
@@ -144,7 +144,7 @@ export function CreateAccount() {
   }, [txResult]);
 
   const handleWrite = async () => {
-    const lensNamespaceAddress = LensNamespace?.address;
+    const lensNamespaceAddress = LensNamespace?.address as `0x${string}` | undefined;
     if (!lensNamespaceAddress || !form.owner || !form.metadataURI || !form.username) {
       return;
     }
@@ -173,9 +173,9 @@ export function CreateAccount() {
           createUsernameCustomParams: [],
           createUsernameRuleProcessingParams: [],
           assignUsernameCustomParams: [],
-          unassignAccountRuleProcessingParams: [],
           assignRuleProcessingParams: [],
           usernameExtraData: [],
+          unassignAccountRuleProcessingParams: [],
         },
       ],
     });

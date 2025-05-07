@@ -8,15 +8,12 @@ dotenv.config({ path: envFile });
 
 import "@matterlabs/hardhat-zksync";
 import "@openzeppelin/hardhat-upgrades";
-import "@nomicfoundation/hardhat-ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-dependency-compiler";
-import "hardhat-deploy";
-import "hardhat-deploy-ethers";
 import "hardhat-contract-sizer";
 import "hardhat-ignore-warnings";
 
@@ -40,12 +37,12 @@ const config: HardhatUserConfig = {
     settings: {},
   },
   defaultNetwork: "localhost",
-  namedAccounts: {
-    deployer: {
-      // By default, it will take the first Hardhat account as the deployer
-      default: 0,
-    },
-  },
+  // namedAccounts: {
+  //   deployer: {
+  //     // By default, it will take the first Hardhat account as the deployer
+  //     default: 0,
+  //   },
+  // },
   networks: {
     // View the networks that are pre-configured.
     // If the network you are looking for is not here you can add new network settings
@@ -64,12 +61,13 @@ const config: HardhatUserConfig = {
       url: "https://rpc.testnet.lens.dev",
       verifyURL: "https://block-explorer-verify.testnet.lens.dev/contract_verification",
       zksync: true,
-      accounts: [deployerPrivateKey],
     },
-  },
-  paths: {
-    sources: "./contracts",
-    deployments: "./deployments-zk",
+    lensMainnet: {
+      chainId: 232,
+      url: "https://rpc.lens.dev/",
+      verifyURL: "https://api-explorer-verify.lens.matterhosted.dev/contract_verification",
+      zksync: true,
+    },
   },
   dependencyCompiler: {
     paths: ["@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol"],

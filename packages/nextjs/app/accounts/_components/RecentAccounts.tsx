@@ -20,7 +20,7 @@ export function RecentAccounts({ onAccountSelected }: RecentAccountsProps) {
   const [isAddingAccount, setIsAddingAccount] = useState(false);
 
   const client = usePublicClient();
-  const { data: lensNamespace, isLoading } = useDeployedContractInfo("LensNamespace");
+  const { data: lensNamespace, isLoading } = useDeployedContractInfo("LensGlobalNamespace");
 
   const [recentAccounts, setRecentAccounts] = useLocalStorage<string[]>(recentAccountsStorageKey, [], {
     initializeWithValue: false,
@@ -33,6 +33,8 @@ export function RecentAccounts({ onAccountSelected }: RecentAccountsProps) {
   useEffect(() => {
     if (!lensNamespace || !client || isLoading) return;
 
+    console.log("lensNamespace: ", lensNamespace);
+
     const fetchRecentAccounts = async () => {
       const res = await client.multicall({
         contracts: recentAccounts.map(account => ({
@@ -42,7 +44,7 @@ export function RecentAccounts({ onAccountSelected }: RecentAccountsProps) {
           args: [account],
         })),
       });
-      console.log("fetchRecentAccounts", res);
+      console.log("fetchRecentAccounts: res", res);
       const data = res.map((item, index) => {
         const username = item.result;
         return { account: recentAccounts[index], username };
