@@ -1,7 +1,8 @@
 import { deployLensContract, ContractType, ContractInfo, loadContractAddressFromAddressBook } from "./lensUtils";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-export async function deployLock(lockType: string, lockOwner: string): Promise<void> {
-  await deployLensContract({
+export async function deployLock(hre: HardhatRuntimeEnvironment, lockType: string, lockOwner: string): Promise<void> {
+  await deployLensContract(hre, {
     name: lockType,
     contractName: "Lock",
     contractType: ContractType.Aux,
@@ -9,7 +10,7 @@ export async function deployLock(lockType: string, lockOwner: string): Promise<v
   });
 }
 
-export async function deployBeacons(beaconOwner: string): Promise<void> {
+export async function deployBeacons(hre: HardhatRuntimeEnvironment, beaconOwner: string): Promise<void> {
   const contracts: ContractInfo[] = [
     {
       name: "AppBeacon",
@@ -50,6 +51,6 @@ export async function deployBeacons(beaconOwner: string): Promise<void> {
   ];
 
   for (const contract of contracts) {
-    await deployLensContract(contract);
+    await deployLensContract(hre, contract);
   }
 }

@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.11",
-    "@lens-chain/storage-client": "^1.0.3",
-    "@lens-protocol/metadata": "^2.0.0-next.6",
+    "@lens-chain/storage-client": "^1.0.4",
+    "@lens-protocol/metadata": "^2.1.0",
     "@rainbow-me/rainbowkit": "2.1.2",
     "@tanstack/react-query": "^5.28.6",
     "@uniswap/sdk-core": "^4.0.1",
@@ -24,6 +24,7 @@
     "blo": "^1.0.1",
     "burner-connector": "^0.0.8",
     "daisyui": "4.12.10",
+    "lens-modules": "3.0.1",
     "next": "^14.2.11",
     "next-themes": "^0.3.0",
     "nprogress": "^0.2.0",

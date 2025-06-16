@@ -1,7 +1,7 @@
 import fs from "fs";
 import { deployContract } from "./utils";
 import { keccak256 } from "ethers";
-import * as hre from "hardhat";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 export enum ContractType {
   Implementation,
@@ -39,6 +39,10 @@ export function saveAddressBook(addressBook: any) {
   fs.writeFileSync("addressBook.json", JSON.stringify(addressBook, null, 2));
 }
 
+export function clearAddressBook() {
+  saveAddressBook({});
+}
+
 export function saveContractToAddressBook(contract: ContractInfo) {
   const addressBook = loadAddressBook();
   addressBook[contract.name ?? contract.contractName] = contract;
@@ -56,6 +60,7 @@ export function loadContractAddressFromAddressBook(name: string): string | undef
 }
 
 export async function deployLensContract(
+  hre: HardhatRuntimeEnvironment,
   contractToDeploy: ContractInfo,
   override: boolean = false,
 ): Promise<ContractInfo> {
@@ -84,7 +89,11 @@ export async function deployLensContract(
     }
   }
 
-  const deployedContract = await deployContract(contractToDeploy.contractName, contractToDeploy.constructorArguments);
+  const deployedContract = await deployContract(
+    hre,
+    contractToDeploy.contractName,
+    contractToDeploy.constructorArguments,
+  );
   const contractInfo: ContractInfo = {
     contractName: contractToDeploy.contractName,
     contractType: contractToDeploy.contractType,
@@ -103,6 +112,7 @@ export async function deployLensContract(
 }
 
 export async function deployLensContractAsProxy(
+  hre: HardhatRuntimeEnvironment,
   contractToDeploy: ContractInfo,
   proxyOwner: string,
 ): Promise<ContractInfo> {
@@ -126,6 +136,7 @@ export async function deployLensContractAsProxy(
   }
 
   const deployedImplementation = await deployContract(
+    hre,
     contractToDeploy.contractName,
     contractToDeploy.constructorArguments,
   );
@@ -143,7 +154,7 @@ export async function deployLensContractAsProxy(
   saveAddressBook(addressBook);
 
   const constructorArguments = [await deployedImplementation.getAddress(), proxyOwner, "0x"];
-  const deployedProxy = await deployContract("TransparentUpgradeableProxy", constructorArguments);
+  const deployedProxy = await deployContract(hre, "TransparentUpgradeableProxy", constructorArguments);
 
   const proxyInfo: ContractInfo = {
     name: contractToDeploy.name,

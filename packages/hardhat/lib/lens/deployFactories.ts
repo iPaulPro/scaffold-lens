@@ -6,8 +6,10 @@ import {
   loadContractAddressFromAddressBook,
 } from "./lensUtils";
 import { ZeroAddress } from "ethers";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 export default async function deployFactories(
+  hre: HardhatRuntimeEnvironment,
   rulesOwner: string,
   factoriesProxyOwner: string,
   DEPLOYING_MIGRATION: boolean,
@@ -101,6 +103,7 @@ export default async function deployFactories(
 
   for (const factory of factories) {
     deployedContracts[factory.name ?? factory.contractName] = await deployLensContractAsProxy(
+      hre,
       factory,
       factoriesProxyOwner,
     );
@@ -108,7 +111,7 @@ export default async function deployFactories(
 
   if (!DEPLOYING_MIGRATION) {
     for (const rule of rules) {
-      deployedContracts[rule.contractName] = await deployLensContract(rule);
+      deployedContracts[rule.contractName] = await deployLensContract(hre, rule);
     }
   }
 
@@ -128,6 +131,7 @@ export default async function deployFactories(
   ];
 
   await deployLensContractAsProxy(
+    hre,
     {
       name: "LensFactory",
       contractName: lensFactory_artifactName,

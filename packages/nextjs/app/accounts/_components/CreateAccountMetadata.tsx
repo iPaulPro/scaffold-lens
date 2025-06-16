@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { immutable } from "@lens-chain/storage-client";
 import { Resource, StorageClient } from "@lens-chain/storage-client";
 import { AccountMetadataSchema, account } from "@lens-protocol/metadata";
@@ -25,17 +25,17 @@ export function CreateAccountMetadata() {
 
   const { targetNetwork } = useTargetNetwork();
 
-  const formToAccount = () => {
+  const formToAccount = useCallback(() => {
     const copy = { ...form };
     Object.keys(copy).forEach(key => copy[key] === "" && delete copy[key]);
     return account(copy);
-  };
+  }, [form]);
 
   useEffect(() => {
     const account = formToAccount();
     const { success } = AccountMetadataSchema.safeParse(account);
     setValidated(success);
-  }, [form]);
+  }, [form, formToAccount]);
 
   const handleUpload = async () => {
     if (!validated || isPending) return;

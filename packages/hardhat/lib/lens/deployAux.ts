@@ -6,9 +6,9 @@ import {
   loadContractAddressFromAddressBook,
   deployLensContractAsProxy,
 } from "./lensUtils";
-import * as hre from "hardhat";
 import { getWallet, parseLensContractDeployedEventsFromReceipt, getAddressFromEvents } from "./utils";
 import { ethers, ZeroAddress } from "ethers";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 const metadataURI = "";
 
@@ -32,7 +32,11 @@ export interface AppInitialProperties {
   treasury: string;
 }
 
-export async function deployLensPrimitives(primitivesOwner: string, DEPLOYING_MIGRATION: boolean) {
+export async function deployLensPrimitives(
+  hre: HardhatRuntimeEnvironment,
+  primitivesOwner: string,
+  DEPLOYING_MIGRATION: boolean,
+) {
   const lensFactoryAddress = loadAddressBook()["LensFactory"].address;
   if (!lensFactoryAddress) {
     throw new Error("LensFactory not found in address book");
@@ -46,7 +50,7 @@ export async function deployLensPrimitives(primitivesOwner: string, DEPLOYING_MI
   const lensFactory = new ethers.Contract(
     lensFactoryAddress,
     lensFactoryArtifact.abi,
-    getWallet(), // Interact with the contract on behalf of this wallet
+    getWallet(hre), // Interact with the contract on behalf of this wallet
   );
 
   let group = ZeroAddress;
@@ -67,8 +71,8 @@ export async function deployLensPrimitives(primitivesOwner: string, DEPLOYING_MI
       groups: [group],
       defaultFeed: feed,
       signers: [],
-      paymaster: getWallet().address,
-      treasury: getWallet().address,
+      paymaster: getWallet(hre).address,
+      treasury: getWallet(hre).address,
     };
 
     await deployLensApp(lensFactory, initialProperties, primitivesOwner);
@@ -292,7 +296,7 @@ export async function deployLensApp(
   return primitiveAddress;
 }
 
-export async function deployLensAccessControl(primitivesOwner: string) {
+export async function deployLensAccessControl(hre: HardhatRuntimeEnvironment, primitivesOwner: string) {
   const contractName = "OwnerAdminOnlyAccessControl";
   const contractType = "AccessControl";
   const existingContract = loadContractFromAddressBook(contractName);
@@ -313,7 +317,7 @@ export async function deployLensAccessControl(primitivesOwner: string) {
   const accessControlFactory = new ethers.Contract(
     accessControlFactoryAddress,
     accessControlFactoryArtifact.abi,
-    getWallet(),
+    getWallet(hre),
   );
 
   const transaction = await accessControlFactory.deployOwnerAdminOnlyAccessControl(primitivesOwner, []);
@@ -341,7 +345,7 @@ export async function deployLensAccessControl(primitivesOwner: string) {
   return accessControlAddress;
 }
 
-export async function deployLensActionHub(proxyOwner: string): Promise<string> {
+export async function deployLensActionHub(hre: HardhatRuntimeEnvironment, proxyOwner: string): Promise<string> {
   const contractName = "ActionHub";
   const existingContract = loadContractFromAddressBook(contractName);
   if (existingContract && existingContract.address) {
@@ -355,6 +359,7 @@ export async function deployLensActionHub(proxyOwner: string): Promise<string> {
   const actionHub_args: any[] = [];
 
   const actionHub = await deployLensContractAsProxy(
+    hre,
     {
       contractName: actionHub_artifactName,
       contractType: ContractType.Aux,

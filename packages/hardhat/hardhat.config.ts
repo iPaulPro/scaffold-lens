@@ -6,27 +6,16 @@ const envFileName =
 const envFile = path.resolve(process.cwd(), envFileName);
 dotenv.config({ path: envFile });
 
-import "@matterlabs/hardhat-zksync";
-import "@openzeppelin/hardhat-upgrades";
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@typechain/hardhat";
-import "hardhat-gas-reporter";
-import "solidity-coverage";
-import "@nomicfoundation/hardhat-verify";
 import "hardhat-dependency-compiler";
-import "hardhat-contract-sizer";
-import "hardhat-ignore-warnings";
+import "@matterlabs/hardhat-zksync";
 
 import { HardhatUserConfig } from "hardhat/config";
 
-// If not set, it uses ours Alchemy's default API key.
-// You can get your own at https://dashboard.alchemyapi.io
-// const providerApiKey = process.env.ALCHEMY_API_KEY || "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 // If not set, it uses the hardhat account 0 private key.
 const deployerPrivateKey =
   process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
-// If not set, it uses ours Etherscan default API key.
-// const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -37,12 +26,6 @@ const config: HardhatUserConfig = {
     settings: {},
   },
   defaultNetwork: "localhost",
-  // namedAccounts: {
-  //   deployer: {
-  //     // By default, it will take the first Hardhat account as the deployer
-  //     default: 0,
-  //   },
-  // },
   networks: {
     // View the networks that are pre-configured.
     // If the network you are looking for is not here you can add new network settings
@@ -53,24 +36,30 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:8011",
       ethNetwork: "localhost", // in-memory node doesn't support eth node; removing this line will cause an error
       zksync: true,
-      accounts: [deployerPrivateKey],
+      accounts: [deployerPrivateKey, deployerPrivateKey],
     },
     lensTestnet: {
       chainId: 37111,
       ethNetwork: "sepolia",
-      url: "https://rpc.testnet.lens.dev",
-      verifyURL: "https://block-explorer-verify.testnet.lens.dev/contract_verification",
+      url: "https://rpc.testnet.lens.xyz",
+      verifyURL: "https://api-explorer-verify.staging.lens.zksync.dev/contract_verification",
       zksync: true,
+      accounts: [deployerPrivateKey],
     },
     lensMainnet: {
       chainId: 232,
-      url: "https://rpc.lens.dev/",
-      verifyURL: "https://api-explorer-verify.lens.matterhosted.dev/contract_verification",
+      url: "https://rpc.lens.xyz/",
+      ethNetwork: `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
+      verifyURL: "https://verify.lens.xyz/contract_verification",
       zksync: true,
+      accounts: [deployerPrivateKey],
     },
   },
   dependencyCompiler: {
-    paths: ["@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol"],
+    paths: ["@openzeppelin/contracts-hardhat-zksync-upgradable/proxy/transparent/TransparentUpgradeableProxy.sol"],
+  },
+  mocha: {
+    timeout: 120000,
   },
 };
 

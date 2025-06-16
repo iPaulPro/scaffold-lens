@@ -1,6 +1,10 @@
 import { deployLensContract, ContractType, ContractInfo } from "./lensUtils";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-export default async function deployImplementations(DEPLOYING_MIGRATION: boolean): Promise<void> {
+export default async function deployImplementations(
+  hre: HardhatRuntimeEnvironment,
+  DEPLOYING_MIGRATION: boolean,
+): Promise<void> {
   const contracts: ContractInfo[] = [
     {
       name: "AppImpl",
@@ -31,6 +35,6 @@ export default async function deployImplementations(DEPLOYING_MIGRATION: boolean
   ];
 
   for (const contract of contracts) {
-    await deployLensContract(contract);
+    await deployLensContract(hre, contract);
   }
 }

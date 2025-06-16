@@ -1,6 +1,7 @@
 import { deployLensContract, ContractType, ContractInfo } from "./lensUtils";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-export async function deployRules(rulesOwner: string): Promise<void> {
+export async function deployRules(hre: HardhatRuntimeEnvironment, rulesOwner: string): Promise<void> {
   const metadataURI = "";
   const contracts: ContractInfo[] = [
     // Feed Rules
@@ -102,6 +103,6 @@ export async function deployRules(rulesOwner: string): Promise<void> {
   ];
 
   for (const contract of contracts) {
-    await deployLensContract(contract);
+    await deployLensContract(hre, contract);
   }
 }

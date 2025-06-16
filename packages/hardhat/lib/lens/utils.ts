@@ -1,5 +1,4 @@
 import { Provider, Wallet } from "zksync-ethers";
-import * as hre from "hardhat";
 import { Deployer } from "@matterlabs/hardhat-zksync";
 import dotenv from "dotenv";
 import { ethers } from "ethers";
@@ -7,12 +6,12 @@ import { ethers } from "ethers";
 import "@matterlabs/hardhat-zksync-node/dist/type-extensions";
 import "@matterlabs/hardhat-zksync-verify/dist/src/type-extensions";
 import { ZkSyncArtifact } from "@matterlabs/hardhat-zksync-deploy/dist/types";
-import { Artifact } from "hardhat/types";
+import { Artifact, HardhatRuntimeEnvironment } from "hardhat/types";
 
 // Load env file
 dotenv.config();
 
-export const getProvider = () => {
+export const getProvider = (hre: HardhatRuntimeEnvironment) => {
   const rpcUrl = hre.network.config.url;
   if (!rpcUrl)
     throw `⛔️ RPC URL wasn't found in "${hre.network.name}"! Please add a "url" field to the network config in hardhat.config.ts`;
@@ -23,8 +22,8 @@ export const getProvider = () => {
   return provider;
 };
 
-export const getWallet = (privateKey?: string) => {
-  const provider = getProvider();
+export const getWallet = (hre: HardhatRuntimeEnvironment, privateKey?: string) => {
+  const provider = getProvider(hre);
 
   // Initialize ZKsync Wallet
   const wallet = new Wallet(
@@ -49,12 +48,15 @@ export const verifyEnoughBalance = async (wallet: Wallet, amount: bigint) => {
 /**
  * @param {string} data.contract The contract's path and name. E.g., "contracts/Greeter.sol:Greeter"
  */
-export const verifyContract = async (data: {
-  address: string;
-  contract: string;
-  constructorArguments: string;
-  bytecode: string;
-}) => {
+export const verifyContract = async (
+  hre: HardhatRuntimeEnvironment,
+  data: {
+    address: string;
+    contract: string;
+    constructorArguments: string;
+    bytecode: string;
+  },
+) => {
   // Skip verification for local networks
   if (hre.network.name === "inMemoryNode" || hre.network.name === "zkstackMigrationNode") {
     console.log("Skipping contract verification on local network");
@@ -67,13 +69,16 @@ export const verifyContract = async (data: {
   return verificationRequestId;
 };
 
-export const verifyZkDeployedContract = async (data: {
-  address: string;
-  artifact: ZkSyncArtifact;
-  constructorArguments: any[];
-}) => {
+export const verifyZkDeployedContract = async (
+  hre: HardhatRuntimeEnvironment,
+  data: {
+    address: string;
+    artifact: ZkSyncArtifact;
+    constructorArguments: any[];
+  },
+) => {
   const contractToVerify = new ethers.Contract(data.address, data.artifact.abi);
-  return verifyContract({
+  return verifyContract(hre, {
     address: data.address,
     contract: `${data.artifact.sourceName}:${data.artifact.contractName}`,
     constructorArguments: contractToVerify.interface.encodeDeploy(data.constructorArguments),
@@ -81,13 +86,16 @@ export const verifyZkDeployedContract = async (data: {
   });
 };
 
-export const verifyDeployedContract = async (data: {
-  address: string;
-  artifact: Artifact;
-  constructorArguments: any[];
-}) => {
+export const verifyDeployedContract = async (
+  hre: HardhatRuntimeEnvironment,
+  data: {
+    address: string;
+    artifact: Artifact;
+    constructorArguments: any[];
+  },
+) => {
   const contractToVerify = new ethers.Contract(data.address, data.artifact.abi);
-  return verifyContract({
+  return verifyContract(hre, {
     address: data.address,
     contract: `${data.artifact.sourceName}:${data.artifact.contractName}`,
     constructorArguments: contractToVerify.interface.encodeDeploy(data.constructorArguments),
@@ -95,11 +103,14 @@ export const verifyDeployedContract = async (data: {
   });
 };
 
-export const verifyLensFactoryDeployedPrimitive = async (data: {
-  tx: any;
-  lensContractArtifactName: string;
-  metadataURIConstructorParam: string;
-}) => {
+export const verifyLensFactoryDeployedPrimitive = async (
+  hre: HardhatRuntimeEnvironment,
+  data: {
+    tx: any;
+    lensContractArtifactName: string;
+    metadataURIConstructorParam: string;
+  },
+) => {
   const txReceipt = (await data.tx.wait()) as ethers.TransactionReceipt;
 
   const eventInterface = new ethers.Interface(["event Lens_Contract_Deployed(string contractType, string flavour)"]);
@@ -122,7 +133,7 @@ export const verifyLensFactoryDeployedPrimitive = async (data: {
   if (accessControlAddress) {
     const deployedArtifact = await hre.artifacts.readArtifact(data.lensContractArtifactName);
 
-    await verifyDeployedContract({
+    await verifyDeployedContract(hre, {
       address: deployedAddress,
       artifact: deployedArtifact,
       constructorArguments: [data.metadataURIConstructorParam, accessControlAddress],
@@ -163,11 +174,16 @@ export const getAddressFromEvents = (events: ParsedEvent[], primitiveName: strin
   return events.filter(e => e?.contractType === `lens.contract.${primitiveName}`)[0]!.address;
 };
 
-export async function verifyPrimitive(primitiveName: string, primitiveAddress: string, constructorArgs: any[]) {
+export async function verifyPrimitive(
+  hre: HardhatRuntimeEnvironment,
+  primitiveName: string,
+  primitiveAddress: string,
+  constructorArgs: any[],
+) {
   // Load compiled contract info
   const primitiveArtifact = await hre.artifacts.readArtifact(primitiveName);
 
-  const deployer = new Deployer(hre, getWallet());
+  const deployer = new Deployer(hre, getWallet(hre));
   const artifact = await deployer.loadArtifact(primitiveName);
 
   // Initialize contract instance for interaction
@@ -176,7 +192,7 @@ export async function verifyPrimitive(primitiveName: string, primitiveAddress: s
   const encodedConstructorArgs = primitive.interface.encodeDeploy(constructorArgs);
   const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;
 
-  await verifyContract({
+  await verifyContract(hre, {
     address: primitiveAddress,
     contract: fullContractSource,
     constructorArguments: encodedConstructorArgs,
@@ -199,6 +215,7 @@ type DeployContractOptions = {
   wallet?: Wallet;
 };
 export const deployContract = async (
+  hre: HardhatRuntimeEnvironment,
   contractArtifactName: string,
   constructorArguments?: any[],
   options?: DeployContractOptions,
@@ -210,7 +227,7 @@ export const deployContract = async (
   console.log(`\nStarting deployment process of "${contractArtifactName}"...`);
   console.log(`\nConstructor arguments: ${constructorArguments}`);
 
-  const wallet = options?.wallet ?? getWallet();
+  const wallet = options?.wallet ?? getWallet(hre);
   const deployer = new Deployer(hre, wallet);
   const artifact = await deployer.loadArtifact(contractArtifactName).catch(error => {
     if (error?.message?.includes(`Artifact for contract "${contractArtifactName}" not found.`)) {
@@ -247,7 +264,7 @@ export const deployContract = async (
 
   if (!options?.noVerify && hre.network.config.verifyURL) {
     log(`Requesting contract verification...`);
-    await verifyContract({
+    await verifyContract(hre, {
       address,
       contract: fullContractSource,
       constructorArguments: constructorArgs,
@@ -258,11 +275,11 @@ export const deployContract = async (
   return contract;
 };
 
-export const deploy = async (artifactName: string): Promise<string> => {
+export const deploy = async (hre: HardhatRuntimeEnvironment, artifactName: string): Promise<string> => {
   const contract_artifactName = artifactName;
   const contract_args: any[] = [];
 
-  const contract = await deployContract(contract_artifactName, contract_args);
+  const contract = await deployContract(hre, contract_artifactName, contract_args);
 
   console.log(`\n✔ ${artifactName} deployed at ${await contract.getAddress()}`);
   return await contract.getAddress();

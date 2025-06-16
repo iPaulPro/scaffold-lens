@@ -3,14 +3,17 @@ import deployFactories from "../lib/lens/deployFactories";
 import { deployLensAccessControl, deployLensActionHub, deployLensPrimitives } from "../lib/lens/deployAux";
 import { deployRules } from "../lib/lens/deployRules";
 import { deployActions } from "../lib/lens/deployActions";
-import { generateEnvFile } from "../lib/lens/lensUtils";
+import { clearAddressBook, generateEnvFile } from "../lib/lens/lensUtils";
 import { deployBeacons, deployLock } from "../lib/lens/deployProxyStuff";
 import { getWallet, LOCAL_RICH_WALLETS } from "../lib/lens/utils";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-async function deploy() {
+async function deployLensProtocol(hre: HardhatRuntimeEnvironment) {
+  clearAddressBook();
+
   const DEPLOYING_MIGRATION = Boolean(process.env.DEPLOY_MIGRATION);
   const DEPLOYING_FR = Boolean(process.env.DEPLOY_FR);
-  const deployerAddress = getWallet().address;
+  const deployerAddress = getWallet(hre).address;
 
   if (DEPLOYING_MIGRATION) {
     console.log("\x1b[33m=============================================");
@@ -76,40 +79,34 @@ async function deploy() {
   }
   console.log("\n-------------------------------------------------------------------\n\n");
 
-  await deployLock("AppLock", proxyAdminLockOwner ?? deployerAddress);
-  await deployLock("AccountLock", proxyAdminLockOwner ?? deployerAddress);
-  await deployLock("FeedLock", proxyAdminLockOwner ?? deployerAddress);
-  await deployLock("GraphLock", proxyAdminLockOwner ?? deployerAddress);
-  await deployLock("GroupLock", proxyAdminLockOwner ?? deployerAddress);
-  await deployLock("NamespaceLock", proxyAdminLockOwner ?? deployerAddress);
-  await deployLock("AccessControlLock", accessControlLockOwner ?? deployerAddress);
+  await deployLock(hre, "AppLock", proxyAdminLockOwner ?? deployerAddress);
+  await deployLock(hre, "AccountLock", proxyAdminLockOwner ?? deployerAddress);
+  await deployLock(hre, "FeedLock", proxyAdminLockOwner ?? deployerAddress);
+  await deployLock(hre, "GraphLock", proxyAdminLockOwner ?? deployerAddress);
+  await deployLock(hre, "GroupLock", proxyAdminLockOwner ?? deployerAddress);
+  await deployLock(hre, "NamespaceLock", proxyAdminLockOwner ?? deployerAddress);
+  await deployLock(hre, "AccessControlLock", accessControlLockOwner ?? deployerAddress);
 
-  await deployImplementations(DEPLOYING_MIGRATION);
-  await deployBeacons(beaconOwner ?? deployerAddress);
+  await deployImplementations(hre, DEPLOYING_MIGRATION);
+  await deployBeacons(hre, beaconOwner ?? deployerAddress);
   await deployFactories(
+    hre,
     rulesOwner ?? deployerAddress,
     factoriesProxyOwner ?? LOCAL_RICH_WALLETS[1].address,
     DEPLOYING_MIGRATION,
   );
-  await deployLensPrimitives(primitivesOwner ?? deployerAddress, DEPLOYING_MIGRATION);
+  await deployLensPrimitives(hre, primitivesOwner ?? deployerAddress, DEPLOYING_MIGRATION);
   if (!DEPLOYING_MIGRATION) {
-    const actionHub = await deployLensActionHub(factoriesProxyOwner ?? deployerAddress);
-    await deployLensAccessControl(primitivesOwner ?? deployerAddress);
-    await deployRules(rulesOwner ?? deployerAddress);
-    await deployActions(actionHub, actionsOwner ?? deployerAddress);
+    const actionHub = await deployLensActionHub(hre, factoriesProxyOwner ?? deployerAddress);
+    await deployLensAccessControl(hre, primitivesOwner ?? deployerAddress);
+    await deployRules(hre, rulesOwner ?? deployerAddress);
+    await deployActions(hre, actionHub, actionsOwner ?? deployerAddress);
   }
-  generateEnvFile();
+  if (hre.network.name !== "hardhat") {
+    generateEnvFile();
+  }
 }
 
-if (require.main === module) {
-  deploy()
-    .then(() => process.exit(0))
-    .catch(error => {
-      console.error(error);
-      process.exit(1);
-    });
-}
+export default deployLensProtocol;
 
-export default deploy;
-
-deploy.tags = ["LensProtocol"];
+deployLensProtocol.tags = ["LensProtocol"];

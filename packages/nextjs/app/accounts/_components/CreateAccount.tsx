@@ -123,7 +123,7 @@ export function CreateAccount() {
     if (address) {
       form.owner = address;
     }
-  }, [address]);
+  }, [address, form]);
 
   useEffect(() => {
     setDisplayedTxResult(txResult);
@@ -141,7 +141,7 @@ export function CreateAccount() {
     if (account) {
       setRecentAccounts([...recentAccounts, account]);
     }
-  }, [txResult]);
+  }, [txResult, recentAccounts, setRecentAccounts]);
 
   const handleWrite = async () => {
     const lensNamespaceAddress = LensNamespace?.address as `0x${string}` | undefined;
@@ -175,7 +175,6 @@ export function CreateAccount() {
           assignUsernameCustomParams: [],
           assignRuleProcessingParams: [],
           usernameExtraData: [],
-          unassignAccountRuleProcessingParams: [],
         },
       ],
     });

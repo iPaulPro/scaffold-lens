@@ -1,20 +1,12 @@
 import { ContractType, deployLensContract } from "../lib/lens/lensUtils";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-async function deploy() {
-  await deployLensContract({
+async function deploy(hre: HardhatRuntimeEnvironment) {
+  await deployLensContract(hre, {
     name: "Multicall3",
     contractName: "Multicall3",
     contractType: ContractType.Misc,
   });
-}
-
-if (require.main === module) {
-  deploy()
-    .then(() => process.exit(0))
-    .catch(error => {
-      console.error(error);
-      process.exit(1);
-    });
 }
 
 export default deploy;
