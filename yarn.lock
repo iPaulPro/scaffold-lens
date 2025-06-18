@@ -2907,6 +2907,8 @@ __metadata:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/providers": ^5.7.1
     "@irys/sdk": ^0.1.1
+    "@lens-chain/storage-client": ^1.0.4
+    "@lens-protocol/metadata": ^2.1.0
     "@matterlabs/hardhat-zksync": ^1.3.0
     "@matterlabs/zksync-contracts": ^0.6.1
     "@nomicfoundation/hardhat-chai-matchers": ^2.0.7

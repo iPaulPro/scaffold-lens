@@ -29,6 +29,7 @@ cache-zk
 # deployments
 deployments/localhost
 deployments-zk/localhost
+deployments-zk/zkSyncEraTestNode
 
 # other
 temp
