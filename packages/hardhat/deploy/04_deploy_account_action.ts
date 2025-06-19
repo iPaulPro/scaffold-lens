@@ -1,13 +1,14 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import { Deployer } from "@matterlabs/hardhat-zksync";
 import { ContractType, loadAddressBook, saveContractToAddressBook } from "../lib/lens/lensUtils";
-import { verifyZkDeployedContract } from "../lib/lens/utils";
 import { action } from "@lens-protocol/metadata";
 import { immutable, StorageClient } from "@lens-chain/storage-client";
 import { lensDeployments } from "lens-modules/deployments";
+import { deployContract } from "../lib/utils";
+
+const CONTRACT_NAME = "AccountVerificationAction";
 
 const metadata = action({
-  name: "AccountVerificationAction",
+  name: CONTRACT_NAME,
   description: "Allows accounts to verify other accounts.",
   authors: ["paul@paulburke.co"],
   source: "https://github.com/iPaulPro/scaffold-lens",
@@ -31,40 +32,34 @@ const deployAccountVerificationAction = async function (hre: HardhatRuntimeEnvir
       : lensDeployments.testnet.ActionHub.address);
 
   const wallet = await hre.deployer.getWallet(0);
-  const deployer = new Deployer(hre, wallet);
 
   let metadataUri: string;
   if (hre.network.config.verifyURL && hre.network.config.chainId) {
     const storageClient = StorageClient.create();
     const acl = immutable(hre.network.config.chainId);
     const { uri } = await storageClient.uploadAsJson(metadata, { acl });
-    console.log("Metadata uploaded to:", uri);
+    console.log(`${CONTRACT_NAME} metadata uploaded to:`, uri);
     metadataUri = uri;
   } else {
     metadataUri = JSON.stringify(metadata);
   }
 
   const constructorArguments = [lensActionHubAddress, wallet.address, metadataUri];
-  const artifact = await deployer.loadArtifact("AccountVerificationAction");
-  const contract = await deployer.deploy(artifact, constructorArguments);
+  const contract = await deployContract(CONTRACT_NAME, constructorArguments, {
+    hre,
+    verify: true,
+  });
   const address = await contract.getAddress();
-  console.log("AccountVerificationAction deployed to:", address);
 
   saveContractToAddressBook({
-    contractName: "AccountVerificationAction",
+    contractName: CONTRACT_NAME,
     address,
     contractType: ContractType.Misc,
   });
-
-  await contract.waitForDeployment();
-
-  if (hre.network.config.verifyURL) {
-    await verifyZkDeployedContract(hre, { address, artifact, constructorArguments });
-  }
 
   return address;
 };
 
 export default deployAccountVerificationAction;
 
-deployAccountVerificationAction.tags = ["AccountVerificationAction"];
+deployAccountVerificationAction.tags = [CONTRACT_NAME];
