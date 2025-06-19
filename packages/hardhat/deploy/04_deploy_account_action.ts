@@ -34,7 +34,7 @@ const deployAccountVerificationAction = async function (hre: HardhatRuntimeEnvir
   const deployer = new Deployer(hre, wallet);
 
   let metadataUri: string;
-  if (hre.network.verifyURL && hre.network.config.chainId) {
+  if (hre.network.config.verifyURL && hre.network.config.chainId) {
     const storageClient = StorageClient.create();
     const acl = immutable(hre.network.config.chainId);
     const { uri } = await storageClient.uploadAsJson(metadata, { acl });
@@ -58,7 +58,7 @@ const deployAccountVerificationAction = async function (hre: HardhatRuntimeEnvir
 
   await contract.waitForDeployment();
 
-  if (hre.network.verifyURL) {
+  if (hre.network.config.verifyURL) {
     await verifyZkDeployedContract(hre, { address, artifact, constructorArguments });
   }
 
