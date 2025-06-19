@@ -75,7 +75,7 @@ export async function deployLensPrimitives(
       treasury: getWallet(hre).address,
     };
 
-    await deployLensApp(lensFactory, initialProperties, primitivesOwner);
+    await deployLensApp(hre, lensFactory, initialProperties, primitivesOwner);
   }
 }
 
@@ -88,12 +88,13 @@ async function deployLensAccount(lensFactory: ethers.Contract, primitivesOwner: 
     return existingContract.address;
   }
 
-  console.log("Deploying " + name);
+  console.log("Deploying " + name + "...");
   const transaction = await lensFactory.deployAccount(metadataURI, primitivesOwner, [], [], emptySourceStamp, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const accountAddress = getAddressFromEvents(events, contractName);
+  console.log(`${name} was successfully deployed at ${accountAddress}\n`);
 
   // await verifyPrimitive('Account', accountAddress, [
   //   getWallet().address,
@@ -123,12 +124,13 @@ async function deployLensFeed(lensFactory: ethers.Contract, primitivesOwner: str
     return existingContract.address;
   }
 
-  console.log("Deploying " + name);
+  console.log("Deploying " + name + "...");
   const transaction = await lensFactory.deployFeed(metadataURI, primitivesOwner, [], [], []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const primitiveAddress = getAddressFromEvents(events, contractName);
+  console.log(`${name} was successfully deployed at ${primitiveAddress}\n`);
   // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
   // await verifyPrimitive(contractName, primitiveAddress, [metadataURI, accessControlAddress]);
@@ -152,12 +154,13 @@ async function deployLensGroup(lensFactory: ethers.Contract, primitivesOwner: st
     return existingContract.address;
   }
 
-  console.log("Deploying " + name);
+  console.log("Deploying " + name + "...");
   const transaction = await lensFactory.deployGroup(metadataURI, primitivesOwner, [], [], [], ZeroAddress, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const primitiveAddress = getAddressFromEvents(events, contractName);
+  console.log(`${name} was successfully deployed at ${primitiveAddress}\n`);
   // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
   // await verifyPrimitive(contractName, primitiveAddress, [metadataURI, accessControlAddress]);
@@ -181,12 +184,13 @@ async function deployLensGraph(lensFactory: ethers.Contract, primitivesOwner: st
     return existingContract.address;
   }
 
-  console.log("Deploying " + name);
+  console.log("Deploying " + name + "...");
   const transaction = await lensFactory.deployGraph(metadataURI, primitivesOwner, [], [], []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const primitiveAddress = getAddressFromEvents(events, contractName);
+  console.log(`${name} was successfully deployed at ${primitiveAddress}\n`);
   // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
   // await verifyPrimitive(contractName, primitiveAddress, [metadataURI, accessControlAddress]);
@@ -210,7 +214,7 @@ export async function deployLensNamespace(lensFactory: ethers.Contract, primitiv
     return existingContract.address;
   }
 
-  console.log("Deploying " + name);
+  console.log("Deploying " + name + "...");
   const namespace = "lens";
   const nftName = "nftName";
   const nftSymbol = "nftSymbol";
@@ -229,6 +233,7 @@ export async function deployLensNamespace(lensFactory: ethers.Contract, primitiv
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const primitiveAddress = getAddressFromEvents(events, contractName);
+  console.log(`${name} was successfully deployed at ${primitiveAddress}\n`);
   // const accessControlAddress = getAddressFromEvents(events, 'access-control');
   // const lensUsernameTokenURIProviderAddress = getAddressFromEvents(
   //   events,
@@ -255,6 +260,7 @@ export async function deployLensNamespace(lensFactory: ethers.Contract, primitiv
 }
 
 export async function deployLensApp(
+  hre: HardhatRuntimeEnvironment,
   lensFactory: ethers.Contract,
   initialProperties: AppInitialProperties,
   primitivesOwner: string,
@@ -267,15 +273,18 @@ export async function deployLensApp(
     return existingContract.address;
   }
 
-  console.log("Deploying " + name);
-  console.log("Using the following initial properties:");
-  console.log(initialProperties);
+  console.log("Deploying " + name + "...");
+  if (hre.network.name !== "zkSyncEraTestNode") {
+    console.log("Using the following initial properties:");
+    console.log(initialProperties);
+  }
   const transaction = await lensFactory.deployApp(metadataURI, false, primitivesOwner, [], initialProperties, []);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
 
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
   const primitiveAddress = getAddressFromEvents(events, contractName);
+  console.log(`${name} was successfully deployed at ${primitiveAddress}\n`);
   // const accessControlAddress = getAddressFromEvents(events, 'access-control');
 
   // await verifyPrimitive('App', appAddress, [

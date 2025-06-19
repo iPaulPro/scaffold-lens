@@ -11,7 +11,7 @@ import { ZeroAddress } from "ethers";
 export const createMockLensAccount = async (
   deployerWallet: Wallet,
   addressBook: AddressBook,
-  ownerWallet: Wallet,
+  ownerWallet: Wallet = deployerWallet,
   managerWallet: Wallet = deployerWallet,
   username = "fameish-user" + Math.floor(Math.random() * 1000000),
 ) => {

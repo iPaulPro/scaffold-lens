@@ -81,7 +81,7 @@ export async function deployLensContract(
     };
   } else {
     console.log(`Deploying ${name}...`);
-    if (contractToDeploy.constructorArguments) {
+    if (hre.network.name !== "zkSyncEraTestNode" && contractToDeploy.constructorArguments) {
       console.log("\tUsing the following Constructor arguments:");
       for (const arg of contractToDeploy.constructorArguments) {
         console.log("\t\t", arg);

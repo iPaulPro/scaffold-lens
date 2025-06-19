@@ -221,11 +221,13 @@ export const deployContract = async (
   options?: DeployContractOptions,
 ) => {
   const log = (message: string) => {
-    if (!options?.silent) console.log(message);
+    if (!options?.silent && hre.network.name !== "zkSyncEraTestNode") console.log(message);
   };
 
-  console.log(`\nStarting deployment process of "${contractArtifactName}"...`);
-  console.log(`\nConstructor arguments: ${constructorArguments}`);
+  if (hre.network.name !== "zkSyncEraTestNode") {
+    console.log(`\nStarting deployment process of "${contractArtifactName}"...`);
+    console.log(`\nConstructor arguments: ${constructorArguments}`);
+  }
 
   const wallet = options?.wallet ?? getWallet(hre);
   const deployer = new Deployer(hre, wallet);
@@ -242,10 +244,12 @@ export const deployContract = async (
   const estimatedDeployGas = await deployer.estimateDeployGas(artifact, constructorArguments || []);
   const estimatedDeployFee = await deployer.estimateDeployFee(artifact, constructorArguments || []);
   const gasPrice = await wallet.provider.getGasPrice();
-  console.log(`Estimated deployment costs:`);
-  console.log(` - Estimated gas used: ${estimatedDeployGas.toString()}`);
-  console.log(` - Estimated gas price: ${ethers.formatUnits(gasPrice, "gwei")} Gwei`);
-  console.log(` - Estimated deployment fee: ${ethers.formatEther(estimatedDeployFee)} ETH`);
+  if (hre.network.name !== "zkSyncEraTestNode") {
+    console.log(`Estimated deployment costs:`);
+    console.log(` - Estimated gas used: ${estimatedDeployGas.toString()}`);
+    console.log(` - Estimated gas price: ${ethers.formatUnits(gasPrice, "gwei")} Gwei`);
+    console.log(` - Estimated deployment fee: ${ethers.formatEther(estimatedDeployFee)} ETH`);
+  }
 
   // Check if the wallet has enough balance
   await verifyEnoughBalance(wallet, estimatedDeployFee);
@@ -257,8 +261,7 @@ export const deployContract = async (
   const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;
 
   // Display contract deployment info
-  log(`\n"${artifact.contractName}" was successfully deployed:`);
-  log(` - Contract address: ${address}`);
+  console.log(`${artifact.contractName} was successfully deployed at ${address}\n`);
   log(` - Contract source: ${fullContractSource}`);
   log(` - Encoded constructor arguments: ${constructorArgs}\n`);
 

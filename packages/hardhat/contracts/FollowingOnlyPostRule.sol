@@ -11,10 +11,11 @@ import {Errors} from "./lens/core/types/Errors.sol";
 
 /**
  * @title FollowingOnlyPostRule
+ * @author Paul Burke
  *
- * @notice A post rule that only allows users to reply, repost or quote a post if they are followed by the author of the root post.
- *         The rule can be configured to restrict replies, reposts and/or quotes.
- *         The rule requires a graph contract to check if an author is following another user.
+ * @dev A post rule that only allows users to reply, repost or quote a post if they are followed by the author of the root post.
+ *      The rule can be configured to restrict replies, reposts and/or quotes.
+ *      The rule requires a graph contract to check if an author is following another user.
  */
 contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
     struct Configuration {

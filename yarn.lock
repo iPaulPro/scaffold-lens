@@ -2933,6 +2933,7 @@ __metadata:
     hardhat-dependency-compiler: ^1.2.1
     hardhat-gas-reporter: ^2.2.1
     hardhat-ignore-warnings: ^0.2.12
+    lens-modules: 3.1.0
     prettier: ^3.3.3
     prettier-plugin-solidity: ^1.4.1
     qrcode: ^1.5.4
@@ -2969,7 +2970,7 @@ __metadata:
     eslint-config-next: ^14.0.4
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.1.3
-    lens-modules: 3.0.1
+    lens-modules: 3.1.0
     next: ^14.2.11
     next-themes: ^0.3.0
     nprogress: ^0.2.0
@@ -10524,10 +10525,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lens-modules@npm:3.0.1":
-  version: 3.0.1
-  resolution: "lens-modules@npm:3.0.1"
-  checksum: 351b9bafa9ffb50c4074380869b4a42328a156e07d157733486d45b4b39c929a32cd38153a4bf60d89ea80427563515db12245ea3505c1b54efee4856c909572
+"lens-modules@npm:3.1.0":
+  version: 3.1.0
+  resolution: "lens-modules@npm:3.1.0"
+  checksum: 6b5fa8209d1b69f6439ca862657a613fe8203dede3c1e3829cc167175614522e41c3432e737fd4ce11466021e542375e189c94cbaebd119939028fc751838e5a
   languageName: node
   linkType: hard
 
