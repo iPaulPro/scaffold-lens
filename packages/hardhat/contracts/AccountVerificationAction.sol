@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {OwnableMetadataBasedAccountAction} from "./lens/actions/account/base/OwnableMetadataBasedAccountAction.sol";
-import {KeyValue} from "./lens/core/types/Types.sol";
+import {OwnableMetadataBasedAccountAction} from "lens-modules/contracts/actions/account/base/OwnableMetadataBasedAccountAction.sol";
+import {KeyValue} from "lens-modules/contracts/core/types/Types.sol";
 
 /**
  * @title AccountVerificationAction

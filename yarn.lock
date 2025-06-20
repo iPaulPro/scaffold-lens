@@ -4005,7 +4005,7 @@ __metadata:
     hardhat-dependency-compiler: ^1.2.1
     hardhat-gas-reporter: ^2.3.0
     hardhat-ignore-warnings: ^0.2.12
-    lens-modules: 3.1.0
+    lens-modules: 3.1.1
     prettier: ^3.3.3
     prettier-plugin-solidity: ^1.4.1
     qrcode: ^1.5.4
@@ -11861,6 +11861,13 @@ __metadata:
   version: 3.1.0
   resolution: "lens-modules@npm:3.1.0"
   checksum: 6b5fa8209d1b69f6439ca862657a613fe8203dede3c1e3829cc167175614522e41c3432e737fd4ce11466021e542375e189c94cbaebd119939028fc751838e5a
+  languageName: node
+  linkType: hard
+
+"lens-modules@npm:3.1.1":
+  version: 3.1.1
+  resolution: "lens-modules@npm:3.1.1"
+  checksum: 40ec6b0aa6c843d26b7a98d1eeac9b40a0ba35b5d33fd27d1fdab5c6c9ea24cd06ad1671a62799dda55db5587ff0a72e1bdc521024d5ff40b59cb7db13900cdb
   languageName: node
   linkType: hard
 

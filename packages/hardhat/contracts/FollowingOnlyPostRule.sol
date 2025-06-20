@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {IPostRule} from "./lens/core/interfaces/IPostRule.sol";
-import {IGraph} from "./lens/core/interfaces/IGraph.sol";
-import {IFeed} from "./lens/core/interfaces/IFeed.sol";
-import {KeyValue} from "./lens/core/types/Types.sol";
-import {CreatePostParams, EditPostParams} from "./lens/core/interfaces/IFeed.sol";
-import {OwnableMetadataBasedRule} from "./lens/rules/base/OwnableMetadataBasedRule.sol";
-import {Errors} from "./lens/core/types/Errors.sol";
+import {IPostRule} from "lens-modules/contracts/core/interfaces/IPostRule.sol";
+import {IGraph} from "lens-modules/contracts/core/interfaces/IGraph.sol";
+import {IFeed} from "lens-modules/contracts/core/interfaces/IFeed.sol";
+import {KeyValue} from "lens-modules/contracts/core/types/Types.sol";
+import {CreatePostParams, EditPostParams} from "lens-modules/contracts/core/interfaces/IFeed.sol";
+import {OwnableMetadataBasedRule} from "lens-modules/contracts/rules/base/OwnableMetadataBasedRule.sol";
+import {Errors} from "lens-modules/contracts/core/types/Errors.sol";
 
 /**
  * @title FollowingOnlyPostRule
