@@ -221,10 +221,10 @@ export const deployContract = async (
   options?: DeployContractOptions,
 ) => {
   const log = (message: string) => {
-    if (!options?.silent && hre.network.name !== "zkSyncEraTestNode") console.log(message);
+    if (!options?.silent && hre.network.config.chainId !== 260) console.log(message);
   };
 
-  if (hre.network.name !== "zkSyncEraTestNode") {
+  if (hre.network.config.chainId !== 260) {
     console.log(`\nStarting deployment process of "${contractArtifactName}"...`);
     console.log(`\nConstructor arguments: ${constructorArguments}`);
   }
@@ -244,7 +244,7 @@ export const deployContract = async (
   const estimatedDeployGas = await deployer.estimateDeployGas(artifact, constructorArguments || []);
   const estimatedDeployFee = await deployer.estimateDeployFee(artifact, constructorArguments || []);
   const gasPrice = await wallet.provider.getGasPrice();
-  if (hre.network.name !== "zkSyncEraTestNode") {
+  if (hre.network.config.chainId !== 260) {
     console.log(`Estimated deployment costs:`);
     console.log(` - Estimated gas used: ${estimatedDeployGas.toString()}`);
     console.log(` - Estimated gas price: ${ethers.formatUnits(gasPrice, "gwei")} Gwei`);

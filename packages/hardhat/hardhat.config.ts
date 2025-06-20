@@ -22,12 +22,11 @@ const config: HardhatUserConfig = {
     version: "0.8.28",
   },
   zksolc: {
-    version: "1.5.12",
+    version: "1.5.15",
     settings: {
       // find all available options in the official documentation
       // https://docs.zksync.io/build/tooling/hardhat/hardhat-zksync-solc#configuration
       optimizer: {
-        enabled: true, // optional. True by default
         mode: "1", // optional. 3 by default, z to optimize bytecode size
       },
       metadata: {

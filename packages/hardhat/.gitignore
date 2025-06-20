@@ -32,6 +32,7 @@ anvil-zksync.log
 deployments/localhost
 deployments-zk/localhost
 deployments-zk/zkSyncEraTestNode
+deployments-zk/AnvilZKsync
 
 # other
 temp

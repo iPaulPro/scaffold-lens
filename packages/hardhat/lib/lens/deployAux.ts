@@ -274,7 +274,7 @@ export async function deployLensApp(
   }
 
   console.log("Deploying " + name + "...");
-  if (hre.network.name !== "zkSyncEraTestNode") {
+  if (hre.network.config.chainId !== 260) {
     console.log("Using the following initial properties:");
     console.log(initialProperties);
   }
