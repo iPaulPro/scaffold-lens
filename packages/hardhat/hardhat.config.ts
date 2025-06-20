@@ -22,8 +22,22 @@ const config: HardhatUserConfig = {
     version: "0.8.28",
   },
   zksolc: {
-    version: "latest",
-    settings: {},
+    version: "1.5.12",
+    settings: {
+      // find all available options in the official documentation
+      // https://docs.zksync.io/build/tooling/hardhat/hardhat-zksync-solc#configuration
+      optimizer: {
+        enabled: true, // optional. True by default
+        mode: "1", // optional. 3 by default, z to optimize bytecode size
+      },
+      metadata: {
+        // do not include the metadata hash, since this is machine dependent
+        // and we want all generated code to be deterministic
+        // https://docs.soliditylang.org/en/v0.7.6/metadata.html
+        bytecodeHash: "none",
+      },
+      codegen: "yul",
+    },
   },
   defaultNetwork: "localhost",
   networks: {
@@ -45,6 +59,7 @@ const config: HardhatUserConfig = {
       verifyURL: "https://api-explorer-verify.staging.lens.zksync.dev/contract_verification",
       zksync: true,
       accounts: [deployerPrivateKey],
+      enableVerifyURL: true,
     },
     lensMainnet: {
       chainId: 232,

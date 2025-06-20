@@ -14,6 +14,7 @@ typechain
 typechain-types
 
 # hardhat files
+.cache
 cache
 cache-zk
 artifacts
@@ -25,6 +26,7 @@ contracts/hardhat-dependency-compiler
 # zkSync files
 artifacts-zk
 cache-zk
+anvil-zksync.log
 
 # deployments
 deployments/localhost

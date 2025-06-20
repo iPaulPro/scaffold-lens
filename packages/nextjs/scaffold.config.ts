@@ -1,4 +1,5 @@
 import * as chains from "viem/chains";
+// import { inMemoryNode } from "~~/utils/lensChains";
 import { lens, lensTestnet } from "~~/utils/lensChains";
 
 export type ScaffoldConfig = {
