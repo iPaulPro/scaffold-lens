@@ -1,14 +1,14 @@
 # 🏗🌿 Scaffold-Lens
 
-This project is a fork of [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2) for building dapps with Lens V3 on Lens Network.
+This project is a fork of [Scaffold-ETH 2](https://github.com/scaffold-eth/scaffold-eth-2) for building dapps with Lens V3 on Lens Chain.
 
 ## Overview
 
 Features:
-- ✅ Run a local EVM chain and test contracts locally with Hardhat
-- ✅ Deploy the full Lens Protocol V3 on a local network
-- ✅ Debug Lens V3 contracts on a Lens Network Sepolia Testnet
-- ✅ Debug local contracts with a graphical interface
+- ✅ Run a local ZKsync chain and test contracts locally with Hardhat
+- ✅ Deploy the full V3 Lens Protocol on a local network
+- ✅ Debug Lens V3 contracts on a Lens Testnet
+- ✅ Debug contracts with a graphical interface
 - ✅ Deploy a Lens Account Action contract
 - ✅ Deploy a Lens Post Rule contract
 - ✅ Verify contracts on Lens Block Explorer
@@ -40,17 +40,16 @@ To get started with Scaffold-Lens, follow the steps below:
     ```shell
     git clone https://github.com/iPaulPro/scaffold-lens
     cd scaffold-lens
-    git checkout feat/lens-network
     yarn install
     ```
 
 2. **Start a chain**  
-   Run a local Lens Network in a terminal from the root directory:
+   Run a local Lens Chain in a terminal from the root directory:
     ```shell
     yarn chain
     ```
 
-   This command starts a local zkSync network using Hardhat. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
+   This command starts a local zkSync node using Hardhat and the [hardhat-zksync](https://docs.zksync.io/zksync-era/tooling/hardhat/plugins/hardhat-zksync) plugin. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `hardhat.config.ts`.
 
 3. **Deploy**  
    On a second terminal, from the root directory, deploy the Lens contracts locally:
@@ -58,7 +57,7 @@ To get started with Scaffold-Lens, follow the steps below:
     yarn deploy
     ```
 
-   This command deploys the full Lens Protocol on the local network as well as the example Action and Rule contracts. Put your contracts  in `packages/hardhat/contracts`. The `yarn deploy:*` commands use the scripts located in `packages/hardhat/deploy` to deploy the contracts to the specified network.
+   This command deploys the full Lens Social Protocol on the local network as well as the example Action and Rule contracts. Put your contracts  in `packages/hardhat/contracts`.
 
 4. **Start the app**  
    On a third terminal, from the root directory, start your NextJS app:
@@ -86,12 +85,12 @@ yarn hardhat:test
 
 This will run the tests located in `packages/hardhat/test` with [Chai](https://github.com/chaijs/chai).
 
-## Deploying to Testnet
+## Deploying to Lens Testnet
 
 Once you are ready to deploy your smart contracts, there are a few things you need to adjust.
 
 1. **Set up environment**  
-   To deploy on Lens Network Sepolia Testnet, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.staging.example` file as a template.
+   To deploy on Lens Testnet, you'll need to set up a `.env.staging` file in the `packages/hardhat` directory. You can use the `.env.staging.example` file as a template.
 
    Next, generate a new account or add one to deploy the contract(s) from.
    ```bash
@@ -105,22 +104,42 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
 2. Ensure your deployer account has sufficient \$GRASS tokens needed to deploy the contract(s) on the Lens Testnet. You can get free \$GRASS tokens from [Alchemy](https://www.alchemy.com/faucets/lens-sepolia/) or [Lenscan](https://testnet.lenscan.io/faucet).
 
 3. **Deploy**  
-   To deploy the `AccountVerificationAction` and `LimitedRepliesPostRule` to Lens Testnet you can run
+   To deploy the `AccountVerificationAction` and `FollowingOnlyPostRule` to Lens Testnet you can run
 
    ```shell
    yarn deploy:testnet
    ```
 ---
 
-## Deploying to Lens Network Mainnet
+## Deploying to Lens Chain (Mainnet)
 
-Lens Network mainnet has not launched yet.
+To deploy your contracts to Lens Chain, you will need to follow similar steps as for the testnet, but with a few adjustments:
+
+1. **Set up environment**  
+   Create a `.env` file in the `packages/hardhat` directory using the `.env.example` as a template.
+
+   Set the `DEPLOYER_PRIVATE_KEY` to the private key of your deployer account.
+2. **Add a script** 
+    Add a script for deploying to mainnet that uses the production environment, something like:
+    ```json
+    {
+       "scripts": {
+         "deploy:mainnet": "hardhat deploy-zksync --network lensMainnet --tags YourContractName,generateTsAbis"
+       }
+    }
+    ```
+3. **Deploy**  
+   To deploy your contract to Lens Chain you can then run
+
+   ```shell
+   yarn deploy:mainnet
+   ```
 
 ## Using your own contracts
 
 If you want to use your own contracts there are a few simple steps. 
 
-1. Replace the `AccountVerificationAction.sol` and/or `LimitedRepliesPostRule.sol` contracts in `/packages/hardhat/contracts` with your own. 
+1. Replace the `AccountVerificationAction.sol` and/or `FollowingOnlyPostRule.sol` contracts in `/packages/hardhat/contracts` with your own. 
 2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the sample contracts.
 3. Change the tag in the `deploy:testnet` script in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
 

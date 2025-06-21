@@ -49,7 +49,7 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:8011",
       ethNetwork: "localhost", // in-memory node doesn't support eth node; removing this line will cause an error
       zksync: true,
-      accounts: [deployerPrivateKey, deployerPrivateKey],
+      accounts: [deployerPrivateKey],
     },
     lensTestnet: {
       chainId: 37111,
