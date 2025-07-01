@@ -11,20 +11,15 @@ export function getAllAbis(chainId: number): any[] {
 
   for (const contractName in deployedContracts) {
     // @ts-ignore
-    const contract = deployedContract[contractName];
+    const contract = deployedContracts[contractName];
     allAbis.push(...contract.abi);
     for (const inheritedContractName in contract.inheritedFunctions) {
       // @ts-ignore
-      const inheritedContract = deployedContract[inheritedContractName];
+      const inheritedContract = deployedContracts[inheritedContractName];
       if (inheritedContract) {
         allAbis.push(...inheritedContract.abi);
       }
     }
-  }
-
-  if (allAbis.length === 0) {
-    console.error("No ABIs found.");
-    throw new Error("No ABIs found.");
   }
 
   return allAbis;
