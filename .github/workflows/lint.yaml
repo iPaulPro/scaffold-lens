@@ -31,9 +31,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
-        env:
-          NETWORK: ${{ secrets.CHAIN_ID }}
-        run: yarn chain & yarn deploy:local
+        run: yarn chain & yarn deploy
 
       - name: Run nextjs lint
         run: yarn next:lint --max-warnings=0
