@@ -30,3 +30,7 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+.collapse-arrow > .collapse-title:after {
+  top: 0.8rem;
+}
