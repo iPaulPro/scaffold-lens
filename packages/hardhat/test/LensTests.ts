@@ -6,7 +6,7 @@ import { Wallet } from "zksync-ethers";
 import deployFollowingOnlyPostRule from "../deploy/03_deploy_post_rule";
 import { createMockLensAccount } from "./lib/createMockLensAccount";
 import { Account, AccountVerificationAction, ActionHub, Feed, FollowingOnlyPostRule, Graph } from "../typechain-types";
-import { KeyValueStruct, RuleChangeStruct } from "../typechain-types/contracts/lens/core/interfaces/IFeed";
+import { KeyValueStruct, RuleChangeStruct } from "../typechain-types/lens-modules/contracts/core/interfaces/IFeed";
 import { AbiCoder, keccak256, toUtf8Bytes, ZeroHash } from "ethers";
 import deployAccountVerificationAction from "../deploy/04_deploy_account_action";
 
@@ -332,9 +332,11 @@ describe("Given an AccountVerificationAction contract", async () => {
       ],
     ]);
 
-    const executeTx = friendAccount
+    const executeTx = await friendAccount
       .connect(deployerWallet)
       .executeTransaction(actionHubAddress as `0x${string}`, 0n, executeData);
+
+    await executeTx.wait();
 
     await expect(executeTx).to.emit(accountAction, "AccountVerified");
   });
