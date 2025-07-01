@@ -175,6 +175,7 @@ export function CreateAccount() {
           assignUsernameCustomParams: [],
           assignRuleProcessingParams: [],
           usernameExtraData: [],
+          unassignAccountRuleProcessingParams: [],
         },
       ],
     });
