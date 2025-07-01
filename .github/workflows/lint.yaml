@@ -24,14 +24,14 @@ jobs:
       - name: Setup node env
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '20'
           cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
 
       - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
-        run: yarn chain & yarn deploy
+        run: yarn chain & yarn compile & yarn deploy
 
       - name: Run nextjs lint
         run: yarn next:lint --max-warnings=0
