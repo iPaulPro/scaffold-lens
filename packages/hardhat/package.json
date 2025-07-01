@@ -1,6 +1,7 @@
 {
   "name": "@sl/hardhat",
-  "version": "1.1.0",
+  "version": "3.0.0",
+  "private": true,
   "scripts": {
     "account": "hardhat run scripts/listAccount.ts",
     "chain": "NODE_ENV=local hardhat node-zksync",
