@@ -1,6 +1,6 @@
 {
   "name": "@sl/hardhat",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "scripts": {
     "account": "hardhat run scripts/listAccount.ts",
