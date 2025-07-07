@@ -92,6 +92,9 @@ function getContractDataFromDeployments() {
   if (!fs.existsSync(DEPLOYMENTS_DIR)) {
     throw Error("At least one other deployment script should exist to generate an actual contract.");
   }
+
+  const addressBook = loadAddressBook();
+
   const output = {} as Record<string, any>;
   for (const chainName of getDirectories(DEPLOYMENTS_DIR)) {
     const chainId = fs.readFileSync(`${DEPLOYMENTS_DIR}/${chainName}/.chainId`).toString();
@@ -103,8 +106,13 @@ function getContractDataFromDeployments() {
       const inheritedFunctions = metadata?.sources
         ? getInheritedFunctions(JSON.parse(metadata).sources, contractPath)
         : undefined;
+      const addressBookEntry = addressBook[contractName];
       const name = contractName ?? contractPath;
-      contracts[name] = { address: address ?? entries[0].address, abi, inheritedFunctions };
+      contracts[name] = {
+        address: addressBookEntry?.address ?? address ?? entries[0].address,
+        abi,
+        inheritedFunctions,
+      };
     }
     output[chainId] = contracts;
   }
@@ -113,7 +121,6 @@ function getContractDataFromDeployments() {
   const localContracts: Record<string, any> = output["0x104"];
   if (!localContracts) return output;
 
-  const addressBook = loadAddressBook();
   const lensContracts = Object.entries(addressBook).reduce(
     (acc, [name, contract]) => {
       if (contract.contractType === ContractType.Primitive) {

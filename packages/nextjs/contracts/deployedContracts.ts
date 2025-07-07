@@ -5,6 +5,839 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
+  37111: {
+    AccountVerificationAction: {
+      address: "0x87211Ff26Ae70300917119ded51FBc88714dB544",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "actionHub",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AlreadyVerified",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "RedundantStateChange",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "SelfVerificationNotAllowed",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "VerificationDoesNotExist",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "verifier",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "verified",
+              type: "address",
+            },
+          ],
+          name: "AccountUnverified",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "verifier",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "verified",
+              type: "address",
+            },
+          ],
+          name: "AccountVerified",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_AccountAction_MetadataURISet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "execute",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "verifier",
+              type: "address",
+            },
+          ],
+          name: "getVerificationCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "verifier",
+              type: "address",
+            },
+          ],
+          name: "getVerifications",
+          outputs: [
+            {
+              internalType: "address[]",
+              name: "",
+              type: "address[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "verifier",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "verified",
+              type: "address",
+            },
+          ],
+          name: "isVerified",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "originalMsgSender",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "isDisabled",
+              type: "bool",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "params",
+              type: "tuple[]",
+            },
+          ],
+          name: "setDisabled",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+    FollowingOnlyPostRule: {
+      address: "0xdD7870A759Cbe9B755e33ce10Fbc16962c6b44B7",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidMsgSender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidParameter",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotFollowing",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "Lens_Ownable_OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "Lens_Rule_MetadataURISet",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "ruleParams",
+              type: "tuple[]",
+            },
+          ],
+          name: "configure",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "source",
+              type: "address",
+            },
+          ],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getMetadataURI",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "configSalt",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "rootPostId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "postId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "author",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repostedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "quotedPostId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "repliedPostId",
+                  type: "uint256",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "ruleAddress",
+                      type: "address",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "configSalt",
+                      type: "bytes32",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bool",
+                          name: "configure",
+                          type: "bool",
+                        },
+                        {
+                          components: [
+                            {
+                              internalType: "bytes32",
+                              name: "key",
+                              type: "bytes32",
+                            },
+                            {
+                              internalType: "bytes",
+                              name: "value",
+                              type: "bytes",
+                            },
+                          ],
+                          internalType: "struct KeyValue[]",
+                          name: "ruleParams",
+                          type: "tuple[]",
+                        },
+                      ],
+                      internalType: "struct RuleConfigurationChange",
+                      name: "configurationChanges",
+                      type: "tuple",
+                    },
+                    {
+                      components: [
+                        {
+                          internalType: "bytes4",
+                          name: "ruleSelector",
+                          type: "bytes4",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "isRequired",
+                          type: "bool",
+                        },
+                        {
+                          internalType: "bool",
+                          name: "enabled",
+                          type: "bool",
+                        },
+                      ],
+                      internalType: "struct RuleSelectorChange[]",
+                      name: "selectorChanges",
+                      type: "tuple[]",
+                    },
+                  ],
+                  internalType: "struct RuleChange[]",
+                  name: "ruleChanges",
+                  type: "tuple[]",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct CreatePostParams",
+              name: "postParams",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processCreatePost",
+          outputs: [],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "contentURI",
+                  type: "string",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "key",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes",
+                      name: "value",
+                      type: "bytes",
+                    },
+                  ],
+                  internalType: "struct KeyValue[]",
+                  name: "extraData",
+                  type: "tuple[]",
+                },
+              ],
+              internalType: "struct EditPostParams",
+              name: "",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "key",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "bytes",
+                  name: "value",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct KeyValue[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          name: "processEditPost",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "metadataURI",
+              type: "string",
+            },
+          ],
+          name: "setMetadataURI",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+    },
+  },
   260: {
     TransparentUpgradeableProxy: {
       address: "0xb9695C94f3aACCE22921Ae4B6539481EA190Af43",
@@ -11346,7 +12179,7 @@ const deployedContracts = {
       ],
     },
     ActionHub: {
-      address: "0x08CA9bf962B08381A65B3417a68459fB1868B4Fa",
+      address: "0xdAC07830B09A9Dd7BD7dCA2aD4D156f845B5472D",
       abi: [
         {
           inputs: [],
@@ -12286,7 +13119,7 @@ const deployedContracts = {
       ],
     },
     AccessControlFactory: {
-      address: "0x22719C7546DA37C629085e0b7333Cd1118604F6c",
+      address: "0xb9695C94f3aACCE22921Ae4B6539481EA190Af43",
       abi: [
         {
           inputs: [
@@ -12345,7 +13178,7 @@ const deployedContracts = {
       ],
     },
     AccountFactory: {
-      address: "0xee1AD27D771E1888Bc34E29546B9Ebffe297eC30",
+      address: "0x8Ff15F68EFac40EA397403E3F8C10036C1453531",
       abi: [
         {
           inputs: [
@@ -12559,7 +13392,7 @@ const deployedContracts = {
       ],
     },
     AppFactory: {
-      address: "0x84C084579Daa3c6a6f600657969a38e8D3fBEB5F",
+      address: "0x041cf178e328eFdE2f92FDEcFDC5A87B573bEDac",
       abi: [
         {
           inputs: [
@@ -12715,7 +13548,7 @@ const deployedContracts = {
       ],
     },
     FeedFactory: {
-      address: "0x3E71984C1e7726eFc29F19f118eBdBF83951CAad",
+      address: "0x6a3a04b5470cAEDcFa9071dFD8c535c5E0008Bf5",
       abi: [
         {
           inputs: [
@@ -12869,7 +13702,7 @@ const deployedContracts = {
       ],
     },
     GraphFactory: {
-      address: "0x6a7d65c87dAa5c9ad98DBD1eF8567c2056989272",
+      address: "0x8B39F9F171805ec9f9Ff0fD93461c301fCf51131",
       abi: [
         {
           inputs: [
@@ -13023,7 +13856,7 @@ const deployedContracts = {
       ],
     },
     GroupFactory: {
-      address: "0x5686c890827423ff58eb4C8fDe8D18C3cbCc11b3",
+      address: "0x9F72C7dD3f6246da855d13A18c8216aa4Dd4Ff85",
       abi: [
         {
           inputs: [
@@ -13199,7 +14032,7 @@ const deployedContracts = {
       ],
     },
     LensFactory: {
-      address: "0x8A547aeA7258D4470372bbeAC924eCCD154D6689",
+      address: "0x779a4B84d09a514e0b2E0ea5879F9398D229e68b",
       abi: [
         {
           inputs: [
@@ -14568,7 +15401,7 @@ const deployedContracts = {
       ],
     },
     NamespaceFactory: {
-      address: "0xCEE92F4e26B57e03510211760330cD787479957B",
+      address: "0x5283681542a1E146D624f9a6dbEA5D5b41173358",
       abi: [
         {
           inputs: [
@@ -33659,839 +34492,6 @@ const deployedContracts = {
             },
           ],
           name: "validateSource",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-      ],
-    },
-  },
-  37111: {
-    AccountVerificationAction: {
-      address: "0x2d971e9218AA79941f91197352b88332BbE88e8a",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "actionHub",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              internalType: "string",
-              name: "metadataURI",
-              type: "string",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "AlreadyVerified",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "InvalidMsgSender",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "InvalidParameter",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "NotImplemented",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "RedundantStateChange",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "SelfVerificationNotAllowed",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "VerificationDoesNotExist",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "verifier",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "verified",
-              type: "address",
-            },
-          ],
-          name: "AccountUnverified",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "verifier",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "verified",
-              type: "address",
-            },
-          ],
-          name: "AccountVerified",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "string",
-              name: "metadataURI",
-              type: "string",
-            },
-          ],
-          name: "Lens_AccountAction_MetadataURISet",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "Lens_Ownable_OwnershipTransferred",
-          type: "event",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "originalMsgSender",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "params",
-              type: "tuple[]",
-            },
-          ],
-          name: "configure",
-          outputs: [
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "originalMsgSender",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "params",
-              type: "tuple[]",
-            },
-          ],
-          name: "execute",
-          outputs: [
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "source",
-              type: "address",
-            },
-          ],
-          name: "getMetadataURI",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getMetadataURI",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "verifier",
-              type: "address",
-            },
-          ],
-          name: "getVerificationCount",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "verifier",
-              type: "address",
-            },
-          ],
-          name: "getVerifications",
-          outputs: [
-            {
-              internalType: "address[]",
-              name: "",
-              type: "address[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "verifier",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "verified",
-              type: "address",
-            },
-          ],
-          name: "isVerified",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "owner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "originalMsgSender",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              internalType: "bool",
-              name: "isDisabled",
-              type: "bool",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "params",
-              type: "tuple[]",
-            },
-          ],
-          name: "setDisabled",
-          outputs: [
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "metadataURI",
-              type: "string",
-            },
-          ],
-          name: "setMetadataURI",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "transferOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-      ],
-    },
-    FollowingOnlyPostRule: {
-      address: "0xe67f19c3dc58193F6dd1D00dcdC1EA74AFf62cb3",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              internalType: "string",
-              name: "metadataURI",
-              type: "string",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "InvalidMsgSender",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "InvalidParameter",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "NotFollowing",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "NotImplemented",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "Lens_Ownable_OwnershipTransferred",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "string",
-              name: "metadataURI",
-              type: "string",
-            },
-          ],
-          name: "Lens_Rule_MetadataURISet",
-          type: "event",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "configSalt",
-              type: "bytes32",
-            },
-            {
-              internalType: "uint256",
-              name: "postId",
-              type: "uint256",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "ruleParams",
-              type: "tuple[]",
-            },
-          ],
-          name: "configure",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "source",
-              type: "address",
-            },
-          ],
-          name: "getMetadataURI",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getMetadataURI",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "owner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "configSalt",
-              type: "bytes32",
-            },
-            {
-              internalType: "uint256",
-              name: "rootPostId",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "postId",
-              type: "uint256",
-            },
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "author",
-                  type: "address",
-                },
-                {
-                  internalType: "string",
-                  name: "contentURI",
-                  type: "string",
-                },
-                {
-                  internalType: "uint256",
-                  name: "repostedPostId",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "quotedPostId",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "repliedPostId",
-                  type: "uint256",
-                },
-                {
-                  components: [
-                    {
-                      internalType: "address",
-                      name: "ruleAddress",
-                      type: "address",
-                    },
-                    {
-                      internalType: "bytes32",
-                      name: "configSalt",
-                      type: "bytes32",
-                    },
-                    {
-                      components: [
-                        {
-                          internalType: "bool",
-                          name: "configure",
-                          type: "bool",
-                        },
-                        {
-                          components: [
-                            {
-                              internalType: "bytes32",
-                              name: "key",
-                              type: "bytes32",
-                            },
-                            {
-                              internalType: "bytes",
-                              name: "value",
-                              type: "bytes",
-                            },
-                          ],
-                          internalType: "struct KeyValue[]",
-                          name: "ruleParams",
-                          type: "tuple[]",
-                        },
-                      ],
-                      internalType: "struct RuleConfigurationChange",
-                      name: "configurationChanges",
-                      type: "tuple",
-                    },
-                    {
-                      components: [
-                        {
-                          internalType: "bytes4",
-                          name: "ruleSelector",
-                          type: "bytes4",
-                        },
-                        {
-                          internalType: "bool",
-                          name: "isRequired",
-                          type: "bool",
-                        },
-                        {
-                          internalType: "bool",
-                          name: "enabled",
-                          type: "bool",
-                        },
-                      ],
-                      internalType: "struct RuleSelectorChange[]",
-                      name: "selectorChanges",
-                      type: "tuple[]",
-                    },
-                  ],
-                  internalType: "struct RuleChange[]",
-                  name: "ruleChanges",
-                  type: "tuple[]",
-                },
-                {
-                  components: [
-                    {
-                      internalType: "bytes32",
-                      name: "key",
-                      type: "bytes32",
-                    },
-                    {
-                      internalType: "bytes",
-                      name: "value",
-                      type: "bytes",
-                    },
-                  ],
-                  internalType: "struct KeyValue[]",
-                  name: "extraData",
-                  type: "tuple[]",
-                },
-              ],
-              internalType: "struct CreatePostParams",
-              name: "postParams",
-              type: "tuple",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "",
-              type: "tuple[]",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "",
-              type: "tuple[]",
-            },
-          ],
-          name: "processCreatePost",
-          outputs: [],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-            {
-              components: [
-                {
-                  internalType: "string",
-                  name: "contentURI",
-                  type: "string",
-                },
-                {
-                  components: [
-                    {
-                      internalType: "bytes32",
-                      name: "key",
-                      type: "bytes32",
-                    },
-                    {
-                      internalType: "bytes",
-                      name: "value",
-                      type: "bytes",
-                    },
-                  ],
-                  internalType: "struct KeyValue[]",
-                  name: "extraData",
-                  type: "tuple[]",
-                },
-              ],
-              internalType: "struct EditPostParams",
-              name: "",
-              type: "tuple",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "",
-              type: "tuple[]",
-            },
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "key",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "bytes",
-                  name: "value",
-                  type: "bytes",
-                },
-              ],
-              internalType: "struct KeyValue[]",
-              name: "",
-              type: "tuple[]",
-            },
-          ],
-          name: "processEditPost",
-          outputs: [],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "metadataURI",
-              type: "string",
-            },
-          ],
-          name: "setMetadataURI",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "transferOwnership",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
