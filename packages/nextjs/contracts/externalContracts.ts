@@ -19,6 +19,10 @@ const externalContracts = {
       address: lensDeployments.mainnet.AccessControlFactory.address,
       abi: abis.accessControlFactoryAbi,
     },
+    Account: {
+      address: lensDeployments.mainnet.AccountImpl.address,
+      abi: abis.accountAbi,
+    },
     AccountBlockingRule: {
       address: lensDeployments.mainnet.AccountBlockingRule.address,
       abi: abis.accountBlockingRuleAbi,
@@ -157,6 +161,10 @@ const externalContracts = {
       address: lensDeployments.testnet.AccessControlFactory.address,
       abi: abis.accessControlFactoryAbi,
     },
+    Account: {
+      address: lensDeployments.testnet.AccountImpl.address,
+      abi: abis.accountAbi,
+    },
     AccountBlockingRule: {
       address: lensDeployments.testnet.AccountBlockingRule.address,
       abi: abis.accountBlockingRuleAbi,
@@ -164,10 +172,6 @@ const externalContracts = {
     AccountFactory: {
       address: lensDeployments.testnet.AccountFactory.address,
       abi: abis.accountFactoryAbi,
-    },
-    Account: {
-      address: lensDeployments.testnet.AccountImpl.address,
-      abi: abis.accountAbi,
     },
     ActionHub: {
       address: lensDeployments.testnet.ActionHub.address,
