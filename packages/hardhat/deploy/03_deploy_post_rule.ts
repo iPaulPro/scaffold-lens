@@ -4,17 +4,17 @@ import { postRule } from "@lens-protocol/metadata";
 import { immutable, StorageClient } from "@lens-chain/storage-client";
 import { deployContract } from "../lib/utils";
 
-const CONTRACT_NAME = "FollowingOnlyPostRule";
+const CONTRACT_NAME = "CollectorOnlyPostRule";
 
 const metadata = postRule({
   name: CONTRACT_NAME,
-  description: "Restricts users to reply, repost or quote a post if they are followed by the author of the root post",
+  description: "Only allows users to reply, repost or quote a post if they have collected the root post.",
   authors: ["paul@paulburke.co"],
   source: "https://github.com/iPaulPro/scaffold-lens",
   configureParams: [
     {
-      key: "0x7d50408405f482949cd317ab452b66f1104c85a1708ae5be893385b1c898c6d9",
-      name: "graph",
+      key: "0x805820b2240216c463ad8c45b9d6055a1af2511622f7e2cda740464a41f544ca",
+      name: "collectAction",
       type: "address",
     },
     {
@@ -37,7 +37,7 @@ const metadata = postRule({
   processEditPostParams: [],
 });
 
-const deployFollowingOnlyPostRule = async function (hre: HardhatRuntimeEnvironment) {
+const deployCollectorOnlyPostRule = async function (hre: HardhatRuntimeEnvironment) {
   const wallet = await hre.deployer.getWallet(0);
 
   let metadataUri: string;
@@ -67,6 +67,6 @@ const deployFollowingOnlyPostRule = async function (hre: HardhatRuntimeEnvironme
   return address;
 };
 
-export default deployFollowingOnlyPostRule;
+export default deployCollectorOnlyPostRule;
 
-deployFollowingOnlyPostRule.tags = [CONTRACT_NAME];
+deployCollectorOnlyPostRule.tags = [CONTRACT_NAME];
