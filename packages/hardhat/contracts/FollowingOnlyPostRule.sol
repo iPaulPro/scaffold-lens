@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {IPostRule} from "lens-modules/contracts/core/interfaces/IPostRule.sol";
-import {IGraph} from "lens-modules/contracts/core/interfaces/IGraph.sol";
+import {IPostRuleValidation} from "./helpers/IPostRuleValidation.sol";
+import {Errors} from "lens-modules/contracts/core/types/Errors.sol";
 import {IFeed, CreatePostParams, EditPostParams} from "lens-modules/contracts/core/interfaces/IFeed.sol";
+import {IGraph} from "lens-modules/contracts/core/interfaces/IGraph.sol";
+import {IPostRule} from "lens-modules/contracts/core/interfaces/IPostRule.sol";
 import {KeyValue} from "lens-modules/contracts/core/types/Types.sol";
 import {OwnableMetadataBasedRule} from "lens-modules/contracts/rules/base/OwnableMetadataBasedRule.sol";
-import {Errors} from "lens-modules/contracts/core/types/Errors.sol";
 
 /**
  * @title FollowingOnlyPostRule
@@ -16,7 +17,11 @@ import {Errors} from "lens-modules/contracts/core/types/Errors.sol";
  *      The rule can be configured to restrict replies, reposts and/or quotes.
  *      The rule requires a graph contract to check if an author is following another user.
  */
-contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
+contract FollowingOnlyPostRule is
+    IPostRule,
+    OwnableMetadataBasedRule,
+    IPostRuleValidation
+{
     struct Configuration {
         address graph;
         bool repliesRestricted;
@@ -37,7 +42,7 @@ contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
     bytes32 private constant PARAM_QUOTES_RESTRICTED =
         0x323cbd3bdd5537df3af23e8d4c6c6bb31c9fa33346759abf247f998a32cda0a2;
 
-    mapping(address feed => mapping(bytes32 configSalt => mapping(uint256 postId => Configuration config)))
+    mapping(address feed => mapping(uint256 postId => Configuration config))
         internal _configuration;
 
     constructor(
@@ -46,7 +51,7 @@ contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
     ) OwnableMetadataBasedRule(owner, metadataURI) {}
 
     function configure(
-        bytes32 configSalt,
+        bytes32 /* configSalt */,
         uint256 postId,
         KeyValue[] calldata ruleParams
     ) external override {
@@ -81,11 +86,11 @@ contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
                 configuration.quotesRestricted,
             Errors.InvalidParameter()
         );
-        _configuration[msg.sender][configSalt][postId] = configuration;
+        _configuration[msg.sender][postId] = configuration;
     }
 
     function processCreatePost(
-        bytes32 configSalt,
+        bytes32 /* configSalt */,
         uint256 rootPostId,
         uint256 postId,
         CreatePostParams calldata postParams,
@@ -93,8 +98,8 @@ contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
         KeyValue[] calldata /* ruleParams */
     ) external view override {
         Configuration memory configuration = _configuration[msg.sender][
-            configSalt
-        ][rootPostId];
+            rootPostId
+        ];
         if (
             _shouldRestrictionBeApplied(configuration, rootPostId, postParams)
         ) {
@@ -118,6 +123,55 @@ contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
         KeyValue[] calldata /* ruleParams */
     ) external pure override {
         revert Errors.NotImplemented();
+    }
+
+    function getConfiguration(
+        address feed,
+        uint256 postId
+    ) external view returns (Configuration memory) {
+        return _configuration[feed][postId];
+    }
+
+    function validateCanReply(
+        address feed,
+        uint256 postId,
+        address account
+    ) external view returns (bool) {
+        IFeed feedContract = IFeed(feed);
+        uint256 rootPostId = feedContract.getPost(postId).rootPostId;
+        Configuration memory configuration = _configuration[feed][rootPostId];
+        if (!configuration.repliesRestricted) {
+            return true;
+        }
+        return isAuthorFollowing(feed, rootPostId, account);
+    }
+
+    function validateCanRepost(
+        address feed,
+        uint256 postId,
+        address account
+    ) external view returns (bool) {
+        IFeed feedContract = IFeed(feed);
+        uint256 rootPostId = feedContract.getPost(postId).rootPostId;
+        Configuration memory configuration = _configuration[feed][rootPostId];
+        if (!configuration.repostsRestricted) {
+            return true;
+        }
+        return isAuthorFollowing(feed, rootPostId, account);
+    }
+
+    function validateCanQuote(
+        address feed,
+        uint256 postId,
+        address account
+    ) external view returns (bool) {
+        IFeed feedContract = IFeed(feed);
+        uint256 rootPostId = feedContract.getPost(postId).rootPostId;
+        Configuration memory configuration = _configuration[feed][rootPostId];
+        if (!configuration.quotesRestricted) {
+            return true;
+        }
+        return isAuthorFollowing(feed, rootPostId, account);
     }
 
     function _shouldRestrictionBeApplied(
@@ -155,5 +209,22 @@ contract FollowingOnlyPostRule is IPostRule, OwnableMetadataBasedRule {
             }
         }
         return false;
+    }
+
+    function isAuthorFollowing(
+        address feedAddress,
+        uint256 rootPostId,
+        address account
+    ) private view returns (bool) {
+        IFeed feed = IFeed(feedAddress);
+        Configuration memory configuration = _configuration[feedAddress][
+            rootPostId
+        ];
+        address rootPostAuthor = feed.getPostAuthor(rootPostId);
+        if (rootPostAuthor == account) {
+            return true;
+        }
+        IGraph graph = IGraph(configuration.graph);
+        return graph.isFollowing(rootPostAuthor, account);
     }
 }
