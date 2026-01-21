@@ -548,13 +548,13 @@
     {
       "constructorArgs": [
         "0xA82C8f5A03AeB2221abEdB51d9E462aFd9f63CD4",
-        "lens://be9777c2bea725d8c7b600759f1ece16d2c8c13e2b81b919f7713ba0d0e18767"
+        "lens://516936b401aaef5aa0d81ad65d167d218731284ff9ea95fc6e540e91365ac4ab"
       ],
       "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "deploymentType": "create",
       "factoryDeps": [],
-      "address": "0xF4f0366d666d4fAaEE5fd38e7D2aEbeF091b189a",
-      "txHash": "0x201ac569dd0c43707c6ef537f3ac42db21181212412df5596a15e80a999172a5"
+      "address": "0x1592955B3C207dA89f5ea87E109D5fBEeA449422",
+      "txHash": "0xb8ed6de15a6121e2b658972068aeb1f7e92dace8d32bbf66711ccdc0d3035fa6"
     }
   ]
 }

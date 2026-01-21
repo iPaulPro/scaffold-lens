@@ -14,7 +14,7 @@ const metadata = postRule({
   configureParams: [
     {
       key: "0xa92ea569d1a9f915f96759ba7cea5f135d011c442b0508dbef76a309e55f4458",
-      name: "lens.param.group",
+      name: "group",
       type: "address",
     },
   ],
