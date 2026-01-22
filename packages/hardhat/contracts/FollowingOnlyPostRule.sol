@@ -136,7 +136,7 @@ contract FollowingOnlyPostRule is
         address feed,
         uint256 postId,
         address account
-    ) external view returns (bool) {
+    ) external view override returns (bool) {
         IFeed feedContract = IFeed(feed);
         uint256 rootPostId = feedContract.getPost(postId).rootPostId;
         Configuration memory configuration = _configuration[feed][rootPostId];
@@ -150,7 +150,7 @@ contract FollowingOnlyPostRule is
         address feed,
         uint256 postId,
         address account
-    ) external view returns (bool) {
+    ) external view override returns (bool) {
         IFeed feedContract = IFeed(feed);
         uint256 rootPostId = feedContract.getPost(postId).rootPostId;
         Configuration memory configuration = _configuration[feed][rootPostId];
@@ -164,7 +164,7 @@ contract FollowingOnlyPostRule is
         address feed,
         uint256 postId,
         address account
-    ) external view returns (bool) {
+    ) external view override returns (bool) {
         IFeed feedContract = IFeed(feed);
         uint256 rootPostId = feedContract.getPost(postId).rootPostId;
         Configuration memory configuration = _configuration[feed][rootPostId];
