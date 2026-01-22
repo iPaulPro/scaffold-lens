@@ -555,6 +555,17 @@
       "factoryDeps": [],
       "address": "0xF4f0366d666d4fAaEE5fd38e7D2aEbeF091b189a",
       "txHash": "0x201ac569dd0c43707c6ef537f3ac42db21181212412df5596a15e80a999172a5"
+    },
+    {
+      "constructorArgs": [
+        "0xA82C8f5A03AeB2221abEdB51d9E462aFd9f63CD4",
+        "lens://ba97fdf29c586cf9d4010cbbab38f2042e22b11e559297a1f36f2793d4d5dc9f"
+      ],
+      "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "deploymentType": "create",
+      "factoryDeps": [],
+      "address": "0x83F5E3bb7209111002eB6C98A89a9869cD63a0e1",
+      "txHash": "0xc5a2c043aefd42755150d2ea027965145c47e0cafcbd0c4faa43d36ee38c563f"
     }
   ]
 }

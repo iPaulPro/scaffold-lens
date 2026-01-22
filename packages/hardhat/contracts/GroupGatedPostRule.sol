@@ -78,7 +78,7 @@ contract GroupGatedPostRule is
         address feed,
         uint256 postId,
         address account
-    ) external view returns (bool) {
+    ) external view override returns (bool) {
         return isAuthorGroupMember(feed, postId, account);
     }
 
@@ -86,7 +86,7 @@ contract GroupGatedPostRule is
         address feed,
         uint256 postId,
         address account
-    ) external view returns (bool) {
+    ) external view override returns (bool) {
         return isAuthorGroupMember(feed, postId, account);
     }
 
@@ -94,7 +94,7 @@ contract GroupGatedPostRule is
         address feed,
         uint256 postId,
         address account
-    ) external view returns (bool) {
+    ) external view override returns (bool) {
         return isAuthorGroupMember(feed, postId, account);
     }
 
@@ -102,7 +102,7 @@ contract GroupGatedPostRule is
         address feed,
         uint256 postId,
         address account
-    ) internal view returns (bool) {
+    ) private view returns (bool) {
         IFeed feedContract = IFeed(feed);
         uint256 rootPostId = feedContract.getPost(postId).rootPostId;
         address rootPostAuthor = feedContract.getPostAuthor(rootPostId);
