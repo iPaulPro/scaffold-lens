@@ -5,24 +5,29 @@ import { immutable, StorageClient } from "@lens-chain/storage-client";
 import { lensDeployments } from "lens-modules/deployments";
 import { deployContract } from "../lib/utils";
 
-const CONTRACT_NAME = "AccountVerificationAction";
+const CONTRACT_NAME = "PinPostAccountAction";
 
 const metadata = action({
   name: CONTRACT_NAME,
-  description: "Allows accounts to verify other accounts.",
+  description: "Allows accounts to pin and unpin posts.",
   authors: ["paul@paulburke.co"],
   source: "https://github.com/iPaulPro/scaffold-lens",
   configureParams: [],
   executeParams: [
     {
-      key: "0x9b8ec5ac6a057082411c3af019905162d7a163931f117b2539e5b51b353a27fd",
-      name: "verify",
-      type: "bool",
+      key: "0xa9393259e39523bbb903f0ba2a379b4b186e37f9b5eb6e010422b9d3c078ed99",
+      name: "lens.param.postId",
+      type: "uint256",
+    },
+    {
+      key: "0xbe03c9c5920f7e47c5ff7b8626411717c31c9a3bb26a54cfcf05d31673c6de65",
+      name: "lens.param.feed",
+      type: "address",
     },
   ],
 });
 
-const deployAccountVerificationAction = async function (hre: HardhatRuntimeEnvironment) {
+const deployPinPostAccountAction = async function (hre: HardhatRuntimeEnvironment) {
   const addressBook = loadAddressBook();
 
   const lensActionHubAddress =
@@ -60,6 +65,6 @@ const deployAccountVerificationAction = async function (hre: HardhatRuntimeEnvir
   return address;
 };
 
-export default deployAccountVerificationAction;
+export default deployPinPostAccountAction;
 
-deployAccountVerificationAction.tags = [CONTRACT_NAME];
+deployPinPostAccountAction.tags = [CONTRACT_NAME];
