@@ -22,6 +22,12 @@ export interface ContractInfo {
   address?: string;
   constructorArguments?: any[];
   bytecodeHash?: string;
+  implementation?: string;
+  proxyAdmin?: string;
+  initializerCalldata?: string;
+  owner?: string;
+  metadataURI?: string;
+  lensCreate2PreSalt?: string;
 }
 
 export type AddressBook = Record<string, Omit<ContractInfo, "name">>;
@@ -115,6 +121,7 @@ export async function deployLensContractAsProxy(
   hre: HardhatRuntimeEnvironment,
   contractToDeploy: ContractInfo,
   proxyOwner: string,
+  initializerCalldata?: string,
 ): Promise<ContractInfo> {
   const name = contractToDeploy.name ?? contractToDeploy.contractName;
 
@@ -153,7 +160,7 @@ export async function deployLensContractAsProxy(
   addressBook[contractToDeploy.name ?? contractToDeploy.contractName + "Impl"] = contractInfo;
   saveAddressBook(addressBook);
 
-  const constructorArguments = [await deployedImplementation.getAddress(), proxyOwner, "0x"];
+  const constructorArguments = [await deployedImplementation.getAddress(), proxyOwner, initializerCalldata ?? "0x"];
   const deployedProxy = await deployContract(hre, "TransparentUpgradeableProxy", constructorArguments);
 
   const proxyInfo: ContractInfo = {
@@ -163,6 +170,10 @@ export async function deployLensContractAsProxy(
     constructorArguments,
     address: await deployedProxy.getAddress(),
   };
+
+  if (initializerCalldata) {
+    proxyInfo.initializerCalldata = initializerCalldata;
+  }
 
   addressBook[name] = proxyInfo;
   saveAddressBook(addressBook);

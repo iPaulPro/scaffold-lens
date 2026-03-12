@@ -1,4 +1,4 @@
-import { deployLensContract, ContractType, ContractInfo } from "./lensUtils";
+import { deployLensContract, ContractType, ContractInfo, loadContractAddressFromAddressBook } from "./lensUtils";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 export default async function deployImplementations(
@@ -15,6 +15,7 @@ export default async function deployImplementations(
       name: "AccountImpl",
       contractName: DEPLOYING_MIGRATION ? "MigrationAccount" : "Account",
       contractType: ContractType.Implementation,
+      constructorArguments: [loadContractAddressFromAddressBook("GHO"), loadContractAddressFromAddressBook("WGHO")],
     },
     {
       name: "FeedImpl",

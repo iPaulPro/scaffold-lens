@@ -7,6 +7,7 @@ import { clearAddressBook, generateEnvFile } from "../lib/lens/lensUtils";
 import { deployBeacons, deployLock } from "../lib/lens/deployProxyStuff";
 import { getWallet, LOCAL_RICH_WALLETS } from "../lib/lens/utils";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import deployLocal from "../lib/lens/deployLocalDependencies";
 
 async function deployLensProtocol(hre: HardhatRuntimeEnvironment) {
   clearAddressBook();
@@ -79,6 +80,8 @@ async function deployLensProtocol(hre: HardhatRuntimeEnvironment) {
   }
   console.log("\n-------------------------------------------------------------------\n\n");
 
+  await deployLocal(hre);
+
   await deployLock(hre, "AppLock", proxyAdminLockOwner ?? deployerAddress);
   await deployLock(hre, "AccountLock", proxyAdminLockOwner ?? deployerAddress);
   await deployLock(hre, "FeedLock", proxyAdminLockOwner ?? deployerAddress);
@@ -100,7 +103,7 @@ async function deployLensProtocol(hre: HardhatRuntimeEnvironment) {
     const actionHub = await deployLensActionHub(hre, factoriesProxyOwner ?? deployerAddress);
     await deployLensAccessControl(hre, primitivesOwner ?? deployerAddress);
     await deployRules(hre, rulesOwner ?? deployerAddress);
-    await deployActions(hre, actionHub, actionsOwner ?? deployerAddress);
+    await deployActions(hre, actionHub);
   }
   if (hre.network.name !== "hardhat") {
     generateEnvFile();

@@ -1,5 +1,7 @@
 import * as dotenv from "dotenv";
 import path from "path";
+import { subtask } from "hardhat/config";
+import { TASK_COMPILE_SOLIDITY_RUN_SOLC, TASK_COMPILE_SOLIDITY_RUN_SOLCJS } from "hardhat/builtin-tasks/task-names";
 
 const envFileName =
   !process.env.NODE_ENV || process.env.NODE_ENV === "production" ? ".env" : `.env.${process.env.NODE_ENV}`;
@@ -71,7 +73,7 @@ const config: HardhatUserConfig = {
   },
   dependencyCompiler: {
     paths: [
-      "@openzeppelin/contracts-hardhat-zksync-upgradable/proxy/transparent/TransparentUpgradeableProxy.sol",
+      "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
       "lens-modules/contracts/actions/account/TippingAccountAction.sol",
       "lens-modules/contracts/actions/post/TippingPostAction.sol",
       "lens-modules/contracts/actions/post/collect/SimpleCollectAction.sol",
@@ -103,6 +105,7 @@ const config: HardhatUserConfig = {
       "lens-modules/contracts/rules/graph/TokenGatedGraphRule.sol",
       "lens-modules/contracts/rules/follow/SimplePaymentFollowRule.sol",
       "lens-modules/contracts/rules/follow/TokenGatedFollowRule.sol",
+      "lens-modules/contracts/rules/group/AdditionRemovalPidGroupRule.sol",
       "lens-modules/contracts/rules/group/BanMemberGroupRule.sol",
       "lens-modules/contracts/rules/group/MembershipApprovalGroupRule.sol",
       "lens-modules/contracts/rules/group/SimplePaymentGroupRule.sol",
@@ -118,5 +121,24 @@ const config: HardhatUserConfig = {
     timeout: 120000,
   },
 };
+
+// We need to replace the LensCreate2 contract so the LENS_CREATE_2_ADDRESS constant matches the local deployment
+const LOCAL_REMAPPINGS = [
+  "lens-modules/contracts/core/upgradeability/LensCreate2.sol=contracts/helpers/LensCreate2.sol",
+];
+
+subtask(TASK_COMPILE_SOLIDITY_RUN_SOLC, async (args: { input: any; solcPath: string }, hre, runSuper) => {
+  if (hre.network.zksync) {
+    args.input.settings.remappings = LOCAL_REMAPPINGS;
+  }
+  return runSuper(args);
+});
+
+subtask(TASK_COMPILE_SOLIDITY_RUN_SOLCJS, async (args: { input: any; solcJsPath: string }, hre, runSuper) => {
+  if (hre.network.zksync) {
+    args.input.settings.remappings = LOCAL_REMAPPINGS;
+  }
+  return runSuper(args);
+});
 
 export default config;

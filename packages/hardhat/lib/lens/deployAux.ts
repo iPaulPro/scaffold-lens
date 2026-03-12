@@ -155,7 +155,7 @@ async function deployLensGroup(lensFactory: ethers.Contract, primitivesOwner: st
   }
 
   console.log("Deploying " + name + "...");
-  const transaction = await lensFactory.deployGroup(metadataURI, primitivesOwner, [], [], [], ZeroAddress, []);
+  const transaction = await lensFactory.deployGroup(metadataURI, primitivesOwner, [], [], [], ZeroAddress);
 
   const txReceipt = (await transaction.wait()) as ethers.TransactionReceipt;
   const events = parseLensContractDeployedEventsFromReceipt(txReceipt);
@@ -215,9 +215,9 @@ export async function deployLensNamespace(lensFactory: ethers.Contract, primitiv
   }
 
   console.log("Deploying " + name + "...");
-  const namespace = "lens";
-  const nftName = "nftName";
-  const nftSymbol = "nftSymbol";
+  const namespace = "test";
+  const nftName = "Test";
+  const nftSymbol = "TEST";
 
   const transaction = await lensFactory.deployNamespace(
     namespace,

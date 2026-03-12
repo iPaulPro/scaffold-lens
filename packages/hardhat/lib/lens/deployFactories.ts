@@ -1,12 +1,8 @@
-import {
-  deployLensContract,
-  deployLensContractAsProxy,
-  ContractType,
-  ContractInfo,
-  loadContractAddressFromAddressBook,
-} from "./lensUtils";
-import { ZeroAddress } from "ethers";
+import { deployLensContractAsProxy, ContractType, ContractInfo, loadContractAddressFromAddressBook } from "./lensUtils";
+import { assert, Contract, ethers, ZeroAddress } from "ethers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { getWallet } from "./utils";
+import { utils } from "zksync-ethers";
 
 export default async function deployFactories(
   hre: HardhatRuntimeEnvironment,
@@ -15,6 +11,26 @@ export default async function deployFactories(
   DEPLOYING_MIGRATION: boolean,
 ): Promise<void> {
   const metadataURI = "";
+
+  const deployer = getWallet(hre);
+  console.log(`Deployer address: ${deployer.address}`);
+
+  const nonce = await deployer.getNonce();
+
+  // TODO: This is a super-dirty hack which doesn't work half of the time (or if you change anything in deployment script).
+  // Probably the problem has something to do with libraries already deployed or something.
+  // If it fails - restart the node or play with nonce + values.
+  const contractDeployer = new Contract(utils.CONTRACT_DEPLOYER_ADDRESS, utils.CONTRACT_DEPLOYER.fragments, deployer);
+
+  // Print all addresses from nonce 0 to nonce + 20
+  for (let i = 0; i < 30; i++) {
+    const address = await contractDeployer.getNewAddressCreate.staticCall(deployer.address, nonce + i);
+    console.log(`Nonce ${i} address: ${address}`);
+  }
+  const predictedLensFactoryAddress = await contractDeployer.getNewAddressCreate.staticCall(
+    deployer.address,
+    DEPLOYING_MIGRATION ? nonce + 15 : nonce + 27,
+  );
 
   const factories: ContractInfo[] = [
     // Factories
@@ -49,6 +65,7 @@ export default async function deployFactories(
       constructorArguments: [
         loadContractAddressFromAddressBook("FeedBeacon"),
         loadContractAddressFromAddressBook("FeedLock"),
+        predictedLensFactoryAddress,
       ],
     },
     {
@@ -58,6 +75,7 @@ export default async function deployFactories(
       constructorArguments: [
         loadContractAddressFromAddressBook("GraphBeacon"),
         loadContractAddressFromAddressBook("GraphLock"),
+        predictedLensFactoryAddress,
       ],
     },
     {
@@ -67,6 +85,7 @@ export default async function deployFactories(
       constructorArguments: [
         loadContractAddressFromAddressBook("GroupBeacon"),
         loadContractAddressFromAddressBook("GroupLock"),
+        predictedLensFactoryAddress,
       ],
     },
     {
@@ -76,6 +95,7 @@ export default async function deployFactories(
       constructorArguments: [
         loadContractAddressFromAddressBook("NamespaceBeacon"),
         loadContractAddressFromAddressBook("NamespaceLock"),
+        predictedLensFactoryAddress,
       ],
     },
   ];
@@ -85,17 +105,32 @@ export default async function deployFactories(
     {
       contractName: "AccountBlockingRule",
       contractType: ContractType.Rule,
-      constructorArguments: [rulesOwner, metadataURI],
+      constructorArguments: [],
     },
     {
       contractName: "GroupGatedFeedRule",
       contractType: ContractType.Rule,
-      constructorArguments: [rulesOwner, metadataURI],
+      constructorArguments: [],
     },
     {
       contractName: "UsernameSimpleCharsetNamespaceRule",
       contractType: ContractType.Rule,
-      constructorArguments: [rulesOwner, metadataURI],
+      constructorArguments: [],
+    },
+    {
+      contractName: "UsernameReservedNamespaceRule",
+      contractType: ContractType.Rule,
+      constructorArguments: [],
+    },
+    {
+      contractName: "BanMemberGroupRule",
+      contractType: ContractType.Rule,
+      constructorArguments: [],
+    },
+    {
+      contractName: "AdditionRemovalPidGroupRule",
+      contractType: ContractType.Rule,
+      constructorArguments: [],
     },
   ];
 
@@ -110,27 +145,50 @@ export default async function deployFactories(
   }
 
   if (!DEPLOYING_MIGRATION) {
+    const initializerABI = ["function initialize(address owner, string memory metadataURI) external"];
+    const initializerInterface = new ethers.Interface(initializerABI);
+    const initializeEncodedCall = initializerInterface.encodeFunctionData("initialize", [rulesOwner, metadataURI]);
     for (const rule of rules) {
-      deployedContracts[rule.contractName] = await deployLensContract(hre, rule);
+      deployedContracts[rule.contractName] = await deployLensContractAsProxy(
+        hre,
+        rule,
+        rulesOwner,
+        initializeEncodedCall,
+      );
     }
   }
 
   // lens factory
   const lensFactory_artifactName = DEPLOYING_MIGRATION ? "MigrationLensFactory" : "LensFactory";
   const lensFactory_args = [
-    deployedContracts["AccessControlFactory"].address,
-    deployedContracts["AccountFactory"].address,
-    deployedContracts["AppFactory"].address,
-    deployedContracts["GroupFactory"].address,
-    deployedContracts["FeedFactory"].address,
-    deployedContracts["GraphFactory"].address,
-    deployedContracts["NamespaceFactory"].address,
-    DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["AccountBlockingRule"].address,
-    DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["GroupGatedFeedRule"].address,
-    DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["UsernameSimpleCharsetNamespaceRule"].address,
+    {
+      accessControlFactory: deployedContracts["AccessControlFactory"].address,
+      accountFactory: deployedContracts["AccountFactory"].address,
+      appFactory: deployedContracts["AppFactory"].address,
+      groupFactory: deployedContracts["GroupFactory"].address,
+      feedFactory: deployedContracts["FeedFactory"].address,
+      graphFactory: deployedContracts["GraphFactory"].address,
+      namespaceFactory: deployedContracts["NamespaceFactory"].address,
+    },
+    {
+      accountBlockingRule: DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["AccountBlockingRule"].address,
+      groupGatedFeedRule: DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["GroupGatedFeedRule"].address,
+      usernameSimpleCharsetRule: DEPLOYING_MIGRATION
+        ? ZeroAddress
+        : deployedContracts["UsernameSimpleCharsetNamespaceRule"].address,
+      banMemberGroupRule: DEPLOYING_MIGRATION ? ZeroAddress : deployedContracts["BanMemberGroupRule"].address,
+      addRemovePidGroupRule: DEPLOYING_MIGRATION
+        ? ZeroAddress
+        : deployedContracts["AdditionRemovalPidGroupRule"].address,
+      usernameReservedNamespaceRule: DEPLOYING_MIGRATION
+        ? ZeroAddress
+        : deployedContracts["UsernameReservedNamespaceRule"].address,
+    },
   ];
 
-  await deployLensContractAsProxy(
+  const wasLensFactoryDeployed = loadContractAddressFromAddressBook("LensFactory") !== undefined;
+
+  const lensFactoryInfo = await deployLensContractAsProxy(
     hre,
     {
       name: "LensFactory",
@@ -140,4 +198,15 @@ export default async function deployFactories(
     },
     factoriesProxyOwner,
   );
+
+  if (wasLensFactoryDeployed == false) {
+    console.log(
+      `LensFactory address: ${lensFactoryInfo.address} <<< ??? >>> ${predictedLensFactoryAddress} Predicted LensFactory address`,
+    );
+    assert(
+      lensFactoryInfo.address === predictedLensFactoryAddress,
+      "Predicted LensFactory address doesnt match the actual deployed address",
+      "VALUE_MISMATCH",
+    );
+  }
 }

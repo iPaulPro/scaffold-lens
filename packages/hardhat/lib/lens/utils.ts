@@ -240,22 +240,28 @@ export const deployContract = async (
     }
   });
 
-  // Estimate contract deployment fee
-  const estimatedDeployGas = await deployer.estimateDeployGas(artifact, constructorArguments || []);
-  const estimatedDeployFee = await deployer.estimateDeployFee(artifact, constructorArguments || []);
-  const gasPrice = await wallet.provider.getGasPrice();
-  if (hre.network.config.chainId !== 260) {
-    console.log(`Estimated deployment costs:`);
-    console.log(` - Estimated gas used: ${estimatedDeployGas.toString()}`);
-    console.log(` - Estimated gas price: ${ethers.formatUnits(gasPrice, "gwei")} Gwei`);
-    console.log(` - Estimated deployment fee: ${ethers.formatEther(estimatedDeployFee)} ETH`);
-  }
+  console.log(`Artifact: ${artifact.contractName}`);
+  console.log(`Constructor args being passed:`, JSON.stringify(constructorArguments ?? []));
+  console.log(`Artifact bytecode length: ${artifact.bytecode.length}`);
 
-  // Check if the wallet has enough balance
-  await verifyEnoughBalance(wallet, estimatedDeployFee);
+  // Estimate contract deployment fee
+  // const estimatedDeployGas = await deployer.estimateDeployGas(artifact, constructorArguments || []);
+  // const estimatedDeployFee = await deployer.estimateDeployFee(artifact, constructorArguments || []);
+  // const gasPrice = await wallet.provider.getGasPrice();
+  // if (hre.network.config.chainId !== 260) {
+  //   console.log(`Estimated deployment costs:`);
+  //   console.log(` - Estimated gas used: ${estimatedDeployGas.toString()}`);
+  //   console.log(` - Estimated gas price: ${ethers.formatUnits(gasPrice, "gwei")} Gwei`);
+  //   console.log(` - Estimated deployment fee: ${ethers.formatEther(estimatedDeployFee)} ETH`);
+  // }
+  //
+  // // Check if the wallet has enough balance
+  // await verifyEnoughBalance(wallet, estimatedDeployFee);
 
   // Deploy the contract to ZKsync
   const contract = await deployer.deploy(artifact, constructorArguments);
+  const tx = contract.deploymentTransaction();
+  console.log("Deployment transaction hash:", tx?.hash);
   const address = await contract.getAddress();
   const constructorArgs = contract.interface.encodeDeploy(constructorArguments);
   const fullContractSource = `${artifact.sourceName}:${artifact.contractName}`;

@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.26;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract GHO is ERC20 {
+    constructor() ERC20("GHO", "GHO") {
+        _mint(msg.sender, 1000 * 10 ** decimals());
+    }
+
+    function mint(address to, uint256 amount) external {}
+}
