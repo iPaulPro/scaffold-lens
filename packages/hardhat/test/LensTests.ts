@@ -25,6 +25,7 @@ describe("Given an PinPostAccountAction contract", async () => {
   let otherAccount: Account;
   let actionHub: ActionHub;
   let mainPostId: string | undefined;
+  let secondPostId: string | undefined;
 
   const createPostData = (author: string) => {
     const contentURI = "lens://content";
@@ -96,6 +97,16 @@ describe("Given an PinPostAccountAction contract", async () => {
     const createMainPostTx = mainAccount.connect(deployerWallet).executeTransaction(lensFeedAddress, 0n, mainPostData);
 
     await expect(createMainPostTx).to.not.be.reverted;
+
+    const secondPostData = createPostData(mainAccountAddress);
+    secondPostId = await mainAccount
+      .connect(deployerWallet)
+      .executeTransaction.staticCall(lensFeedAddress, 0n, secondPostData);
+
+    const createSecondPostTx = mainAccount
+      .connect(deployerWallet)
+      .executeTransaction(lensFeedAddress, 0n, secondPostData);
+    await expect(createSecondPostTx).to.not.be.reverted;
   });
 
   it("should deploy the PinPostAccountAction contract", async () => {
@@ -127,6 +138,10 @@ describe("Given an PinPostAccountAction contract", async () => {
     if (!mainAccountAddress) {
       throw new Error("Main account address is undefined");
     }
+    if (!mainPostId) {
+      throw new Error("Main postId is undefined");
+    }
+
     const executeData = actionHub.interface.encodeFunctionData("executeAccountAction", [
       accountActionAddress as `0x${string}`,
       mainAccountAddress as `0x${string}`,
@@ -148,7 +163,7 @@ describe("Given an PinPostAccountAction contract", async () => {
 
     await executeTx.wait();
 
-    await expect(executeTx).to.emit(accountAction, "PostPinned");
+    await expect(executeTx).to.emit(accountAction, "PostPinned").withArgs(mainAccountAddress, BigInt(mainPostId));
   });
 
   it("should return the pinned post", async () => {
@@ -166,7 +181,7 @@ describe("Given an PinPostAccountAction contract", async () => {
     expect(pinnedPost).to.eq(BigInt(mainPostId));
   });
 
-  it("should emit PostUnpinned event when post is unpinned", async () => {
+  it("should emit PostUnpinned and PostPinned events when pin is replaced", async () => {
     if (!accountActionAddress) {
       throw new Error("AccountAction address is undefined");
     }
@@ -176,13 +191,20 @@ describe("Given an PinPostAccountAction contract", async () => {
     if (!mainAccountAddress) {
       throw new Error("Main account address is undefined");
     }
+    if (!mainPostId) {
+      throw new Error("mainPostId is undefined");
+    }
+    if (!secondPostId) {
+      throw new Error("secondPostId is undefined");
+    }
+
     const executeData = actionHub.interface.encodeFunctionData("executeAccountAction", [
       accountActionAddress as `0x${string}`,
       mainAccountAddress as `0x${string}`,
       [
         {
           key: keccak256(toUtf8Bytes("lens.param.postId")),
-          value: AbiCoder.defaultAbiCoder().encode(["uint256"], [mainPostId]),
+          value: AbiCoder.defaultAbiCoder().encode(["uint256"], [secondPostId]),
         },
         {
           key: keccak256(toUtf8Bytes("lens.param.feed")),
@@ -195,7 +217,47 @@ describe("Given an PinPostAccountAction contract", async () => {
       .connect(deployerWallet)
       .executeTransaction(actionHubAddress as `0x${string}`, 0n, executeData);
 
-    await expect(executeTx).to.emit(accountAction, "PostUnpinned");
+    await expect(executeTx)
+      .to.emit(accountAction, "PostUnpinned")
+      .withArgs(mainAccountAddress, BigInt(mainPostId))
+      .and.to.emit(accountAction, "PostPinned")
+      .withArgs(mainAccountAddress, BigInt(secondPostId));
+  });
+
+  it("should emit PostUnpinned event when post is unpinned", async () => {
+    if (!accountActionAddress) {
+      throw new Error("AccountAction address is undefined");
+    }
+    if (!actionHubAddress) {
+      throw new Error("ActionHub address is undefined");
+    }
+    if (!mainAccountAddress) {
+      throw new Error("Main account address is undefined");
+    }
+    if (!secondPostId) {
+      throw new Error("postId is undefined");
+    }
+
+    const executeData = actionHub.interface.encodeFunctionData("executeAccountAction", [
+      accountActionAddress as `0x${string}`,
+      mainAccountAddress as `0x${string}`,
+      [
+        {
+          key: keccak256(toUtf8Bytes("lens.param.postId")),
+          value: AbiCoder.defaultAbiCoder().encode(["uint256"], [secondPostId]),
+        },
+        {
+          key: keccak256(toUtf8Bytes("lens.param.feed")),
+          value: AbiCoder.defaultAbiCoder().encode(["address"], [lensFeedAddress]),
+        },
+      ],
+    ]);
+
+    const executeTx = mainAccount
+      .connect(deployerWallet)
+      .executeTransaction(actionHubAddress as `0x${string}`, 0n, executeData);
+
+    await expect(executeTx).to.emit(accountAction, "PostUnpinned").withArgs(mainAccountAddress, BigInt(secondPostId));
   });
 
   it("should revert when trying to pin an invalid post id", async () => {
