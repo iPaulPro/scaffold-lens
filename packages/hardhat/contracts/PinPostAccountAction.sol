@@ -13,6 +13,13 @@ import {IFeed} from "lens-modules/contracts/core/interfaces/IFeed.sol";
  * @dev An account action that allows users to pin and unpin posts. Pinned posts are stored on-chain.
  */
 contract PinPostAccountAction is OwnableMetadataBasedAccountAction {
+    /**
+     * @dev The Lens API requires configuration before execution, but in this case, we don't need to
+     * store any configuration data. The `isConfigured` mapping is used to track whether an account
+     * has been configured or not, but it doesn't store any specific configuration values.
+     */
+    mapping(address account => bool configured) public isConfigured;
+
     mapping(address account => uint256 postId) public pinnedPosts;
 
     event PostPinned(address indexed account, uint256 indexed postId);
@@ -28,6 +35,15 @@ contract PinPostAccountAction is OwnableMetadataBasedAccountAction {
         address owner,
         string memory metadataURI
     ) OwnableMetadataBasedAccountAction(actionHub, owner, metadataURI) {}
+
+    function _configure(
+        address /* originalMsgSender */,
+        address account,
+        KeyValue[] calldata /* params */
+    ) internal virtual override returns (bytes memory) {
+        isConfigured[account] = true;
+        return "";
+    }
 
     function _execute(
         address originalMsgSender,
