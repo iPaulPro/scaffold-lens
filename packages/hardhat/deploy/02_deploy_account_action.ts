@@ -31,10 +31,11 @@ const deployPinPostAccountAction = async function (hre: HardhatRuntimeEnvironmen
   const addressBook = loadAddressBook();
 
   const lensActionHubAddress =
-    addressBook["ActionHub"]?.address ??
-    (hre.network.config.chainId === 232
+    hre.network.config.chainId === 232
       ? lensDeployments.mainnet.ActionHub.address
-      : lensDeployments.testnet.ActionHub.address);
+      : hre.network.config.chainId === 37111
+        ? lensDeployments.testnet.ActionHub.address
+        : addressBook["ActionHub"]?.address;
 
   const wallet = await hre.deployer.getWallet(0);
 
