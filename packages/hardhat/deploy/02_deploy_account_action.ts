@@ -9,9 +9,13 @@ const CONTRACT_NAME = "PinPostAccountAction";
 
 const metadata = action({
   name: CONTRACT_NAME,
-  description: "Allows accounts to pin and unpin posts.",
+  description:
+    "An account action that allows users to pin and unpin posts. Pinned posts are stored on-chain. " +
+    "Only post authors can pin their posts, and they can only have one pinned post at a time. " +
+    "If a user pins a new post, the previous pinned post will be unpinned automatically. " +
+    "Users can also unpin their currently pinned post by calling the action with the same post ID.",
   authors: ["paul@paulburke.co"],
-  source: "https://github.com/iPaulPro/scaffold-lens",
+  source: "https://github.com/iPaulPro/scaffold-lens/tree/feat/pinned-posts",
   configureParams: [],
   executeParams: [
     {
