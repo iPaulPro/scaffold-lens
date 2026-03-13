@@ -4045,7 +4045,7 @@ __metadata:
     hardhat-contract-sizer: ^2.10.0
     hardhat-dependency-compiler: ^1.2.1
     hardhat-ignore-warnings: ^0.2.12
-    lens-modules: 3.1.6
+    lens-modules: 3.1.7
     prettier: ^3.3.3
     prettier-plugin-solidity: ^1.4.1
     qrcode: ^1.5.4
@@ -4082,7 +4082,7 @@ __metadata:
     eslint-config-next: ^14.0.4
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.1.3
-    lens-modules: 3.1.6
+    lens-modules: 3.1.7
     next: ^14.2.11
     next-themes: ^0.3.0
     nprogress: ^0.2.0
@@ -11891,10 +11891,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lens-modules@npm:3.1.6":
-  version: 3.1.6
-  resolution: "lens-modules@npm:3.1.6"
-  checksum: 2dd49f49288f7202ab7116804f42d2fe0460cf6135adc72cb08778c48faee112fadd966923c0d632e145ae3ed0f9de60f3ae92615251fa35cc7486901634a31b
+"lens-modules@npm:3.1.7":
+  version: 3.1.7
+  resolution: "lens-modules@npm:3.1.7"
+  checksum: e72b2198fce5e42e390e80f8419a586c412357345ad6b80123d1371e40a773aa901b2db7cd01e2da6c47d19c66e5de034575274f0453a80a4a9326f5c508fdca
   languageName: node
   linkType: hard
 
