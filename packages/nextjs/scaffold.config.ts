@@ -1,6 +1,7 @@
 import * as chains from "viem/chains";
-// import { inMemoryNode } from "~~/utils/lensChains";
-import { lens, lensTestnet } from "~~/utils/lensChains";
+import { inMemoryNode } from "~~/utils/lensChains";
+
+// import { lens, lensTestnet } from "~~/utils/lensChains";
 
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
@@ -12,8 +13,8 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  // targetNetworks: [inMemoryNode],
-  targetNetworks: [lensTestnet, lens],
+  targetNetworks: [inMemoryNode],
+  // targetNetworks: [lensTestnet, lens],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
