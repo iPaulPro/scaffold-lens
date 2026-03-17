@@ -83,7 +83,7 @@ Run the smart contract unit tests from the root directory.
 yarn hardhat:test
 ```
 
-This will run the tests located in `packages/hardhat/test` with [Chai](https://github.com/chaijs/chai).
+This will run the tests located in `packages/hardhat/test` with [Chai](https://github.com/chaijs/chai). The tests include the full V3 deployment and demonstrate how to interact with the Lens Protocol contracts and the example Action and Rule contracts. You can add your own tests in the same directory.
 
 ## Deploying to Lens Testnet
 
@@ -111,6 +111,14 @@ Once you are ready to deploy your smart contracts, there are a few things you ne
    ```
 ---
 
+## Using your own contracts
+
+If you want to use your own contracts there are a few simple steps.
+
+1. Replace the `AccountVerificationAction.sol` and/or `FollowingOnlyPostRule.sol` contracts in `/packages/hardhat/contracts` with your own.
+2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the sample contracts.
+3. Change the tag in the `deploy:testnet` script in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
+
 ## Deploying to Lens Chain (Mainnet)
 
 To deploy your contracts to Lens Chain, you will need to follow similar steps as for the testnet, but with a few adjustments:
@@ -128,20 +136,13 @@ To deploy your contracts to Lens Chain, you will need to follow similar steps as
        }
     }
     ```
+   Where `YourContractName` is the name of the contract you want to deploy. You can add multiple tags if you have more than one contract to deploy. The `generateTsAbis` tag is optional and can be used if you want to generate TypeScript ABIs for your contracts to be used in the Next.js project.
 3. **Deploy**  
    To deploy your contract to Lens Chain you can then run
 
    ```shell
    yarn deploy:mainnet
    ```
-
-## Using your own contracts
-
-If you want to use your own contracts there are a few simple steps. 
-
-1. Replace the `AccountVerificationAction.sol` and/or `FollowingOnlyPostRule.sol` contracts in `/packages/hardhat/contracts` with your own. 
-2. Update the script(s) in `/packages/hardhat/deploy` to deploy your contract(s) instead of the sample contracts.
-3. Change the tag in the `deploy:testnet` script in `/packages/hardhat/package.json` to the tag(s) of your contract(s).
 
 ## About Scaffold-ETH 2
 
