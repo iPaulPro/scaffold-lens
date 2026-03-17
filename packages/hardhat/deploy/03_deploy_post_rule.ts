@@ -2,7 +2,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { ContractType, saveContractToAddressBook } from "../lib/lens/lensUtils";
 import { postRule } from "@lens-protocol/metadata";
 import { immutable, StorageClient } from "@lens-chain/storage-client";
-import { deployContract } from "../lib/utils";
+import { deployContract } from "../lib/lens/utils";
 
 const CONTRACT_NAME = "FollowingOnlyPostRule";
 
@@ -52,10 +52,7 @@ const deployFollowingOnlyPostRule = async function (hre: HardhatRuntimeEnvironme
   }
 
   const constructorArguments = [wallet.address, metadataUri];
-  const contract = await deployContract(CONTRACT_NAME, constructorArguments, {
-    hre,
-    verify: true,
-  });
+  const contract = await deployContract(hre, CONTRACT_NAME, constructorArguments);
   const address = await contract.getAddress();
 
   saveContractToAddressBook({

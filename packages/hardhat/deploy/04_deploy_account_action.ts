@@ -3,7 +3,7 @@ import { ContractType, loadAddressBook, saveContractToAddressBook } from "../lib
 import { action } from "@lens-protocol/metadata";
 import { immutable, StorageClient } from "@lens-chain/storage-client";
 import { lensDeployments } from "lens-modules/deployments";
-import { deployContract } from "../lib/utils";
+import { deployContract } from "../lib/lens/utils";
 
 const CONTRACT_NAME = "AccountVerificationAction";
 
@@ -46,10 +46,7 @@ const deployAccountVerificationAction = async function (hre: HardhatRuntimeEnvir
   }
 
   const constructorArguments = [lensActionHubAddress, wallet.address, metadataUri];
-  const contract = await deployContract(CONTRACT_NAME, constructorArguments, {
-    hre,
-    verify: true,
-  });
+  const contract = await deployContract(hre, CONTRACT_NAME, constructorArguments);
   const address = await contract.getAddress();
 
   saveContractToAddressBook({
