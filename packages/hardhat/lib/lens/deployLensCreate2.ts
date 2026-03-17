@@ -11,7 +11,8 @@ import { createHash } from "crypto";
 async function deploy(hre: HardhatRuntimeEnvironment) {
   const DEPLOYING_FR = Boolean(process.env.DEPLOY_FR);
 
-  const regularDeployerPk = process.env.DEPLOYER_PRIVATE_KEY;
+  const regularDeployerPk =
+    process.env.DEPLOYER_PRIVATE_KEY ?? "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
   if (!regularDeployerPk) {
     throw new Error("WALLET_PRIVATE_KEY not found in environment variables");
   }
